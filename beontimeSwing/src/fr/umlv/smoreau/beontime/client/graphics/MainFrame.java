@@ -10,7 +10,6 @@ import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -32,7 +31,7 @@ import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -192,7 +191,7 @@ public class MainFrame {
 		return null;
 	}
 	
-	public Person getUserSelected() {
+	public User getUserSelected() {
 		//TODO à implémenter
 		return null;
 	}
