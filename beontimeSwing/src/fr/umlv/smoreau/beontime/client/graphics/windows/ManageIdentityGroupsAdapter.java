@@ -1,16 +1,9 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -21,10 +14,7 @@ import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 
 /**
- * @author sandrine
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ManageIdentityGroupsAdapter implements TableModel {
 
@@ -112,7 +102,7 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 		for(Iterator it = ((Group)(groups.get(columnIndex-1))).getStudents().iterator();it.hasNext();) {
 			
 			if ( ((Long)it.next()).compareTo(ID_student) == 0)
-				return new JPanel().add(new CrossDrawing());
+				return "oui";
 		}	
 		
 		return "non";
