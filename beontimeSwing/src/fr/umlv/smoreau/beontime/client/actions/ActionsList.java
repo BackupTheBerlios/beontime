@@ -37,6 +37,8 @@ public class ActionsList {
 		ACTIONS.put("ShowTimetableByWeek", new ShowTimetableByWeek(null));
 		ACTIONS.put("ShowTimetableBySixMonthPeriod", new ShowTimetableBySixMonthPeriod(null));
 		ACTIONS.put("AddTeacher", new AddTeacher(null));
+		ACTIONS.put("ModifyUser", new ModifyUser(null));
+		ACTIONS.put("RemoveUser", new RemoveUser(null));
 		ACTIONS.put("ManageUsers", new ManageUsers(null));
 		ACTIONS.put("AddSubject", new AddSubject(null));
 		ACTIONS.put("ModifySubject", new ModifySubject(null));

@@ -34,7 +34,7 @@ public class ManageMaterials extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        ManageElementsWindow window = new ManageElementsWindow("TYPE_MATERIALS");
+        ManageElementsWindow window = new ManageElementsWindow(ManageElementsWindow.TYPE_MATERIALS);
         window.show();
     }
 }

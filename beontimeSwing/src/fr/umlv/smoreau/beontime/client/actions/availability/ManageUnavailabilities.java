@@ -34,7 +34,7 @@ public class ManageUnavailabilities extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        ManageElementsWindow window = new ManageElementsWindow("TYPE_UNAVAILABILITIES");
+        ManageElementsWindow window = new ManageElementsWindow(ManageElementsWindow.TYPE_UNAVAILABILITIES);
         window.show();
     }
 }

@@ -34,7 +34,7 @@ public class ManageGroups extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-    	ManageElementsWindow window = new ManageElementsWindow("TYPE_GROUPS");
+    	ManageElementsWindow window = new ManageElementsWindow(ManageElementsWindow.TYPE_GROUPS);
         window.show();
     }
 }

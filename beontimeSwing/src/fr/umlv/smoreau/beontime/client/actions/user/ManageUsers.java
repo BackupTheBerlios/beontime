@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
  * @author BeOnTime
@@ -34,7 +35,11 @@ public class ManageUsers extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        ManageElementsWindow window = new ManageElementsWindow("TYPE_USERS");
+        ManageElementsWindow window;
+        if (UserDao.TYPE_ADMIN.equals(mainFrame.getUser().getUserType()))
+        	window = new ManageElementsWindow(ManageElementsWindow.TYPE_USERS_BY_ADMIN);
+        else
+            window = new ManageElementsWindow(ManageElementsWindow.TYPE_USERS_BY_SECRETARY);
         window.show();
     }
 }
