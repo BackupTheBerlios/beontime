@@ -30,19 +30,16 @@ public class AddModifyUserWindow {
 	
 	private static String TITRE = "Ajouter une secrétaire ou un enseignant";
 
-	private JLabel nomLabel;
-	private JLabel prenomLabel;
+	private JLabel nameLabel;
+	private JLabel surnameLabel;
 	private JLabel courrielMailLabel;
 
-	private JTextField nomJtf;
-	private JTextField prenomJtf;
+	private JTextField nameJtf;
+	private JTextField surnameJtf;
 	private JTextField courrielMailJtf;
 	
 	private JButton ok;
 	private JButton annuler;
-	
-	private JPanel secretaryPanel = new JPanel();
-	private JPanel teacherPanel = new JPanel();
 	
 	private JDialog AMUWFrame;
 	private GridBagLayout AMUWLayout = new GridBagLayout();
@@ -66,23 +63,23 @@ public class AddModifyUserWindow {
 	private void initAddModifyUserWindow(int type) {
     	
 		
-		nomLabel = new JLabel("Nom :");
-		addComponent(AMUWLayout,layoutConstraints,nomLabel,1,1,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
-		AMUWFrame.getContentPane().add(nomLabel);
+		nameLabel = new JLabel("Nom :");
+		addComponent(AMUWLayout,layoutConstraints,nameLabel,1,1,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(nameLabel);
 		
-		nomJtf = new JTextField();
-		addComponent(AMUWLayout,layoutConstraints,nomJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		AMUWFrame.getContentPane().add(nomJtf);
+		nameJtf = new JTextField();
+		addComponent(AMUWLayout,layoutConstraints,nameJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(nameJtf);
 		
 		
 		
-		prenomLabel = new JLabel("Prénom :");
-		addComponent(AMUWLayout,layoutConstraints,prenomLabel,1,2,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
-		AMUWFrame.getContentPane().add(prenomLabel);
+		surnameLabel = new JLabel("Prénom :");
+		addComponent(AMUWLayout,layoutConstraints,surnameLabel,1,2,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(surnameLabel);
 		
-		prenomJtf = new JTextField();
-		addComponent(AMUWLayout,layoutConstraints,prenomJtf,3,2,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		AMUWFrame.getContentPane().add(prenomJtf);
+		surnameJtf = new JTextField();
+		addComponent(AMUWLayout,layoutConstraints,surnameJtf,3,2,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(surnameJtf);
 		
 		
 		switch(type) {

@@ -25,7 +25,7 @@ public class AddRoom extends Action {
 	public static javax.swing.Action getAction(String name,final MainFrame mainFrame){
 		AbstractAction va=new AbstractAction(name,getImage("images/New24.gif")) {
 		public void actionPerformed(ActionEvent e) {
-			AddModifyElementWindow amew=new AddModifyElementWindow();
+			AddModifyElementWindow amew=new AddModifyElementWindow(2);
 			amew.show();
 			}
 		};
