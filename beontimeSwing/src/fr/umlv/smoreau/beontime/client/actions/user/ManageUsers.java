@@ -34,7 +34,7 @@ public class ManageUsers extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        ManageElementsWindow window = new ManageElementsWindow();
+        ManageElementsWindow window = new ManageElementsWindow("TYPE_USERS");
         window.show();
     }
 }

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
+import fr.umlv.smoreau.beontime.client.graphics.windows.ManageGroupsWindow;
 
 /**
  * @author BeOnTime
@@ -34,7 +34,7 @@ public class ManageIdentitiesToGroups extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        ManageElementsWindow window = new ManageElementsWindow();
+    	ManageGroupsWindow window = new ManageGroupsWindow();  
         window.show();
     }
 }
