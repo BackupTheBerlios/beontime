@@ -108,7 +108,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 		return getFormations(null);
 	}
 
-	public void addFormation(Formation formation) throws RemoteException, HibernateException {
+	public Formation addFormation(Formation formation) throws RemoteException, HibernateException {
 	    Session session = null;
 	    try {
             TransactionManager.beginTransaction();
@@ -121,6 +121,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
         } finally {
             Hibernate.closeSession();
         }
+        return formation;
 	}
 
 	public void modifyFormation(Formation formation) throws RemoteException, HibernateException {

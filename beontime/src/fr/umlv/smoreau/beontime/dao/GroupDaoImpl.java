@@ -77,7 +77,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 		return getGroups(null);
 	}
 	
-	public void addGroup(Group group) throws RemoteException, HibernateException {
+	public Group addGroup(Group group) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -98,6 +98,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
             session = null;
             Hibernate.closeSession();
         }
+        return group;
 	}
 	
 	public void modifyGroup(Group group) throws RemoteException, HibernateException {

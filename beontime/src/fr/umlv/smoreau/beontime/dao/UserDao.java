@@ -45,7 +45,7 @@ public interface UserDao extends Remote {
 	
 	public Collection getTeachers() throws RemoteException, HibernateException;
 	
-	public void addUser(User user) throws RemoteException, HibernateException;
+	public User addUser(User user) throws RemoteException, HibernateException;
 	
 	public void modifyUser(User user) throws RemoteException, HibernateException;
 	

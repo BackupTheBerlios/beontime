@@ -30,7 +30,7 @@ public interface UnavailabilityDao extends Remote {
 	
 	public Collection getUnavailabilities() throws RemoteException, HibernateException;
 	
-	public void addUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
+	public Unavailability addUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
 	
 	public void modifyUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
 	

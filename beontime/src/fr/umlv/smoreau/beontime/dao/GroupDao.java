@@ -21,7 +21,7 @@ public interface GroupDao extends Remote {
 	
 	public Collection getGroups() throws RemoteException, HibernateException;
 	
-	public void addGroup(Group group) throws RemoteException, HibernateException;
+	public Group addGroup(Group group) throws RemoteException, HibernateException;
 	
 	public void modifyGroup(Group group) throws RemoteException, HibernateException;
 	

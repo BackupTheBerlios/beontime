@@ -3,7 +3,6 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -32,7 +31,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime team
  */
 public class TimetableDaoImpl extends Dao implements TimetableDao {
-	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	//En cas de modif refaire le rmic et rebalancer coté client
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
 
@@ -75,21 +74,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	    Session session = null;
         try {
             session = Hibernate.getCurrentSession();
-            Collection c = get(TABLE_COURSE, filter, session);
-            UserDao userDao = UserDaoImpl.getInstance();
-            for (Iterator i = c.iterator(); i.hasNext(); ) {
-                Course course = (Course) i.next();
-                Set teachers = course.getTeachersDirecting();
-                if (teachers != null) {
-	                course.setTeachersDirecting(new HashSet());
-	                for (Iterator j = teachers.iterator(); j.hasNext(); ) {
-	                    IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) j.next();
-	                    //Collection tmp = userDao.getTeachers(new UserFilter(new User(isDirected.getIdTeacher())));
-	                    course.addTeacherDirecting(isDirected/*(User) tmp.toArray()[0]*/);
-	                }
-                }
-            }
-            return c;
+            return get(TABLE_COURSE, filter, session);
         } finally {
             Hibernate.closeSession();
         }
@@ -165,7 +150,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 		return getSubjects(null);
 	}
 	
-	public void addCourse(Course course) throws RemoteException, HibernateException {
+	public Course addCourse(Course course) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -174,7 +159,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); ) {
-	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse)i.next();
+	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) i.next();
 	                takePart.setIdCourse(course.getIdCourse());
 	                add(takePart, session);
 	            }
@@ -182,7 +167,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Collection c = course.getTeachersDirecting();
             if (c != null) {
 	            for (Iterator i = c.iterator(); i.hasNext(); ) {
-	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();//new IsDirectedByCourseTeacher((User) i.next(), course);
+	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();
 	                add(isDirected, session);
 	            }
             }
@@ -193,9 +178,10 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         } finally {
             Hibernate.closeSession();
         }
+        return course;
 	}
 	
-	public void addSubject(Subject subject) throws RemoteException, HibernateException {
+	public Subject addSubject(Subject subject) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -208,6 +194,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         } finally {
             Hibernate.closeSession();
         }
+        return subject;
 	}
 	
 	public void modifyCourse(Course course) throws RemoteException, HibernateException {
@@ -265,7 +252,6 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Collection c = course.getTeachersDirecting();
             if (c != null) {
 	            for (Iterator i = c.iterator(); i.hasNext(); ) {
-	                //IsDirectedByCourseTeacher isDirected = new IsDirectedByCourseTeacher((User) i.next(), course);
 	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();
 	                remove(TABLE_ISDIRECTING, new _IsDirectedByCourseTeacherFilter(isDirected), session);
 	            }
@@ -306,7 +292,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         }
 	}
 	
-	private void addTypeCourse(CourseType typeCourse) throws HibernateException {
+	private CourseType addTypeCourse(CourseType typeCourse) throws HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -319,5 +305,6 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         } finally {
             Hibernate.closeSession();
         }
+        return typeCourse;
 	}
 }

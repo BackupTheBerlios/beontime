@@ -73,7 +73,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
 		return getMaterials(null);
 	}
 	
-	public void addRoom(Room room) throws RemoteException, HibernateException {
+	public Room addRoom(Room room) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -86,9 +86,10 @@ public class ElementDaoImpl extends Dao implements ElementDao {
         } finally {
             Hibernate.closeSession();
         }
+        return room;
 	}
 	
-	public void addMaterial(Material material) throws RemoteException, HibernateException {
+	public Material addMaterial(Material material) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -101,6 +102,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
         } finally {
             Hibernate.closeSession();
         }
+        return material;
 	}
 	
 	public void modifyRoom(Room room) throws RemoteException, HibernateException {

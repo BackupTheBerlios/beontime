@@ -68,7 +68,7 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
 		return getUnavailabilities(null);
 	}
 	
-	public void addUnavailability(Unavailability unavailability) throws RemoteException, HibernateException {
+	public Unavailability addUnavailability(Unavailability unavailability) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -81,6 +81,7 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
         } finally {
             Hibernate.closeSession();
         }
+        return unavailability;
 	}
 	
 	public void modifyUnavailability(Unavailability unavailability) throws RemoteException, HibernateException {
@@ -124,7 +125,7 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
         }
 	}
 	
-	private void addTypeUnavailability(UnavailabilityType typeUnavailability) throws HibernateException {
+	private UnavailabilityType addTypeUnavailability(UnavailabilityType typeUnavailability) throws HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -137,5 +138,6 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
         } finally {
             Hibernate.closeSession();
         }
+        return typeUnavailability;
 	}
 }

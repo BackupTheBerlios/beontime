@@ -146,7 +146,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return getUsers(filter);
 	}
 	
-	public void addUser(User user) throws RemoteException, HibernateException {
+	public User addUser(User user) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             TransactionManager.beginTransaction();
@@ -165,6 +165,7 @@ public class UserDaoImpl extends Dao implements UserDao {
         } finally {
             Hibernate.closeSession();
         }
+        return user;
 	}
 	
 	public void modifyUser(User user) throws RemoteException, HibernateException {

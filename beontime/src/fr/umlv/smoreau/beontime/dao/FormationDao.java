@@ -22,7 +22,7 @@ public interface FormationDao extends Remote {
 	
 	public Collection getFormations() throws RemoteException, HibernateException;
 	
-	public void addFormation(Formation formation) throws RemoteException, HibernateException;
+	public Formation addFormation(Formation formation) throws RemoteException, HibernateException;
 	
 	public void modifyFormation(Formation formation) throws RemoteException, HibernateException;
 }

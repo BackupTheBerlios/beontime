@@ -28,9 +28,9 @@ public interface ElementDao extends Remote {
 	
 	public Collection getMaterials() throws RemoteException, HibernateException;
 	
-	public void addRoom(Room room) throws RemoteException, HibernateException;
+	public Room addRoom(Room room) throws RemoteException, HibernateException;
 	
-	public void addMaterial(Material material) throws RemoteException, HibernateException;
+	public Material addMaterial(Material material) throws RemoteException, HibernateException;
 	
 	public void modifyRoom(Room room) throws RemoteException, HibernateException;
 	

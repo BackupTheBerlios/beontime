@@ -29,9 +29,9 @@ public interface TimetableDao extends Remote {
 
 	public Collection getSubjects() throws RemoteException, HibernateException;
 	
-	public void addCourse(Course course) throws RemoteException, HibernateException;
+	public Course addCourse(Course course) throws RemoteException, HibernateException;
 	
-	public void addSubject(Subject subject) throws RemoteException, HibernateException;
+	public Subject addSubject(Subject subject) throws RemoteException, HibernateException;
 	
 	public void modifyCourse(Course course) throws RemoteException, HibernateException;
 	
