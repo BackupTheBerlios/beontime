@@ -13,7 +13,7 @@ import fr.umlv.smoreau.beontime.filter.CourseFilter;
 import fr.umlv.smoreau.beontime.filter.ParticipeGroupSubjectCourseFilter;
 import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
-import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.timetable.*;
 
 /**
@@ -24,8 +24,8 @@ public class TimetableDao extends Dao {
 
     private static final String TABLE_COURSE      = "Course";
     private static final String TABLE_SUBJECT     = "Subject";
-    private static final String TABLE_TYPE_COURSE = "TypeCourse";
-    private static final String TABLE_ASSOCIATION = "ParticipeGroupSubjectCourse";
+    private static final String TABLE_TYPE_COURSE = "CourseType";
+    private static final String TABLE_ASSOCIATION = "TakePartGroupSubjectCourse";
     
     private String[] DEFAULT_TYPES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
 
@@ -33,8 +33,8 @@ public class TimetableDao extends Dao {
         Collection types = getTypesCourse();
         if (types != null && types.size() == 0) {
             for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
-                TypeCourse type = new TypeCourse();
-                type.setNomTypeCours(DEFAULT_TYPES[i]);
+                CourseType type = new CourseType();
+                type.setNameCourseType(DEFAULT_TYPES[i]);
                 addTypeCourse(type);
             }
         }
@@ -92,10 +92,10 @@ public class TimetableDao extends Dao {
         try {
             TransactionManager.beginTransaction();
             add(course);
-            Set p = course.getParticipeGroupeMatiereCoursSet();
+            Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); )
-	                add((ParticipeGroupSubjectCourse)i.next());
+	                add((TakePartGroupSubjectCourse)i.next());
             }
             TransactionManager.commit();
         } catch (HibernateException e) {
@@ -122,10 +122,10 @@ public class TimetableDao extends Dao {
         try {
             TransactionManager.beginTransaction();
             modify(course);
-            Set p = course.getParticipeGroupeMatiereCoursSet();
+            Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); )
-	                add((ParticipeGroupSubjectCourse)i.next());
+	                add((TakePartGroupSubjectCourse)i.next());
             }
             TransactionManager.commit();
         } catch (HibernateException e) {
@@ -151,10 +151,10 @@ public class TimetableDao extends Dao {
 	public boolean removeCourse(Course course) {
         try {
             TransactionManager.beginTransaction();
-            Set p = course.getParticipeGroupeMatiereCoursSet();
+            Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); )
-	                remove(TABLE_ASSOCIATION, new ParticipeGroupSubjectCourseFilter((ParticipeGroupSubjectCourse)i.next()));
+	                remove(TABLE_ASSOCIATION, new ParticipeGroupSubjectCourseFilter((TakePartGroupSubjectCourse)i.next()));
             }
             remove(TABLE_COURSE, new CourseFilter(course));
             TransactionManager.commit();
@@ -193,7 +193,7 @@ public class TimetableDao extends Dao {
 		return result;
 	}
 	
-	private boolean addTypeCourse(TypeCourse typeCourse) {
+	private boolean addTypeCourse(CourseType typeCourse) {
         try {
             TransactionManager.beginTransaction();
             add(typeCourse);

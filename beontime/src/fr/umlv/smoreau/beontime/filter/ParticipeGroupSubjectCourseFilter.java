@@ -2,19 +2,19 @@ package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 
 /**
  * @author BeOnTime
  */
-public class ParticipeGroupSubjectCourseFilter extends ParticipeGroupSubjectCourse implements Filter {
+public class ParticipeGroupSubjectCourseFilter extends TakePartGroupSubjectCourse implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("IdGroupe.IdGroupe", "id_groupe");
-        corres.put("IdCourse.IdCours", "id_cours");
-        corres.put("IdSubject.IdMatiere", "id_matiere");
+        corres.put("IdGroup.IdGroup", "id_groupe");
+        corres.put("IdCourse.IdCourse", "id_cours");
+        corres.put("IdSubject.IdSubject", "id_matiere");
     }
 
 
@@ -22,10 +22,10 @@ public class ParticipeGroupSubjectCourseFilter extends ParticipeGroupSubjectCour
         super();
     }
     
-    public ParticipeGroupSubjectCourseFilter(ParticipeGroupSubjectCourse participe) {
+    public ParticipeGroupSubjectCourseFilter(TakePartGroupSubjectCourse takePart) {
         super();
         try {
-            FilterUtils.fillFilterClass(this, participe, corres.keySet());
+            FilterUtils.fillFilterClass(this, takePart, corres.keySet());
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }
