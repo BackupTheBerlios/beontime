@@ -1,35 +1,35 @@
 package fr.umlv.smoreau.beontime.model.user;
 
-import fr.umlv.smoreau.beontime.model.base.BasePerson;
+import fr.umlv.smoreau.beontime.model.base.BaseUser;
 
 /**
  * This is the object class that relates to the Personne table.
  * Any customizations belong here.
  */
-public class Person extends BasePerson {
+public class User extends BaseUser {
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
-	public Person () {
+	public User () {
 		super();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public Person (java.lang.Long _idPersonne) {
-		super(_idPersonne);
+	public User (java.lang.Long _idUser) {
+		super(_idUser);
 	}
 
 	/**
 	 * Constructor for required fields
 	 */
-	public Person (
-		java.lang.Long _idPersonne,
-		java.lang.String _typePersonne) {
+	public User (
+		java.lang.Long _idUser,
+		java.lang.String _userType) {
 
 		super (
-			_idPersonne,
-			_typePersonne);
+			_idUser,
+			_userType);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

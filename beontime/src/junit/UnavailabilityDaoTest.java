@@ -3,7 +3,7 @@ package junit;
 import java.util.Collection;
 
 import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
-import fr.umlv.smoreau.beontime.model.TypeUnavailability;
+import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -30,9 +30,9 @@ public class UnavailabilityDaoTest extends TestCase {
     public void testAddRemoveUnavailability() {
         Unavailability unavailability = new Unavailability();
         Collection t = unavailabilityDao.getTypesUnavailability();
-        TypeUnavailability[] types = (TypeUnavailability[]) t.toArray(new TypeUnavailability[t.size()]);
-        unavailability.setIdTypeUnavailability(types[0]);
-        unavailability.setIdSujetIndisponibilite(new Long(1));
+        UnavailabilityType[] types = (UnavailabilityType[]) t.toArray(new UnavailabilityType[t.size()]);
+        unavailability.setIdUnavailabilityType(types[0]);
+        unavailability.setIdUnavailabilitySubject(new Long(1));
         assertTrue(unavailabilityDao.addUnavailability(unavailability));
         unavailability.setDescription("voici l'essai pour l'indisponibilité");
         assertTrue(unavailabilityDao.modifyUnavailability(unavailability));

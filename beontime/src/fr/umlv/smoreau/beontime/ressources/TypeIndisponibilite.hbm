@@ -4,21 +4,22 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.TypeUnavailability" table="type_indisponibilite">
+	<class name="fr.umlv.smoreau.beontime.model.UnavailabilityType" table="type_indisponibilite">
 		<id
-			column="ID_type_indisponibilite"
-			name="IdTypeIndisponibilite"
+			column="id_type_indisponibilite"
+			name="IdUnavailabilityType"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="Nom_type_indisponibilite"
-			name="NomTypeIndisponibilite"
+			column="nom_type_indisponibilite"
+			name="NameUnavailabilityType"
 			type="string"
 		 />
-		<set inverse="true" name="IndisponibiliteSet">
-			<key column="ID_type_indisponibilite" />
+
+		<set inverse="true" name="Unavailabilities">
+			<key column="id_type_indisponibilite" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Unavailability" />
 		</set>
 	</class>

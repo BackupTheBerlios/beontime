@@ -6,76 +6,77 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.timetable.Course" table="cours">
 		<id
-			column="ID_cours"
-			name="IdCours"
+			column="id_cours"
+			name="IdCourse"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="ID_formation"
+			column="id_formation"
 			length="8"
 			name="IdFormation"
 			not-null="true"
 			type="java.lang.Long"
 		 />
 		<property
-			column="Nb_semaine"
+			column="nb_semaine"
 			length="2"
-			name="NbSemaine"
+			name="NbWeeks"
 			not-null="false"
 			type="integer"
 		 />
 		<property
-			column="Date_fin"
+			column="date_fin"
 			length="4"
-			name="DateFin"
+			name="EndDate"
 			not-null="false"
 			type="date"
 		 />
 		<property
-			column="Date_debut"
+			column="date_debut"
 			length="4"
-			name="DateDebut"
+			name="BeginDate"
 			not-null="false"
 			type="date"
 		 />
 
 		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.timetable.TypeCourse"
-			name="IdTypeCourse"
+			class="fr.umlv.smoreau.beontime.model.timetable.CourseType"
+			name="IdCourseType"
 			not-null="true"
 		>
-			<column name="ID_type_cours" />
+			<column name="id_type_cours" />
 		</many-to-one>
-		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
-			<key column="ID_cours" />
-			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
+
+		<set inverse="true" name="GroupsSubjectsTakingPart">
+			<key column="id_cours" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>
 
 		<set
 			cascade="none"
-			name="PersonneSet"
+			name="TeachersDirecting"
 			table="est_dirige_par_cours_enseignant"
 		>
-			<key column="ID_cours" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.user.Person" column="ID_enseignant" />
+			<key column="id_cours" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.user.User" column="id_enseignant" />
 		</set>
 		<set
 			cascade="all"
-			name="MaterielSet"
-			table="Utilise_Cours_Materiel"
+			name="Materials"
+			table="utilise_cours_materiel"
 		>
-			<key column="ID_cours" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Material" column="ID_materiel" />
+			<key column="id_cours" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Material" column="id_materiel" />
 		</set>
 		<set
 			cascade="all"
-			name="LocalSet"
-			table="A_Lieu_Cours_Local"
+			name="Rooms"
+			table="a_lieu_cours_local"
 		>
-			<key column="ID_cours" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Room" column="ID_local" />
+			<key column="id_cours" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Room" column="id_local" />
 		</set>
 	</class>
 </hibernate-mapping>

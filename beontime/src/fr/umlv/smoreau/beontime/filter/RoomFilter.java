@@ -12,9 +12,9 @@ public class RoomFilter extends Room implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdLocal", "id_local");
-        corres.put("Nom", "nom");
-        corres.put("NomBatiment", "nom_batiment");
+        corres.put("IdRoom", "id_local");
+        corres.put("Name", "nom");
+        corres.put("BuildingName", "nom_batiment");
         corres.put("Description", "description");
     }
 

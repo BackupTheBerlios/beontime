@@ -16,22 +16,22 @@ public class Unavailability extends BaseUnavailability {
 	/**
 	 * Constructor for primary key
 	 */
-	public Unavailability (java.lang.Long _idIndisponibilite) {
-		super(_idIndisponibilite);
+	public Unavailability (java.lang.Long _idUnavailability) {
+		super(_idUnavailability);
 	}
 
 	/**
 	 * Constructor for required fields
 	 */
 	public Unavailability (
-		java.lang.Long _idIndisponibilite,
-		TypeUnavailability _idTypeIndisponibilite,
-		java.lang.Long _idSujetIndisponibilite) {
+		java.lang.Long _idUnavailability,
+		UnavailabilityType _idUnavailabilityType,
+		java.lang.Long _idUnavailabilitySubject) {
 
 		super (
-			_idIndisponibilite,
-			_idTypeIndisponibilite,
-			_idSujetIndisponibilite);
+			_idUnavailability,
+			_idUnavailabilityType,
+			_idUnavailabilitySubject);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

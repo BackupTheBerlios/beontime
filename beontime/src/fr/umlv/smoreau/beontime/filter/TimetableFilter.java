@@ -12,7 +12,7 @@ public class TimetableFilter extends Timetable implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("Group.IdGroupe", "id_groupe");
+        corres.put("Group.IdGroup", "id_groupe");
         corres.put("Formation.IdFormation", "id_formation");
     }
 

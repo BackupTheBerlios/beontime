@@ -3,7 +3,7 @@ package junit;
 
 import fr.umlv.smoreau.beontime.dao.*;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,14 +25,14 @@ public class UserDaoTest extends TestCase {
     
     public void testGetUsersWithFilter() {
         UserFilter filter = new UserFilter();
-        filter.setNom("toto");
+        filter.setName("toto");
         assertNotNull(userDao.getAdministrators(filter));
     }
     
     public void testAddRemoveUser() {
-        Person person = new Person();
-        person.setNom("toto");
-        person.setTypePersonne("secretaire");
+        User person = new User();
+        person.setName("toto");
+        person.setUserType("secretaire");
         assertTrue(userDao.addUser(person));
         assertTrue(userDao.removeUser(person));
     }

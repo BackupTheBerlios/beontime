@@ -16,8 +16,8 @@ public class Material extends BaseMaterial {
 	/**
 	 * Constructor for primary key
 	 */
-	public Material (java.lang.Long _idMateriel) {
-		super(_idMateriel);
+	public Material (java.lang.Long _idMaterial) {
+		super(_idMaterial);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

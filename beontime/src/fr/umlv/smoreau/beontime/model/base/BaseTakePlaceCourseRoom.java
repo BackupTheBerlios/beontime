@@ -18,31 +18,31 @@ import fr.umlv.smoreau.beontime.model.timetable.Course;
  * @hibernate.class
  *  table="A_Lieu_Cours_Local"
  */
-public abstract class BaseALieuCourseRoom  implements Serializable {
+public abstract class BaseTakePlaceCourseRoom  implements Serializable {
 
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Room _idLocal;
-	private Course _idCours;
+	private Room _idRoom;
+	private Course _idCourse;
 
 
 	// constructors
-	public BaseALieuCourseRoom () {
+	public BaseTakePlaceCourseRoom () {
 		initialize();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseALieuCourseRoom (
-		Room _idLocal,
-		Course _idCours) {
+	public BaseTakePlaceCourseRoom (
+		Room _idRoom,
+		Course _idCourse) {
 
-		this.setIdRoom(_idLocal);
-		this.setIdCourse(_idCours);
+		this.setIdRoom(_idRoom);
+		this.setIdCourse(_idCourse);
 		initialize();
 	}
 
@@ -56,15 +56,15 @@ public abstract class BaseALieuCourseRoom  implements Serializable {
 	 * not-null=true
 	 */
 	public Room getIdRoom () {
-		return this._idLocal;
+		return this._idRoom;
 	}
 
 	/**
 	 * Set the value related to the column: ID_local
-	 * @param _idLocal the ID_local value
+	 * @param _idRoom the ID_local value
 	 */
-	public void setIdRoom (Room _idLocal) {
-		this._idLocal = _idLocal;
+	public void setIdRoom (Room _idRoom) {
+		this._idRoom = _idRoom;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -74,24 +74,24 @@ public abstract class BaseALieuCourseRoom  implements Serializable {
 	 * not-null=true
 	 */
 	public Course getIdCourse () {
-		return this._idCours;
+		return this._idCourse;
 	}
 
 	/**
 	 * Set the value related to the column: ID_cours
-	 * @param _idCours the ID_cours value
+	 * @param _idCourse the ID_cours value
 	 */
-	public void setIdCourse (Course _idCours) {
-		this._idCours = _idCours;
+	public void setIdCourse (Course _idCourse) {
+		this._idCourse = _idCourse;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom mObj = (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) obj;
+			fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom mObj = (fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom) obj;
 			if (null != this.getIdRoom() && null != mObj.getIdRoom()) {
 				if (!this.getIdRoom().equals(mObj.getIdRoom())) {
 					return false;

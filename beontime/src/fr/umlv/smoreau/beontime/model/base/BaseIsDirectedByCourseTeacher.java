@@ -3,7 +3,7 @@ package fr.umlv.smoreau.beontime.model.base;
 import java.io.Serializable;
 
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -18,31 +18,31 @@ import fr.umlv.smoreau.beontime.model.user.Person;
  * @hibernate.class
  *  table="Est_Dirige_par_Cours_Enseignant"
  */
-public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
+public abstract class BaseIsDirectedByCourseTeacher  implements Serializable {
 
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Person _idEnseignant;
-	private Course _idCours;
+	private User _idTeacher;
+	private Course _idCourse;
 
 
 	// constructors
-	public BaseIsDirigeByCourseTeacher () {
+	public BaseIsDirectedByCourseTeacher () {
 		initialize();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseIsDirigeByCourseTeacher (
-		Person _idEnseignant,
-		Course _idCours) {
+	public BaseIsDirectedByCourseTeacher (
+		User _idTeacher,
+		Course _idCourse) {
 
-		this.setIdTeacher(_idEnseignant);
-		this.setIdCourse(_idCours);
+		this.setIdTeacher(_idTeacher);
+		this.setIdCourse(_idCourse);
 		initialize();
 	}
 
@@ -55,16 +55,16 @@ public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
      *  column=ID_enseignant
 	 * not-null=true
 	 */
-	public Person getIdTeacher () {
-		return this._idEnseignant;
+	public User getIdTeacher () {
+		return this._idTeacher;
 	}
 
 	/**
 	 * Set the value related to the column: ID_enseignant
-	 * @param _idEnseignant the ID_enseignant value
+	 * @param _idTeacher the ID_enseignant value
 	 */
-	public void setIdTeacher (Person _idEnseignant) {
-		this._idEnseignant = _idEnseignant;
+	public void setIdTeacher (User _idTeacher) {
+		this._idTeacher = _idTeacher;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -74,24 +74,24 @@ public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
 	 * not-null=true
 	 */
 	public Course getIdCourse () {
-		return this._idCours;
+		return this._idCourse;
 	}
 
 	/**
 	 * Set the value related to the column: ID_cours
-	 * @param _idCours the ID_cours value
+	 * @param _idCourse the ID_cours value
 	 */
-	public void setIdCourse (Course _idCours) {
-		this._idCours = _idCours;
+	public void setIdCourse (Course _idCourse) {
+		this._idCourse = _idCourse;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher mObj = (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) obj;
+			fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher mObj = (fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher) obj;
 			if (null != this.getIdTeacher() && null != mObj.getIdTeacher()) {
 				if (!this.getIdTeacher().equals(mObj.getIdTeacher())) {
 					return false;

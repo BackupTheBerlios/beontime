@@ -16,8 +16,8 @@ public class Room extends BaseRoom {
 	/**
 	 * Constructor for primary key
 	 */
-	public Room (java.lang.Long _idLocal) {
-		super(_idLocal);
+	public Room (java.lang.Long _idRoom) {
+		super(_idRoom);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

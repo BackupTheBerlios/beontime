@@ -4,16 +4,16 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher" table="est_dirige_par_cours_enseignant">
+	<class name="fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher" table="est_dirige_par_cours_enseignant">
 		<composite-id>
 			<key-many-to-one
-				class="fr.umlv.smoreau.beontime.model.user.Person"
-				column="ID_enseignant"
+				class="fr.umlv.smoreau.beontime.model.user.User"
+				column="id_enseignant"
 				name="IdTeacher"
 			 />
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.timetable.Course"
-				column="ID_cours"
+				column="id_cours"
 				name="IdCourse"
 			 />
 		</composite-id>

@@ -2,7 +2,7 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.timetable.TypeCourse;
+import fr.umlv.smoreau.beontime.model.timetable.CourseType;
 
 
 /**
@@ -19,33 +19,33 @@ import fr.umlv.smoreau.beontime.model.timetable.TypeCourse;
  */
 public abstract class BaseCourse  implements Serializable {
 
-	public static String PROP_DATE_DEBUT = "DateDebut";
-	public static String PROP_ID_COURS = "IdCours";
+	public static String PROP_DATE_DEBUT = "BeginDate";
+	public static String PROP_ID_COURS = "IdCourse";
 	public static String PROP_ID_FORMATION = "IdFormation";
-	public static String PROP_ID_TYPE_COURS = "IdTypeCours";
-	public static String PROP_NB_SEMAINE = "NbSemaine";
-	public static String PROP_DATE_FIN = "DateFin";
+	public static String PROP_ID_TYPE_COURS = "IdCourseType";
+	public static String PROP_NB_SEMAINE = "NbWeeks";
+	public static String PROP_DATE_FIN = "EndDate";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.Long _idCours;
+	private java.lang.Long _idCourse;
 
 	// fields
 	private java.lang.Long _idFormation;
-	private java.lang.Integer _nbSemaine;
-	private java.util.Date _dateFin;
-	private java.util.Date _dateDebut;
+	private java.lang.Integer _nbWeeks;
+	private java.util.Date _endDate;
+	private java.util.Date _beginDate;
 
 	// many to one
-	private TypeCourse _idTypeCours;
+	private CourseType _idCourseType;
 
 	// collections
-	private java.util.Set _participeGroupeMatiereCoursSet;
-	private java.util.Set _personneSet;
-	private java.util.Set _materielSet;
-	private java.util.Set _localSet;
+	private java.util.Set _groupsSubjectsTakingPart;
+	private java.util.Set _teachersDirecting;
+	private java.util.Set _materials;
+	private java.util.Set _rooms;
 
 
 	// constructors
@@ -56,8 +56,8 @@ public abstract class BaseCourse  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseCourse (java.lang.Long _idCours) {
-		this.setIdCours(_idCours);
+	public BaseCourse (java.lang.Long _idCourse) {
+		this.setIdCourse(_idCourse);
 		initialize();
 	}
 
@@ -65,12 +65,12 @@ public abstract class BaseCourse  implements Serializable {
 	 * Constructor for required fields
 	 */
 	public BaseCourse (
-		java.lang.Long _idCours,
-		TypeCourse _idTypeCours,
+		java.lang.Long _idCourse,
+		CourseType _idCourseType,
 		java.lang.Long _idFormation) {
 
-		this.setIdCours(_idCours);
-		this.setIdTypeCourse(_idTypeCours);
+		this.setIdCourse(_idCourse);
+		this.setIdCourseType(_idCourseType);
 		this.setIdFormation(_idFormation);
 		initialize();
 	}
@@ -85,16 +85,16 @@ public abstract class BaseCourse  implements Serializable {
      *  generator-class="vm"
      *  column="ID_cours"
      */
-	public java.lang.Long getIdCours () {
-		return _idCours;
+	public java.lang.Long getIdCourse () {
+		return _idCourse;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idCours the new ID
+	 * @param _idCourse the new ID
 	 */
-	public void setIdCours (java.lang.Long _idCours) {
-		this._idCours = _idCours;
+	public void setIdCourse (java.lang.Long _idCourse) {
+		this._idCourse = _idCourse;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -118,48 +118,48 @@ public abstract class BaseCourse  implements Serializable {
 	/**
 	 * Return the value associated with the column: Nb_semaine
 	 */
-	public java.lang.Integer getNbSemaine () {
-		return _nbSemaine;
+	public java.lang.Integer getNbWeeks () {
+		return _nbWeeks;
 	}
 
 	/**
 	 * Set the value related to the column: Nb_semaine
-	 * @param _nbSemaine the Nb_semaine value
+	 * @param _nbWeeks the Nb_semaine value
 	 */
-	public void setNbSemaine (java.lang.Integer _nbSemaine) {
-		this._nbSemaine = _nbSemaine;
+	public void setNbWeeks (java.lang.Integer _nbWeeks) {
+		this._nbWeeks = _nbWeeks;
 	}
 
 
 	/**
 	 * Return the value associated with the column: Date_fin
 	 */
-	public java.util.Date getDateFin () {
-		return _dateFin;
+	public java.util.Date getEndDate () {
+		return _endDate;
 	}
 
 	/**
 	 * Set the value related to the column: Date_fin
-	 * @param _dateFin the Date_fin value
+	 * @param _endDate the Date_fin value
 	 */
-	public void setDateFin (java.util.Date _dateFin) {
-		this._dateFin = _dateFin;
+	public void setEndDate (java.util.Date _endDate) {
+		this._endDate = _endDate;
 	}
 
 
 	/**
 	 * Return the value associated with the column: Date_debut
 	 */
-	public java.util.Date getDateDebut () {
-		return _dateDebut;
+	public java.util.Date getBeginDate () {
+		return _beginDate;
 	}
 
 	/**
 	 * Set the value related to the column: Date_debut
-	 * @param _dateDebut the Date_debut value
+	 * @param _beginDate the Date_debut value
 	 */
-	public void setDateDebut (java.util.Date _dateDebut) {
-		this._dateDebut = _dateDebut;
+	public void setBeginDate (java.util.Date _beginDate) {
+		this._beginDate = _beginDate;
 	}
 
 
@@ -168,37 +168,37 @@ public abstract class BaseCourse  implements Serializable {
      *  column=ID_type_cours
 	 * not-null=true
 	 */
-	public TypeCourse getIdTypeCourse () {
-		return this._idTypeCours;
+	public CourseType getIdCourseType () {
+		return this._idCourseType;
 	}
 
 	/**
 	 * Set the value related to the column: ID_type_cours
-	 * @param _idTypeCours the ID_type_cours value
+	 * @param _idCourseType the ID_type_cours value
 	 */
-	public void setIdTypeCourse (TypeCourse _idTypeCours) {
-		this._idTypeCours = _idTypeCours;
+	public void setIdCourseType (CourseType _idCourseType) {
+		this._idCourseType = _idCourseType;
 	}
 
 
 	/**
 	 * Return the value associated with the column: ParticipeGroupeMatiereCoursSet
 	 */
-	public java.util.Set getParticipeGroupeMatiereCoursSet () {
-		return this._participeGroupeMatiereCoursSet;
+	public java.util.Set getGroupsSubjectsTakingPart () {
+		return this._groupsSubjectsTakingPart;
 	}
 
 	/**
 	 * Set the value related to the column: ParticipeGroupeMatiereCoursSet
-	 * @param _participeGroupeMatiereCoursSet the ParticipeGroupeMatiereCoursSet value
+	 * @param _groupsSubjectsTakingPart the ParticipeGroupeMatiereCoursSet value
 	 */
-	public void setParticipeGroupeMatiereCoursSet (java.util.Set _participeGroupeMatiereCoursSet) {
-		this._participeGroupeMatiereCoursSet = _participeGroupeMatiereCoursSet;
+	public void setGroupsSubjectsTakingPart (java.util.Set _groupsSubjectsTakingPart) {
+		this._groupsSubjectsTakingPart = _groupsSubjectsTakingPart;
 	}
 	
-	public void addToParticipeGroupeMatiereCoursSet (Object obj) {
-		if (null == this._participeGroupeMatiereCoursSet) this._participeGroupeMatiereCoursSet = new java.util.HashSet();
-		this._participeGroupeMatiereCoursSet.add(obj);
+	public void addGroupSubjectTakingPart (Object obj) {
+		if (null == this._groupsSubjectsTakingPart) this._groupsSubjectsTakingPart = new java.util.HashSet();
+		this._groupsSubjectsTakingPart.add(obj);
 	}
 
 
@@ -206,21 +206,21 @@ public abstract class BaseCourse  implements Serializable {
 	/**
 	 * Return the value associated with the column: PersonneSet
 	 */
-	public java.util.Set getPersonneSet () {
-		return this._personneSet;
+	public java.util.Set getTeachersDirecting () {
+		return this._teachersDirecting;
 	}
 
 	/**
 	 * Set the value related to the column: PersonneSet
-	 * @param _personneSet the PersonneSet value
+	 * @param _teachersDirecting the PersonneSet value
 	 */
-	public void setPersonneSet (java.util.Set _personneSet) {
-		this._personneSet = _personneSet;
+	public void setTeachersDirecting (java.util.Set _teachersDirecting) {
+		this._teachersDirecting = _teachersDirecting;
 	}
 	
-	public void addToPersonneSet (Object obj) {
-		if (null == this._personneSet) this._personneSet = new java.util.HashSet();
-		this._personneSet.add(obj);
+	public void addTeacherDirecting (Object obj) {
+		if (null == this._teachersDirecting) this._teachersDirecting = new java.util.HashSet();
+		this._teachersDirecting.add(obj);
 	}
 
 
@@ -228,21 +228,21 @@ public abstract class BaseCourse  implements Serializable {
 	/**
 	 * Return the value associated with the column: MaterielSet
 	 */
-	public java.util.Set getMaterielSet () {
-		return this._materielSet;
+	public java.util.Set getMaterials () {
+		return this._materials;
 	}
 
 	/**
 	 * Set the value related to the column: MaterielSet
-	 * @param _materielSet the MaterielSet value
+	 * @param _materials the MaterielSet value
 	 */
-	public void setMaterielSet (java.util.Set _materielSet) {
-		this._materielSet = _materielSet;
+	public void setMaterials (java.util.Set _materials) {
+		this._materials = _materials;
 	}
 	
-	public void addToMaterielSet (Object obj) {
-		if (null == this._materielSet) this._materielSet = new java.util.HashSet();
-		this._materielSet.add(obj);
+	public void addMaterial (Object obj) {
+		if (null == this._materials) this._materials = new java.util.HashSet();
+		this._materials.add(obj);
 	}
 
 
@@ -250,21 +250,21 @@ public abstract class BaseCourse  implements Serializable {
 	/**
 	 * Return the value associated with the column: LocalSet
 	 */
-	public java.util.Set getLocalSet () {
-		return this._localSet;
+	public java.util.Set getRooms () {
+		return this._rooms;
 	}
 
 	/**
 	 * Set the value related to the column: LocalSet
-	 * @param _localSet the LocalSet value
+	 * @param _rooms the LocalSet value
 	 */
-	public void setLocalSet (java.util.Set _localSet) {
-		this._localSet = _localSet;
+	public void setRooms (java.util.Set _rooms) {
+		this._rooms = _rooms;
 	}
 	
-	public void addToLocalSet (Object obj) {
-		if (null == this._localSet) this._localSet = new java.util.HashSet();
-		this._localSet.add(obj);
+	public void addRoom (Object obj) {
+		if (null == this._rooms) this._rooms = new java.util.HashSet();
+		this._rooms.add(obj);
 	}
 
 
@@ -274,17 +274,17 @@ public abstract class BaseCourse  implements Serializable {
 		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseCourse)) return false;
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseCourse mObj = (fr.umlv.smoreau.beontime.model.base.BaseCourse) obj;
-			if (null == this.getIdCours() || null == mObj.getIdCours()) return false;
-			else return (this.getIdCours().equals(mObj.getIdCours()));
+			if (null == this.getIdCourse() || null == mObj.getIdCourse()) return false;
+			else return (this.getIdCourse().equals(mObj.getIdCourse()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdCours()) return super.hashCode();
+			if (null == this.getIdCourse()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdCours().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdCourse().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

@@ -7,7 +7,7 @@ import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 /**
  * @author BeOnTime
  */
-public class ParticipeGroupSubjectCourseFilter extends TakePartGroupSubjectCourse implements Filter {
+public class TakePartGroupSubjectCourseFilter extends TakePartGroupSubjectCourse implements Filter {
     private static final HashMap corres;
     
     static {
@@ -18,11 +18,11 @@ public class ParticipeGroupSubjectCourseFilter extends TakePartGroupSubjectCours
     }
 
 
-    public ParticipeGroupSubjectCourseFilter() {
+    public TakePartGroupSubjectCourseFilter() {
         super();
     }
     
-    public ParticipeGroupSubjectCourseFilter(TakePartGroupSubjectCourse takePart) {
+    public TakePartGroupSubjectCourseFilter(TakePartGroupSubjectCourse takePart) {
         super();
         try {
             FilterUtils.fillFilterClass(this, takePart, corres.keySet());

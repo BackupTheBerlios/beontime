@@ -6,46 +6,46 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.Unavailability" table="indisponibilite">
 		<id
-			column="ID_indisponibilite"
-			name="IdIndisponibilite"
+			column="id_indisponibilite"
+			name="IdUnavailability"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="ID_sujet_indisponibilite"
+			column="id_sujet_indisponibilite"
 			length="8"
-			name="IdSujetIndisponibilite"
+			name="IdUnavailabilitySubject"
 			not-null="true"
 			type="java.lang.Long"
 		 />
 		<property
-			column="Description"
+			column="description"
 			name="Description"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Date_fin"
+			column="date_fin"
 			length="4"
-			name="DateFin"
+			name="EndDate"
 			not-null="false"
 			type="date"
 		 />
 		<property
-			column="Date_debut"
+			column="date_debut"
 			length="4"
-			name="DateDebut"
+			name="BeginDate"
 			not-null="false"
 			type="date"
 		 />
 
 		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.TypeUnavailability"
-			name="IdTypeUnavailability"
+			class="fr.umlv.smoreau.beontime.model.UnavailabilityType"
+			name="IdUnavailabilityType"
 			not-null="true"
 		>
-			<column name="ID_type_indisponibilite" />
+			<column name="id_type_indisponibilite" />
 		</many-to-one>
 	</class>
 </hibernate-mapping>

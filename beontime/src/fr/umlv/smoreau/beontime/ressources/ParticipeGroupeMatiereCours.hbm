@@ -4,30 +4,23 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" table="participe_groupe_matiere_cours">
+	<class name="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" table="participe_groupe_matiere_cours">
 		<composite-id>
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.timetable.Subject"
-				column="ID_matiere"
+				column="id_matiere"
 				name="IdSubject"
 			 />
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.Group"
-				column="ID_groupe"
-				name="IdGroupe"
+				column="id_groupe"
+				name="IdGroup"
 			 />
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.timetable.Course"
-				column="ID_cours"
+				column="id_cours"
 				name="IdCourse"
 			 />
 		</composite-id>
-		<!--property
-			column="type_cours"
-			length="3"
-			name="TypeCours"
-			not-null="false"
-			type="string"
-		 /-->
 	</class>
 </hibernate-mapping>

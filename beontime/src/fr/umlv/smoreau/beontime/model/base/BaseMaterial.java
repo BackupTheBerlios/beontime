@@ -18,21 +18,21 @@ import java.io.Serializable;
 public abstract class BaseMaterial  implements Serializable {
 
 	public static String PROP_DESCRIPTION = "Description";
-	public static String PROP_NOM = "Nom";
-	public static String PROP_ID_MATERIEL = "IdMateriel";
+	public static String PROP_NOM = "Name";
+	public static String PROP_ID_MATERIEL = "IdMaterial";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.Long _idMateriel;
+	private java.lang.Long _idMaterial;
 
 	// fields
 	private java.lang.String _description;
-	private java.lang.String _nom;
+	private java.lang.String _name;
 
 	// collections
-	private java.util.Set _coursSet;
+	private java.util.Set _courses;
 
 
 	// constructors
@@ -43,8 +43,8 @@ public abstract class BaseMaterial  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseMaterial (java.lang.Long _idMateriel) {
-		this.setIdMateriel(_idMateriel);
+	public BaseMaterial (java.lang.Long _idMaterial) {
+		this.setIdMaterial(_idMaterial);
 		initialize();
 	}
 
@@ -58,16 +58,16 @@ public abstract class BaseMaterial  implements Serializable {
      *  generator-class="vm"
      *  column="ID_materiel"
      */
-	public java.lang.Long getIdMateriel () {
-		return _idMateriel;
+	public java.lang.Long getIdMaterial () {
+		return _idMaterial;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idMateriel the new ID
+	 * @param _idMaterial the new ID
 	 */
-	public void setIdMateriel (java.lang.Long _idMateriel) {
-		this._idMateriel = _idMateriel;
+	public void setIdMaterial (java.lang.Long _idMaterial) {
+		this._idMaterial = _idMaterial;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -91,37 +91,37 @@ public abstract class BaseMaterial  implements Serializable {
 	/**
 	 * Return the value associated with the column: Nom
 	 */
-	public java.lang.String getNom () {
-		return _nom;
+	public java.lang.String getName () {
+		return _name;
 	}
 
 	/**
 	 * Set the value related to the column: Nom
-	 * @param _nom the Nom value
+	 * @param _name the Nom value
 	 */
-	public void setNom (java.lang.String _nom) {
-		this._nom = _nom;
+	public void setName (java.lang.String _name) {
+		this._name = _name;
 	}
 
 
 	/**
 	 * Return the value associated with the column: CoursSet
 	 */
-	public java.util.Set getCoursSet () {
-		return this._coursSet;
+	public java.util.Set getCourses () {
+		return this._courses;
 	}
 
 	/**
 	 * Set the value related to the column: CoursSet
-	 * @param _coursSet the CoursSet value
+	 * @param _courses the CoursSet value
 	 */
-	public void setCoursSet (java.util.Set _coursSet) {
-		this._coursSet = _coursSet;
+	public void setCourses (java.util.Set _courses) {
+		this._courses = _courses;
 	}
 	
-	public void addToCoursSet (Object obj) {
-		if (null == this._coursSet) this._coursSet = new java.util.HashSet();
-		this._coursSet.add(obj);
+	public void addCourse (Object obj) {
+		if (null == this._courses) this._courses = new java.util.HashSet();
+		this._courses.add(obj);
 	}
 
 
@@ -131,17 +131,17 @@ public abstract class BaseMaterial  implements Serializable {
 		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseMaterial)) return false;
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseMaterial mObj = (fr.umlv.smoreau.beontime.model.base.BaseMaterial) obj;
-			if (null == this.getIdMateriel() || null == mObj.getIdMateriel()) return false;
-			else return (this.getIdMateriel().equals(mObj.getIdMateriel()));
+			if (null == this.getIdMaterial() || null == mObj.getIdMaterial()) return false;
+			else return (this.getIdMaterial().equals(mObj.getIdMaterial()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdMateriel()) return super.hashCode();
+			if (null == this.getIdMaterial()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdMateriel().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdMaterial().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

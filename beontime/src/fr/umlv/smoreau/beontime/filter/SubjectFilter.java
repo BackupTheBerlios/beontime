@@ -12,16 +12,16 @@ public class SubjectFilter extends Subject implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdMatiere", "id_matiere");
+        corres.put("IdSubject", "id_matiere");
         corres.put("IdFormation", "id_formation");
         corres.put("IdTeacher", "id_enseignant");
-        corres.put("Intitule", "intitule");
-        corres.put("NbHeureMag", "nb_heure_mag");
-        corres.put("NbHeureTd", "nb_heure_td");
-        corres.put("NbHeureTp", "nb_heure_tp");
-        corres.put("NbGroupeMag", "nb_groupe_mag");
-        corres.put("NbGroupeTd", "nb_groupe_td");
-        corres.put("NbGroupeTp", "nb_groupe_tp");
+        corres.put("Heading", "intitule");
+        corres.put("NbMagHours", "nb_heure_mag");
+        corres.put("NbTdHours", "nb_heure_td");
+        corres.put("NbTpHours", "nb_heure_tp");
+        corres.put("NbMagGroups", "nb_groupe_mag");
+        corres.put("NbTdGroups", "nb_groupe_td");
+        corres.put("NbTpGroups", "nb_groupe_tp");
     }
 
 

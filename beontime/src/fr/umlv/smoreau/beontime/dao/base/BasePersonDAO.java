@@ -27,22 +27,22 @@ public class BasePersonDAO extends _RootDAO {
 	 * fr.umlv.smoreau.beontime.model.user.dao._RootDAO _RootDAO.getReferenceClass()
 	 */
 	public Class getReferenceClass () {
-		return fr.umlv.smoreau.beontime.model.user.Person.class;
+		return fr.umlv.smoreau.beontime.model.user.User.class;
 	}
 	
-	public fr.umlv.smoreau.beontime.model.user.Person load(java.lang.String key)
+	public fr.umlv.smoreau.beontime.model.user.User load(java.lang.String key)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.user.Person) load(getReferenceClass(), key);
+		return (fr.umlv.smoreau.beontime.model.user.User) load(getReferenceClass(), key);
 	}
 
-	public fr.umlv.smoreau.beontime.model.user.Person load(java.lang.String key, Session s)
+	public fr.umlv.smoreau.beontime.model.user.User load(java.lang.String key, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.user.Person) load(getReferenceClass(), key, s);
+		return (fr.umlv.smoreau.beontime.model.user.User) load(getReferenceClass(), key, s);
 	}
 
-	public fr.umlv.smoreau.beontime.model.user.Person loadInitialize(java.lang.String key, Session s) 
+	public fr.umlv.smoreau.beontime.model.user.User loadInitialize(java.lang.String key, Session s) 
 			throws net.sf.hibernate.HibernateException { 
-		fr.umlv.smoreau.beontime.model.user.Person obj = load(key, s); 
+		fr.umlv.smoreau.beontime.model.user.User obj = load(key, s); 
 		if (!Hibernate.isInitialized(obj)) {
 			Hibernate.initialize(obj);
 		} 
@@ -55,7 +55,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * @param person a transient instance of a persistent class 
 	 * @return the class identifier
 	 */
-	public java.lang.String save(fr.umlv.smoreau.beontime.model.user.Person person)
+	public java.lang.String save(fr.umlv.smoreau.beontime.model.user.User person)
 		throws net.sf.hibernate.HibernateException {
 		return (java.lang.String) super.save(person);
 	}
@@ -68,7 +68,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * @param s the Session
 	 * @return the class identifier
 	 */
-	public java.lang.String save(fr.umlv.smoreau.beontime.model.user.Person person, Session s)
+	public java.lang.String save(fr.umlv.smoreau.beontime.model.user.User person, Session s)
 		throws net.sf.hibernate.HibernateException {
 		return (java.lang.String) super.save(person, s);
 	}
@@ -79,7 +79,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * identifier property mapping. 
 	 * @param person a transient instance containing new or updated state 
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.user.Person person)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.user.User person)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(person);
 	}
@@ -92,7 +92,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * @param person a transient instance containing new or updated state.
 	 * @param s the Session.
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.user.Person person, Session s)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.user.User person, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(person, s);
 	}
@@ -102,7 +102,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * instance with the same identifier in the current session.
 	 * @param person a transient instance containing updated state
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.user.Person person) 
+	public void update(fr.umlv.smoreau.beontime.model.user.User person) 
 		throws net.sf.hibernate.HibernateException {
 		super.update(person);
 	}
@@ -114,7 +114,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * @param person a transient instance containing updated state
 	 * @param the Session
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.user.Person person, Session s)
+	public void update(fr.umlv.smoreau.beontime.model.user.User person, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.update(person, s);
 	}
@@ -146,7 +146,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * Session or a transient instance with an identifier associated with existing persistent state. 
 	 * @param person the instance to be removed
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.user.Person person)
+	public void delete(fr.umlv.smoreau.beontime.model.user.User person)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(person);
 	}
@@ -158,7 +158,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * @param person the instance to be removed
 	 * @param s the Session
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.user.Person person, Session s)
+	public void delete(fr.umlv.smoreau.beontime.model.user.User person, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(person, s);
 	}
@@ -173,7 +173,7 @@ public class BasePersonDAO extends _RootDAO {
 	 * <li>after inserting a Blob or Clob</li>
 	 * </ul>
 	 */
-	public void refresh (fr.umlv.smoreau.beontime.model.user.Person person, Session s)
+	public void refresh (fr.umlv.smoreau.beontime.model.user.User person, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.refresh(person, s);
 	}

@@ -4,23 +4,24 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.timetable.TypeCourse" table="type_cours">
+	<class name="fr.umlv.smoreau.beontime.model.timetable.CourseType" table="type_cours">
 		<id
-			column="ID_type_cours"
-			name="IdTypeCours"
+			column="id_type_cours"
+			name="IdCourseType"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="Nom_type_cours"
+			column="nom_type_cours"
 			length="20"
-			name="NomTypeCours"
+			name="NameCourseType"
 			not-null="false"
 			type="string"
 		 />
-		<set inverse="true" name="CoursSet">
-			<key column="ID_type_cours" />
+
+		<set inverse="true" name="Courses">
+			<key column="id_type_cours" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" />
 		</set>
 	</class>

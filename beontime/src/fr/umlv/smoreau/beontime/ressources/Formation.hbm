@@ -6,33 +6,26 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.Formation" table="formation">
 		<id
-			column="ID_formation"
+			column="id_formation"
 			name="IdFormation"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="Intitule"
+			column="intitule"
 			length="20"
-			name="Intitule"
+			name="Heading"
 			not-null="false"
 			type="string"
 		 />
-		<!-- please tell Joe Hudson that the type 'SET' could not be resolved.. defaulting to java.lang.String -->
-		<!--property
-			column="........pg.dropped.4........"
-			name="........pg.dropped.4........"
-			not-null="false"
-			type="java.lang.String"
-		 /-->
 
 		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.user.Person"
-			name="IdSecretaire"
+			class="fr.umlv.smoreau.beontime.model.user.User"
+			name="IdSecretary"
 			not-null="true"
 		>
-			<column name="ID_secretaire" />
+			<column name="id_secretaire" />
 		</many-to-one>
 		<property
 			column="id_enseignant"
@@ -41,12 +34,12 @@
 			not-null="true"
 		 />
 
-		<set inverse="true" name="GroupeSet">
-			<key column="ID_formation" />
+		<set inverse="true" name="Groups">
+			<key column="id_formation" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Group" />
 		</set>
-		<set inverse="true" name="MatiereSet">
-			<key column="ID_formation" />
+		<set inverse="true" name="Subjects">
+			<key column="id_formation" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Subject" />
 		</set>
 	</class>

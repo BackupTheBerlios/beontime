@@ -3,10 +3,9 @@ package fr.umlv.smoreau.beontime.model.base;
 import java.io.Serializable;
 
 import fr.umlv.smoreau.beontime.model.Group;
-import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
-import fr.umlv.smoreau.beontime.model.user.Person;
 
 
 /**
@@ -21,104 +20,76 @@ import fr.umlv.smoreau.beontime.model.user.Person;
  * @hibernate.class
  *  table="Participe_Groupe_Matiere_Cours"
  */
-public abstract class BaseParticipeGroupSubjectCourse implements Serializable {
+public abstract class BaseTakePartGroupSubjectCourse implements Serializable {
 
-	public static String PROP_TYPE_COURS = "TypeCours";
 	public static String PROP_ID_MATIERE = "IdSubject";
-	public static String PROP_ID_GROUPE = "IdGroupe";
-	public static String PROP_ID_COURS = "IdCours";
+	public static String PROP_ID_GROUPE = "IdGroup";
+	public static String PROP_ID_COURS = "IdCourse";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Subject _idMatiere;
-	private Group _idGroupe;
-	private Course _idCours;
-
-	// fields
-	private java.lang.String _typeCours;
-	private Person _idEnseignant;
+	private Subject _idSubject;
+	private Group _idGroup;
+	private Course _idCourse;
 
 	// constructors
-	public BaseParticipeGroupSubjectCourse () {
+	public BaseTakePartGroupSubjectCourse () {
 	    initialize();
 	}
 	
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseParticipeGroupSubjectCourse (
-		Subject _idMatiere,
-		Group _idGroupe,
-		Course _idCours) {
+	public BaseTakePartGroupSubjectCourse (
+		Subject _idSubject,
+		Group _idGroup,
+		Course _idCourse) {
 
-		this.setIdSubject(_idMatiere);
-		this.setIdGroupe(_idGroupe);
-		this.setIdCourse(_idCours);
+		this.setIdSubject(_idSubject);
+		this.setIdGroup(_idGroup);
+		this.setIdCourse(_idCourse);
 		initialize();
 	}
 
 	protected void initialize () {}
 
-	
-	public Person getIdTeacher () {
-		return _idEnseignant;
-	}
-
-	public void setIdTeacher (Person _idEnseignant) {
-		hashCode = Integer.MIN_VALUE;
-		this._idEnseignant = _idEnseignant;
-	}
 
 	public Subject getIdSubject () {
-		return _idMatiere;
+		return _idSubject;
 	}
 
-	public void setIdSubject (Subject _idMatiere) {
+	public void setIdSubject (Subject _idSubject) {
 		hashCode = Integer.MIN_VALUE;
-		this._idMatiere = _idMatiere;
+		this._idSubject = _idSubject;
 	}
 
-	public Group getIdGroupe () {
-		return _idGroupe;
+	public Group getIdGroup () {
+		return _idGroup;
 	}
 
-	public void setIdGroupe (Group _idGroupe) {
+	public void setIdGroup (Group _idGroup) {
 		hashCode = Integer.MIN_VALUE;
-		this._idGroupe = _idGroupe;
+		this._idGroup = _idGroup;
 	}
 
 	public Course getIdCourse () {
-		return _idCours;
+		return _idCourse;
 	}
 
-	public void setIdCourse (Course _idCours) {
+	public void setIdCourse (Course _idCourse) {
 		hashCode = Integer.MIN_VALUE;
-		this._idCours = _idCours;
+		this._idCourse = _idCourse;
 	}
 
-	/**
-	 * Return the value associated with the column: type_cours
-	 */
-	public java.lang.String getTypeCours () {
-		return _typeCours;
-	}
-
-	/**
-	 * Set the value related to the column: type_cours
-	 * @param _typeCours the type_cours value
-	 */
-	public void setTypeCours (java.lang.String _typeCours) {
-		this._typeCours = _typeCours;
-	}
 
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof ParticipeGroupSubjectCourse)) return false;
+		if (!(obj instanceof TakePartGroupSubjectCourse)) return false;
 		else {
-			ParticipeGroupSubjectCourse mObj = (ParticipeGroupSubjectCourse) obj;
+			TakePartGroupSubjectCourse mObj = (TakePartGroupSubjectCourse) obj;
 			if (null != this.getIdSubject() && null != mObj.getIdSubject()) {
 				if (!this.getIdSubject().equals(mObj.getIdSubject())) {
 					return false;
@@ -127,8 +98,8 @@ public abstract class BaseParticipeGroupSubjectCourse implements Serializable {
 			else {
 				return false;
 			}
-			if (null != this.getIdGroupe() && null != mObj.getIdGroupe()) {
-				if (!this.getIdGroupe().equals(mObj.getIdGroupe())) {
+			if (null != this.getIdGroup() && null != mObj.getIdGroup()) {
+				if (!this.getIdGroup().equals(mObj.getIdGroup())) {
 					return false;
 				}
 			}
@@ -158,8 +129,8 @@ public abstract class BaseParticipeGroupSubjectCourse implements Serializable {
 			else {
 				return super.hashCode();
 			}
-			if (null != this.getIdGroupe()) {
-				sb.append(this.getIdGroupe().hashCode());
+			if (null != this.getIdGroup()) {
+				sb.append(this.getIdGroup().hashCode());
 				sb.append(":");
 			}
 			else {

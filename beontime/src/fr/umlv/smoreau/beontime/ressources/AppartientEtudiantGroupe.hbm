@@ -4,17 +4,17 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.association.AppartientEtudiantGroupe" table="appartient_etudiant_groupe">
+	<class name="fr.umlv.smoreau.beontime.model.association.BelongStudentGroup" table="appartient_etudiant_groupe">
 		<composite-id>
 			<key-many-to-one
-				class="fr.umlv.smoreau.beontime.model.user.Person"
-				column="ID_etudiant"
-				name="IdEtudiant"
+				class="fr.umlv.smoreau.beontime.model.user.User"
+				column="id_etudiant"
+				name="IdStudent"
 			 />
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.Group"
-				column="ID_groupe"
-				name="IdGroupe"
+				column="id_groupe"
+				name="IdGroup"
 			 />
 		</composite-id>
 	</class>

@@ -5,7 +5,7 @@ import java.util.Collection;
 import fr.umlv.smoreau.beontime.dao.FormationDao;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.model.Formation;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,11 +28,11 @@ public class FormationDaoTest extends TestCase {
         Formation formation = new Formation();
         UserDao userDao = UserDao.getInstance();
         Collection c = userDao.getSecretaries();
-        Person[] persons = (Person[]) c.toArray(new Person[c.size()]);
-        formation.setIdSecretaire(persons[0]);
+        User[] persons = (User[]) c.toArray(new User[c.size()]);
+        formation.setIdSecretary(persons[0]);
         formation.setIdTeacher(new Long(6));
         assertTrue(formationDao.addFormation(formation));
-        formation.setIntitule("formation de test");
+        formation.setHeading("formation de test");
         assertTrue(formationDao.modifyFormation(formation));
     }
     

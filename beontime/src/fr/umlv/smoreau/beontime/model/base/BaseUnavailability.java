@@ -2,7 +2,7 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.TypeUnavailability;
+import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 
 
 /**
@@ -19,27 +19,27 @@ import fr.umlv.smoreau.beontime.model.TypeUnavailability;
  */
 public abstract class BaseUnavailability  implements Serializable {
 
-	public static String PROP_ID_INDISPONIBILITE = "IdIndisponibilite";
+	public static String PROP_ID_INDISPONIBILITE = "IdUnavailability";
 	public static String PROP_DESCRIPTION = "Description";
-	public static String PROP_DATE_DEBUT = "DateDebut";
-	public static String PROP_ID_TYPE_INDISPONIBILITE = "IdTypeIndisponibilite";
-	public static String PROP_DATE_FIN = "DateFin";
-	public static String PROP_ID_SUJET_INDISPONIBILITE = "IdSujetIndisponibilite";
+	public static String PROP_DATE_DEBUT = "BeginDate";
+	public static String PROP_ID_TYPE_INDISPONIBILITE = "IdUnavailabilityType";
+	public static String PROP_DATE_FIN = "EndDate";
+	public static String PROP_ID_SUJET_INDISPONIBILITE = "IdUnavailabilitySubject";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.Long _idIndisponibilite;
+	private java.lang.Long _idUnavailability;
 
 	// fields
-	private java.lang.Long _idSujetIndisponibilite;
+	private java.lang.Long _idUnavailabilitySubject;
 	private java.lang.String _description;
-	private java.util.Date _dateFin;
-	private java.util.Date _dateDebut;
+	private java.util.Date _endDate;
+	private java.util.Date _beginDate;
 
 	// many to one
-	private TypeUnavailability _idTypeIndisponibilite;
+	private UnavailabilityType _idUnavailabilityType;
 
 
 	// constructors
@@ -50,8 +50,8 @@ public abstract class BaseUnavailability  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseUnavailability (java.lang.Long _idIndisponibilite) {
-		this.setIdIndisponibilite(_idIndisponibilite);
+	public BaseUnavailability (java.lang.Long _idUnavailability) {
+		this.setIdUnavailability(_idUnavailability);
 		initialize();
 	}
 
@@ -59,13 +59,13 @@ public abstract class BaseUnavailability  implements Serializable {
 	 * Constructor for required fields
 	 */
 	public BaseUnavailability (
-		java.lang.Long _idIndisponibilite,
-		TypeUnavailability _idTypeIndisponibilite,
-		java.lang.Long _idSujetIndisponibilite) {
+		java.lang.Long _idUnavailability,
+		UnavailabilityType _idUnavailabilityType,
+		java.lang.Long _idUnavailabilitySubject) {
 
-		this.setIdIndisponibilite(_idIndisponibilite);
-		this.setIdTypeUnavailability(_idTypeIndisponibilite);
-		this.setIdSujetIndisponibilite(_idSujetIndisponibilite);
+		this.setIdUnavailability(_idUnavailability);
+		this.setIdUnavailabilityType(_idUnavailabilityType);
+		this.setIdUnavailabilitySubject(_idUnavailabilitySubject);
 		initialize();
 	}
 
@@ -79,16 +79,16 @@ public abstract class BaseUnavailability  implements Serializable {
      *  generator-class="vm"
      *  column="ID_indisponibilite"
      */
-	public java.lang.Long getIdIndisponibilite () {
-		return _idIndisponibilite;
+	public java.lang.Long getIdUnavailability () {
+		return _idUnavailability;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idIndisponibilite the new ID
+	 * @param _idUnavailability the new ID
 	 */
-	public void setIdIndisponibilite (java.lang.Long _idIndisponibilite) {
-		this._idIndisponibilite = _idIndisponibilite;
+	public void setIdUnavailability (java.lang.Long _idUnavailability) {
+		this._idUnavailability = _idUnavailability;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -96,16 +96,16 @@ public abstract class BaseUnavailability  implements Serializable {
 	/**
 	 * Return the value associated with the column: ID_sujet_indisponibilite
 	 */
-	public java.lang.Long getIdSujetIndisponibilite () {
-		return _idSujetIndisponibilite;
+	public java.lang.Long getIdUnavailabilitySubject () {
+		return _idUnavailabilitySubject;
 	}
 
 	/**
 	 * Set the value related to the column: ID_sujet_indisponibilite
-	 * @param _idSujetIndisponibilite the ID_sujet_indisponibilite value
+	 * @param _idUnavailabilitySubject the ID_sujet_indisponibilite value
 	 */
-	public void setIdSujetIndisponibilite (java.lang.Long _idSujetIndisponibilite) {
-		this._idSujetIndisponibilite = _idSujetIndisponibilite;
+	public void setIdUnavailabilitySubject (java.lang.Long _idUnavailabilitySubject) {
+		this._idUnavailabilitySubject = _idUnavailabilitySubject;
 	}
 
 
@@ -128,32 +128,32 @@ public abstract class BaseUnavailability  implements Serializable {
 	/**
 	 * Return the value associated with the column: Date_fin
 	 */
-	public java.util.Date getDateFin () {
-		return _dateFin;
+	public java.util.Date getEndDate () {
+		return _endDate;
 	}
 
 	/**
 	 * Set the value related to the column: Date_fin
-	 * @param _dateFin the Date_fin value
+	 * @param _endDate the Date_fin value
 	 */
-	public void setDateFin (java.util.Date _dateFin) {
-		this._dateFin = _dateFin;
+	public void setEndDate (java.util.Date _endDate) {
+		this._endDate = _endDate;
 	}
 
 
 	/**
 	 * Return the value associated with the column: Date_debut
 	 */
-	public java.util.Date getDateDebut () {
-		return _dateDebut;
+	public java.util.Date getBeginDate () {
+		return _beginDate;
 	}
 
 	/**
 	 * Set the value related to the column: Date_debut
-	 * @param _dateDebut the Date_debut value
+	 * @param _beginDate the Date_debut value
 	 */
-	public void setDateDebut (java.util.Date _dateDebut) {
-		this._dateDebut = _dateDebut;
+	public void setBeginDate (java.util.Date _beginDate) {
+		this._beginDate = _beginDate;
 	}
 
 
@@ -162,16 +162,16 @@ public abstract class BaseUnavailability  implements Serializable {
      *  column=ID_type_indisponibilite
 	 * not-null=true
 	 */
-	public TypeUnavailability getIdTypeUnavailability () {
-		return this._idTypeIndisponibilite;
+	public UnavailabilityType getIdUnavailabilityType () {
+		return this._idUnavailabilityType;
 	}
 
 	/**
 	 * Set the value related to the column: ID_type_indisponibilite
-	 * @param _idTypeIndisponibilite the ID_type_indisponibilite value
+	 * @param _idUnavailabilityType the ID_type_indisponibilite value
 	 */
-	public void setIdTypeUnavailability (TypeUnavailability _idTypeIndisponibilite) {
-		this._idTypeIndisponibilite = _idTypeIndisponibilite;
+	public void setIdUnavailabilityType (UnavailabilityType _idUnavailabilityType) {
+		this._idUnavailabilityType = _idUnavailabilityType;
 	}
 
 
@@ -180,17 +180,17 @@ public abstract class BaseUnavailability  implements Serializable {
 		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseUnavailability)) return false;
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseUnavailability mObj = (fr.umlv.smoreau.beontime.model.base.BaseUnavailability) obj;
-			if (null == this.getIdIndisponibilite() || null == mObj.getIdIndisponibilite()) return false;
-			else return (this.getIdIndisponibilite().equals(mObj.getIdIndisponibilite()));
+			if (null == this.getIdUnavailability() || null == mObj.getIdUnavailability()) return false;
+			else return (this.getIdUnavailability().equals(mObj.getIdUnavailability()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdIndisponibilite()) return super.hashCode();
+			if (null == this.getIdUnavailability()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdIndisponibilite().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdUnavailability().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

@@ -17,36 +17,36 @@ import java.io.Serializable;
  */
 public abstract class BaseSubject  implements Serializable {
 
-	public static String PROP_NB_GROUPE_TP = "NbGroupeTp";
-	public static String PROP_NB_HEURE_TD = "NbHeureTd";
-	public static String PROP_ID_MATIERE = "IdMatiere";
-	public static String PROP_NB_GROUPE_TD = "NbGroupeTd";
-	public static String PROP_NB_HEURE_MAG = "NbHeureMag";
-	public static String PROP_NB_HEURE_TP = "NbHeureTp";
-	public static String PROP_NB_GROUPE_MAG = "NbGroupeMag";
+	public static String PROP_NB_GROUPE_TP = "NbTpGroups";
+	public static String PROP_NB_HEURE_TD = "NbTdHours";
+	public static String PROP_ID_MATIERE = "IdSubject";
+	public static String PROP_NB_GROUPE_TD = "NbTdGroups";
+	public static String PROP_NB_HEURE_MAG = "NbMagHours";
+	public static String PROP_NB_HEURE_TP = "NbTpHours";
+	public static String PROP_NB_GROUPE_MAG = "NbMagGroups";
 	public static String PROP_ID_FORMATION = "IdFormation";
-	public static String PROP_ID_ENSEIGNANT = "IdEnseignant";
-	public static String PROP_INTITULE = "Intitule";
+	public static String PROP_ID_ENSEIGNANT = "IdTeacher";
+	public static String PROP_INTITULE = "Heading";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.Long _idMatiere;
+	private java.lang.Long _idSubject;
 
 	// fields
-	private java.lang.Integer _nbHeureTp;
-	private java.lang.Integer _nbHeureMag;
-	private java.lang.Integer _nbGroupeTd;
-	private java.lang.Integer _nbGroupeMag;
-	private java.lang.Integer _nbHeureTd;
-	private java.lang.String _intitule;
-	private java.lang.Integer _nbGroupeTp;
-	private java.lang.Long _idEnseignant;
+	private java.lang.Integer _nbTpHours;
+	private java.lang.Integer _nbMagHours;
+	private java.lang.Integer _nbTdGroups;
+	private java.lang.Integer _nbMagGroups;
+	private java.lang.Integer _nbTdHours;
+	private java.lang.String _heading;
+	private java.lang.Integer _nbTpGroups;
+	private java.lang.Long _idTeacher;
 	private java.lang.Long _idFormation;
 
 	// collections
-	private java.util.Set _participeGroupeMatiereCoursSet;
+	private java.util.Set _GroupsSubjectsTakingPart;
 
 
 	// constructors
@@ -57,8 +57,8 @@ public abstract class BaseSubject  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseSubject (java.lang.Long _idMatiere) {
-		this.setIdMatiere(_idMatiere);
+	public BaseSubject (java.lang.Long _idSubject) {
+		this.setIdSubject(_idSubject);
 		initialize();
 	}
 
@@ -66,12 +66,12 @@ public abstract class BaseSubject  implements Serializable {
 	 * Constructor for required fields
 	 */
 	public BaseSubject (
-		java.lang.Long _idMatiere,
-		java.lang.Long _idEnseignant,
+		java.lang.Long _idSubject,
+		java.lang.Long _idTeacher,
 		java.lang.Long _idFormation) {
 
-		this.setIdMatiere(_idMatiere);
-		this.setIdTeacher(_idEnseignant);
+		this.setIdSubject(_idSubject);
+		this.setIdTeacher(_idTeacher);
 		this.setIdFormation(_idFormation);
 		initialize();
 	}
@@ -86,16 +86,16 @@ public abstract class BaseSubject  implements Serializable {
      *  generator-class="vm"
      *  column="ID_matiere"
      */
-	public java.lang.Long getIdMatiere () {
-		return _idMatiere;
+	public java.lang.Long getIdSubject () {
+		return _idSubject;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idMatiere the new ID
+	 * @param _idSubject the new ID
 	 */
-	public void setIdMatiere (java.lang.Long _idMatiere) {
-		this._idMatiere = _idMatiere;
+	public void setIdSubject (java.lang.Long _idSubject) {
+		this._idSubject = _idSubject;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -103,112 +103,112 @@ public abstract class BaseSubject  implements Serializable {
 	/**
 	 * Return the value associated with the column: NB_heure_TP
 	 */
-	public java.lang.Integer getNbHeureTp () {
-		return _nbHeureTp;
+	public java.lang.Integer getNbTpHours () {
+		return _nbTpHours;
 	}
 
 	/**
 	 * Set the value related to the column: NB_heure_TP
-	 * @param _nbHeureTp the NB_heure_TP value
+	 * @param _nbTpHours the NB_heure_TP value
 	 */
-	public void setNbHeureTp (java.lang.Integer _nbHeureTp) {
-		this._nbHeureTp = _nbHeureTp;
+	public void setNbTpHours (java.lang.Integer _nbTpHours) {
+		this._nbTpHours = _nbTpHours;
 	}
 
 
 	/**
 	 * Return the value associated with the column: NB_heure_MAG
 	 */
-	public java.lang.Integer getNbHeureMag () {
-		return _nbHeureMag;
+	public java.lang.Integer getNbMagHours () {
+		return _nbMagHours;
 	}
 
 	/**
 	 * Set the value related to the column: NB_heure_MAG
-	 * @param _nbHeureMag the NB_heure_MAG value
+	 * @param _nbMagHours the NB_heure_MAG value
 	 */
-	public void setNbHeureMag (java.lang.Integer _nbHeureMag) {
-		this._nbHeureMag = _nbHeureMag;
+	public void setNbMagHours (java.lang.Integer _nbMagHours) {
+		this._nbMagHours = _nbMagHours;
 	}
 
 
 	/**
 	 * Return the value associated with the column: NB_groupe_TD
 	 */
-	public java.lang.Integer getNbGroupeTd () {
-		return _nbGroupeTd;
+	public java.lang.Integer getNbTdGroups () {
+		return _nbTdGroups;
 	}
 
 	/**
 	 * Set the value related to the column: NB_groupe_TD
-	 * @param _nbGroupeTd the NB_groupe_TD value
+	 * @param _nbTdGroups the NB_groupe_TD value
 	 */
-	public void setNbGroupeTd (java.lang.Integer _nbGroupeTd) {
-		this._nbGroupeTd = _nbGroupeTd;
+	public void setNbTdGroups (java.lang.Integer _nbTdGroups) {
+		this._nbTdGroups = _nbTdGroups;
 	}
 
 
 	/**
 	 * Return the value associated with the column: NB_groupe_MAG
 	 */
-	public java.lang.Integer getNbGroupeMag () {
-		return _nbGroupeMag;
+	public java.lang.Integer getNbMagGroups () {
+		return _nbMagGroups;
 	}
 
 	/**
 	 * Set the value related to the column: NB_groupe_MAG
-	 * @param _nbGroupeMag the NB_groupe_MAG value
+	 * @param _nbMagGroups the NB_groupe_MAG value
 	 */
-	public void setNbGroupeMag (java.lang.Integer _nbGroupeMag) {
-		this._nbGroupeMag = _nbGroupeMag;
+	public void setNbMagGroups (java.lang.Integer _nbMagGroups) {
+		this._nbMagGroups = _nbMagGroups;
 	}
 
 
 	/**
 	 * Return the value associated with the column: NB_heure_TD
 	 */
-	public java.lang.Integer getNbHeureTd () {
-		return _nbHeureTd;
+	public java.lang.Integer getNbTdHours () {
+		return _nbTdHours;
 	}
 
 	/**
 	 * Set the value related to the column: NB_heure_TD
-	 * @param _nbHeureTd the NB_heure_TD value
+	 * @param _nbTdHours the NB_heure_TD value
 	 */
-	public void setNbHeureTd (java.lang.Integer _nbHeureTd) {
-		this._nbHeureTd = _nbHeureTd;
+	public void setNbTdHours (java.lang.Integer _nbTdHours) {
+		this._nbTdHours = _nbTdHours;
 	}
 
 
 	/**
 	 * Return the value associated with the column: Intitule
 	 */
-	public java.lang.String getIntitule () {
-		return _intitule;
+	public java.lang.String getHeading () {
+		return _heading;
 	}
 
 	/**
 	 * Set the value related to the column: Intitule
-	 * @param _intitule the Intitule value
+	 * @param _heading the Intitule value
 	 */
-	public void setIntitule (java.lang.String _intitule) {
-		this._intitule = _intitule;
+	public void setHeading (java.lang.String _heading) {
+		this._heading = _heading;
 	}
 
 
 	/**
 	 * Return the value associated with the column: NB_groupe_TP
 	 */
-	public java.lang.Integer getNbGroupeTp () {
-		return _nbGroupeTp;
+	public java.lang.Integer getNbTpGroups () {
+		return _nbTpGroups;
 	}
 
 	/**
 	 * Set the value related to the column: NB_groupe_TP
-	 * @param _nbGroupeTp the NB_groupe_TP value
+	 * @param _nbTpGroups the NB_groupe_TP value
 	 */
-	public void setNbGroupeTp (java.lang.Integer _nbGroupeTp) {
-		this._nbGroupeTp = _nbGroupeTp;
+	public void setNbTpGroups (java.lang.Integer _nbTpGroups) {
+		this._nbTpGroups = _nbTpGroups;
 	}
 
 
@@ -218,15 +218,15 @@ public abstract class BaseSubject  implements Serializable {
 	 * not-null=true
 	 */
 	public java.lang.Long getIdTeacher () {
-		return this._idEnseignant;
+		return this._idTeacher;
 	}
 
 	/**
 	 * Set the value related to the column: ID_enseignant
-	 * @param _idEnseignant the ID_enseignant value
+	 * @param _idTeacher the ID_enseignant value
 	 */
-	public void setIdTeacher (java.lang.Long _idEnseignant) {
-		this._idEnseignant = _idEnseignant;
+	public void setIdTeacher (java.lang.Long _idTeacher) {
+		this._idTeacher = _idTeacher;
 	}
 
 
@@ -251,21 +251,21 @@ public abstract class BaseSubject  implements Serializable {
 	/**
 	 * Return the value associated with the column: ParticipeGroupeMatiereCoursSet
 	 */
-	public java.util.Set getParticipeGroupeMatiereCoursSet () {
-		return this._participeGroupeMatiereCoursSet;
+	public java.util.Set getGroupsCoursesTakingPart () {
+		return this._GroupsSubjectsTakingPart;
 	}
 
 	/**
 	 * Set the value related to the column: ParticipeGroupeMatiereCoursSet
-	 * @param _participeGroupeMatiereCoursSet the ParticipeGroupeMatiereCoursSet value
+	 * @param _groupsCoursesTakingPart the ParticipeGroupeMatiereCoursSet value
 	 */
-	public void setParticipeGroupeMatiereCoursSet (java.util.Set _participeGroupeMatiereCoursSet) {
-		this._participeGroupeMatiereCoursSet = _participeGroupeMatiereCoursSet;
+	public void setGroupsCoursesTakingPart (java.util.Set _groupsCoursesTakingPart) {
+		this._GroupsSubjectsTakingPart = _groupsCoursesTakingPart;
 	}
 	
-	public void addToParticipeGroupeMatiereCoursSet (Object obj) {
-		if (null == this._participeGroupeMatiereCoursSet) this._participeGroupeMatiereCoursSet = new java.util.HashSet();
-		this._participeGroupeMatiereCoursSet.add(obj);
+	public void addGroupCourseTakingPart (Object obj) {
+		if (null == this._GroupsSubjectsTakingPart) this._GroupsSubjectsTakingPart = new java.util.HashSet();
+		this._GroupsSubjectsTakingPart.add(obj);
 	}
 
 
@@ -275,17 +275,17 @@ public abstract class BaseSubject  implements Serializable {
 		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseSubject)) return false;
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseSubject mObj = (fr.umlv.smoreau.beontime.model.base.BaseSubject) obj;
-			if (null == this.getIdMatiere() || null == mObj.getIdMatiere()) return false;
-			else return (this.getIdMatiere().equals(mObj.getIdMatiere()));
+			if (null == this.getIdSubject() || null == mObj.getIdSubject()) return false;
+			else return (this.getIdSubject().equals(mObj.getIdSubject()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdMatiere()) return super.hashCode();
+			if (null == this.getIdSubject()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdMatiere().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdSubject().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

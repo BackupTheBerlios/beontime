@@ -27,22 +27,22 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * fr.umlv.smoreau.beontime.model.association.dao._RootDAO _RootDAO.getReferenceClass()
 	 */
 	public Class getReferenceClass () {
-		return fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher.class;
+		return fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher.class;
 	}
 	
-	public fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher load(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher key)
+	public fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher load(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher key)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) load(getReferenceClass(), key);
+		return (fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher) load(getReferenceClass(), key);
 	}
 
-	public fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher load(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher key, Session s)
+	public fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher load(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher key, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) load(getReferenceClass(), key, s);
+		return (fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher) load(getReferenceClass(), key, s);
 	}
 
-	public fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher loadInitialize(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher key, Session s) 
+	public fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher loadInitialize(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher key, Session s) 
 			throws net.sf.hibernate.HibernateException { 
-		fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher obj = load(key, s); 
+		fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher obj = load(key, s); 
 		if (!Hibernate.isInitialized(obj)) {
 			Hibernate.initialize(obj);
 		} 
@@ -55,9 +55,9 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * @param isDirigeByCourseTeacher a transient instance of a persistent class 
 	 * @return the class identifier
 	 */
-	public fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher save(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher)
+	public fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher save(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) super.save(isDirigeByCourseTeacher);
+		return (fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher) super.save(isDirigeByCourseTeacher);
 	}
 
 	/**
@@ -68,9 +68,9 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * @param s the Session
 	 * @return the class identifier
 	 */
-	public fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher save(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher, Session s)
+	public fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher save(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) super.save(isDirigeByCourseTeacher, s);
+		return (fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher) super.save(isDirigeByCourseTeacher, s);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * identifier property mapping. 
 	 * @param isDirigeByCourseTeacher a transient instance containing new or updated state 
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(isDirigeByCourseTeacher);
 	}
@@ -92,7 +92,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * @param isDirigeByCourseTeacher a transient instance containing new or updated state.
 	 * @param s the Session.
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher, Session s)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(isDirigeByCourseTeacher, s);
 	}
@@ -102,7 +102,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * instance with the same identifier in the current session.
 	 * @param isDirigeByCourseTeacher a transient instance containing updated state
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher) 
+	public void update(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher) 
 		throws net.sf.hibernate.HibernateException {
 		super.update(isDirigeByCourseTeacher);
 	}
@@ -114,7 +114,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * @param isDirigeByCourseTeacher a transient instance containing updated state
 	 * @param the Session
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher, Session s)
+	public void update(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.update(isDirigeByCourseTeacher, s);
 	}
@@ -124,7 +124,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * Session or a transient instance with an identifier associated with existing persistent state. 
 	 * @param isDirigeByCourseTeacher the instance to be removed
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher)
+	public void delete(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(isDirigeByCourseTeacher);
 	}
@@ -136,7 +136,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * @param isDirigeByCourseTeacher the instance to be removed
 	 * @param s the Session
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher, Session s)
+	public void delete(fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(isDirigeByCourseTeacher, s);
 	}
@@ -151,7 +151,7 @@ public class BaseIsDirigeByCourseTeacherDAO extends _RootDAO {
 	 * <li>after inserting a Blob or Clob</li>
 	 * </ul>
 	 */
-	public void refresh (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher isDirigeByCourseTeacher, Session s)
+	public void refresh (fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher isDirigeByCourseTeacher, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.refresh(isDirigeByCourseTeacher, s);
 	}

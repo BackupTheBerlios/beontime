@@ -8,7 +8,7 @@ import net.sf.hibernate.Session;
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
-import fr.umlv.smoreau.beontime.model.TypeUnavailability;
+import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 
 /**
@@ -18,7 +18,7 @@ public class UnavailabilityDao extends Dao {
     private static final UnavailabilityDao INSTANCE = new UnavailabilityDao();
     
     private static final String TABLE      = "Unavailability";
-    private static final String TABLE_TYPE = "TypeUnavailability";
+    private static final String TABLE_TYPE = "UnavailabilityType";
     
     private String[] DEFAULT_TYPES = { "enseignant", "étudiant", "cours", "matériel", "local", "calendrier" };
     
@@ -26,8 +26,8 @@ public class UnavailabilityDao extends Dao {
         Collection types = getTypesUnavailability();
         if (types != null && types.size() == 0) {
             for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
-                TypeUnavailability type = new TypeUnavailability();
-                type.setNomTypeIndisponibilite(DEFAULT_TYPES[i]);
+                UnavailabilityType type = new UnavailabilityType();
+                type.setNameUnavailabilityType(DEFAULT_TYPES[i]);
                 addTypeUnavailability(type);
             }
         }
@@ -110,7 +110,7 @@ public class UnavailabilityDao extends Dao {
 		return result;
 	}
 	
-	private boolean addTypeUnavailability(TypeUnavailability typeUnavailability) {
+	private boolean addTypeUnavailability(UnavailabilityType typeUnavailability) {
         try {
             TransactionManager.beginTransaction();
             add(typeUnavailability);

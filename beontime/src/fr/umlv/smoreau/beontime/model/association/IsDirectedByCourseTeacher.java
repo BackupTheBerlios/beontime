@@ -1,30 +1,30 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.model.base.BaseIsDirigeByCourseTeacher;
+import fr.umlv.smoreau.beontime.model.base.BaseIsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * This is the object class that relates to the Est_Dirige_par_Cours_Enseignant table.
  * Any customizations belong here.
  */
-public class IsDirigeByCourseTeacher extends BaseIsDirigeByCourseTeacher {
+public class IsDirectedByCourseTeacher extends BaseIsDirectedByCourseTeacher {
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
-	public IsDirigeByCourseTeacher () {
+	public IsDirectedByCourseTeacher () {
 		super();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public IsDirigeByCourseTeacher (
-		Person _idEnseignant,
-		Course _idCours) {
+	public IsDirectedByCourseTeacher (
+		User _idTeacher,
+		Course _idCourse) {
 
 		super (
-			_idEnseignant,
-			_idCours);
+			_idTeacher,
+			_idCourse);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

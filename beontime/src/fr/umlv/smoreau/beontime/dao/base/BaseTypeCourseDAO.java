@@ -27,22 +27,22 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * fr.umlv.smoreau.beontime.model.timetable.dao._RootDAO _RootDAO.getReferenceClass()
 	 */
 	public Class getReferenceClass () {
-		return fr.umlv.smoreau.beontime.model.timetable.TypeCourse.class;
+		return fr.umlv.smoreau.beontime.model.timetable.CourseType.class;
 	}
 	
-	public fr.umlv.smoreau.beontime.model.timetable.TypeCourse load(java.lang.Long key)
+	public fr.umlv.smoreau.beontime.model.timetable.CourseType load(java.lang.Long key)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.timetable.TypeCourse) load(getReferenceClass(), key);
+		return (fr.umlv.smoreau.beontime.model.timetable.CourseType) load(getReferenceClass(), key);
 	}
 
-	public fr.umlv.smoreau.beontime.model.timetable.TypeCourse load(java.lang.Long key, Session s)
+	public fr.umlv.smoreau.beontime.model.timetable.CourseType load(java.lang.Long key, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.timetable.TypeCourse) load(getReferenceClass(), key, s);
+		return (fr.umlv.smoreau.beontime.model.timetable.CourseType) load(getReferenceClass(), key, s);
 	}
 
-	public fr.umlv.smoreau.beontime.model.timetable.TypeCourse loadInitialize(java.lang.Long key, Session s) 
+	public fr.umlv.smoreau.beontime.model.timetable.CourseType loadInitialize(java.lang.Long key, Session s) 
 			throws net.sf.hibernate.HibernateException { 
-		fr.umlv.smoreau.beontime.model.timetable.TypeCourse obj = load(key, s); 
+		fr.umlv.smoreau.beontime.model.timetable.CourseType obj = load(key, s); 
 		if (!Hibernate.isInitialized(obj)) {
 			Hibernate.initialize(obj);
 		} 
@@ -55,7 +55,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * @param typeCourse a transient instance of a persistent class 
 	 * @return the class identifier
 	 */
-	public java.lang.Long save(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse)
+	public java.lang.Long save(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse)
 		throws net.sf.hibernate.HibernateException {
 		return (java.lang.Long) super.save(typeCourse);
 	}
@@ -68,7 +68,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * @param s the Session
 	 * @return the class identifier
 	 */
-	public java.lang.Long save(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse, Session s)
+	public java.lang.Long save(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse, Session s)
 		throws net.sf.hibernate.HibernateException {
 		return (java.lang.Long) super.save(typeCourse, s);
 	}
@@ -79,7 +79,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * identifier property mapping. 
 	 * @param typeCourse a transient instance containing new or updated state 
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(typeCourse);
 	}
@@ -92,7 +92,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * @param typeCourse a transient instance containing new or updated state.
 	 * @param s the Session.
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse, Session s)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(typeCourse, s);
 	}
@@ -102,7 +102,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * instance with the same identifier in the current session.
 	 * @param typeCourse a transient instance containing updated state
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse) 
+	public void update(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse) 
 		throws net.sf.hibernate.HibernateException {
 		super.update(typeCourse);
 	}
@@ -114,7 +114,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * @param typeCourse a transient instance containing updated state
 	 * @param the Session
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse, Session s)
+	public void update(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.update(typeCourse, s);
 	}
@@ -146,7 +146,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * Session or a transient instance with an identifier associated with existing persistent state. 
 	 * @param typeCourse the instance to be removed
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse)
+	public void delete(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(typeCourse);
 	}
@@ -158,7 +158,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * @param typeCourse the instance to be removed
 	 * @param s the Session
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse, Session s)
+	public void delete(fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(typeCourse, s);
 	}
@@ -173,7 +173,7 @@ public class BaseTypeCourseDAO extends _RootDAO {
 	 * <li>after inserting a Blob or Clob</li>
 	 * </ul>
 	 */
-	public void refresh (fr.umlv.smoreau.beontime.model.timetable.TypeCourse typeCourse, Session s)
+	public void refresh (fr.umlv.smoreau.beontime.model.timetable.CourseType typeCourse, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.refresh(typeCourse, s);
 	}

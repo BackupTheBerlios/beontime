@@ -6,58 +6,58 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.timetable.Subject" table="matiere">
 		<id
-			column="ID_matiere"
-			name="IdMatiere"
+			column="id_matiere"
+			name="IdSubject"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="NB_heure_TP"
+			column="nb_heure_tp"
 			length="2"
-			name="NbHeureTp"
+			name="NbTpHours"
 			not-null="false"
 			type="integer"
 		 />
 		<property
-			column="NB_heure_MAG"
+			column="nb_heure_mag"
 			length="2"
-			name="NbHeureMag"
+			name="NbMagHours"
 			not-null="false"
 			type="integer"
 		 />
 		<property
-			column="NB_groupe_TD"
+			column="nb_groupe_td"
 			length="2"
-			name="NbGroupeTd"
+			name="NbTdGroups"
 			not-null="false"
 			type="integer"
 		 />
 		<property
-			column="NB_groupe_MAG"
+			column="nb_groupe_mag"
 			length="2"
-			name="NbGroupeMag"
+			name="NbMagGroups"
 			not-null="false"
 			type="integer"
 		 />
 		<property
-			column="NB_heure_TD"
+			column="nb_heure_td"
 			length="2"
-			name="NbHeureTd"
+			name="NbTdHours"
 			not-null="false"
 			type="integer"
 		 />
 		<property
-			column="Intitule"
+			column="intitule"
 			length="40"
-			name="Intitule"
+			name="Heading"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="NB_groupe_TP"
+			column="nb_groupe_tp"
 			length="2"
-			name="NbGroupeTp"
+			name="NbTpGroups"
 			not-null="false"
 			type="integer"
 		 />
@@ -72,9 +72,9 @@
 			type="java.lang.Long"
 		 />
 
-		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
-			<key column="ID_matiere" />
-			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
+		<set inverse="true" name="GroupsCoursesTakingPart">
+			<key column="id_matiere" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>
 	</class>
 </hibernate-mapping>

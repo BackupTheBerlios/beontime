@@ -19,12 +19,12 @@ public class UseCourseMaterial extends BaseUseCourseMaterial {
 	 * Constructor for primary key
 	 */
 	public UseCourseMaterial (
-		Material _idMateriel,
-		Course _idCours) {
+		Material _idMaterial,
+		Course _idCourse) {
 
 		super (
-			_idMateriel,
-			_idCours);
+			_idMaterial,
+			_idCourse);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

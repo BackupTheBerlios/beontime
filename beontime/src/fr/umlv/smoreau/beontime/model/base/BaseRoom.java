@@ -18,23 +18,23 @@ import java.io.Serializable;
 public abstract class BaseRoom  implements Serializable {
 
 	public static String PROP_DESCRIPTION = "Description";
-	public static String PROP_NOM = "Nom";
-	public static String PROP_ID_LOCAL = "IdLocal";
-	public static String PROP_NOM_BATIMENT = "NomBatiment";
+	public static String PROP_NOM = "Name";
+	public static String PROP_ID_LOCAL = "IdRoom";
+	public static String PROP_NOM_BATIMENT = "BuildingName";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.Long _idLocal;
+	private java.lang.Long _idRoom;
 
 	// fields
-	private java.lang.String _nomBatiment;
+	private java.lang.String _buildingName;
 	private java.lang.String _description;
-	private java.lang.String _nom;
+	private java.lang.String _name;
 
 	// collections
-	private java.util.Set _coursSet;
+	private java.util.Set _courses;
 
 
 	// constructors
@@ -45,8 +45,8 @@ public abstract class BaseRoom  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseRoom (java.lang.Long _idLocal) {
-		this.setIdLocal(_idLocal);
+	public BaseRoom (java.lang.Long _idRoom) {
+		this.setIdRoom(_idRoom);
 		initialize();
 	}
 
@@ -60,16 +60,16 @@ public abstract class BaseRoom  implements Serializable {
      *  generator-class="vm"
      *  column="ID_local"
      */
-	public java.lang.Long getIdLocal () {
-		return _idLocal;
+	public java.lang.Long getIdRoom () {
+		return _idRoom;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idLocal the new ID
+	 * @param _idRoom the new ID
 	 */
-	public void setIdLocal (java.lang.Long _idLocal) {
-		this._idLocal = _idLocal;
+	public void setIdRoom (java.lang.Long _idRoom) {
+		this._idRoom = _idRoom;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -77,16 +77,16 @@ public abstract class BaseRoom  implements Serializable {
 	/**
 	 * Return the value associated with the column: Nom_batiment
 	 */
-	public java.lang.String getNomBatiment () {
-		return _nomBatiment;
+	public java.lang.String getBuildingName () {
+		return _buildingName;
 	}
 
 	/**
 	 * Set the value related to the column: Nom_batiment
-	 * @param _nomBatiment the Nom_batiment value
+	 * @param _buildingName the Nom_batiment value
 	 */
-	public void setNomBatiment (java.lang.String _nomBatiment) {
-		this._nomBatiment = _nomBatiment;
+	public void setBuildingName (java.lang.String _buildingName) {
+		this._buildingName = _buildingName;
 	}
 
 
@@ -109,37 +109,37 @@ public abstract class BaseRoom  implements Serializable {
 	/**
 	 * Return the value associated with the column: Nom
 	 */
-	public java.lang.String getNom () {
-		return _nom;
+	public java.lang.String getName () {
+		return _name;
 	}
 
 	/**
 	 * Set the value related to the column: Nom
-	 * @param _nom the Nom value
+	 * @param _name the Nom value
 	 */
-	public void setNom (java.lang.String _nom) {
-		this._nom = _nom;
+	public void setName (java.lang.String _name) {
+		this._name = _name;
 	}
 
 
 	/**
 	 * Return the value associated with the column: CoursSet
 	 */
-	public java.util.Set getCoursSet () {
-		return this._coursSet;
+	public java.util.Set getCourses () {
+		return this._courses;
 	}
 
 	/**
 	 * Set the value related to the column: CoursSet
-	 * @param _coursSet the CoursSet value
+	 * @param _courses the CoursSet value
 	 */
-	public void setCoursSet (java.util.Set _coursSet) {
-		this._coursSet = _coursSet;
+	public void setCourses (java.util.Set _courses) {
+		this._courses = _courses;
 	}
 	
-	public void addToCoursSet (Object obj) {
-		if (null == this._coursSet) this._coursSet = new java.util.HashSet();
-		this._coursSet.add(obj);
+	public void addCourse (Object obj) {
+		if (null == this._courses) this._courses = new java.util.HashSet();
+		this._courses.add(obj);
 	}
 
 
@@ -149,17 +149,17 @@ public abstract class BaseRoom  implements Serializable {
 		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseRoom)) return false;
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseRoom mObj = (fr.umlv.smoreau.beontime.model.base.BaseRoom) obj;
-			if (null == this.getIdLocal() || null == mObj.getIdLocal()) return false;
-			else return (this.getIdLocal().equals(mObj.getIdLocal()));
+			if (null == this.getIdRoom() || null == mObj.getIdRoom()) return false;
+			else return (this.getIdRoom().equals(mObj.getIdRoom()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdLocal()) return super.hashCode();
+			if (null == this.getIdRoom()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdLocal().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdRoom().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

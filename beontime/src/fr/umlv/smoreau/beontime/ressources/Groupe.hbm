@@ -6,8 +6,8 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.Group" table="groupe">
 		<id
-			column="ID_groupe"
-			name="IdGroupe"
+			column="id_groupe"
+			name="IdGroup"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
@@ -18,25 +18,25 @@
 			type="java.lang.Long"
 		 />
 		<property
-			column="Intitule"
+			column="intitule"
 			length="20"
-			name="Intitule"
+			name="Heading"
 			not-null="false"
 			type="string"
 		 />
 
-		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
-			<key column="ID_groupe" />
-			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
+		<set inverse="true" name="SubjectsCoursesTakePart">
+			<key column="id_groupe" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>
 		
 		<set
 			cascade="none"
-			name="StudentSet"
+			name="Students"
 			table="appartient_etudiant_groupe"
 		>
-			<key column="ID_groupe" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.user.Person" column="ID_etudiant" />
+			<key column="id_groupe" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.user.User" column="id_etudiant" />
 		</set>
 	</class>
 </hibernate-mapping>

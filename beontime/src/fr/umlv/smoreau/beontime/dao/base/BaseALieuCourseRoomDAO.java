@@ -27,22 +27,22 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * fr.umlv.smoreau.beontime.model.association.dao._RootDAO _RootDAO.getReferenceClass()
 	 */
 	public Class getReferenceClass () {
-		return fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom.class;
+		return fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom.class;
 	}
 	
-	public fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom load(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom key)
+	public fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom load(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom key)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) load(getReferenceClass(), key);
+		return (fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom) load(getReferenceClass(), key);
 	}
 
-	public fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom load(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom key, Session s)
+	public fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom load(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom key, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) load(getReferenceClass(), key, s);
+		return (fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom) load(getReferenceClass(), key, s);
 	}
 
-	public fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom loadInitialize(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom key, Session s) 
+	public fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom loadInitialize(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom key, Session s) 
 			throws net.sf.hibernate.HibernateException { 
-		fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom obj = load(key, s); 
+		fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom obj = load(key, s); 
 		if (!Hibernate.isInitialized(obj)) {
 			Hibernate.initialize(obj);
 		} 
@@ -55,9 +55,9 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * @param aLieuCourseRoom a transient instance of a persistent class 
 	 * @return the class identifier
 	 */
-	public fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom save(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom)
+	public fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom save(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) super.save(aLieuCourseRoom);
+		return (fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom) super.save(aLieuCourseRoom);
 	}
 
 	/**
@@ -68,9 +68,9 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * @param s the Session
 	 * @return the class identifier
 	 */
-	public fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom save(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom, Session s)
+	public fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom save(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) super.save(aLieuCourseRoom, s);
+		return (fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom) super.save(aLieuCourseRoom, s);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * identifier property mapping. 
 	 * @param aLieuCourseRoom a transient instance containing new or updated state 
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(aLieuCourseRoom);
 	}
@@ -92,7 +92,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * @param aLieuCourseRoom a transient instance containing new or updated state.
 	 * @param s the Session.
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom, Session s)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(aLieuCourseRoom, s);
 	}
@@ -102,7 +102,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * instance with the same identifier in the current session.
 	 * @param aLieuCourseRoom a transient instance containing updated state
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom) 
+	public void update(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom) 
 		throws net.sf.hibernate.HibernateException {
 		super.update(aLieuCourseRoom);
 	}
@@ -114,7 +114,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * @param aLieuCourseRoom a transient instance containing updated state
 	 * @param the Session
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom, Session s)
+	public void update(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.update(aLieuCourseRoom, s);
 	}
@@ -124,7 +124,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * Session or a transient instance with an identifier associated with existing persistent state. 
 	 * @param aLieuCourseRoom the instance to be removed
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom)
+	public void delete(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(aLieuCourseRoom);
 	}
@@ -136,7 +136,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * @param aLieuCourseRoom the instance to be removed
 	 * @param s the Session
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom, Session s)
+	public void delete(fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(aLieuCourseRoom, s);
 	}
@@ -151,7 +151,7 @@ public class BaseALieuCourseRoomDAO extends _RootDAO {
 	 * <li>after inserting a Blob or Clob</li>
 	 * </ul>
 	 */
-	public void refresh (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom aLieuCourseRoom, Session s)
+	public void refresh (fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom aLieuCourseRoom, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.refresh(aLieuCourseRoom, s);
 	}

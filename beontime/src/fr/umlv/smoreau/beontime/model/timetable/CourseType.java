@@ -1,23 +1,23 @@
 package fr.umlv.smoreau.beontime.model.timetable;
 
-import fr.umlv.smoreau.beontime.model.base.BaseTypeCourse;
+import fr.umlv.smoreau.beontime.model.base.BaseCourseType;
 
 /**
  * This is the object class that relates to the Type_cours table.
  * Any customizations belong here.
  */
-public class TypeCourse extends BaseTypeCourse {
+public class CourseType extends BaseCourseType {
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
-	public TypeCourse () {
+	public CourseType () {
 		super();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public TypeCourse (java.lang.Long _idTypeCours) {
-		super(_idTypeCours);
+	public CourseType (java.lang.Long _idCourseType) {
+		super(_idCourseType);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

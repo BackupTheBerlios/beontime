@@ -16,21 +16,21 @@ public class Course extends BaseCourse {
 	/**
 	 * Constructor for primary key
 	 */
-	public Course (java.lang.Long _idCours) {
-		super(_idCours);
+	public Course (java.lang.Long _idCourse) {
+		super(_idCourse);
 	}
 
 	/**
 	 * Constructor for required fields
 	 */
 	public Course (
-		java.lang.Long _idCours,
-		TypeCourse _idTypeCours,
+		java.lang.Long _idCourse,
+		CourseType _idCourseType,
 		java.lang.Long _idFormation) {
 
 		super (
-			_idCours,
-			_idTypeCours,
+			_idCourse,
+			_idCourseType,
 			_idFormation);
 	}
 

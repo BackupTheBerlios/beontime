@@ -5,13 +5,13 @@ import java.util.Collection;
 import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.Group;
-import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
-import fr.umlv.smoreau.beontime.model.timetable.TypeCourse;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.timetable.CourseType;
+import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -43,44 +43,44 @@ public class TimetableDaoTest extends TestCase {
         // ajout d'un cours simple
         Course course = new Course();
         Collection t = timetableDao.getTypesCourse();
-        TypeCourse[] types = (TypeCourse[]) t.toArray(new TypeCourse[t.size()]);
-        course.setIdTypeCourse(types[0]);
+        CourseType[] types = (CourseType[]) t.toArray(new CourseType[t.size()]);
+        course.setIdCourseType(types[0]);
         course.setIdFormation(new Long(1));
         assertTrue(timetableDao.addCourse(course));
         
         // modification du cours, ajout d'un local
         Room room = new Room();
         room.setDescription("local d'essai ...");
-        course.addToLocalSet(room);
+        course.addRoom(room);
         assertTrue(timetableDao.modifyCourse(course));
         
         // modification du cours, ajout d'un matériel
         Material material = new Material();
         material.setDescription("matériel d'essai ...");
-        course.addToMaterielSet(material);
+        course.addMaterial(material);
         assertTrue(timetableDao.modifyCourse(course));
         
         // modification du cours, ajout d'un enseignant
-        Person person = new Person();
-        person.setIdPersonne(new Long(10));
-        person.setTypePersonne("enseignant");
-        course.addToPersonneSet(person);
+        User person = new User();
+        person.setIdUser(new Long(10));
+        person.setUserType("enseignant");
+        course.addTeacherDirecting(person);
         assertTrue(timetableDao.modifyCourse(course));
         
         // modification du cours, relation avec la matière et le groupe
-        ParticipeGroupSubjectCourse participe = new ParticipeGroupSubjectCourse();
+        TakePartGroupSubjectCourse participe = new TakePartGroupSubjectCourse();
         participe.setIdCourse(course);
         Group group = new Group();
         group.setIdFormation(new Long(1));
-        group.setIntitule("groupe pour essayer");
+        group.setHeading("groupe pour essayer");
         groupDao.addGroup(group);
-        participe.setIdGroupe(group);
+        participe.setIdGroup(group);
         Subject subject = new Subject();
         subject.setIdFormation(new Long(2));
         subject.setIdTeacher(new Long(5));
         timetableDao.addSubject(subject);
         participe.setIdSubject(subject);
-        course.addToParticipeGroupeMatiereCoursSet(participe);
+        course.addGroupSubjectTakingPart(participe);
         assertTrue(timetableDao.modifyCourse(course));
         
         // suppression du cours et des éléments utilisés
@@ -94,7 +94,7 @@ public class TimetableDaoTest extends TestCase {
         subject.setIdFormation(new Long(2));
         subject.setIdTeacher(new Long(5));
         assertTrue(timetableDao.addSubject(subject));
-        subject.setIntitule("matière de test");
+        subject.setHeading("matière de test");
         assertTrue(timetableDao.modifySubject(subject));
         assertTrue(timetableDao.removeSubject(subject));
     }

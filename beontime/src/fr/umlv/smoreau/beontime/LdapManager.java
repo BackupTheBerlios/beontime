@@ -20,7 +20,7 @@ import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -88,43 +88,43 @@ public class LdapManager {
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
 			if (filter != null) {
-				if (filter.getTypePersonne().equals(UserDao.TYPE_ADMIN))
+				if (filter.getUserType().equals(UserDao.TYPE_ADMIN))
 					matchAttrs.put(new BasicAttribute("gidNumber","150"));
-				else if (filter.getTypePersonne().equals(UserDao.TYPE_TEACHER))
+				else if (filter.getUserType().equals(UserDao.TYPE_TEACHER))
 					matchAttrs.put(new BasicAttribute("gidNumber","801"));
-			    if (filter.getNom() != null)
-			        matchAttrs.put(new BasicAttribute("sn",filter.getNom()));
-			    if (filter.getPrenom() != null)
-			        matchAttrs.put(new BasicAttribute("givenName",filter.getPrenom()));
+			    if (filter.getName() != null)
+			        matchAttrs.put(new BasicAttribute("sn",filter.getName()));
+			    if (filter.getFirstName() != null)
+			        matchAttrs.put(new BasicAttribute("givenName",filter.getFirstName()));
 			    if (filter.getEMail() != null)
 			        matchAttrs.put(new BasicAttribute("mail",filter.getEMail()));
-			    if (filter.getIdPersonne() != null)
-			        matchAttrs.put(new BasicAttribute("uidNumber",filter.getIdPersonne()));
+			    if (filter.getIdUser() != null)
+			        matchAttrs.put(new BasicAttribute("uidNumber",filter.getIdUser()));
 			}
 			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("users"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();
-				Person person = new Person();
+				User person = new User();
 				
 				Attributes attrs = sr.getAttributes();
 				Attribute tmp = attrs.get("gidNumber");
-				if (filter.getTypePersonne().equals(UserDao.TYPE_STUDENT) &&
+				if (filter.getUserType().equals(UserDao.TYPE_STUDENT) &&
 						(((String)tmp.get()).equals("150") || ((String)tmp.get()).equals("801")))
 					continue;
 				tmp = attrs.get("sn");
 				if (tmp != null)
-				    person.setNom((String) tmp.get());
+				    person.setName((String) tmp.get());
 				tmp = attrs.get("givenName");
 				if (tmp != null)
-					person.setPrenom((String) tmp.get());
+					person.setFirstName((String) tmp.get());
 				tmp = attrs.get("mail");
 				if (tmp != null)
 					person.setEMail((String) tmp.get());
 				tmp = attrs.get("uidNumber");
 				if (tmp != null)
-					person.setIdPersonne(new Long((String) tmp.get()));
-				person.setTypePersonne(filter.getTypePersonne());
+					person.setIdUser(new Long((String) tmp.get()));
+				person.setUserType(filter.getUserType());
 
 				result.add(person);
 			}
@@ -137,19 +137,19 @@ public class LdapManager {
 	
 	public Collection getAdministrators(UserFilter filter) {
 	    UserFilter f = new UserFilter(filter);
-	    f.setTypePersonne(UserDao.TYPE_ADMIN);
+	    f.setUserType(UserDao.TYPE_ADMIN);
 		return getUsers(f);
 	}
 	
 	public Collection getStudents(UserFilter filter) {
 	    UserFilter f = new UserFilter(filter);
-	    f.setTypePersonne(UserDao.TYPE_STUDENT);
+	    f.setUserType(UserDao.TYPE_STUDENT);
 		return getUsers(f);
 	}
 		
 	public Collection getTeachers(UserFilter filter) {
 	    UserFilter f = new UserFilter(filter);
-	    f.setTypePersonne(UserDao.TYPE_TEACHER);
+	    f.setUserType(UserDao.TYPE_TEACHER);
 		return getUsers(f);
 	}
 
@@ -177,8 +177,8 @@ public class LdapManager {
 			if (filter != null) {
 			    if (filter.getIdFormation() != null)
 			        matchAttrs.put(new BasicAttribute("gidNumber",filter.getIdFormation()));
-			    if (filter.getIntitule() != null)
-			        matchAttrs.put(new BasicAttribute("cn",filter.getIntitule()));
+			    if (filter.getHeading() != null)
+			        matchAttrs.put(new BasicAttribute("cn",filter.getHeading()));
 			}
 			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("groups"),matchAttrs);
 			
@@ -192,7 +192,7 @@ public class LdapManager {
 				    formation.setIdFormation(new Long((String) tmp.get()));
 				tmp = attrs.get("cn");
 				if (tmp != null)
-				    formation.setIntitule((String) tmp.get());
+				    formation.setHeading((String) tmp.get());
 				
 				result.add(formation);
 			}

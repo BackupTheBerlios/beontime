@@ -3,7 +3,7 @@ package fr.umlv.smoreau.beontime.model.base;
 import java.io.Serializable;
 
 import fr.umlv.smoreau.beontime.model.Group;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -18,33 +18,33 @@ import fr.umlv.smoreau.beontime.model.user.Person;
  * @hibernate.class
  *  table="appartient_etudiant_groupe"
  */
-public abstract class BaseAppartientEtudiantGroupe implements Serializable {
+public abstract class BaseBelongStudentGroup implements Serializable {
 
-	public static String PROP_ID_GROUPE = "IdGroupe";
-	public static String PROP_ID_ETUDIANT = "IdEtudiant";
+	public static String PROP_ID_GROUPE = "IdGroup";
+	public static String PROP_ID_ETUDIANT = "IdStudent";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Person _idEtudiant;
-	private Group _idGroupe;
+	private User _idStudent;
+	private Group _idGroup;
 
 
 	// constructors
-	public BaseAppartientEtudiantGroupe () {
+	public BaseBelongStudentGroup () {
 		initialize();
 	}
 	
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseAppartientEtudiantGroupe (
-		Person _idEtudiant,
-		Group _idGroupe) {
+	public BaseBelongStudentGroup (
+		User _idStudent,
+		Group _idGroup) {
 
-		this.setIdEtudiant(_idEtudiant);
-		this.setIdGroupe(_idGroupe);
+		this.setIdStudent(_idStudent);
+		this.setIdGroup(_idGroup);
 		initialize();
 	}
 
@@ -58,16 +58,16 @@ public abstract class BaseAppartientEtudiantGroupe implements Serializable {
      *  generator-class="vm"
      *  column="id_groupe"
      */
-	public Group getIdGroupe () {
-		return _idGroupe;
+	public Group getIdGroup () {
+		return _idGroup;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idGroupe the new ID
+	 * @param _idGroup the new ID
 	 */
-	public void setIdGroupe (Group _idGroupe) {
-		this._idGroupe = _idGroupe;
+	public void setIdGroup (Group _idGroup) {
+		this._idGroup = _idGroup;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -75,35 +75,35 @@ public abstract class BaseAppartientEtudiantGroupe implements Serializable {
 	/**
 	 * Return the value associated with the column: id_etudiant
 	 */
-	public Person getIdEtudiant () {
-		return _idEtudiant;
+	public User getIdStudent () {
+		return _idStudent;
 	}
 
 	/**
 	 * Set the value related to the column: id_etudiant
-	 * @param _idEtudiant the id_etudiant value
+	 * @param _idStudent the id_etudiant value
 	 */
-	public void setIdEtudiant (Person _idEtudiant) {
-		this._idEtudiant = _idEtudiant;
+	public void setIdStudent (User _idStudent) {
+		this._idStudent = _idStudent;
 	}
 
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseBelongStudentGroup)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe mObj = (fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe) obj;
-			if (null == this.getIdGroupe() || null == mObj.getIdGroupe()) return false;
-			else return (this.getIdGroupe().equals(mObj.getIdGroupe()));
+			fr.umlv.smoreau.beontime.model.base.BaseBelongStudentGroup mObj = (fr.umlv.smoreau.beontime.model.base.BaseBelongStudentGroup) obj;
+			if (null == this.getIdGroup() || null == mObj.getIdGroup()) return false;
+			else return (this.getIdGroup().equals(mObj.getIdGroup()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdGroupe()) return super.hashCode();
+			if (null == this.getIdGroup()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdGroupe().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdGroup().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

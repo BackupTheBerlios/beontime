@@ -6,40 +6,40 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.element.Room" table="local">
 		<id
-			column="ID_local"
-			name="IdLocal"
+			column="id_local"
+			name="IdRoom"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="Nom_batiment"
+			column="nom_batiment"
 			length="40"
-			name="NomBatiment"
+			name="BuildingName"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Description"
+			column="description"
 			name="Description"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Nom"
+			column="nom"
 			length="20"
-			name="Nom"
+			name="Name"
 			not-null="false"
 			type="string"
 		 />
 
 		<set
 			cascade="all"
-			name="CoursSet"
-			table="A_Lieu_Cours_Local"
+			name="Courses"
+			table="a_lieu_cours_local"
 		>
-			<key column="ID_local" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="ID_cours" />
+			<key column="id_local" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="id_cours" />
 		</set>
 	</class>
 </hibernate-mapping>

@@ -27,7 +27,7 @@ public class ElementDaoTest extends TestCase {
     
     public void testAddRemoveMaterial() {
         Material material = new Material();
-        material.setNom("m1");
+        material.setName("m1");
         assertTrue(elementDao.addMaterial(material));
         material.setDescription("matériel n°1");
         assertTrue(elementDao.modifyMaterial(material));
@@ -36,7 +36,7 @@ public class ElementDaoTest extends TestCase {
     
     public void testAddRemoveRoom() {
         Room room = new Room();
-        room.setNom("r1");
+        room.setName("r1");
         assertTrue(elementDao.addRoom(room));
         room.setDescription("local n°1");
         assertTrue(elementDao.modifyRoom(room));

@@ -12,11 +12,11 @@ public class UnavailabilityFilter extends Unavailability implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdIndisponibilite", "id_indisponibilite");
-        corres.put("DateDebut", "date_debut");
-        corres.put("DateFin", "date_fin");
-        corres.put("IdTypeUnavailability.IdTypeIndisponibilite", "id_type_indisponibilite");
-        corres.put("IdSujetIndisponibilite", "id_sujet_indisponibilite");
+        corres.put("IdUnavailability", "id_indisponibilite");
+        corres.put("BeginDate", "date_debut");
+        corres.put("EndDate", "date_fin");
+        corres.put("IdUnavailabilityType.IdUnavailabilityType", "id_type_indisponibilite");
+        corres.put("IdUnavailabilitySubject", "id_sujet_indisponibilite");
         corres.put("Description", "description");
     }
 

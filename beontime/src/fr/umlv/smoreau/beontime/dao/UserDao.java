@@ -14,7 +14,7 @@ import fr.umlv.smoreau.beontime.model.user.*;
 public class UserDao extends Dao {
     private static final UserDao INSTANCE = new UserDao();
     
-    private static final String TABLE = "Person";
+    private static final String TABLE = "User";
     public static final String TYPE_TEACHER   = "enseignant";
     public static final String TYPE_STUDENT   = "etudiant";
     public static final String TYPE_SECRETARY = "secretaire";
@@ -48,7 +48,7 @@ public class UserDao extends Dao {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
-	    f.setTypePersonne(TYPE_ADMIN);
+	    f.setUserType(TYPE_ADMIN);
 
 		return getUsers(f);
 	}
@@ -57,7 +57,7 @@ public class UserDao extends Dao {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
-	    f.setTypePersonne(TYPE_SECRETARY);
+	    f.setUserType(TYPE_SECRETARY);
 
 		return getUsers(f);
 	}
@@ -66,7 +66,7 @@ public class UserDao extends Dao {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
-	    f.setTypePersonne(TYPE_STUDENT);
+	    f.setUserType(TYPE_STUDENT);
 
 		return getUsers(f);
 	}
@@ -75,36 +75,36 @@ public class UserDao extends Dao {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
-	    f.setTypePersonne(TYPE_TEACHER);
+	    f.setUserType(TYPE_TEACHER);
 
 		return getUsers(f);
 	}
 	
 	public Collection getAdministrators() {
 	    UserFilter filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_ADMIN);
+	    filter.setUserType(TYPE_ADMIN);
 		return getUsers(filter);
 	}
 	
 	public Collection getSecretaries() {
 	    UserFilter filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_SECRETARY);
+	    filter.setUserType(TYPE_SECRETARY);
 		return getUsers(filter);
 	}
 	
 	public Collection getStudents() {
 	    UserFilter filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_STUDENT);
+	    filter.setUserType(TYPE_STUDENT);
 		return getUsers(filter);
 	}
 	
 	public Collection getTeachers() {
 	    UserFilter filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_TEACHER);
+	    filter.setUserType(TYPE_TEACHER);
 		return getUsers(filter);
 	}
 	
-	public boolean addUser(Person user) {
+	public boolean addUser(User user) {
         try {
             TransactionManager.beginTransaction();
             add(user);
@@ -116,7 +116,7 @@ public class UserDao extends Dao {
         return true;
 	}
 	
-	public boolean modifyUser(Person user) {
+	public boolean modifyUser(User user) {
         try {
             TransactionManager.beginTransaction();
             modify(user);
@@ -128,7 +128,7 @@ public class UserDao extends Dao {
         return true;
 	}
 	
-	public boolean removeUser(Person user) {
+	public boolean removeUser(User user) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE, new UserFilter(user));

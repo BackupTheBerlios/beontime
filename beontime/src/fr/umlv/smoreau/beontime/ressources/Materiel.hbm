@@ -6,32 +6,32 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.element.Material" table="materiel">
 		<id
-			column="ID_materiel"
-			name="IdMateriel"
+			column="id_materiel"
+			name="IdMaterial"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="Description"
+			column="description"
 			name="Description"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Nom"
+			column="nom"
 			length="20"
-			name="Nom"
+			name="Name"
 			not-null="false"
 			type="string"
 		 />
 		<set
 			cascade="all"
-			name="CoursSet"
-			table="Utilise_Cours_Materiel"
+			name="Courses"
+			table="utilise_cours_materiel"
 		>
-			<key column="ID_materiel" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="ID_cours" />
+			<key column="id_materiel" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="id_cours" />
 		</set>
 	</class>
 </hibernate-mapping>

@@ -2,7 +2,7 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -17,13 +17,12 @@ import fr.umlv.smoreau.beontime.model.user.Person;
  * @hibernate.class
  *  table="Formation"
  */
-public abstract class BaseFormation  implements Serializable {
+public abstract class BaseFormation implements Serializable {
 
-	public static String PROP_ID_SECRETAIRE = "IdSecretaire";
+	public static String PROP_ID_SECRETAIRE = "IdSecretary";
 	public static String PROP_ID_FORMATION = "IdFormation";
-	public static String PROP_ID_ENSEIGNANT = "IdEnseignant";
-	public static String PROP_INTITULE = "Intitule";
-	public static String PROP__PG_DROPPED_4_ = "........pg.dropped.4........";
+	public static String PROP_ID_ENSEIGNANT = "IdTeacher";
+	public static String PROP_INTITULE = "Heading";
 
 
 	private int hashCode = Integer.MIN_VALUE;
@@ -32,17 +31,17 @@ public abstract class BaseFormation  implements Serializable {
 	private java.lang.Long _idFormation;
 
 	// fields
-	private java.lang.String _intitule;
-	private java.lang.Long _idEnseignant;
+	private java.lang.String _heading;
+	private java.lang.Long _idTeacher;
 
 
 	// many to one
-	private Person _idSecretaire;
+	private User _idSecretary;
 
 
 	// collections
-	private java.util.Set _groupeSet;
-	private java.util.Set _matiereSet;
+	private java.util.Set _groups;
+	private java.util.Set _subjects;
 
 
 	// constructors
@@ -63,12 +62,12 @@ public abstract class BaseFormation  implements Serializable {
 	 */
 	public BaseFormation (
 		java.lang.Long _idFormation,
-		Person _idSecretaire,
-		java.lang.Long _idEnseignant) {
+		User _idSecretary,
+		java.lang.Long _idTeacher) {
 
 		this.setIdFormation(_idFormation);
-		this.setIdSecretaire(_idSecretaire);
-		this.setIdTeacher(_idEnseignant);
+		this.setIdSecretary(_idSecretary);
+		this.setIdTeacher(_idTeacher);
 		initialize();
 	}
 
@@ -99,16 +98,16 @@ public abstract class BaseFormation  implements Serializable {
 	/**
 	 * Return the value associated with the column: Intitule
 	 */
-	public java.lang.String getIntitule () {
-		return _intitule;
+	public java.lang.String getHeading () {
+		return _heading;
 	}
 
 	/**
 	 * Set the value related to the column: Intitule
-	 * @param _intitule the Intitule value
+	 * @param _heading the Intitule value
 	 */
-	public void setIntitule (java.lang.String _intitule) {
-		this._intitule = _intitule;
+	public void setHeading (java.lang.String _heading) {
+		this._heading = _heading;
 	}
 
 
@@ -117,16 +116,16 @@ public abstract class BaseFormation  implements Serializable {
      *  column=ID_secretaire
 	 * not-null=true
 	 */
-	public Person getIdSecretaire () {
-		return this._idSecretaire;
+	public User getIdSecretary () {
+		return this._idSecretary;
 	}
 
 	/**
 	 * Set the value related to the column: ID_secretaire
-	 * @param _idSecretaire the ID_secretaire value
+	 * @param _idSecretary the ID_secretaire value
 	 */
-	public void setIdSecretaire (Person _idSecretaire) {
-		this._idSecretaire = _idSecretaire;
+	public void setIdSecretary (User _idSecretary) {
+		this._idSecretary = _idSecretary;
 	}
 
 
@@ -136,36 +135,36 @@ public abstract class BaseFormation  implements Serializable {
 	 * not-null=true
 	 */
 	public java.lang.Long getIdTeacher () {
-		return this._idEnseignant;
+		return this._idTeacher;
 	}
 
 	/**
 	 * Set the value related to the column: ID_enseignant
-	 * @param _idEnseignant the ID_enseignant value
+	 * @param _idTeacher the ID_enseignant value
 	 */
-	public void setIdTeacher (java.lang.Long _idEnseignant) {
-		this._idEnseignant = _idEnseignant;
+	public void setIdTeacher (java.lang.Long _idTeacher) {
+		this._idTeacher = _idTeacher;
 	}
 
 
 	/**
 	 * Return the value associated with the column: GroupeSet
 	 */
-	public java.util.Set getGroupeSet () {
-		return this._groupeSet;
+	public java.util.Set getGroups () {
+		return this._groups;
 	}
 
 	/**
 	 * Set the value related to the column: GroupeSet
-	 * @param _groupeSet the GroupeSet value
+	 * @param _groups the GroupeSet value
 	 */
-	public void setGroupeSet (java.util.Set _groupeSet) {
-		this._groupeSet = _groupeSet;
+	public void setGroups (java.util.Set _groups) {
+		this._groups = _groups;
 	}
 	
-	public void addToGroupeSet (Object obj) {
-		if (null == this._groupeSet) this._groupeSet = new java.util.HashSet();
-		this._groupeSet.add(obj);
+	public void addGroup (Object obj) {
+		if (null == this._groups) this._groups = new java.util.HashSet();
+		this._groups.add(obj);
 	}
 
 
@@ -173,21 +172,21 @@ public abstract class BaseFormation  implements Serializable {
 	/**
 	 * Return the value associated with the column: MatiereSet
 	 */
-	public java.util.Set getMatiereSet () {
-		return this._matiereSet;
+	public java.util.Set getSubjects () {
+		return this._subjects;
 	}
 
 	/**
 	 * Set the value related to the column: MatiereSet
-	 * @param _matiereSet the MatiereSet value
+	 * @param _subjects the MatiereSet value
 	 */
-	public void setMatiereSet (java.util.Set _matiereSet) {
-		this._matiereSet = _matiereSet;
+	public void setSubjects (java.util.Set _subjects) {
+		this._subjects = _subjects;
 	}
 	
-	public void addToMatiereSet (Object obj) {
-		if (null == this._matiereSet) this._matiereSet = new java.util.HashSet();
-		this._matiereSet.add(obj);
+	public void addSubject (Object obj) {
+		if (null == this._subjects) this._subjects = new java.util.HashSet();
+		this._subjects.add(obj);
 	}
 
 

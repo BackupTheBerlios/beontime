@@ -13,9 +13,9 @@ public class FormationFilter extends Formation implements Filter {
     static {
         corres = new HashMap();
         corres.put("IdFormation", "id_formation");
-        corres.put("Intitule", "intitule");
-        corres.put("IdTeacher", "id_secretaire");
-        corres.put("IdEnseignant", "id_enseignant");
+        corres.put("Heading", "intitule");
+        corres.put("IdSecretary", "id_secretaire");
+        corres.put("IdTeacher", "id_enseignant");
     }
 
 

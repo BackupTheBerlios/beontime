@@ -12,8 +12,8 @@ public class MaterialFilter extends Material implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdMateriel", "id_materiel");
-        corres.put("Nom", "nom");
+        corres.put("IdMaterial", "id_materiel");
+        corres.put("Name", "nom");
         corres.put("Description", "description");
     }
 

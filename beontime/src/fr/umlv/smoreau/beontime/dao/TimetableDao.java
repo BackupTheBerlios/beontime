@@ -10,7 +10,7 @@ import net.sf.hibernate.Session;
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.CourseFilter;
-import fr.umlv.smoreau.beontime.filter.ParticipeGroupSubjectCourseFilter;
+import fr.umlv.smoreau.beontime.filter.TakePartGroupSubjectCourseFilter;
 import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
@@ -154,7 +154,7 @@ public class TimetableDao extends Dao {
             Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); )
-	                remove(TABLE_ASSOCIATION, new ParticipeGroupSubjectCourseFilter((TakePartGroupSubjectCourse)i.next()));
+	                remove(TABLE_ASSOCIATION, new TakePartGroupSubjectCourseFilter((TakePartGroupSubjectCourse)i.next()));
             }
             remove(TABLE_COURSE, new CourseFilter(course));
             TransactionManager.commit();

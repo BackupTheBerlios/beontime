@@ -3,7 +3,7 @@ package junit;
 
 import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.model.Group;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,14 +26,14 @@ public class GroupDaoTest extends TestCase {
         // ajout d'un groupe simple
         Group group = new Group();
         group.setIdFormation(new Long(1));
-        group.setIntitule("groupe pour essayer");
+        group.setHeading("groupe pour essayer");
         assertTrue(groupDao.addGroup(group));
         
         // assignation d'un étudiant à ce groupe
-        Person person = new Person();
-        person.setIdPersonne(new Long(1054));
-        person.setTypePersonne("etudiant");
-        group.addToStudentSet(person);
+        User person = new User();
+        person.setIdUser(new Long(1054));
+        person.setUserType("etudiant");
+        group.addStudent(person);
         assertTrue(groupDao.modifyGroup(group));
         
         // suppression du groupe

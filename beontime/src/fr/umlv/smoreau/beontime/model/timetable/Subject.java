@@ -16,21 +16,21 @@ public class Subject extends BaseSubject {
 	/**
 	 * Constructor for primary key
 	 */
-	public Subject (java.lang.Long _idMatiere) {
-		super(_idMatiere);
+	public Subject (java.lang.Long _idSubject) {
+		super(_idSubject);
 	}
 
 	/**
 	 * Constructor for required fields
 	 */
 	public Subject (
-		java.lang.Long _idMatiere,
-		java.lang.Long _idEnseignant,
+		java.lang.Long _idSubject,
+		java.lang.Long _idTeacher,
 		java.lang.Long _idFormation) {
 
 		super (
-			_idMatiere,
-			_idEnseignant,
+			_idSubject,
+			_idTeacher,
 			_idFormation);
 	}
 

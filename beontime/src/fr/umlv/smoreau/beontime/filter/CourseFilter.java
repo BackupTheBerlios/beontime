@@ -12,11 +12,11 @@ public class CourseFilter extends Course implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdCours", "id_cours");
-        corres.put("IdTypeCourse.IdTypeCours", "id_type_cours");
-        corres.put("DateDebut", "date_debut");
-        corres.put("DateFin", "date_fin");
-        corres.put("NbSemaine", "nb_semaine");
+        corres.put("IdCourse", "id_cours");
+        corres.put("IdCourseType.IdCourseType", "id_type_cours");
+        corres.put("BeginDate", "date_debut");
+        corres.put("EndDate", "date_fin");
+        corres.put("NbWeeks", "nb_semaine");
         corres.put("IdFormation", "id_formation");
     }
 

@@ -4,51 +4,51 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.user.Person" table="personne">
+	<class name="fr.umlv.smoreau.beontime.model.user.User" table="personne">
 		<id
-			column="ID_personne"
-			name="IdPersonne"
+			column="id_personne"
+			name="IdUser"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
 		<property
-			column="Nom"
+			column="nom"
 			length="20"
-			name="Nom"
+			name="Name"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Telephone"
+			column="telephone"
 			length="14"
 			name="Telephone"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Prenom"
+			column="prenom"
 			length="20"
-			name="Prenom"
+			name="FirstName"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Nom_bureau"
+			column="nom_bureau"
 			length="20"
-			name="NomBureau"
+			name="OfficeName"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="Nom_batiment_bureau"
+			column="nom_batiment_bureau"
 			length="40"
-			name="NomBatimentBureau"
+			name="BuildingNameForOffice"
 			not-null="false"
 			type="string"
 		 />
 		<property
-			column="E_mail"
+			column="e_mail"
 			length="50"
 			name="EMail"
 			not-null="false"
@@ -57,34 +57,30 @@
 		<property
 			column="type_personne"
 			length="20"
-			name="TypePersonne"
+			name="UserType"
 			not-null="true"
 			type="string"
 		 />
 
-		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
-			<key column="ID_enseignant" />
-			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
-		</set>
-		<set inverse="true" name="FormationSetByIdEnseignant">
-			<key column="ID_enseignant" />
+		<set inverse="true" name="FormationsResponsible">
+			<key column="id_enseignant" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
-		<set inverse="true" name="FormationSetByIdSecretaire">
-			<key column="ID_secretaire" />
+		<set inverse="true" name="FormationsInCharge">
+			<key column="id_secretaire" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
-		<set inverse="true" name="MatiereSet">
-			<key column="ID_enseignant" />
+		<set inverse="true" name="SubjectsResponsible">
+			<key column="id_enseignant" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Subject" />
 		</set>
 		<set
 			cascade="all"
-			name="CoursSet"
-			table="Est_Dirige_par_Cours_Enseignant"
+			name="CoursesDirected"
+			table="est_dirige_par_cours_enseignant"
 		>
-			<key column="ID_enseignant" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="ID_cours" />
+			<key column="id_enseignant" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="id_cours" />
 		</set>
 	</class>
 </hibernate-mapping>

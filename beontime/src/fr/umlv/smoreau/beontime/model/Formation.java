@@ -1,7 +1,7 @@
 package fr.umlv.smoreau.beontime.model;
 
 import fr.umlv.smoreau.beontime.model.base.BaseFormation;
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * This is the object class that relates to the Formation table.
@@ -26,13 +26,13 @@ public class Formation extends BaseFormation {
 	 */
 	public Formation (
 		java.lang.Long _idFormation,
-		Person _idSecretaire,
-		java.lang.Long _idEnseignant) {
+		User _idSecretary,
+		java.lang.Long _idTeacher) {
 
 		super (
 			_idFormation,
-			_idSecretaire,
-			_idEnseignant);
+			_idSecretary,
+			_idTeacher);
 	}
 /*[CONSTRUCTOR MARKER END]*/
 }

@@ -17,23 +17,23 @@ import java.io.Serializable;
  */
 public abstract class BaseGroup  implements Serializable {
 
-	public static String PROP_ID_GROUPE = "IdGroupe";
+	public static String PROP_ID_GROUPE = "IdGroup";
 	public static String PROP_ID_FORMATION = "IdFormation";
-	public static String PROP_INTITULE = "Intitule";
+	public static String PROP_INTITULE = "Heading";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.Long _idGroupe;
+	private java.lang.Long _idGroup;
 
 	// fields
 	private java.lang.Long _idFormation;
-	private java.lang.String _intitule;
+	private java.lang.String _heading;
 
 	// collections
-	private java.util.Set _participeGroupeMatiereCoursSet;
-	private java.util.Set _studentSet;
+	private java.util.Set _subjectsCoursesTakePart;
+	private java.util.Set _students;
 
 
 	// constructors
@@ -44,8 +44,8 @@ public abstract class BaseGroup  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseGroup (java.lang.Long _idGroupe) {
-		this.setIdGroupe(_idGroupe);
+	public BaseGroup (java.lang.Long _idGroup) {
+		this.setIdGroup(_idGroup);
 		initialize();
 	}
 
@@ -59,16 +59,16 @@ public abstract class BaseGroup  implements Serializable {
      *  generator-class="vm"
      *  column="id_groupe"
      */
-	public java.lang.Long getIdGroupe () {
-		return _idGroupe;
+	public java.lang.Long getIdGroup () {
+		return _idGroup;
 	}
 
 	/**
 	 * Set the unique identifier of this class
-	 * @param _idGroupe the new ID
+	 * @param _idGroup the new ID
 	 */
-	public void setIdGroupe (java.lang.Long _idGroupe) {
-		this._idGroupe = _idGroupe;
+	public void setIdGroup (java.lang.Long _idGroup) {
+		this._idGroup = _idGroup;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -92,57 +92,57 @@ public abstract class BaseGroup  implements Serializable {
 	/**
 	 * Return the value associated with the column: Intitule
 	 */
-	public java.lang.String getIntitule () {
-		return _intitule;
+	public java.lang.String getHeading () {
+		return _heading;
 	}
 
 	/**
 	 * Set the value related to the column: Intitule
-	 * @param _intitule the Intitule value
+	 * @param _heading the Intitule value
 	 */
-	public void setIntitule (java.lang.String _intitule) {
-		this._intitule = _intitule;
+	public void setHeading (java.lang.String _heading) {
+		this._heading = _heading;
 	}
 
 
 	/**
 	 * Return the value associated with the column: ParticipeGroupeMatiereCoursSet
 	 */
-	public java.util.Set getParticipeGroupeMatiereCoursSet () {
-		return this._participeGroupeMatiereCoursSet;
+	public java.util.Set getSubjectsCoursesTakePart () {
+		return this._subjectsCoursesTakePart;
 	}
 
 	/**
 	 * Set the value related to the column: ParticipeGroupeMatiereCoursSet
-	 * @param _participeGroupeMatiereCoursSet the ParticipeGroupeMatiereCoursSet value
+	 * @param _subjectsCoursesTakePart the ParticipeGroupeMatiereCoursSet value
 	 */
-	public void setParticipeGroupeMatiereCoursSet (java.util.Set _participeGroupeMatiereCoursSet) {
-		this._participeGroupeMatiereCoursSet = _participeGroupeMatiereCoursSet;
+	public void setSubjectsCoursesTakePart (java.util.Set _subjectsCoursesTakePart) {
+		this._subjectsCoursesTakePart = _subjectsCoursesTakePart;
 	}
 	
-	public void addToParticipeGroupeMatiereCoursSet (Object obj) {
-		if (null == this._participeGroupeMatiereCoursSet) this._participeGroupeMatiereCoursSet = new java.util.HashSet();
-		this._participeGroupeMatiereCoursSet.add(obj);
+	public void addSubjectCourseTakePart (Object obj) {
+		if (null == this._subjectsCoursesTakePart) this._subjectsCoursesTakePart = new java.util.HashSet();
+		this._subjectsCoursesTakePart.add(obj);
 	}
 	
 	/**
 	 * Return the value associated with the column: StudentSet
 	 */
-	public java.util.Set getStudentSet () {
-		return this._studentSet;
+	public java.util.Set getStudents () {
+		return this._students;
 	}
 
 	/**
 	 * Set the value related to the column: StudentSet
-	 * @param _studentSet the StudentSet value
+	 * @param _students the StudentSet value
 	 */
-	public void setStudentSet (java.util.Set _studentSet) {
-		this._studentSet = _studentSet;
+	public void setStudents (java.util.Set _students) {
+		this._students = _students;
 	}
 	
-	public void addToStudentSet (Object obj) {
-		if (null == this._studentSet) this._studentSet = new java.util.HashSet();
-		this._studentSet.add(obj);
+	public void addStudent (Object obj) {
+		if (null == this._students) this._students = new java.util.HashSet();
+		this._students.add(obj);
 	}
 
 
@@ -152,17 +152,17 @@ public abstract class BaseGroup  implements Serializable {
 		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseGroup)) return false;
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseGroup mObj = (fr.umlv.smoreau.beontime.model.base.BaseGroup) obj;
-			if (null == this.getIdGroupe() || null == mObj.getIdGroupe()) return false;
-			else return (this.getIdGroupe().equals(mObj.getIdGroupe()));
+			if (null == this.getIdGroup() || null == mObj.getIdGroup()) return false;
+			else return (this.getIdGroup().equals(mObj.getIdGroup()));
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getIdGroupe()) return super.hashCode();
+			if (null == this.getIdGroup()) return super.hashCode();
 			else {
-				String hashStr = this.getClass().getName() + ":" + this.getIdGroupe().hashCode();
+				String hashStr = this.getClass().getName() + ":" + this.getIdGroup().hashCode();
 				this.hashCode = hashStr.hashCode();
 			}
 		}

@@ -18,15 +18,15 @@ import fr.umlv.smoreau.beontime.model.timetable.Course;
  * @hibernate.class
  *  table="Utilise_Cours_Materiel"
  */
-public abstract class BaseUseCourseMaterial  implements Serializable {
+public abstract class BaseUseCourseMaterial implements Serializable {
 
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Material _idMateriel;
-	private Course _idCours;
+	private Material _idMaterial;
+	private Course _idCourse;
 
 
 	// constructors
@@ -38,11 +38,11 @@ public abstract class BaseUseCourseMaterial  implements Serializable {
 	 * Constructor for primary key
 	 */
 	public BaseUseCourseMaterial (
-		Material _idMateriel,
-		Course _idCours) {
+		Material _idMaterial,
+		Course _idCourse) {
 
-		this.setIdMaterial(_idMateriel);
-		this.setIdCourse(_idCours);
+		this.setIdMaterial(_idMaterial);
+		this.setIdCourse(_idCourse);
 		initialize();
 	}
 
@@ -56,15 +56,15 @@ public abstract class BaseUseCourseMaterial  implements Serializable {
 	 * not-null=true
 	 */
 	public Material getIdMaterial () {
-		return this._idMateriel;
+		return this._idMaterial;
 	}
 
 	/**
 	 * Set the value related to the column: ID_materiel
-	 * @param _idMateriel the ID_materiel value
+	 * @param _idMaterial the ID_materiel value
 	 */
-	public void setIdMaterial (Material _idMateriel) {
-		this._idMateriel = _idMateriel;
+	public void setIdMaterial (Material _idMaterial) {
+		this._idMaterial = _idMaterial;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -74,15 +74,15 @@ public abstract class BaseUseCourseMaterial  implements Serializable {
 	 * not-null=true
 	 */
 	public Course getIdCourse () {
-		return this._idCours;
+		return this._idCourse;
 	}
 
 	/**
 	 * Set the value related to the column: ID_cours
-	 * @param _idCours the ID_cours value
+	 * @param _idCourse the ID_cours value
 	 */
-	public void setIdCourse (Course _idCours) {
-		this._idCours = _idCours;
+	public void setIdCourse (Course _idCourse) {
+		this._idCourse = _idCourse;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 

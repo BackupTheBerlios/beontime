@@ -2,24 +2,24 @@ package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.user.Person;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
  */
-public class UserFilter extends Person implements Filter {
+public class UserFilter extends User implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("IdPersonne", "id_personne");
-        corres.put("Nom", "nom");
-        corres.put("Prenom", "prenom");
-        corres.put("TypePersonne", "type_personne");
+        corres.put("IdUser", "id_personne");
+        corres.put("Name", "nom");
+        corres.put("FirstName", "prenom");
+        corres.put("UserType", "type_personne");
         corres.put("Telephone", "telephone");
         corres.put("EMail", "e_mail");
-        corres.put("NomBureau", "nom_bureau");
-        corres.put("NomBatimentBureau", "nom_batiment_bureau");
+        corres.put("OfficeName", "nom_bureau");
+        corres.put("BuildingNameForOffice", "nom_batiment_bureau");
     }
 
 
@@ -27,7 +27,7 @@ public class UserFilter extends Person implements Filter {
         super();
     }
     
-    public UserFilter(Person person) {
+    public UserFilter(User person) {
         super();
         try {
             FilterUtils.fillFilterClass(this, person, corres.keySet());

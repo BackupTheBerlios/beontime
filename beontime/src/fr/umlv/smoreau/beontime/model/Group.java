@@ -16,8 +16,8 @@ public class Group extends BaseGroup {
 	/**
 	 * Constructor for primary key
 	 */
-	public Group (java.lang.Long _idGroupe) {
-		super(_idGroupe);
+	public Group (java.lang.Long _idGroup) {
+		super(_idGroup);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/
