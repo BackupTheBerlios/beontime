@@ -327,6 +327,10 @@ public class ExportTimetable extends Action {
 			
 			for(int i=1; i<7; i++) {
 				beginPeriodCopy.roll(Calendar.DATE, true);
+				if(beginPeriodCopy.get(Calendar.DAY_OF_MONTH) == 1)
+					beginPeriodCopy.roll(Calendar.MONTH, true);
+				if((beginPeriodCopy.get(Calendar.DAY_OF_MONTH) == 1) && (beginPeriodCopy.get(Calendar.MONTH) == Calendar.JANUARY))
+					beginPeriodCopy.roll(Calendar.YEAR, true);
 			}
 			
 			writeLineFich(file,"Semaine du "+beginPeriod.get(Calendar.DAY_OF_MONTH)+" "+getMonth(beginPeriod)+" "+beginPeriod.get(Calendar.YEAR)+" au "+beginPeriodCopy.get(Calendar.DAY_OF_MONTH)+" "+getMonth(beginPeriodCopy)+" "+beginPeriodCopy.get(Calendar.YEAR)+" : \r\n\r\n");
@@ -370,6 +374,10 @@ public class ExportTimetable extends Action {
 				
 				writeLineFich(file,"\r\n");
 				beginPeriod.roll(Calendar.DATE, true);
+				if(beginPeriod.get(Calendar.DAY_OF_MONTH) == 1)
+					beginPeriod.roll(Calendar.MONTH, true);
+				if((beginPeriod.get(Calendar.DAY_OF_MONTH) == 1) && (beginPeriod.get(Calendar.MONTH) == Calendar.JANUARY))
+					beginPeriod.roll(Calendar.YEAR, true);
 			}
 			
 			
