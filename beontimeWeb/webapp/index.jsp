@@ -273,7 +273,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 						if (colspan > 0) {
 				%>
 				<% String schedule = FORMAT_HOUR.format(course.getBeginDate().getTime()) + " / " + FORMAT_HOUR.format(course.getEndDate().getTime()); %>
-				<td title="<%=schedule %>" align="center" class="cours" colspan="<%=colspan %>" style="background-color:rgb(<%=course.getSubject().getColor().getRed() %>,<%=course.getSubject().getColor().getGreen() %>,<%=course.getSubject().getColor().getBlue() %>)">
+				<td align="center" class="cours" colspan="<%=colspan %>" style="background-color:rgb(<%=course.getSubject().getColor().getRed() %>,<%=course.getSubject().getColor().getGreen() %>,<%=course.getSubject().getColor().getBlue() %>)">
 					<strong><%=course.getSubject().getHeading() %></strong>
 					<%
 						if (TimetableDao.TYPE_TD.equals(course.getIdCourseType().getNameCourseType()))
@@ -282,16 +282,18 @@ if (idFormation != null && !"".equals(idFormation)) {
 							out.println("(TP)");
 					%>
 					<br/>
-					<% if (beginHour < defaultHour) { %>
+					<!--% if (beginHour < defaultHour) { %-->
 					<%=schedule %>
 					<br/>
-					<% } %>
+					<!--% } %-->
 					<%
 						for (Iterator it2 = course.getTeachers().iterator(); it2.hasNext(); ) {
 							User t = (User) it2.next();
-							out.print(t.getFirstName() + " " + t.getName());
-							if (it2.hasNext())
-								out.print(" - ");
+							if (t != null) {
+								out.print(t.getFirstName() + " " + t.getName());
+								if (it2.hasNext())
+									out.print(" - ");
+							}
 						}
 					%>
 					<br/>
