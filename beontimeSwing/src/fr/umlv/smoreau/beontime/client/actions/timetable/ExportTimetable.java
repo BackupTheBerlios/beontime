@@ -3,10 +3,18 @@
  */
 package fr.umlv.smoreau.beontime.client.actions.timetable;
 
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Enumeration;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
@@ -19,20 +27,54 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  * @author BeOnTime
  */
 public class ExportTimetable extends Action {
-    private static final String NAME = "Exporter l'emploi du temps";
-    private static final String ICON = "exporter.png";
-    private static final String SMALL_ICON = "exporter_small.png";
-
-
-    public ExportTimetable(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
-    }
-
-    
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent arg0) {
+	private static final String NAME = "Exporter l'emploi du temps";
+	private static final String ICON = "exporter.png";
+	private static final String SMALL_ICON = "exporter_small.png";
+	
+	
+	public ExportTimetable(MainFrame mainFrame) {
+		super(NAME, SMALL_ICON, ICON, mainFrame);
+	}
+	
+	
+	public static Image getImage(Component component){
+		if(component==null){return null;}
+		int width = component.getWidth();
+		int height = component.getHeight();
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = image.createGraphics();
+		component.paintAll(g);
+		g.dispose();
+		return image;
+	}
+	
+	public static BufferedImage toBufferedImage(Image image) {
+		/** On test si l'image n'est pas déja une instance de BufferedImage */
+		if( image instanceof BufferedImage ) {
+			/** cool, rien à faire */
+			return( (BufferedImage)image );
+		} else {
+			/** On s'assure que l'image est complètement chargée */
+			image = new ImageIcon(image).getImage();
+			
+			/** On crée la nouvelle image */
+			BufferedImage bufferedImage = new BufferedImage(
+					image.getWidth(null),
+					image.getHeight(null),
+					BufferedImage.TYPE_INT_RGB );
+			Graphics g = bufferedImage.createGraphics();
+			g.drawImage(image,0,0,null);
+			g.dispose();
+			
+			return( bufferedImage );
+		} 
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent arg0) {
 		JFileChooser EEDTFrame = new JFileChooser();
 		
 		BOTFileFilter filterJPEG = new BOTFileFilter(new String[] {"jpeg", "jpg"}, "JPEG Images");
@@ -49,12 +91,55 @@ public class ExportTimetable extends Action {
 		
 		int returnVal = EEDTFrame.showSaveDialog(MainFrame.getInstance().getMainFrame());
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
-			//System.out.println("You chose to save this file: " +
-			// EEDTFrame.getSelectedFile().getName());
+			
+			System.out.println("You chose to save this file: " + EEDTFrame.getSelectedFile().getName());
+			
+			String formatName = null;
+			
+			if(EEDTFrame.getSelectedFile().getName().endsWith("txt")) {
+				formatName = "txt";
+				return;
+			}
+				
+			else if(EEDTFrame.getSelectedFile().getName().endsWith("xml")) {
+				formatName = "xml";
+				return;
+			}
+				
+			else if(EEDTFrame.getSelectedFile().getName().endsWith("jpeg"))
+				formatName = "image/jpeg";
+			
+				
+			else if(EEDTFrame.getSelectedFile().getName().endsWith("jpg"))
+				formatName = "jpg";
+			
+			else if(EEDTFrame.getSelectedFile().getName().endsWith("png"))
+				formatName = "png";
+			
+			
+			
+			Image image = ExportTimetable.getImage(MainFrame.getInstance().getView().getJScrollPane());
+			try {
+				
+				
+				/* Possibilité d'exporter en "gif", "jpg", "bmp", "image/jpeg" */
+				ImageIO.write(ExportTimetable.toBufferedImage(image), formatName, EEDTFrame.getSelectedFile());
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 		}
-    }
-    
-    
+	}
+	
+	
+	
+	
+	
+	
 	private static class BOTFileFilter extends FileFilter {
 		
 		private static String TYPE_UNKNOWN = "Type Unknown";
