@@ -71,8 +71,8 @@ public class ManageElementsWindow {
 		
 		/*frame = new JFrame();
 		frame.setSize(600,600);
-		frame.setVisible(true);*/
-		MEWFrame = new JDialog(frame, titre, true);   
+		frame.setVisible(true);
+		MEWFrame = new JDialog(frame, titre, true);*/   
 		MEWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);   
 		initManageElementsWindow(type);  
 	}
@@ -101,7 +101,7 @@ public class ManageElementsWindow {
 		else if (type.equals("TYPE_GROUPS"))
 			panel = new ManageGroupsTree(model, modifyButton, removeButton, manageIdentityButton, generateButton).getPanel();
 		else if (type.equals("TYPE_UNAVAILABILITIES"))
-		{}
+			panel = new ManageUnavailabilitiesTree(model, modifyButton, removeButton, searchUnavailabilitiesButton).getPanel();
 		else if (type.equals("TYPE_USERS"))
 			panel = new ManageUsersTable(model, modifyButton, removeButton).getPanel();
 		else if (type.equals("TYPE_ROOMS"))
@@ -135,7 +135,7 @@ public class ManageElementsWindow {
 		manageButtonPanel.add(removeButton);
 		
 		
-		searchUnavailabilitiesButton = new JButton("Rechercher une disponibilité");
+		searchUnavailabilitiesButton = new JButton(getActionButton("searchUnavailabilitiesButton", type));
 		addComponent(layout,layoutConstraints,searchUnavailabilitiesButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		searchUnavailabilitiesButton.setVisible(false);
 		manageButtonPanel.add(searchUnavailabilitiesButton);
@@ -321,7 +321,7 @@ public class ManageElementsWindow {
 		
 		
 		
-		ManageElementsWindow form = new ManageElementsWindow("TYPE_GROUPS");
+		ManageElementsWindow form = new ManageElementsWindow("TYPE_UNAVAILABILITIES");
 		form.show();
 		
 	}    
