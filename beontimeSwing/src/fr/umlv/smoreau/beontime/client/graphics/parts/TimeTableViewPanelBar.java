@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
+import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -68,6 +71,8 @@ public class TimeTableViewPanelBar extends JPanel {
 		add(jcbGroupEDT);
 		jcbSubjectEDT.setEnabled(false);
 		jcbGroupEDT.setEnabled(false);
+		
+		mainFrame.getModel().addBoTListener(new TimeTableViewListener());
 	}
 	
 	public void init() {
@@ -259,5 +264,100 @@ public class TimeTableViewPanelBar extends JPanel {
 		public String toString() {
 			return text;
 		}
+		
+		public boolean equals(Object obj) {
+		    if (obj == null || !(obj instanceof Item))
+		        return false;
+
+		    Item item = (Item) obj;
+
+		    return id.equals(item.id);
+		}
 	}
+	
+	private class TimeTableViewListener extends DefaultBoTListener {
+	    public void addGroup(BoTEvent e) throws InterruptedException {
+	        if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
+	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
+                Group group = e.getGroup();
+                jcbGroupEDT.addItem(new Item(group.getHeading(), group.getIdGroup()));
+                jcbGroupEDT.revalidate();
+            }
+        }
+
+        public void addMaterial(BoTEvent e) throws InterruptedException {
+            if (TYPE_MATERIEL.equals(jcbTypeEDT.getSelectedItem())) {
+                Material material = e.getMaterial();
+                jcbSubjectEDT.addItem(new Item(material.getName(), material.getIdMaterial()));
+                jcbSubjectEDT.revalidate();
+            }
+        }
+
+        public void addRoom(BoTEvent e) throws InterruptedException {
+            if (TYPE_LOCAL.equals(jcbTypeEDT.getSelectedItem())) {
+                Room room = e.getRoom();
+                jcbSubjectEDT.addItem(new Item(room.getName(), room.getIdRoom()));
+                jcbSubjectEDT.revalidate();
+            }
+        }
+
+        public void addUser(BoTEvent e) throws InterruptedException {
+            if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
+                User user = e.getUser();
+                if (UserDao.TYPE_TEACHER.equals(user.getUserType())) {
+	                jcbSubjectEDT.addItem(new Item(user.getName()+" "+user.getFirstName(), user.getIdUser()));
+	                jcbSubjectEDT.revalidate();
+                }
+            }
+        }
+
+        public void modifyGroup(BoTEvent e) throws InterruptedException {
+            if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
+	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
+                Group group = e.getGroup();
+                Item itemSelected = (Item) jcbGroupEDT.getSelectedItem();
+                Item item = new Item(group.getHeading(), group.getIdGroup());
+                jcbGroupEDT.removeItem(item);
+                jcbGroupEDT.addItem(item);
+                if (itemSelected.equals(item))
+                    jcbGroupEDT.setSelectedItem(item);
+                jcbGroupEDT.revalidate();
+            }
+        }
+
+        public void removeGroup(BoTEvent e) throws InterruptedException {
+            if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
+	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
+                Group group = e.getGroup();
+                jcbGroupEDT.removeItem(new Item(group.getHeading(), group.getIdGroup()));
+                jcbGroupEDT.revalidate();
+            }
+        }
+
+        public void removeMaterial(BoTEvent e) throws InterruptedException {
+            if (TYPE_MATERIEL.equals(jcbTypeEDT.getSelectedItem())) {
+                Material material = e.getMaterial();
+                jcbSubjectEDT.removeItem(new Item(material.getName(), material.getIdMaterial()));
+                jcbSubjectEDT.revalidate();
+            }
+        }
+
+        public void removeRoom(BoTEvent e) throws InterruptedException {
+            if (TYPE_LOCAL.equals(jcbTypeEDT.getSelectedItem())) {
+                Room room = e.getRoom();
+                jcbSubjectEDT.removeItem(new Item(room.getName(), room.getIdRoom()));
+                jcbSubjectEDT.revalidate();
+            }
+        }
+
+        public void removeUser(BoTEvent e) throws InterruptedException {
+            if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
+                User user = e.getUser();
+                if (UserDao.TYPE_TEACHER.equals(user.getUserType())) {
+	                jcbSubjectEDT.removeItem(new Item(user.getName()+" "+user.getFirstName(), user.getIdUser()));
+	                jcbSubjectEDT.revalidate();
+                }
+            }
+        }
+    }
 }
