@@ -1,8 +1,10 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,9 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
@@ -43,6 +47,8 @@ public class ManageElementsWindow {
 	private int type;
 	
 	private JButton newButton;
+	private JButton newButton2;
+	private JButton newButton3;
 	private JButton modifyButton;
 	private JButton removeButton;
 	private JButton searchUnavailabilitiesButton;
@@ -106,16 +112,28 @@ public class ManageElementsWindow {
                 Collection users = DaoManager.getUserDao().getUsers(false);
                 panel = new ManageUsersTable(model, users).getPanel();
             } catch (Exception e) {
-                //TODO Sandrine: afficher un message d'erreur sur la fenêtre ...
-                //Je verrais bien ce message disant "erreur lors de la récupération des utilisateurs" en rouge au dessus des boutons à droite du tableau
+            	panel.setLayout(new BorderLayout());
+            	
+            	JLabel label = new JLabel("Erreur lors de la récupération des utilisateurs");
+            	Font font = new Font("Arial", Font.BOLD, 15);
+            	label.setFont(font);
+            	label.setForeground(Color.RED);
+            	label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+            	panel.add(label, BorderLayout.CENTER);
             }
 		} else if (type == TYPE_USERS_BY_SECRETARY) {
 		    try {
                 Collection users = DaoManager.getUserDao().getTeachers(false);
                 panel = new ManageUsersTable(model, users).getPanel();
             } catch (Exception e) {
-                //TODO Sandrine: afficher un message d'erreur sur la fenêtre ...
-                //Je verrais bien ce message disant "erreur lors de la récupération des utilisateurs" en rouge au dessus des boutons à droite du tableau
+            	panel.setLayout(new BorderLayout());
+            	
+            	JLabel label = new JLabel("Erreur lors de la récupération des utilisateurs");
+            	Font font = new Font("Arial", Font.BOLD, 15);
+            	label.setFont(font);
+            	label.setForeground(Color.RED);
+            	label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+            	panel.add(label, BorderLayout.CENTER);
             }
 		} else if (type == TYPE_ROOMS)
 			panel = new ManageRoomsTable(model, modifyButton, removeButton).getPanel();
@@ -133,6 +151,16 @@ public class ManageElementsWindow {
 		newButton = new JButton(getActionButton("newButton", type));
 		addComponent(layout,layoutConstraints,newButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		manageButtonPanel.add(newButton);
+		
+		if (type == TYPE_USERS_BY_ADMIN) {
+			newButton2 = new JButton(getActionButton("newButton2", type));
+			addComponent(layout,layoutConstraints,newButton2,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+			manageButtonPanel.add(newButton2);
+	
+			newButton3 = new JButton(getActionButton("newButton3", type));
+			addComponent(layout,layoutConstraints,newButton3,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+			manageButtonPanel.add(newButton3);
+		}
 		
 		modifyButton = new JButton(getActionButton("modifyButton", type));
 		addComponent(layout,layoutConstraints,modifyButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
@@ -219,6 +247,10 @@ public class ManageElementsWindow {
 		else if (type == TYPE_USERS_BY_ADMIN || type == TYPE_USERS_BY_SECRETARY) {
 			if(nameButton.compareTo("newButton") == 0)
 				return ActionsList.getAction("AddTeacher");
+			else if(nameButton.compareTo("newButton2") == 0)
+				return ActionsList.getAction("AddSecretary");
+			else if(nameButton.compareTo("newButton3") == 0)
+				return ActionsList.getAction("AddAdministrator");
 			else if(nameButton.compareTo("modifyButton") == 0)
 				return ActionsList.getAction("ModifyUser");
 			else if(nameButton.compareTo("removeButton") == 0)
