@@ -261,13 +261,12 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setTypeCourse(String typeCourse) {
-		if (typeCourse.compareTo("cours magistraux") == 0)
-			magistral.setSelected(true);
-		
-		else if(typeCourse.compareTo("travaux dirigés") == 0)
+		if (TimetableDao.TYPES_COURSES[1].equals(typeCourse))
 			td.setSelected(true);
-		
-		tp.setSelected(true);
+		else if (TimetableDao.TYPES_COURSES[2].equals(typeCourse))
+			tp.setSelected(true);
+		else
+		    magistral.setSelected(true);
 	}
 	
 

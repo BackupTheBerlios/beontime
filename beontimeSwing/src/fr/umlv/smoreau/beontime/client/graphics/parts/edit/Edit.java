@@ -35,6 +35,7 @@ public class Edit extends JTree {
     private JPanel pane;
     private final JTree tree;
     private Subject subjectSelected;
+    private String courseTypeSelected;
     private static MainFrame mainFrame;
 
     public Edit(final BoTModel model, MainFrame mainFrame) {
@@ -92,16 +93,19 @@ public class Edit extends JTree {
                     ActionsList.getAction("RemoveSubject").setEnabled(false);
                     ActionsList.getAction("AddCourse").setEnabled(false);
                     subjectSelected = null;
+                    courseTypeSelected = null;
                 } else if (selected instanceof Subject) {
                     ActionsList.getAction("ModifySubject").setEnabled(true);
                     ActionsList.getAction("RemoveSubject").setEnabled(true);
                     ActionsList.getAction("AddCourse").setEnabled(true);
                     subjectSelected = (Subject) selected;
+                    courseTypeSelected = null;
                 } else if (selected instanceof String) {
                     ActionsList.getAction("ModifySubject").setEnabled(true);
                     ActionsList.getAction("RemoveSubject").setEnabled(true);
                     ActionsList.getAction("AddCourse").setEnabled(true);
                     subjectSelected = (Subject) treePath.getPathComponent(treePath.getPathCount()-2);
+                    courseTypeSelected = (String) selected;
                 }
             }
 		});
@@ -119,6 +123,10 @@ public class Edit extends JTree {
     
     public Subject getSubjectSelected() {
         return subjectSelected;
+    }
+    
+    public String getCourseTypeSelected() {
+        return courseTypeSelected;
     }
     
     

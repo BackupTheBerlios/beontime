@@ -201,6 +201,10 @@ public class MainFrame {
 		return edit.getSubjectSelected();
 	}
 	
+	public String getCourseTypeSelected() {
+		return edit.getCourseTypeSelected();
+	}
+	
 	public Unavailability getUnavailabilitySelected() {
 		//TODO à implémenter
 		return null;

@@ -65,6 +65,7 @@ public class AddCourse extends Action {
     		window.setEndHour(columns[columns.length-1]);
     	}
     	window.setCourseFormation(mainFrame.getFormationSelected());
+    	window.setTypeCourse(mainFrame.getCourseTypeSelected());
     	window.show();
     	
     	if (window.isOk()) {
