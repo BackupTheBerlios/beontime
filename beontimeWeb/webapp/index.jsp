@@ -10,7 +10,8 @@ import="fr.umlv.smoreau.beontime.dao.*,
 		java.text.SimpleDateFormat" %>
 
 <%
-SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd/MM/yyyy");
+SimpleDateFormat FORMAT_DAY  = new SimpleDateFormat("dd/MM/yyyy");
+SimpleDateFormat FORMAT_HOUR = new SimpleDateFormat("HH'h'mm");
 
 Calendar date = Calendar.getInstance();
 String week = request.getParameter("week");
@@ -21,18 +22,61 @@ if (year != null)
 	date.set(Calendar.YEAR, (new Integer(year)).intValue());
 date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
-Collection formations = DaoManager.getFormationDao().getFormations();
 String idFormation = request.getParameter("id_formation");
+Collection formations = DaoManager.getFormationDao().getFormations();
 
-String login = request.getParameter("login");
-String password = request.getParameter("password");
 User teacher = null;
-if (login != null && !"".equals(login) && password != null && !"".equals(password)) {
-	teacher = DaoManager.getUserDao().testLoginPwd(login, password);
-	if (teacher == null || !UserDao.TYPE_TEACHER.equals(teacher.getUserType()))
-		teacher = null;
+if (request.getParameter("disconnect") != null) {
+	session.removeAttribute("teacher");
+	if ("0".equals(idFormation))
+		idFormation = null;
+} else
+	teacher = (User) session.getAttribute("teacher");
+
+if (teacher == null) {
+	String login = request.getParameter("login");
+	String password = request.getParameter("password");
+
+	if (login != null && !"".equals(login) && password != null && !"".equals(password)) {
+		teacher = DaoManager.getUserDao().testLoginPwd(login, password);
+		if (teacher == null || !UserDao.TYPE_TEACHER.equals(teacher.getUserType()))
+			teacher = null;
+		else
+			session.putValue("teacher", teacher);
+	}
 }
 
+if (teacher == null && (date.get(Calendar.WEEK_OF_YEAR) - Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)) > 2)
+	idFormation = null;
+
+ArrangeCourses arranged = null;
+if (idFormation != null && !"".equals(idFormation)) {
+	TimetableFilter filter = new TimetableFilter();
+
+	if ("0".equals(idFormation))
+		filter.setTeacher(teacher);
+	else
+		filter.setFormation(new Formation(new Long(idFormation)));
+
+	Calendar begin = Calendar.getInstance();
+	begin.setTime(date.getTime());
+	begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+	begin.set(Calendar.HOUR_OF_DAY, 0);
+	begin.set(Calendar.MINUTE, 0);
+	begin.set(Calendar.SECOND, 0);
+	filter.setBeginPeriod(begin);
+
+	Calendar end = Calendar.getInstance();
+	end.setTime(date.getTime());
+	end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+	end.set(Calendar.HOUR_OF_DAY, 23);
+	end.set(Calendar.MINUTE, 59);
+	end.set(Calendar.SECOND, 59);
+	filter.setEndPeriod(end);
+
+	Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+	arranged = new ArrangeCourses(timetable.getCourses());
+}
 %>
 
 <html>
@@ -49,6 +93,18 @@ if (login != null && !"".equals(login) && password != null && !"".equals(passwor
 				color: #0000FF;
 				text-decoration:underline;
 				cursor: hand;
+			}
+			table.edt {
+				border-bottom: 1px black solid;
+				border-right: 1px black solid;
+			}
+			td.titre {
+				border: 1px black solid;
+				background-color: lightgrey;
+				text-align: center;
+			}
+			td.cours {
+				border-style: outset;
 			}
 		</style>
 	</head>
@@ -71,10 +127,6 @@ if (login != null && !"".equals(login) && password != null && !"".equals(passwor
 		
 		<fieldset>
 			<legend><strong>Identification</strong></legend>
-<%
-	
-%>
-
 			<form method="post" action="">
 				<table width="100%">
 					<tr>
@@ -102,13 +154,12 @@ if (login != null && !"".equals(login) && password != null && !"".equals(passwor
 						</td>
 						<td align="center">
 							<form method="post" action="">
-								<input type="hidden" name="login" value="<%=login %>" />
-								<input type="hidden" name="password" value="<%=password %>" />
 								<input type="hidden" name="id_formation" value="0" />
 								<input type="submit" value="Visualiser votre emploi du temps" class="link" />
 							</form>
 							<form method="post" action="">
-								<% if (!"0".equals(idFormation)) { %>
+								<input type="hidden" name="disconnect" />
+								<% if (!"0".equals(idFormation) && idFormation != null) { %>
 								<input type="hidden" name="id_formation" value="<%=idFormation %>" />
 								<input type="hidden" name="week" value="<%=date.get(Calendar.WEEK_OF_YEAR) %>" />
 								<input type="hidden" name="year" value="<%=date.get(Calendar.YEAR) %>" />
@@ -127,42 +178,13 @@ if (login != null && !"".equals(login) && password != null && !"".equals(passwor
 								<option value="<%=formation.getIdFormation() %>" <% if (formation.getIdFormation().toString().equals(idFormation)) { %>selected="selected"<% } %>><%=formation.getHeading() %></option>
 								<% } %>
 							</select>
-							<input type="hidden" name="login" value="<%=login %>" />
-							<input type="hidden" name="password" value="<%=password %>" />
 						</td>
 					</tr>
 				</table>
 			</form>
 		</fieldset>
 
-<% if (idFormation != null && !"".equals(idFormation)) { %>
-<%
-TimetableFilter filter = new TimetableFilter();
-
-if ("0".equals(idFormation))
-	filter.setTeacher(teacher);
-else
-	filter.setFormation(new Formation(new Long(idFormation)));
-
-Calendar begin = Calendar.getInstance();
-begin.setTime(date.getTime());
-begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-begin.set(Calendar.HOUR_OF_DAY, 0);
-begin.set(Calendar.MINUTE, 0);
-begin.set(Calendar.SECOND, 0);
-filter.setBeginPeriod(begin);
-
-Calendar end = Calendar.getInstance();
-end.setTime(date.getTime());
-end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-end.set(Calendar.HOUR_OF_DAY, 23);
-end.set(Calendar.MINUTE, 59);
-end.set(Calendar.SECOND, 59);
-filter.setEndPeriod(end);
-
-Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
-ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
-%>
+<% if (arranged != null) { %>
 		<br/><br/>
 		
 		<table align="center">
@@ -174,8 +196,6 @@ ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
 						tmp.setTime(date.getTime());
 						tmp.set(Calendar.WEEK_OF_YEAR, tmp.get(Calendar.WEEK_OF_YEAR)-1);
 						%>
-						<input type="hidden" name="login" value="<%=login %>" />
-						<input type="hidden" name="password" value="<%=password %>" />
 						<input type="hidden" name="week" value="<%=tmp.get(Calendar.WEEK_OF_YEAR) %>" />
 						<input type="hidden" name="year" value="<%=tmp.get(Calendar.YEAR) %>" />
 						<input type="hidden" name="id_formation" value="<%=idFormation %>" />
@@ -183,7 +203,7 @@ ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
 					</form>
 				</td>
 				<td>
-					<strong>Semaine du <%=FORMAT_DATE.format(date.getTime()) %></strong>
+					<strong>Semaine du <%=FORMAT_DAY.format(date.getTime()) %></strong>
 				</td>
 				<td>
 					<form method="post" action="">
@@ -191,13 +211,14 @@ ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
 						tmp = Calendar.getInstance();
 						tmp.setTime(date.getTime());
 						tmp.set(Calendar.WEEK_OF_YEAR, tmp.get(Calendar.WEEK_OF_YEAR)+1);
+						boolean disable = false;
+						if (teacher == null && (date.get(Calendar.WEEK_OF_YEAR) - Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)) >= 2)
+							disable = true;
 						%>
-						<input type="hidden" name="login" value="<%=login %>" />
-						<input type="hidden" name="password" value="<%=password %>" />
 						<input type="hidden" name="week" value="<%=tmp.get(Calendar.WEEK_OF_YEAR) %>" />
 						<input type="hidden" name="year" value="<%=tmp.get(Calendar.YEAR) %>" />
 						<input type="hidden" name="id_formation" value="<%=idFormation %>" />
-						<input type="submit" value=">" />
+						<input type="submit" value=">" <% if (disable) { %>disabled="disabled"<% } %> />
 					</form>
 				</td>
 			</tr>
@@ -205,7 +226,7 @@ ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
 
 		<br/>
 
-		<table width="100%" border="1">
+		<table width="100%" border="0" cellspacing="0" class="edt">
 			<%
 			int nbDay = ArrangeCourses.ALL_DAYS.length;
 			if (arranged.getCourses(ArrangeCourses.SUNDAY).size() == 0) {
@@ -217,23 +238,22 @@ ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
 			<tr>
 				<td rowspan="2"></td>
 				<% for (int i = arranged.getHourEarliest(); i < arranged.getHourLatest(); ++i) { %>
-				<td align="center" colspan="4"><strong><%=i %>H</strong></td>
+				<td colspan="4" class="titre"><strong><%=i %>H</strong></td>
 				<% } %>
 			</tr>
 			<tr>
 				<% for (int i = arranged.getHourEarliest(); i < arranged.getHourLatest(); ++i) { %>
-				<td>00</td>
-				<td>15</td>
-				<td>30</td>
-				<td>45</td>
+				<td class="titre">00</td>
+				<td class="titre">15</td>
+				<td class="titre">30</td>
+				<td class="titre">45</td>
 				<% } %>
 			</tr>
 			<% for (int i = 0; i < nbDay; ++i) { %>
 			<tr height="75">
-				<td><strong><%=ArrangeCourses.ALL_DAYS[i] %></strong></td>
+				<td class="titre"><strong><%=ArrangeCourses.ALL_DAYS[i] %></strong></td>
 				<%
 					int defaultHour = arranged.getHourEarliest();
-					//int defaultMinute = 0;
 					for (Iterator it = arranged.getCourses(ArrangeCourses.ALL_DAYS[i]).iterator(); it.hasNext(); ) {
 						Course course = (Course) it.next();
 						int beginHour = course.getBeginDate().get(Calendar.HOUR_OF_DAY);
@@ -252,9 +272,20 @@ ArrangeCourses arranged = new ArrangeCourses(timetable.getCourses());
 						colspan += minuteHour / 15;
 						if (colspan > 0) {
 				%>
-				<td align="center" colspan="<%=colspan %>" style="background-color:rgb(<%=course.getSubject().getColor().getRed() %>,<%=course.getSubject().getColor().getGreen() %>,<%=course.getSubject().getColor().getBlue() %>)">
+				<% String schedule = FORMAT_HOUR.format(course.getBeginDate().getTime()) + " / " + FORMAT_HOUR.format(course.getEndDate().getTime()); %>
+				<td title="<%=schedule %>" align="center" class="cours" colspan="<%=colspan %>" style="background-color:rgb(<%=course.getSubject().getColor().getRed() %>,<%=course.getSubject().getColor().getGreen() %>,<%=course.getSubject().getColor().getBlue() %>)">
 					<strong><%=course.getSubject().getHeading() %></strong>
+					<%
+						if (TimetableDao.TYPE_TD.equals(course.getIdCourseType().getNameCourseType()))
+							out.println("(TD)");
+						else if (TimetableDao.TYPE_TP.equals(course.getIdCourseType().getNameCourseType()))
+							out.println("(TP)");
+					%>
 					<br/>
+					<% if (beginHour < defaultHour) { %>
+					<%=schedule %>
+					<br/>
+					<% } %>
 					<%
 						for (Iterator it2 = course.getTeachers().iterator(); it2.hasNext(); ) {
 							User t = (User) it2.next();
