@@ -66,11 +66,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	    fireTableDataChanged();
 	}
 	public String getColumnName(int columnIndex) {
-
-		System.out.println(columnIndex%4);
 		return plage[columnIndex%4];
-		
-		
 	}
    
 }

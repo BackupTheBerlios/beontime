@@ -48,8 +48,10 @@ public class AddCourse extends Action {
         int[] columns = table.getSelectedColumns();
         int[] rows    = table.getSelectedRows();
     	AddModifyCourseWindow window = new AddModifyCourseWindow();
-    	window.setStartHour(columns[0]);
-    	window.setEndHour(columns[columns.length-1]);
+    	if (columns.length>1){
+    		window.setStartHour(columns[0]);
+    		window.setEndHour(columns[columns.length-1]);
+    	}
         window.show();
 
         int [] row=new int[]{rows[0]};
@@ -95,7 +97,6 @@ public class AddCourse extends Action {
           if (isForeground) {
             cellAtt.setForeground(color, rows, columns);
           } else {
-          	System.out.println("a");
             cellAtt.setBackground(color, rows, columns);
           }
           table.clearSelection();
