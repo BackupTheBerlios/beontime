@@ -14,8 +14,8 @@ public class CourseFilter extends Course implements Filter {
         corres = new HashMap();
         corres.put("IdCourse", "id_cours");
         corres.put("IdCourseType.IdCourseType", "id_type_cours");
-        corres.put("BeginDate", "date_debut");
-        corres.put("EndDate", "date_fin");
+        //corres.put("BeginDate", "date_debut");
+        //corres.put("EndDate", "date_fin");
         corres.put("NbWeeks", "nb_semaine");
         corres.put("IdFormation", "id_formation");
     }

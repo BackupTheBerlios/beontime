@@ -1,7 +1,9 @@
 package fr.umlv.smoreau.beontime.model.timetable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
@@ -54,6 +56,24 @@ public class Timetable implements Serializable {
     public void setCourses(Collection courses) {
         this.courses = courses;
     }
+    
+    public Collection getCourses(Subject subject) {
+        ArrayList list = new ArrayList();
+        for (Iterator i = courses.iterator(); i.hasNext(); ) {
+            Course course = (Course) i.next();
+            if (course.getSubject().equals(subject))
+                list.add(course);
+        }
+        return list;
+    }
+    
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+    
+    public void removeCourse(Course course) {
+        courses.remove(course);
+    }
 
     /**
      * @return Renvoie subjects.
@@ -64,6 +84,14 @@ public class Timetable implements Serializable {
     
     public void setSubjects(Collection subjects) {
         this.subjects = subjects;
+    }
+    
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+    }
+    
+    public void removeSubject(Subject subject) {
+        subjects.remove(subject);
     }
     
     public Collection getGroups() {

@@ -43,6 +43,10 @@ public abstract class Dao extends UnicastRemoteObject {
         session.update(object);
     }
     
+    protected void remove(Object object, Session session) throws HibernateException {
+        session.delete(object);
+    }
+    
     protected void remove(String databaseName, Filter filter, Session session) throws HibernateException {
         String f = filter.getHQLQuery();
         if (f.length() != 0)

@@ -12,6 +12,7 @@ import fr.umlv.smoreau.beontime.dao.TimetableDaoImpl;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
@@ -91,7 +92,7 @@ public class TimetableDaoTest extends TestCase {
 	        User person = new User();
 	        person.setIdUser(new Long(10));
 	        person.setUserType("enseignant");
-	        course.addTeacherDirecting(person);
+	        course.addTeacherDirecting(new IsDirectedByCourseTeacher(person,course));
             timetableDao.modifyCourse(course);
         
         	// modification du cours, relation avec la matière et le groupe

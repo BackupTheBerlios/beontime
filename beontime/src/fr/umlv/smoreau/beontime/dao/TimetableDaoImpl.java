@@ -84,8 +84,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	                course.setTeachersDirecting(new HashSet());
 	                for (Iterator j = teachers.iterator(); j.hasNext(); ) {
 	                    IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) j.next();
-	                    Collection tmp = userDao.getTeachers(new UserFilter(new User(isDirected.getIdTeacher())));
-	                    course.addTeacherDirecting(tmp.toArray()[0]);
+	                    //Collection tmp = userDao.getTeachers(new UserFilter(new User(isDirected.getIdTeacher())));
+	                    course.addTeacherDirecting(isDirected/*(User) tmp.toArray()[0]*/);
 	                }
                 }
             }
@@ -182,7 +182,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Collection c = course.getTeachersDirecting();
             if (c != null) {
 	            for (Iterator i = c.iterator(); i.hasNext(); ) {
-	                IsDirectedByCourseTeacher isDirected = new IsDirectedByCourseTeacher((User) i.next(), course);
+	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();//new IsDirectedByCourseTeacher((User) i.next(), course);
 	                add(isDirected, session);
 	            }
             }
@@ -224,7 +224,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Collection c = course.getTeachersDirecting();
             if (c != null) {
 	            for (Iterator i = c.iterator(); i.hasNext(); ) {
-	                IsDirectedByCourseTeacher isDirected = new IsDirectedByCourseTeacher((User) i.next(), course);
+	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();//new IsDirectedByCourseTeacher((User) i.next(), course);
                 	addOrModify(isDirected, session);
 	            }
             }
@@ -265,7 +265,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Collection c = course.getTeachersDirecting();
             if (c != null) {
 	            for (Iterator i = c.iterator(); i.hasNext(); ) {
-	                IsDirectedByCourseTeacher isDirected = new IsDirectedByCourseTeacher((User) i.next(), course);
+	                //IsDirectedByCourseTeacher isDirected = new IsDirectedByCourseTeacher((User) i.next(), course);
+	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();
 	                remove(TABLE_ISDIRECTING, new _IsDirectedByCourseTeacherFilter(isDirected), session);
 	            }
             }
