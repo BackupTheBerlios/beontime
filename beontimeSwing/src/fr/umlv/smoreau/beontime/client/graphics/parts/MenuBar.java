@@ -12,6 +12,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.dao.UserDao;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
@@ -117,12 +118,16 @@ public class MenuBar extends JMenuBar {
 			
 			JMenu local = new JMenu("Local"); 
 			local.add(new JMenuItem(ActionsList.getAction("AddRoom")));
+			local.add(new JMenuItem(ActionsList.getAction("ModifyRoom")));
+			local.add(new JMenuItem(ActionsList.getAction("RemoveRoom")));
 			local.add(new JMenuItem(ActionsList.getAction("ManageRooms")));
 			
 			emploi_du_temps.add(local);
 			
 			JMenu materiel = new JMenu("Matériel"); 
 			materiel.add(new JMenuItem(ActionsList.getAction("AddMaterial")));
+			materiel.add(new JMenuItem(ActionsList.getAction("ModifyMaterial")));
+			materiel.add(new JMenuItem(ActionsList.getAction("RemoveMaterial")));
 			materiel.add(new JMenuItem(ActionsList.getAction("ManageMaterials")));
 			
 			emploi_du_temps.add(materiel);
@@ -163,6 +168,7 @@ public class MenuBar extends JMenuBar {
 	
 	private class MenuBarListener extends DefaultBoTListener {
 		public void refreshAll(BoTEvent e) {
+		    Timetable timetable = e.getTimetable();
 		    ActionsList.getAction("CloseTimetable").setEnabled(true);
 		    ActionsList.getAction("PrintTimetable").setEnabled(true);
 		    ActionsList.getAction("ExportTimetable").setEnabled(true);
@@ -170,11 +176,19 @@ public class MenuBar extends JMenuBar {
 		    ActionsList.getAction("ShowTimetableHorizontal").setEnabled(true);
 		    //ActionsList.getAction("ShowTimetableByWeek").setEnabled(true);
 		    //ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
-		    ActionsList.getAction("AddSubject").setEnabled(true);
-		    ActionsList.getAction("ManageSubjects").setEnabled(true);
-		    ActionsList.getAction("AddGroup").setEnabled(true);
-		    ActionsList.getAction("ManageGroups").setEnabled(true);
-		    ActionsList.getAction("GenerateGroups").setEnabled(true);
+		    if (timetable.getRoom() != null) {
+		        ActionsList.getAction("ModifyRoom").setEnabled(true);
+		        ActionsList.getAction("RemoveRoom").setEnabled(true);
+		    } else if (timetable.getMaterial() != null) {
+		        ActionsList.getAction("ModifyMaterial").setEnabled(true);
+		        ActionsList.getAction("RemoveMaterial").setEnabled(true);
+		    } else {
+			    ActionsList.getAction("AddSubject").setEnabled(true);
+			    ActionsList.getAction("ManageSubjects").setEnabled(true);
+			    ActionsList.getAction("AddGroup").setEnabled(true);
+			    ActionsList.getAction("ManageGroups").setEnabled(true);
+			    ActionsList.getAction("GenerateGroups").setEnabled(true);
+		    }
 		}
 		
 		public void closeTimetable(BoTEvent e) {
@@ -190,6 +204,10 @@ public class MenuBar extends JMenuBar {
 		    ActionsList.getAction("AddGroup").setEnabled(false);
 		    ActionsList.getAction("ManageGroups").setEnabled(false);
 		    ActionsList.getAction("GenerateGroups").setEnabled(false);
+		    ActionsList.getAction("ModifyRoom").setEnabled(false);
+	        ActionsList.getAction("RemoveRoom").setEnabled(false);
+	        ActionsList.getAction("ModifyMaterial").setEnabled(false);
+	        ActionsList.getAction("RemoveMaterial").setEnabled(false);
 		}
 	}
 }

@@ -30,8 +30,11 @@ public class RemoveRoom extends Action {
      */
     public void actionPerformed(ActionEvent arg0) {
         Room room = mainFrame.getRoomSelected();
-        if (room == null)
-            return;
+        if (room == null) {
+            room = mainFrame.getModel().getTimetable().getRoom();
+            if (room == null)
+                return;
+        }
         
         int select = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer le local '"+room.getName()+"'", "Confirmation", JOptionPane.YES_NO_OPTION);
         if (select == JOptionPane.YES_OPTION) {
@@ -45,6 +48,8 @@ public class RemoveRoom extends Action {
                 DaoManager.getElementDao().removeRoom(room);
 
                 mainFrame.getModel().fireRefreshRoom(room, BoTModel.TYPE_REMOVE);
+                if (mainFrame.getRoomSelected() == null)
+                    mainFrame.getModel().fireCloseTimetable();
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

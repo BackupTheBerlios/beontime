@@ -178,13 +178,13 @@ public class ManageElementsWindow {
 		}
 		
 		modifyButton = new JButton(getActionButton("modifyButton", type));
+		modifyButton.getAction().setEnabled(false);
 		addComponent(layout,layoutConstraints,modifyButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		modifyButton.setEnabled(false);
 		manageButtonPanel.add(modifyButton);
 		
 		removeButton = new JButton(getActionButton("removeButton", type));
+		removeButton.getAction().setEnabled(false);
 		addComponent(layout,layoutConstraints,removeButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		removeButton.setEnabled(false);
 		manageButtonPanel.add(removeButton);
 		
 		

@@ -31,8 +31,11 @@ public class ModifyRoom extends Action {
      */
     public void actionPerformed(ActionEvent arg0) {
         Room room = mainFrame.getRoomSelected();
-        if (room == null)
-            return;
+        if (room == null) {
+            room = mainFrame.getModel().getTimetable().getRoom();
+            if (room == null)
+                return;
+        }
 
         AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_ROOM);
         window.setEquipmentName(room.getName());

@@ -30,8 +30,11 @@ public class RemoveMaterial extends Action {
      */
     public void actionPerformed(ActionEvent arg0) {
         Material material = mainFrame.getMaterialSelected();
-        if (material == null)
-            return;
+        if (material == null) {
+            material = mainFrame.getModel().getTimetable().getMaterial();
+            if (material == null)
+                return;
+        }
         
         int select = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer le matériel '"+material.getName()+"'", "Confirmation", JOptionPane.YES_NO_OPTION);
         if (select == JOptionPane.YES_OPTION) {
@@ -45,10 +48,11 @@ public class RemoveMaterial extends Action {
                 DaoManager.getElementDao().removeMaterial(material);
 
                 mainFrame.getModel().fireRefreshMaterial(material, BoTModel.TYPE_REMOVE);
+                if (mainFrame.getMaterialSelected() == null)
+                    mainFrame.getModel().fireCloseTimetable();
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

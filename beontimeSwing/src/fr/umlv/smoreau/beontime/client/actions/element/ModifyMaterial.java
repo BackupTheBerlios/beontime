@@ -31,8 +31,11 @@ public class ModifyMaterial extends Action {
      */
     public void actionPerformed(ActionEvent arg0) {
         Material material = mainFrame.getMaterialSelected();
-        if (material == null)
-            return;
+        if (material == null) {
+            material = mainFrame.getModel().getTimetable().getMaterial();
+            if (material == null)
+                return;
+        }
 
         AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_MATERIAL);
         window.setEquipmentName(material.getName());

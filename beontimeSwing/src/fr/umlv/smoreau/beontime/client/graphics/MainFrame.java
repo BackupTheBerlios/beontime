@@ -260,8 +260,13 @@ public class MainFrame {
 	}
 	
 	public void setMaterialSelected(Material material) {
-		ActionsList.getAction("ModifyMaterial").setEnabled(material != null);
-		ActionsList.getAction("RemoveMaterial").setEnabled(material != null);
+	    boolean enable;
+	    if (material == null && (model.getTimetable() == null || model.getTimetable().getMaterial() == null))
+	        enable = false;
+	    else
+	        enable = true;
+		ActionsList.getAction("ModifyMaterial").setEnabled(enable);
+		ActionsList.getAction("RemoveMaterial").setEnabled(enable);
 
 	    this.materialSelected = material;
 	}
@@ -271,8 +276,13 @@ public class MainFrame {
 	}
 	
 	public void setRoomSelected(Room room) {
-		ActionsList.getAction("ModifyRoom").setEnabled(room != null);
-		ActionsList.getAction("RemoveRoom").setEnabled(room != null);
+	    boolean enable;
+	    if (room == null && (model.getTimetable() == null || model.getTimetable().getRoom() == null))
+	        enable = false;
+	    else
+	        enable = true;
+		ActionsList.getAction("ModifyRoom").setEnabled(enable);
+		ActionsList.getAction("RemoveRoom").setEnabled(enable);
 
 	    this.roomSelected = room;
 	}
