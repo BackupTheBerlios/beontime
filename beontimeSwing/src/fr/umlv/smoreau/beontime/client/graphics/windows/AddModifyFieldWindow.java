@@ -112,7 +112,6 @@ public class AddModifyFieldWindow {
 					}
 				
 				formFrame.pack();
-				
 			}
 			
 			if (nbGroupsChoose < nbGroupsVisible) {
@@ -192,21 +191,6 @@ public class AddModifyFieldWindow {
     	
     	
     	
-    	//initTypeCoursePanel(courseMPanel, 1);
-    	//addComponent(AMFWLayout,layoutConstraints,courseMPanel,1,6,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	//AMFWFrame.getContentPane().add(courseMPanel);
-    	
-    	//initTypeCoursePanel(tdPanel, 2);
-    	//addComponent(AMFWLayout,layoutConstraints,tdPanel,1,7,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	//AMFWFrame.getContentPane().add(tdPanel);
-    	
-    	//initTypeCoursePanel(tpPanel, 3);
-    	//addComponent(AMFWLayout,layoutConstraints,tpPanel,1,8,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	//AMFWFrame.getContentPane().add(tpPanel);
-    	
-    	
-    	
-    	
     	
     	magistrauxLabel = new JLabel("Magistraux");
     	addComponent(AMFWLayout,layoutConstraints,magistrauxLabel,2,5,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
@@ -234,7 +218,6 @@ public class AddModifyFieldWindow {
 			}
     		
     	});
-    	//magistrauxJcb.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, courseMPanel, 1));
     	addComponent(AMFWLayout,layoutConstraints,magistrauxJcb,3,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMFWFrame.getContentPane().add(magistrauxJcb);
     	
@@ -357,42 +340,42 @@ public class AddModifyFieldWindow {
         case 3:  typeCourseLabel.setText("Travaux pratiques :"); break;
     	}
     	
-    	addComponent(layout,layoutConstraints,typeCourseLabel,1,1,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,typeCourseLabel,1,1,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,7,10));
     	panel.add(typeCourseLabel);
     	
     
-    	addComponent(layout,layoutConstraints,nbGroupsLabel,1,2,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,nbGroupsLabel,1,2,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(7,10,7,10));
     	panel.add(nbGroupsLabel);
     	
     	
     	nbGroupsJcb.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-    	addComponent(layout,layoutConstraints,nbGroupsJcb,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,nbGroupsJcb,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
     	panel.add(nbGroupsJcb);
     	
     
     	nameGroupsPanel.setLayout(new BoxLayout(nameGroupsPanel, BoxLayout.Y_AXIS));
     	nameGroupsPanel.add(nameGroupLabel);
     	nameGroupsPanel.add(Box.createVerticalStrut(13));
-    	addComponent(layout,layoutConstraints,nameGroupsPanel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,nameGroupsPanel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,15,10));
     	panel.add(nameGroupsPanel);
     	
     	chooseNameGroupsPanel.setLayout(new BoxLayout(chooseNameGroupsPanel, BoxLayout.Y_AXIS));
     	chooseNameGroupsPanel.add(nameGroupJcb);
     	chooseNameGroupsPanel.add(Box.createVerticalStrut(5));
-    	addComponent(layout,layoutConstraints,chooseNameGroupsPanel,2,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,chooseNameGroupsPanel,2,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(7,10,15,10));
     	panel.add(chooseNameGroupsPanel);
     	
     	teacherGroupsPanel.setLayout(new BoxLayout(teacherGroupsPanel, BoxLayout.Y_AXIS));
     	teacherGroupsPanel.add(teacherGroupsLabel);
     	teacherGroupsPanel.add(Box.createVerticalStrut(13));
-    	addComponent(layout,layoutConstraints,teacherGroupsPanel,6,3,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,teacherGroupsPanel,6,3,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(7,10,15,10));
     	panel.add(teacherGroupsPanel);
     	
    
     	chooseTeacherGroupsPanel.setLayout(new BoxLayout(chooseTeacherGroupsPanel, BoxLayout.Y_AXIS));
     	chooseTeacherGroupsPanel.add(teacherGroupsJcB);
     	chooseTeacherGroupsPanel.add(Box.createVerticalStrut(5));
-    	addComponent(layout,layoutConstraints,chooseTeacherGroupsPanel,8,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+    	addComponent(layout,layoutConstraints,chooseTeacherGroupsPanel,8,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(7,10,15,10));
     	panel.add(chooseTeacherGroupsPanel);
     }
     
@@ -410,6 +393,7 @@ public class AddModifyFieldWindow {
      * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
      */
     public void show() {
+
     	AMFWFrame.pack();
     	AMFWFrame.setResizable(false);
     	AMFWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
