@@ -103,7 +103,6 @@ public class AddCourse extends Action {
     	        course.addTeacherDirecting(new IsDirectedByCourseTeacher((User) i.next(),course));
     	    
     	    Collection rooms = window.getPlaceCourse();
-    	    System.out.println(rooms.size());
     	    for (Iterator i = rooms.iterator(); i.hasNext(); )
     	        course.addRoom((Room) i.next());
     	    
@@ -122,7 +121,7 @@ public class AddCourse extends Action {
                     }
                 }
                 
-                DaoManager.getTimetableDao().addCourse(course);
+                course = DaoManager.getTimetableDao().addCourse(course);
                 course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
                 course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
                 mainFrame.getModel().getTimetable().addCourse(course);

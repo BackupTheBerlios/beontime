@@ -57,7 +57,7 @@ public class AddSubject extends Action {
             subject.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
             
             try {
-                DaoManager.getTimetableDao().addSubject(subject);
+                subject = DaoManager.getTimetableDao().addSubject(subject);
                 mainFrame.getModel().getTimetable().addSubject(subject);
                 mainFrame.getModel().fireRefreshSubject(subject, BoTModel.TYPE_ADD);
                 
