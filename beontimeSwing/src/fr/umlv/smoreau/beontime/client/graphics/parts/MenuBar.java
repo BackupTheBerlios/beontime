@@ -11,6 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
+import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
@@ -183,8 +184,10 @@ public class MenuBar extends JMenuBar {
 		        ActionsList.getAction("ModifyMaterial").setEnabled(true);
 		        ActionsList.getAction("RemoveMaterial").setEnabled(true);
 		    } else if (timetable.getGroup() != null) {
-		        ActionsList.getAction("ModifyGroup").setEnabled(true);
-		        ActionsList.getAction("RemoveGroup").setEnabled(true);
+		        if (!GroupDao.DEFAULT_GROUP_NAME.equals(timetable.getGroup().getHeading())) {
+			        ActionsList.getAction("ModifyGroup").setEnabled(true);
+			        ActionsList.getAction("RemoveGroup").setEnabled(true);
+		        }
 		    } else if (timetable.getFormation() != null) {
 		        ActionsList.getAction("ModifyFormation").setEnabled(true);
 		    }

@@ -36,6 +36,7 @@ import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.MultiSpanCellTable;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.View;
+import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.Unavailability;
@@ -279,7 +280,7 @@ public class MainFrame {
 	
 	public void setGroupSelected(Group group) {
 	    boolean enable;
-	    if (group == null && (model.getTimetable() == null || model.getTimetable().getGroup() == null))
+	    if ((group == null || GroupDao.DEFAULT_GROUP_NAME.equals(group.getHeading())) && (model.getTimetable() == null || model.getTimetable().getGroup() == null || GroupDao.DEFAULT_GROUP_NAME.equals(model.getTimetable().getGroup().getHeading())))
 	        enable = false;
 	    else
 	        enable = true;

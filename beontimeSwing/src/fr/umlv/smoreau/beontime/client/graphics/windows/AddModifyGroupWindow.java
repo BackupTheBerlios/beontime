@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
+import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
 
 /**
@@ -130,6 +131,8 @@ public class AddModifyGroupWindow {
     
     public void setIntitule(String intitule) {
         intituleGroupJtf.setText(intitule);
+        if (GroupDao.DEFAULT_GROUP_NAME.equals(intitule))
+            intituleGroupJtf.setEnabled(false);
     }
     
     public boolean isOk() {
