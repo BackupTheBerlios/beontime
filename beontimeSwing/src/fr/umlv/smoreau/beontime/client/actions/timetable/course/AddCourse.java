@@ -57,24 +57,6 @@ public class AddCourse extends Action {
     	    course.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
     	    
     	    course.setSubject(mainFrame.getSubjectSelected());
-
-    	    Calendar beginDate = Calendar.getInstance();
-    	    beginDate.setTime(window.getDateCourse());
-    	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
-    	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
-    	    beginDate.set(Calendar.SECOND, 0);
-    	    beginDate.set(Calendar.MILLISECOND, 0);
-    	    course.setBeginDate(beginDate);
-    	    
-    	    Calendar endDate = Calendar.getInstance();
-    	    endDate.setTime(window.getDateCourse());
-    	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+1);
-    	    endDate.set(Calendar.MINUTE, window.getEndMinute());
-    	    endDate.set(Calendar.SECOND, 0);
-    	    endDate.set(Calendar.MILLISECOND, 0);
-    	    course.setEndDate(endDate);
-    	    
-    	    course.setNbWeeks(new Integer(window.getNbWeeksCourse()));
     	    
     	    TakePartGroupSubjectCourse takePart = new TakePartGroupSubjectCourse();
     	    takePart.setIdGroup(window.getCourseGroup().getIdGroup());
@@ -104,11 +86,32 @@ public class AddCourse extends Action {
                     }
                 }
                 
-                course = DaoManager.getTimetableDao().addCourse(course);
-                course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
-                course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
-                mainFrame.getModel().getTimetable().addCourse(course);
-                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
+        	    Calendar beginDate = Calendar.getInstance();
+        	    beginDate.setTime(window.getDateCourse());
+        	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
+        	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
+        	    beginDate.set(Calendar.SECOND, 0);
+        	    beginDate.set(Calendar.MILLISECOND, 0);
+        	    Calendar endDate = Calendar.getInstance();
+        	    endDate.setTime(window.getDateCourse());
+        	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+1);
+        	    endDate.set(Calendar.MINUTE, window.getEndMinute());
+        	    endDate.set(Calendar.SECOND, 0);
+        	    endDate.set(Calendar.MILLISECOND, 0);
+                
+                for (int i = 0; i < window.getNbWeeksCourse(); ++i) {
+	        	    course.setBeginDate(beginDate);
+	        	    course.setEndDate(endDate);
+	                
+	                course = DaoManager.getTimetableDao().addCourse(course);
+	                course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
+	                course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
+	                mainFrame.getModel().getTimetable().addCourse(course);
+	                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
+	                
+	                beginDate.set(Calendar.DAY_OF_YEAR, beginDate.get(Calendar.DAY_OF_YEAR) + 7);
+	                endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7);
+                }
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
