@@ -53,7 +53,7 @@ public class Connect extends Action {
                 JOptionPane.showMessageDialog(null, "Authentification incorrecte", "Erreur", JOptionPane.ERROR_MESSAGE);
                 actionPerformed(null);
             } else {
-                mainFrame.setUser(user);
+                mainFrame.setUserConnected(user);
             }
         } catch (RemoteException e) {
             JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);

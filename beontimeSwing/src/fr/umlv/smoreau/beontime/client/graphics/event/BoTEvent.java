@@ -5,6 +5,7 @@ import java.util.EventObject;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -13,6 +14,7 @@ public class BoTEvent extends EventObject {
 	private Timetable timetable;
 	private Course course;
 	private Subject subject;
+	private User user;
 
 	public BoTEvent(Object source, Timetable timetable) {
 		super(source);
@@ -29,6 +31,11 @@ public class BoTEvent extends EventObject {
 		this.subject = subject;
 	}
 	
+	public BoTEvent(Object source, User user) {
+		super(source);
+		this.user = user;
+	}
+	
 	public Timetable getTimetable() {
 	    return timetable;
 	}
@@ -39,5 +46,9 @@ public class BoTEvent extends EventObject {
 	
 	public Subject getSubject() {
 	    return subject;
+	}
+	
+	public User getUser() {
+	    return user;
 	}
 }

@@ -36,7 +36,7 @@ public class ManageUsers extends Action {
      */
     public void actionPerformed(ActionEvent arg0) {
         ManageElementsWindow window;
-        if (UserDao.TYPE_ADMIN.equals(mainFrame.getUser().getUserType()))
+        if (UserDao.TYPE_ADMIN.equals(mainFrame.getUserConnected().getUserType()))
         	window = new ManageElementsWindow(ManageElementsWindow.TYPE_USERS_BY_ADMIN);
         else
             window = new ManageElementsWindow(ManageElementsWindow.TYPE_USERS_BY_SECRETARY);

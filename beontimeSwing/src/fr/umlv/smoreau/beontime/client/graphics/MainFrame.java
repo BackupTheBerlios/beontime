@@ -45,7 +45,8 @@ public class MainFrame {
 	private static final MainFrame INSTANCE = new MainFrame();
 	
 	private BoTModel model;
-	private User user;
+	private User userConnected;
+	private User userSelected;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
@@ -182,7 +183,7 @@ public class MainFrame {
     }
 
 	public void open() {
-        menuBar = new MenuBar(this, model, user.getUserType());
+        menuBar = new MenuBar(this, model, userConnected.getUserType());
 		mainFrame.setJMenuBar(menuBar);
         buttonBar = new ButtonBar(this);
         splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
@@ -231,12 +232,20 @@ public class MainFrame {
 		return null;
 	}
 	
-	public User getUser() {
-		return user;
+	public User getUserConnected() {
+		return userConnected;
 	}
 	
-	public void setUser(User user) {
-	    this.user = user;
+	public void setUserConnected(User user) {
+	    this.userConnected = user;
+	}
+	
+	public User getUserSelected() {
+		return userSelected;
+	}
+	
+	public void setUserSelected(User user) {
+	    this.userSelected = user;
 	}
 	
 	public Material getMaterialSelected() {

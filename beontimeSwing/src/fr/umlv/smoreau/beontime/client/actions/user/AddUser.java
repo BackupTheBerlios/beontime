@@ -12,6 +12,7 @@ import net.sf.hibernate.HibernateException;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUserWindow;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
@@ -54,7 +55,9 @@ public class AddUser extends Action {
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 md.update(password.getBytes());
                 user.setPassword(new String(md.digest()));
-                DaoManager.getUserDao().addUser(user);
+                user = DaoManager.getUserDao().addUser(user);
+                
+                mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_ADD);
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès\nLogin: "+login+"\nMot de passe: "+password, "Login et mot de passe", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

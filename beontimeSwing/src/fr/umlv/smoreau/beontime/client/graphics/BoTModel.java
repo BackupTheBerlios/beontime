@@ -7,6 +7,7 @@ import fr.umlv.smoreau.beontime.client.graphics.event.BoTListener;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -92,6 +93,24 @@ public class BoTModel {
 				    ((BoTListener) listeners[i + 1]).modifySubject(event);
 				else if (type == TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeSubject(event);
+			}
+		}
+	}
+	
+	public void fireRefreshUser(User user, int type) throws InterruptedException {
+	    BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this, user);
+				if (type == TYPE_ADD)
+				    ((BoTListener) listeners[i + 1]).addUser(event);
+				else if (type == TYPE_MODIFY)
+				    ((BoTListener) listeners[i + 1]).modifyUser(event);
+				else if (type == TYPE_REMOVE)
+				    ((BoTListener) listeners[i + 1]).removeUser(event);
 			}
 		}
 	}

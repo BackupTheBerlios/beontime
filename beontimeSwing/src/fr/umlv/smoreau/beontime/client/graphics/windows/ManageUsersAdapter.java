@@ -1,84 +1,37 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class ManageUsersAdapter implements TableModel {
-
-	
 	private final EventListenerList list;
-	private BoTModel model;
-	private ArrayList listUsers;
+	private User[] users;
 	private final static String[] columnNames = {"Nom","Prénom","Courriel"};
 	
 	
-	public ManageUsersAdapter(BoTModel model) {
-		this.model = model;
+	public ManageUsersAdapter(BoTModel model, Collection users) {
 		this.list = new EventListenerList();
-		
-		//TODO pour tester en local
-		User user1 = new User(new Long(1), "enseignant"); 
-		user1.setName("Nom1");
-		user1.setFirstName("prenom1");
-		user1.setEMail("user1@yahoo.fr");
-		
-		User user2 = new User(new Long(2), "enseignant"); 
-		user2.setName("Nom2");
-		user2.setFirstName("prenom2");
-		user2.setEMail("user2@yahoo.fr");
-		
-		User user3 = new User(new Long(3), "enseignant"); 
-		user3.setName("Nom3");
-		user3.setFirstName("prenom3");
-		user3.setEMail("user3@yahoo.fr");
-		
-		User user4 = new User(new Long(4), "enseignant"); 
-		user4.setName("Nom4");
-		user4.setFirstName("prenom4");
-		user4.setEMail("user4@yahoo.fr");
-		
-		User user5 = new User(new Long(5), "enseignant"); 
-		user5.setName("Nom5");
-		user5.setFirstName("prenom5");
-		user5.setEMail("user5@yahoo.fr");
-		//finTODO
-		
-		
-		listUsers = new ArrayList();
-		listUsers.add(user1);
-		listUsers.add(user2);
-		listUsers.add(user3);
-		listUsers.add(user4);
-		listUsers.add(user5);
-		
-		model.addBoTListener(new ManageUsersListener(this));
+		this.users = (User[]) users.toArray(new User[users.size()]);
+
+		model.addBoTListener(new ManageUsersListener());
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
 	public int getRowCount() {
-		
-		return listUsers.size();
+		return users.length;
 	}
 
 	/* (non-Javadoc)
@@ -99,7 +52,6 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getColumnClass(int)
 	 */
 	public Class getColumnClass(int columnIndex) {
-		// TODO Auto-generated method stub
 		return Object.class;
 	}
 
@@ -107,7 +59,6 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#isCellEditable(int, int)
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -115,18 +66,15 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		User user  = (User)listUsers.get(rowIndex);
-		
-		switch(columnIndex) {
-		
-		case 0: return user.getName();
-		case 1: return user.getFirstName();
-		case 2: return user.getEMail();
-		}
-		
-		throw new IllegalArgumentException("colonne invalide ("+rowIndex+','+columnIndex+')');
-		
+	    if (rowIndex < users.length) {
+		    switch(columnIndex) {
+		    	case 0: return users[rowIndex].getName();
+		    	case 1: return users[rowIndex].getFirstName();
+		    	case 2: return users[rowIndex].getEMail();
+		    }
+	    }
+	    
+	    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
 	}
 	
 
@@ -134,18 +82,11 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-
 	}
 
-	
-	/* (non-Javadoc)
-	 * 
-	 */
+
 	public Object getObjectAt(int rowIndex) {
-		
-		return listUsers.get(rowIndex);
-				
+		return users[rowIndex];
 	}
 	
 	
@@ -154,22 +95,30 @@ public class ManageUsersAdapter implements TableModel {
 	 */
 	public void addTableModelListener(TableModelListener l) {
 		list.add(TableModelListener.class, l);
-
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#removeTableModelListener(javax.swing.event.TableModelListener)
 	 */
 	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-		 list.remove(TableModelListener.class, l);
+		list.remove(TableModelListener.class, l);
 	}
 
-	private class ManageUsersListener extends DefaultBoTListener {
-		private TableModel source;
 
-		public ManageUsersListener(TableModel source) {
-			this.source = source;
-		}	
+	private class ManageUsersListener extends DefaultBoTListener {
+	    public void addUser(BoTEvent e) throws InterruptedException {
+	        User user = (User) e.getUser();
+	        //TODO Ajoute la ligne du nouvel utilisateur
+	    }
+
+	    public void modifyUser(BoTEvent e) throws InterruptedException {
+	        User user = (User) e.getUser();
+	        //TODO Modifie la ligne de l'utilisateur modifié
+	    }
+	    
+	    public void removeUser(BoTEvent e) throws InterruptedException {
+	        User user = (User) e.getUser();
+	        //TODO Supprime la ligne de l'utilisateur supprimé
+	    }
 	}
 }

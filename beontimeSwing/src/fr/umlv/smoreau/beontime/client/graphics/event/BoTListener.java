@@ -19,4 +19,10 @@ public interface BoTListener extends EventListener {
 	public void modifySubject(BoTEvent e) throws InterruptedException;
 	
 	public void removeSubject(BoTEvent e) throws InterruptedException;
+	
+	public void addUser(BoTEvent e) throws InterruptedException;
+	
+	public void modifyUser(BoTEvent e) throws InterruptedException;
+	
+	public void removeUser(BoTEvent e) throws InterruptedException;
 }

@@ -1,15 +1,9 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Collection;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,28 +11,24 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class ManageUsersTable extends JTable {
-	
 	private JPanel panel;
 	private final JTable table;
 	private static MainFrame mainFrame;
-	private User userSelected;
+
 	
-	public ManageUsersTable(final BoTModel model, final JButton modifyButton, final JButton deleteButton) {
+	public ManageUsersTable(final BoTModel model, Collection users) {
 		super();
-		super.setModel(new ManageUsersAdapter(model));
+		super.setModel(new ManageUsersAdapter(model, users));
 		ManageUsersTable.mainFrame = MainFrame.getInstance();
-		userSelected = null;
 		
 		panel = new JPanel(new GridLayout(1, 0));
 		
@@ -48,14 +38,12 @@ public class ManageUsersTable extends JTable {
 		
 		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
 			public void valueChanged(ListSelectionEvent e) {
-				modifyButton.setEnabled(true);
-				deleteButton.setEnabled(true);
+				ActionsList.getAction("ModifyUser").setEnabled(true);
+				ActionsList.getAction("RemoveUser").setEnabled(true);
 				
-				userSelected = (User)((ManageUsersAdapter)table.getModel()).getObjectAt(table.getSelectedRow());
+				mainFrame.setUserSelected((User)((ManageUsersAdapter)table.getModel()).getObjectAt(table.getSelectedRow()));
 			}
-			
 		});
 		
 		
@@ -69,10 +57,4 @@ public class ManageUsersTable extends JTable {
 	public JPanel getPanel() {
 		return panel;
 	}
-	
-	public User getUserSelected() {
-		return userSelected;
-	}
-	
-	
 }

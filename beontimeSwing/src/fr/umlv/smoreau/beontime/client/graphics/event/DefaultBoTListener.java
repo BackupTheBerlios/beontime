@@ -9,19 +9,28 @@ public class DefaultBoTListener implements BoTListener {
 
     public void addCourse(BoTEvent e) throws InterruptedException {
     }
-
-    public void addSubject(BoTEvent e) throws InterruptedException {
-    }
-
+    
     public void modifyCourse(BoTEvent e) throws InterruptedException {
     }
-
+    
     public void removeCourse(BoTEvent e) throws InterruptedException {
     }
 
+    public void addSubject(BoTEvent e) throws InterruptedException {
+    }
+    
     public void modifySubject(BoTEvent e) throws InterruptedException {
     }
-
+    
     public void removeSubject(BoTEvent e) throws InterruptedException {
+    }
+    
+    public void addUser(BoTEvent e) throws InterruptedException {
+    }
+
+    public void modifyUser(BoTEvent e) throws InterruptedException {
+    }
+    
+    public void removeUser(BoTEvent e) throws InterruptedException {
     }
 }

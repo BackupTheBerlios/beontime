@@ -8,12 +8,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
@@ -99,9 +101,23 @@ public class ManageElementsWindow {
 			panel = new ManageGroupsTree(model, modifyButton, removeButton, manageIdentityButton, generateButton).getPanel();
 		else if (type == TYPE_UNAVAILABILITIES)
 			panel = new ManageUnavailabilitiesTree(model, modifyButton, removeButton, searchUnavailabilitiesButton).getPanel();
-		else if (type == TYPE_USERS_BY_ADMIN || type == TYPE_USERS_BY_SECRETARY)
-			panel = new ManageUsersTable(model, modifyButton, removeButton).getPanel();
-		else if (type == TYPE_ROOMS)
+		else if (type == TYPE_USERS_BY_ADMIN) {
+		    try {
+                Collection users = DaoManager.getUserDao().getUsers(false);
+                panel = new ManageUsersTable(model, users).getPanel();
+            } catch (Exception e) {
+                //TODO Sandrine: afficher un message d'erreur sur la fenêtre ...
+                //Je verrais bien ce message disant "erreur lors de la récupération des utilisateurs" en rouge au dessus des boutons à droite du tableau
+            }
+		} else if (type == TYPE_USERS_BY_SECRETARY) {
+		    try {
+                Collection users = DaoManager.getUserDao().getTeachers(false);
+                panel = new ManageUsersTable(model, users).getPanel();
+            } catch (Exception e) {
+                //TODO Sandrine: afficher un message d'erreur sur la fenêtre ...
+                //Je verrais bien ce message disant "erreur lors de la récupération des utilisateurs" en rouge au dessus des boutons à droite du tableau
+            }
+		} else if (type == TYPE_ROOMS)
 			panel = new ManageRoomsTable(model, modifyButton, removeButton).getPanel();
 		else if (type == TYPE_MATERIALS)
 			panel = new ManageMaterialsTable(model, modifyButton, removeButton).getPanel();

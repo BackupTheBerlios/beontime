@@ -41,9 +41,9 @@ public class ButtonBar {
 	
 	public ButtonBar(MainFrame mainFrame) {
 	    this.all = false;
-	    if (UserDao.TYPE_SECRETARY.equals(mainFrame.getUser().getUserType()))
+	    if (UserDao.TYPE_SECRETARY.equals(mainFrame.getUserConnected().getUserType()))
 	        this.isSecretary = true;
-	    else if (UserDao.TYPE_ADMIN.equals(mainFrame.getUser().getUserType()))
+	    else if (UserDao.TYPE_ADMIN.equals(mainFrame.getUserConnected().getUserType()))
 	        this.isSecretary = false;
 	    else
 	        throw new InvalidParameterException();
@@ -101,7 +101,7 @@ public class ButtonBar {
 
 	public void saveToolBar() {
 		try {
-		    FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/.BoTtoolBar"+mainFrame.getUser().getIdUser());
+		    FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/.BoTtoolBar"+mainFrame.getUserConnected().getIdUser());
 		    OutputStreamWriter osw = new OutputStreamWriter(fos);
 			for (Iterator i = defToolBar.iterator(); i.hasNext(); ) {
 			    Action action = (Action) i.next();
@@ -130,7 +130,7 @@ public class ButtonBar {
 		FileInputStream fis = null;
 		try {
 		    defToolBar = new ArrayList();
-			fis =new FileInputStream(System.getProperty("user.home") + "/.BoTtoolBar"+mainFrame.getUser().getIdUser());
+			fis =new FileInputStream(System.getProperty("user.home") + "/.BoTtoolBar"+mainFrame.getUserConnected().getIdUser());
 			LineNumberReader lnr = new LineNumberReader(new InputStreamReader(fis));
 			String line = lnr.readLine();
 			while (line != null) {
