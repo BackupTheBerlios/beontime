@@ -202,6 +202,7 @@ public class MainFrame {
 	}
 	
 	public void close() {
+		ActionsList.getAction("CloseTimetable").actionPerformed(null);
 		mainFrame.setVisible(false);
 	}
 
