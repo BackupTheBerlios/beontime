@@ -87,6 +87,10 @@ public class BoTEvent extends EventObject {
 	    return material;
 	}
 	
+	public Group getGroup() {
+	    return group;
+	}
+	
 	public boolean isInitTimetableViewPanel() {
 	    return initTimetableViewPanel;
 	}
