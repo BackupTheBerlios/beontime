@@ -6,7 +6,6 @@ package fr.umlv.smoreau.beontime.client.graphics.parts;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

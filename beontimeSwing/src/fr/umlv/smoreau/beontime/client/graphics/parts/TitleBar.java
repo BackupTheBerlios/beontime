@@ -55,7 +55,7 @@ public class TitleBar extends JPanel {
 	}
 	
 	public void setPeriod(String period) {
-		periodButton.setLabel(period);
+		periodButton.setText(period);
 	}
 	public void setTitleBarPanel(JPanel panel) {
 		titleBarPanel = panel;
@@ -71,7 +71,7 @@ public class TitleBar extends JPanel {
 	}
 	
 	public String getPeriod() {
-		return periodButton.getLabel();
+		return periodButton.getText();
 	}
 	
 	public JPanel getTitleBarPanel() {
