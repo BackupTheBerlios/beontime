@@ -8,6 +8,7 @@
 	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/db-ojb-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/cglib-2.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-full-2.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

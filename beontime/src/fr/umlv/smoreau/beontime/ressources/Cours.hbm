@@ -43,7 +43,7 @@
 
 		<many-to-one
 			class="fr.umlv.smoreau.beontime.model.timetable.TypeCourse"
-			name="IdTypeCours"
+			name="IdTypeCourse"
 			not-null="true"
 		>
 			<column name="ID_type_cours" />

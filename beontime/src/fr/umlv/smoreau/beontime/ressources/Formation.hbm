@@ -20,12 +20,12 @@
 			type="string"
 		 />
 		<!-- please tell Joe Hudson that the type 'SET' could not be resolved.. defaulting to java.lang.String -->
-		<property
+		<!--property
 			column="........pg.dropped.4........"
 			name="........pg.dropped.4........"
 			not-null="false"
 			type="java.lang.String"
-		 />
+		 /-->
 
 		<many-to-one
 			class="fr.umlv.smoreau.beontime.model.user.Person"
@@ -36,7 +36,7 @@
 		</many-to-one>
 		<many-to-one
 			class="fr.umlv.smoreau.beontime.model.user.Person"
-			name="IdEnseignant"
+			name="IdTeacher"
 			not-null="true"
 		>
 			<column name="ID_enseignant" />

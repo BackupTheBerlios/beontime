@@ -7,7 +7,7 @@
 	<session-factory>
 		<!-- local connection properties -->
 		<property name="hibernate.connection.url">
-			jdbc:postgresql://saadouni@dyndns.org:5432/BoT_db
+			jdbc:postgresql://saadouni.dyndns.org:5432/BoT_db
 		</property>
 		<property name="hibernate.connection.driver_class">
 			org.postgresql.Driver

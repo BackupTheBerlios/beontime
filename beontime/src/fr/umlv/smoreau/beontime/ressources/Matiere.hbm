@@ -64,7 +64,7 @@
 
 		<many-to-one
 			class="fr.umlv.smoreau.beontime.model.user.Person"
-			name="IdEnseignant"
+			name="IdTeacher"
 			not-null="true"
 		>
 			<column name="ID_enseignant" />

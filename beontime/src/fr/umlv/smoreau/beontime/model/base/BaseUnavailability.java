@@ -64,7 +64,7 @@ public abstract class BaseUnavailability  implements Serializable {
 		java.lang.Long _idSujetIndisponibilite) {
 
 		this.setIdIndisponibilite(_idIndisponibilite);
-		this.setIdTypeUnvailability(_idTypeIndisponibilite);
+		this.setIdTypeUnavailability(_idTypeIndisponibilite);
 		this.setIdSujetIndisponibilite(_idSujetIndisponibilite);
 		initialize();
 	}
@@ -162,7 +162,7 @@ public abstract class BaseUnavailability  implements Serializable {
      *  column=ID_type_indisponibilite
 	 * not-null=true
 	 */
-	public TypeUnavailability getIdTypeUnvailability () {
+	public TypeUnavailability getIdTypeUnavailability () {
 		return this._idTypeIndisponibilite;
 	}
 
@@ -170,7 +170,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	 * Set the value related to the column: ID_type_indisponibilite
 	 * @param _idTypeIndisponibilite the ID_type_indisponibilite value
 	 */
-	public void setIdTypeUnvailability (TypeUnavailability _idTypeIndisponibilite) {
+	public void setIdTypeUnavailability (TypeUnavailability _idTypeIndisponibilite) {
 		this._idTypeIndisponibilite = _idTypeIndisponibilite;
 	}
 
