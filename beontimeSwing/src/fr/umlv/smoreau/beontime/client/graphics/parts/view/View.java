@@ -95,10 +95,4 @@ public class View {
 	public MultiSpanCellTable getTable() {
 		return table;
 	}
-	/**
-	 * @return Returns the cellAtt.
-	 */
-	public CellSpan getCellAtt() {
-		return cellAtt;
-	}
 }

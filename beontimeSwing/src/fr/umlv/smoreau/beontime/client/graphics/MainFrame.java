@@ -182,9 +182,6 @@ public class MainFrame {
 		return view.getTable();
     	
     }
-	public CellSpan getCellAtt() {
-		return view.getCellAtt();
-	}
 	public void open() {
 		mainFrame.setVisible(true);
 	}

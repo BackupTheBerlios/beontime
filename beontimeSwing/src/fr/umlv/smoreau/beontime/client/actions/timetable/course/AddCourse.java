@@ -38,7 +38,8 @@ public class AddCourse extends Action {
     public void actionPerformed(ActionEvent arg0) {
         AddModifyCourseWindow window = new AddModifyCourseWindow();
         window.show();
-        CellSpan cellAtt =mainFrame.getCellAtt();
+        AttributiveCellTableModel ml=mainFrame.getTableModel();
+        CellSpan cellAtt =(CellSpan) ml.getCellAttribute();
         MultiSpanCellTable table = mainFrame.getTable();
         int[] columns = table.getSelectedColumns();
         int[] rows    = table.getSelectedRows();
