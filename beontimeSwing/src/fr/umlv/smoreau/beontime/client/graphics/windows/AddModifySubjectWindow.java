@@ -176,7 +176,7 @@ public class AddModifySubjectWindow {
     	AMFWFrame.getContentPane().add(formationFieldJcb);*/
     	
     	JLabel formationValue = new JLabel(formation.getHeading());
-    	addComponent(AMFWLayout,layoutConstraints,formationValue,5,1,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,0,10));
+    	addComponent(AMFWLayout,layoutConstraints,formationValue,5,1,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,0,10));
     	AMFWFrame.getContentPane().add(formationValue);
     	
     	JLabel teacherFieldLabel = new JLabel("Enseignant responsable :");
@@ -245,7 +245,7 @@ public class AddModifySubjectWindow {
 				
 				if((((JComboBox)e.getSource()).getSelectedIndex() != 0) && (courseMPanel.getComponentCount() == 0)) {
 					initTypeCoursePanel(courseMPanel, 1);
-			    	addComponent(AMFWLayout,layoutConstraints,courseMPanel,1,7,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+			    	addComponent(AMFWLayout,layoutConstraints,courseMPanel,1,7,8,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
 			    	AMFWFrame.getContentPane().add(courseMPanel);
 			    	AMFWFrame.pack();
 				}
@@ -285,7 +285,7 @@ public class AddModifySubjectWindow {
     	AMFWFrame.getContentPane().add(tdJcb);
     	
     	JLabel tpLabel = new JLabel("TP");
-    	addComponent(AMFWLayout,layoutConstraints,tpLabel,8,6,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	addComponent(AMFWLayout,layoutConstraints,tpLabel,7,6,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMFWFrame.getContentPane().add(tpLabel);
     	
     	tpJcb = new JComboBox();
@@ -310,7 +310,7 @@ public class AddModifySubjectWindow {
 			}
     		
     	});
-    	addComponent(AMFWLayout,layoutConstraints,tpJcb,9,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
+    	addComponent(AMFWLayout,layoutConstraints,tpJcb,8,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMFWFrame.getContentPane().add(tpJcb);
 
     	
@@ -322,7 +322,7 @@ public class AddModifySubjectWindow {
     	
     	JButton ok = new JButton("OK");
     	ok.addActionListener(new ActionOk());
-		addComponent(AMFWLayout,layoutConstraints,ok,8,11,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMFWLayout,layoutConstraints,ok,7,11,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMFWFrame.getContentPane().add(ok);
 
 		JButton annuler = new JButton("Annuler");
@@ -332,7 +332,7 @@ public class AddModifySubjectWindow {
             }
 		});
 
-		addComponent(AMFWLayout,layoutConstraints,annuler,9,11,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMFWLayout,layoutConstraints,annuler,8,11,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMFWFrame.getContentPane().add(annuler);
     }
     
@@ -379,7 +379,7 @@ public class AddModifySubjectWindow {
 	    	    nbGroupsMag = new JComboBox();
 	    	    initNumberJcb(nbGroupsMag, 1, 10);
 	    	    //nbGroupsMag.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-	        	addComponent(layout,layoutConstraints,nbGroupsMag,9,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
+	        	addComponent(layout,layoutConstraints,nbGroupsMag,8,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsMag);
 	    	    break;
 	        case 2:
@@ -387,7 +387,7 @@ public class AddModifySubjectWindow {
 	            nbGroupsTd = new JComboBox();
 	    	    initNumberJcb(nbGroupsTd, 1, 10);
 	    	    //nbGroupsTd.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-	        	addComponent(layout,layoutConstraints,nbGroupsTd,9,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
+	        	addComponent(layout,layoutConstraints,nbGroupsTd,8,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsTd);
 	            break;
 	        case 3:
@@ -395,16 +395,16 @@ public class AddModifySubjectWindow {
 	            nbGroupsTp = new JComboBox();
 	    	    initNumberJcb(nbGroupsTp, 1, 10);
 	    	    //nbGroupsTp.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-	        	addComponent(layout,layoutConstraints,nbGroupsTp,9,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
+	        	addComponent(layout,layoutConstraints,nbGroupsTp,8,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsTp);
 	            break;
     	}
     	
-    	addComponent(layout,layoutConstraints,typeCourseLabel,1,1,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,7,10));
+    	addComponent(layout,layoutConstraints,typeCourseLabel,1,1,3,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,7,10));
     	panel.add(typeCourseLabel);
     	
     
-    	addComponent(layout,layoutConstraints,nbGroupsLabel,6,1,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,7,10));
+    	addComponent(layout,layoutConstraints,nbGroupsLabel,4,1,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,7,10));
     	panel.add(nbGroupsLabel);
     	
     	
