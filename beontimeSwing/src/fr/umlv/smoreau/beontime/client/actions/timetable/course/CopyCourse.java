@@ -20,7 +20,7 @@ public class CopyCourse extends Action {
     private static final String NAME = "Copier le cours";
     private static final String ICON = "copier.png";
     private static final String SMALL_ICON = "copier_small.png";
-    private static final String KEY_STROKE = "ctrl C";
+    private static final String KEY_STROKE = "shift C";
 
 
     public CopyCourse(MainFrame mainFrame) {

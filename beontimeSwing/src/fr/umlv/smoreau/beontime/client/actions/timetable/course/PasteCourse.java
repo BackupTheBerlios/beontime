@@ -30,7 +30,7 @@ public class PasteCourse extends Action {
     private static final String NAME = "Coller le cours";
     private static final String ICON = "coller.png";
     private static final String SMALL_ICON = "coller_small.png";
-    private static final String KEY_STROKE = "ctrl V";
+    private static final String KEY_STROKE = "shift V";
 
 
     public PasteCourse(MainFrame mainFrame) {
