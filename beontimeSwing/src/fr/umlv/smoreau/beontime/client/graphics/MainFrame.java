@@ -293,6 +293,14 @@ public class MainFrame {
 	public MenuBar getMenuBar() {
 	    return menuBar;
 	}
+	
+	public TitleBar getTitleBar() {
+		return titleBar;
+	}
+	
+	public StateBar getStateBar() {
+		return stateBar;
+	}
 
 	public JFrame getMainFrame() {
 		return mainFrame;

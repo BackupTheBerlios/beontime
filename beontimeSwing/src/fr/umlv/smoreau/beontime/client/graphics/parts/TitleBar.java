@@ -75,11 +75,13 @@ public class TitleBar extends JPanel {
 	
 	
 	public void setResponsible(String name) {
-		responsibleLabel.setName(name);
+		//responsibleLabel.setName(name);
+		responsibleLabel.setText(name);
 	}
 	
 	public void setIntitle(String intitle) {
-		intitleLabel.setName(intitle);
+		//intitleLabel.setName(intitle);
+		intitleLabel.setText(intitle);
 	}
 	
 	public void setPeriod(Calendar period) {
@@ -95,11 +97,13 @@ public class TitleBar extends JPanel {
 	}
 	
 	public String getResponsible() {
-		return responsibleLabel.getName();
+		//return responsibleLabel.getName();
+		return responsibleLabel.getText();
 	}
 	
 	public String getIntitleLabel() {
-		return intitleLabel.getName();
+		//return intitleLabel.getName();
+		return intitleLabel.getText();
 	}
 	
 	public Date getPeriod() {

@@ -1,10 +1,18 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable;
 
-import java.awt.Graphics;
-import java.awt.JobAttributes;
-import java.awt.PageAttributes;
-import java.awt.PrintJob;
+
 import java.awt.event.ActionEvent;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.text.MessageFormat;
+
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttribute;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Chromaticity;
+import javax.print.attribute.standard.OrientationRequested;
+import javax.swing.JTable;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -27,7 +35,7 @@ public class PrintTimetable extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-		JobAttributes jobAttributes = new JobAttributes();
+		/*JobAttributes jobAttributes = new JobAttributes();
 		jobAttributes.setDestination(JobAttributes.DestinationType.PRINTER);
 		
 		PageAttributes pageAttributes = new PageAttributes();
@@ -39,11 +47,49 @@ public class PrintTimetable extends Action {
 		PrintJob demandeDImpression = mainFrame.getTable().getToolkit().getPrintJob(mainFrame.getMainFrame(), "Impression", jobAttributes, pageAttributes);
 		if (demandeDImpression != null) {
 			Graphics gImpr = demandeDImpression.getGraphics();
-
-			mainFrame.getTable().printAll(gImpr);
-
+			
+			//mainFrame.getTable().printAll(gImpr);
+			
+			MessageFormat headerFormat = new MessageFormat("aaaa");
+			MessageFormat footerFormat = new MessageFormat("bbbb");
+			 
+			
+			try {
+		
+				mainFrame.getTable().print(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat);
+			} catch (PrinterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			gImpr.dispose();
 			demandeDImpression.end();
+		}*/
+    	
+    	
+    	MessageFormat headerFormat = new MessageFormat(mainFrame.getTitleBar().getIntitleLabel()+"\r\n"+mainFrame.getTitleBar().getResponsible()+"\r\nEmploi du temps "+mainFrame.getTitleBar().getPeriod());
+		MessageFormat footerFormat = new MessageFormat(mainFrame.getStateBar().getRemark()+"\r\nPage {0}");
+    	
+        try {
+            
+            Printable printable = mainFrame.getTable().getPrintable(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat);
+
+            PrinterJob job = PrinterJob.getPrinterJob();
+            
+            job.setPrintable(printable);
+
+            PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet(new PrintRequestAttribute[] { OrientationRequested.LANDSCAPE, Chromaticity.COLOR});
+            
+            boolean printAccepted = job.printDialog(attr);
+
+            if (printAccepted)    
+                job.print(attr);
+            
+        } catch (PrinterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+        
+        
+        
     }
 }
