@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.UserDao;
+import fr.umlv.smoreau.beontime.model.Formation;
 
 
 
@@ -41,6 +43,7 @@ public class AddModifyUserWindow {
 	private JComboBox buildingJcb;
 	private JTextField localJtf;
 	private JTextField phoneJtf;
+	private JComboBox formationsJcb;
 	
 	private boolean isOk;
 
@@ -108,14 +111,29 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,formationsLabel,1,4,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(formationsLabel);
 
+		try {
+            Collection formations = DaoManager.getFormationDao().getNotAllottedFormations();
+            formationsJcb = new JComboBox();
+            String[] formationsName = new String[formations.size()+1];
+            formationsName[0] = "";
+            int j = 1;
+            for (Iterator i = formations.iterator(); i.hasNext(); ++j)
+                formationsName[j] = ((Formation) i.next()).getHeading();
+            formationsJcb = new JComboBox(formationsName);
+        } catch (Exception e) {
+            JLabel label = new JLabel("Erreur lors de la récupération des formations non attribuées");
+            label.setForeground(Color.RED);
+            addComponent(AMUWLayout,layoutConstraints,label,1,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+            AMUWFrame.getContentPane().add(label);
+            formationsJcb = new JComboBox();
+        }
 
-		JComboBox formationsJcb = new JComboBox();
 		JPanel formationsPanel = new JPanel();
 		formationsPanel.setLayout(new BoxLayout(formationsPanel, BoxLayout.Y_AXIS));
 		formationsPanel.add(formationsJcb);
 		formationsPanel.add(Box.createVerticalStrut(5));
     	
-		addComponent(AMUWLayout,layoutConstraints,formationsPanel,1,5,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,formationsPanel,1,6,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(formationsPanel);
 
 		
@@ -128,13 +146,13 @@ public class AddModifyUserWindow {
     	formationsPlusPanel.add(formationPlusButton);
     	formationsPlusPanel.add(Box.createVerticalStrut(5));
     	
-    	addComponent(AMUWLayout,layoutConstraints,formationsPlusPanel,4,5,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,15,10));
+    	addComponent(AMUWLayout,layoutConstraints,formationsPlusPanel,4,6,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,15,10));
     	AMUWFrame.getContentPane().add(formationsPlusPanel);
 
 
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionOk());
-		addComponent(AMUWLayout,layoutConstraints,ok,3,6,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,ok,3,7,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(ok);
 		
 		JButton annuler = new JButton("Annuler");
@@ -143,7 +161,7 @@ public class AddModifyUserWindow {
                 AMUWFrame.dispose();
             }
 		});
-		addComponent(AMUWLayout,layoutConstraints,annuler,4,6,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,annuler,4,7,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(annuler);
 	}
 	
@@ -310,6 +328,16 @@ public class AddModifyUserWindow {
                 return null;
         }
         return tmp;
+    }
+    
+    public String[] getFormations() {
+        String string = null;
+        if (formationsJcb != null) {
+            string = (String) formationsJcb.getSelectedItem();
+	        if (string != null)
+	            string = string.trim();
+        }
+        return new String[] {string};
     }
     
     public boolean isOk() {
