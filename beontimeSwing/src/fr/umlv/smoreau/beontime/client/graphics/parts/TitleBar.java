@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,15 +17,18 @@ import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
+import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 
@@ -107,11 +112,9 @@ public class TitleBar extends JPanel {
 	
 	
 	private void initTitleBarPanel() {
-		
 		responsibleLabel = new JLabel("");
 		intitleLabel = new JLabel("");
 		initPeriodPanel();
-		
 	}
 	
 	private void initPeriodPanel() {
@@ -119,7 +122,30 @@ public class TitleBar extends JPanel {
 		periodPanel.setLayout(new BorderLayout());
 		
 		periodChooser = new JDateChooser();
-		//TODO fire ?
+		periodChooser.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent event) {
+                MainFrame mainFrame = MainFrame.getInstance();
+                if (mainFrame.getFormationSelected() == null)
+                    return;
+				TimetableFilter filter = new TimetableFilter();
+				filter.setFormation(mainFrame.getFormationSelected());
+				Calendar begin = Calendar.getInstance();
+				begin.setTime(getPeriod());
+				begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+				filter.setBeginPeriod(begin);
+				Calendar end = Calendar.getInstance();
+				end.setTime(getPeriod());
+				end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+				filter.setEndPeriod(end);
+				try {
+					Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+					mainFrame.getModel().fireShowTimetable(timetable);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+            }
+		});
+
 		periodPanel.add(periodChooser, BorderLayout.CENTER);
 		previousButton = new JButton(Action.getImage("gauche_small.png"));
 		periodPanel.add(previousButton, BorderLayout.WEST);
@@ -133,13 +159,6 @@ public class TitleBar extends JPanel {
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
 				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_HALF_YEAR) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));
-				try {			
-					model.fireShowTimetable(model.getTimetable()); //TODO modifier
-				} catch (InterruptedException e) {
-					System.err.println("calendar -- fire exception : "+e.getMessage());
-					e.printStackTrace();
-				}
-			
 			}
 		});
 		nextButton.addActionListener(new ActionListener() {
@@ -148,12 +167,6 @@ public class TitleBar extends JPanel {
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
 				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_HALF_YEAR) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
-				try {			
-					model.fireShowTimetable(model.getTimetable()); //TODO modifier
-				} catch (InterruptedException e) {
-					System.err.println("calendar ++ fire exception : "+e.getMessage());
-					e.printStackTrace();
-				}
 			}
 		});
 		
@@ -193,7 +206,7 @@ public class TitleBar extends JPanel {
 		    	intitleLabel.setEnabled(true);
 		    	responsibleLabel.setText("Responsable : " + timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
 		    }
-		    //TODO : changer la date ?
+
 		    panel.validate();
 		}
 		

@@ -27,12 +27,8 @@ public interface TimetableDao extends Remote {
 	
 	public Collection getCourses(CourseFilter filter) throws RemoteException, HibernateException;
 	
-	//public Collection getCoursesDirected(User user) throws RemoteException, HibernateException;
-	
 	public Collection getSubjects(SubjectFilter filter) throws RemoteException, HibernateException;
 	
-	//public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException;
-
 	public Timetable getTimetable(TimetableFilter filter) throws RemoteException, HibernateException;
 
 	public Collection getCourses() throws RemoteException, HibernateException;

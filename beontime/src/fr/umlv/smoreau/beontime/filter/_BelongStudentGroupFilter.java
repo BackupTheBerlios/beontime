@@ -12,8 +12,8 @@ public class _BelongStudentGroupFilter extends BelongStudentGroup implements Fil
     
     static {
         corres = new HashMap();
-        corres.put("IdGroup.IdGroup", "id_groupe");
-        corres.put("IdStudent", "id_etudiant");
+        corres.put("IdGroup.IdGroup", new FilterObject("id_groupe"));
+        corres.put("IdStudent", new FilterObject("id_etudiant"));
     }
 
 

@@ -80,24 +80,6 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         }
 	}
 	
-	/*public Collection getCoursesDirected(User user) throws RemoteException, HibernateException {
-	    Collection result = new ArrayList();
-
-	    Session session = null;
-        try {
-            session = Hibernate.getCurrentSession();
-            _IsDirectedByCourseTeacherFilter filter = new _IsDirectedByCourseTeacherFilter();
-            filter.setIdTeacher(user.getIdUser());
-            Collection isDirected = get(TABLE_ISDIRECTING, filter, session);
-            for (Iterator i = isDirected.iterator(); i.hasNext(); )
-                result.add(new Course(((IsDirectedByCourseTeacher) i.next()).getIdCourse().getIdCourse()));
-        } finally {
-            Hibernate.closeSession();
-        }
-        
-        return result;
-	}*/
-	
 	public Collection getSubjects(SubjectFilter filter) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
@@ -107,18 +89,6 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Hibernate.closeSession();
         }
 	}
-	
-	/*public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException {
-	    Session session = null;
-        try {
-            session = Hibernate.getCurrentSession();
-            SubjectFilter filter = new SubjectFilter();
-            filter.setIdTeacher(user.getIdUser());
-            return get(TABLE_SUBJECT, filter, session);
-        } finally {
-            Hibernate.closeSession();
-        }
-	}*/
 
 	public Timetable getTimetable(TimetableFilter filter) throws RemoteException, HibernateException {
 	    Session session = null;
@@ -144,6 +114,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             
             Course course = new Course();
             course.setIdFormation(filter.getFormation().getIdFormation());
+            course.setBeginPeriod(filter.getBeginPeriod());
+            course.setEndPeriod(filter.getEndPeriod());
             timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
 
             for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {

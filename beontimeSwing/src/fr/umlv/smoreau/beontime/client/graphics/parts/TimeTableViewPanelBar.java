@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -159,6 +160,14 @@ public class TimeTableViewPanelBar extends JPanel {
 							Long id = ((Item)event.getItem()).getId();
 							TimetableFilter filter = new TimetableFilter();
 							filter.setFormation(new Formation(id));
+							Calendar begin = Calendar.getInstance();
+							begin.setTime(mainFrame.getDateSelected());
+							begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+							filter.setBeginPeriod(begin);
+							Calendar end = Calendar.getInstance();
+							end.setTime(mainFrame.getDateSelected());
+							end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+							filter.setEndPeriod(end);
 							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 							mainFrame.getModel().fireShowTimetable(timetable);
 					    } else if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem())) {
@@ -174,7 +183,6 @@ public class TimeTableViewPanelBar extends JPanel {
 					    }
 					}
 				} catch (Exception e) {
-				    e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
 			}

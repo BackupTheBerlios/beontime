@@ -12,8 +12,8 @@ public class _IsDirectedByCourseTeacherFilter extends IsDirectedByCourseTeacher 
     
     static {
         corres = new HashMap();
-        corres.put("IdCourse.IdCourse", "id_cours");
-        corres.put("IdTeacher", "id_enseignant");
+        corres.put("IdCourse.IdCourse", new FilterObject("id_cours"));
+        corres.put("IdTeacher", new FilterObject("id_enseignant"));
     }
 
 

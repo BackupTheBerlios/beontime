@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.model.timetable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -19,6 +20,8 @@ public class Timetable implements Serializable {
     private Collection subjects;
     private Collection courses;
     private User personInCharge;
+    private Calendar beginPeriod;
+    private Calendar endPeriod;
     
     public Timetable() {
     }
@@ -122,5 +125,21 @@ public class Timetable implements Serializable {
     
     public User getPersonInCharge() {
         return personInCharge;
+    }
+    
+    public Calendar getBeginPeriod() {
+        return beginPeriod;
+    }
+
+    public void setBeginPeriod(Calendar beginPeriod) {
+        this.beginPeriod = beginPeriod;
+    }
+
+    public Calendar getEndPeriod() {
+        return endPeriod;
+    }
+
+    public void setEndPeriod(Calendar endPeriod) {
+        this.endPeriod = endPeriod;
     }
 }

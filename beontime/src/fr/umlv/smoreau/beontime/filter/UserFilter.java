@@ -12,16 +12,16 @@ public class UserFilter extends User implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdUser", "id_personne");
-        corres.put("Name", "nom");
-        corres.put("FirstName", "prenom");
-        corres.put("UserType", "type_personne");
-        corres.put("Telephone", "telephone");
-        corres.put("EMail", "e_mail");
-        corres.put("OfficeName", "nom_bureau");
-        corres.put("BuildingNameForOffice", "nom_batiment_bureau");
-        corres.put("Login", "login");
-        corres.put("Password", "password");
+        corres.put("IdUser", new FilterObject("id_personne"));
+        corres.put("Name", new FilterObject("nom"));
+        corres.put("FirstName", new FilterObject("prenom"));
+        corres.put("UserType", new FilterObject("type_personne"));
+        corres.put("Telephone", new FilterObject("telephone"));
+        corres.put("EMail", new FilterObject("e_mail"));
+        corres.put("OfficeName", new FilterObject("nom_bureau"));
+        corres.put("BuildingNameForOffice", new FilterObject("nom_batiment_bureau"));
+        corres.put("Login", new FilterObject("login"));
+        corres.put("Password", new FilterObject("password"));
     }
 
 

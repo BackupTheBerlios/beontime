@@ -31,7 +31,7 @@ public class FilterUtils {
 	    
 	    for (Iterator i = corres.keySet().iterator(); i.hasNext();) {
 	        String methodName = (String) i.next();
-	        String attributeName = (String) corres.get(methodName);
+	        FilterObject filterObject = (FilterObject) corres.get(methodName);
 
 	        String[] split = null;
 	        if (methodName.indexOf(".") != -1)
@@ -49,10 +49,12 @@ public class FilterUtils {
 			        query.append(" AND ");
 		        if (obj instanceof String)
 		            obj = ((String) obj).replaceAll("'","''");
-		        query.append(attributeName).append("='").append(obj).append("'");
+		        query.append(filterObject.getTableName());
+		        query.append(filterObject.getOperator());
+		        query.append("'").append(obj).append("'");
 	        }
 	    }
-		    
+
 		return query.toString();
     }
 }

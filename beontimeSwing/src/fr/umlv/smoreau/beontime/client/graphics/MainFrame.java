@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -60,7 +61,7 @@ public class MainFrame {
 	private View view;
     private JSplitPane splitPaneVertical;
     private JFrame mainFrame;
-//	private static MainFrame instance;	//TODO virer ?
+
 	private final static int X_POSITION = 0;
 	private final static int Y_POSITION = 0;
 	private final static int WIDTH = 1024;
@@ -316,5 +317,9 @@ public class MainFrame {
 	 */
 	public void setViewType(int view_type) {
 		this.view_type = view_type;
+	}
+	
+	public Date getDateSelected() {
+	    return titleBar.getPeriod();
 	}
 }

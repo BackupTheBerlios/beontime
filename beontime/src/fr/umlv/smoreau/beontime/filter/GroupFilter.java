@@ -12,9 +12,9 @@ public class GroupFilter extends Group implements Filter {
     
     static {
         corres = new HashMap();
-        corres.put("IdGroup", "id_groupe");
-        corres.put("IdFormation", "id_formation");
-        corres.put("Heading", "intitule");
+        corres.put("IdGroup", new FilterObject("id_groupe"));
+        corres.put("IdFormation", new FilterObject("id_formation"));
+        corres.put("Heading", new FilterObject("intitule"));
     }
 
 
