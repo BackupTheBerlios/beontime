@@ -277,7 +277,7 @@ public class TimeTableViewPanelBar extends JPanel {
 	            jcbSubjectEDT.revalidate();
 	        } else if (timetable.getMaterial() != null) {
 	            jcbTypeEDT.setSelectedItem(TYPE_MATERIEL);
-	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getRoom().getName(), timetable.getMaterial().getIdMaterial()));
+	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getMaterial().getName(), timetable.getMaterial().getIdMaterial()));
 	        } else if (timetable.getTeacher() != null) {
 	            jcbTypeEDT.setSelectedItem(TYPE_ENSEIGNANT);
 	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getTeacher().getName() + " " + timetable.getTeacher().getFirstName(), timetable.getTeacher().getIdUser()));
