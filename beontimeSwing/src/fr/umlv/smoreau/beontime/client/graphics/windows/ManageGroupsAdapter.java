@@ -15,25 +15,28 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
- * @author BeOnTime
+ * @author sandrine
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ManageSubjectsAdapter implements TreeModel {
+public class ManageGroupsAdapter implements TreeModel {
 
+	
 	private BoTModel model;
 	private final EventListenerList list;
 	private JTree tree;
 
-	public ManageSubjectsAdapter(BoTModel model, JTree t) {
+	public ManageGroupsAdapter(BoTModel model, JTree t) {
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
@@ -45,6 +48,23 @@ public class ManageSubjectsAdapter implements TreeModel {
 		formation.setIdFormation(new Long(1));
 		timetable.setFormation(formation);
 		
+		Group group1 = new Group();
+		group1.setHeading("Groupe1");
+		group1.setIdGroup(new Long(1));
+		
+		Group group2 = new Group();
+		group2.setHeading("Groupe2");
+		group2.setIdGroup(new Long(2));
+		
+		Group group3 = new Group();
+		group3.setHeading("Groupe3");
+		group3.setIdGroup(new Long(3));
+		
+		ArrayList listGroups = new ArrayList();
+		listGroups.add(group1);
+		listGroups.add(group2);
+		listGroups.add(group3);
+		timetable.setGroups(listGroups);
 		
 		
 		Subject subject = new Subject();
@@ -67,6 +87,9 @@ public class ManageSubjectsAdapter implements TreeModel {
 
 		model.addBoTListener(new TreeListener(this));
 	}
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeModel#getRoot()
 	 */
@@ -80,7 +103,7 @@ public class ManageSubjectsAdapter implements TreeModel {
 	public Object getChild(Object parent, int n) {
 		if (parent instanceof Timetable) {
 	        Timetable timetable = (Timetable) parent;
-	        Collection c = timetable.getSubjects();
+	        Collection c = timetable.getGroups();
 	        return c.toArray()[n];
 		}
 		
@@ -93,7 +116,7 @@ public class ManageSubjectsAdapter implements TreeModel {
 	public int getChildCount(Object parent) {
 		if (parent instanceof Timetable) {
 	        Timetable timetable = (Timetable) parent;
-	        Collection c = timetable.getSubjects();
+	        Collection c = timetable.getGroups();
 	        return (c == null ? 0 : c.size());
 	    } 
 		
@@ -115,6 +138,7 @@ public class ManageSubjectsAdapter implements TreeModel {
 	 */
 	public void valueForPathChanged(TreePath path, Object newValue) {
 		throw new UnsupportedOperationException();
+
 	}
 
 	/* (non-Javadoc)
@@ -140,7 +164,7 @@ public class ManageSubjectsAdapter implements TreeModel {
 		list.remove(l.getClass(), l);
 
 	}
-
+	
 	
 	private class TreeListener extends DefaultBoTListener {
 		private TreeModel source;
@@ -149,4 +173,5 @@ public class ManageSubjectsAdapter implements TreeModel {
 			this.source = source;
 		}	
 	}
+
 }
