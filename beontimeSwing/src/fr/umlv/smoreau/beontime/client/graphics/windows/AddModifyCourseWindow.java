@@ -30,6 +30,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.user.User;
@@ -195,18 +196,152 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setTeachers(Collection teachers) {
-	    teachers.size();
-	    //TODO Sandrine: remplir et ajouter les JComboBox
+	    
+	    teacherPanel.removeAll();
+	    teacherCourseJcb = new JComboBox(teachersName);
+	    teacherPanel.add(teacherCourseJcb);
+	    teacherPanel.add(Box.createVerticalStrut(5));
+	    
+	    int cpt = 0;
+		int sizeTeachers = teachers.size();
+		
+		
+		for(Iterator it = teachers.iterator(); it.hasNext(); ) {
+			
+			Long idTeacher = ((IsDirectedByCourseTeacher) it.next()).getIdTeacher();
+			
+			int pos = -1;
+			
+			for(int i = 1; i < this.teachers.length; ++i) {
+				if (this.teachers[i].getIdUser().compareTo(idTeacher) == 0)
+					pos = i;
+			}
+			
+			if (cpt == 0) {
+				teacherCourseJcb.setSelectedIndex(pos);    			
+				
+				if (cpt != (sizeTeachers-1))
+					teacherPlus.setText("x");  	
+			}
+			else {
+				JComboBox jcb = new JComboBox(teachersName);
+				
+				jcb.setSelectedItem(teachersName[pos]);
+				
+				teacherPanel.add(jcb);
+				teacherPanel.add(Box.createVerticalStrut(5));
+				
+				JButton plus;
+				if(cpt == (sizeTeachers-1))
+					plus = new JButton("+");
+				else
+					plus = new JButton("x");
+				
+				plus.addActionListener(new ButtonPlusListener(teacherPlusPanel, teacherPanel, AMCWFrame, teachersName));
+				teacherPlusPanel.add(plus);
+				teacherPlusPanel.add(Box.createVerticalStrut(5));
+			}
+			cpt++;
+		
+		}
 	}
 	
 	public void setRooms(Collection rooms) {
-	    rooms.size();
-	    //TODO Sandrine: remplir et ajouter les JComboBox
+	    
+	    placeCoursePanel.removeAll();
+	    placeCourseJcb = new JComboBox(roomsName);
+	    placeCoursePanel.add(placeCourseJcb);
+	    placeCoursePanel.add(Box.createVerticalStrut(5));
+	    
+	    int cpt = 0;
+		int sizeRooms = rooms.size();
+		
+		for(Iterator it = rooms.iterator(); it.hasNext(); ) {
+			Room room = (Room) it.next();
+			
+			int pos = -1;
+			
+			for(int i = 1; i < this.rooms.length; ++i) {
+				if (this.rooms[i].equals(room))
+					pos = i;
+			}
+			
+			if (cpt == 0) {
+				placeCourseJcb.setSelectedIndex(pos);    			
+				
+				if (cpt != (sizeRooms-1))
+					placeCoursePlus.setText("x");  	
+			}
+			else {
+				JComboBox jcb = new JComboBox(roomsName);
+				
+				jcb.setSelectedItem(roomsName[pos]);
+				
+				placeCoursePanel.add(jcb);
+				placeCoursePanel.add(Box.createVerticalStrut(5));
+				
+				JButton plus;
+				if(cpt == (sizeRooms-1))
+					plus = new JButton("+");
+				else
+					plus = new JButton("x");
+				
+				plus.addActionListener(new ButtonPlusListener(placeCoursePlusPanel, placeCoursePanel, AMCWFrame, roomsName));
+				placeCoursePlusPanel.add(plus);
+				placeCoursePlusPanel.add(Box.createVerticalStrut(5));
+			}
+			cpt++;
+		}
 	}
 	
 	public void setMaterials(Collection materials) {
-	    materials.size();
+	   
 	    //TODO Sandrine: remplir et ajouter les JComboBox
+	
+	    courseEquipmentPanel.removeAll();
+	    courseEquipmentJcb = new JComboBox(materialsName);
+	    courseEquipmentPanel.add(courseEquipmentJcb);
+	    courseEquipmentPanel.add(Box.createVerticalStrut(5));
+	    
+	    int cpt = 0;
+		int sizeMaterials = materials.size();
+		
+		for(Iterator it = materials.iterator(); it.hasNext(); ) {
+			Material material = (Material) it.next();
+			
+			int pos = -1;
+			
+			for(int i = 1; i < this.materials.length; ++i) {
+				if (this.materials[i].equals(material))
+					pos = i;
+			}
+			
+			if (cpt == 0) {
+				courseEquipmentJcb.setSelectedIndex(pos);    			
+				
+				if (cpt != (sizeMaterials-1))
+					courseEquipmentPlus.setText("x");  	
+			}
+			else {
+				JComboBox jcb = new JComboBox(materialsName);
+				
+				jcb.setSelectedItem(materialsName[pos]);
+				
+				courseEquipmentPanel.add(jcb);
+				courseEquipmentPanel.add(Box.createVerticalStrut(5));
+				
+				JButton plus;
+				if(cpt == (sizeMaterials-1))
+					plus = new JButton("+");
+				else
+					plus = new JButton("x");
+				
+				plus.addActionListener(new ButtonPlusListener(courseEquipmentPlusPanel, courseEquipmentPanel, AMCWFrame, materialsName));
+				courseEquipmentPlusPanel.add(plus);
+				courseEquipmentPlusPanel.add(Box.createVerticalStrut(5));
+			}
+			cpt++;
+		}
 	}
 	
 	public void setIdTeacher(Long idTeacher) {
