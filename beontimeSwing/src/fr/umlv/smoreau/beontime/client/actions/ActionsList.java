@@ -53,8 +53,12 @@ public class ActionsList {
 		ACTIONS.put("ManageGroups", new ManageGroups(null));
 		ACTIONS.put("GenerateGroups", new GenerateGroups(null));
 		ACTIONS.put("AddRoom", new AddRoom(null));
+		ACTIONS.put("ModifyRoom", new ModifyRoom(null));
+		ACTIONS.put("RemoveRoom", new RemoveRoom(null));
 		ACTIONS.put("ManageRooms", new ManageRooms(null));
 		ACTIONS.put("AddMaterial", new AddMaterial(null));
+		ACTIONS.put("ModifyMaterial", new ModifyMaterial(null));
+		ACTIONS.put("RemoveMaterial", new RemoveMaterial(null));
 		ACTIONS.put("ManageMaterials", new ManageMaterials(null));
 		ACTIONS.put("AddUnavailability", new AddUnavailability(null));
 		ACTIONS.put("ModifyUnavailability", new ModifyUnavailability(null));
@@ -105,6 +109,12 @@ public class ActionsList {
 	    getAction("GenerateGroups").setEnabled(false);
 	    getAction("ModifyUser").setEnabled(false);
 	    getAction("RemoveUser").setEnabled(false);
+	    getAction("ModifyUnavailability").setEnabled(false);
+	    getAction("RemoveUnavailability").setEnabled(false);
+	    getAction("ModifyRoom").setEnabled(false);
+	    getAction("RemoveRoom").setEnabled(false);
+	    getAction("ModifyMaterial").setEnabled(false);
+	    getAction("RemoveMaterial").setEnabled(false);
 	}
 	
 	public static ArrayList getActions() {
