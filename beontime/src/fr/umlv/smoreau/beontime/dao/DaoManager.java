@@ -27,7 +27,7 @@ public class DaoManager {
                 properties.load(new FileInputStream(configDirectory + System.getProperty("file.separator") + CONFIG_BOT));
                 host = properties.getProperty("rmi.host");
             } else {
-                System.err.println("Le paramètre JVM 'config.directory' n'est pas positionner");
+                System.err.println("Le paramètre JVM 'config.directory' n'est pas positionné");
                 System.err.println("Utilisation de l'hôte par défaut (" + DEFAULT_HOST + ")");
                 host = DEFAULT_HOST;
             }
