@@ -25,6 +25,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	public static String PROP_ID_TYPE_INDISPONIBILITE = "IdUnavailabilityType";
 	public static String PROP_DATE_FIN = "EndDate";
 	public static String PROP_ID_SUJET_INDISPONIBILITE = "IdUnavailabilitySubject";
+	public static String PROP_ID_COURS = "IdCourse";
 
 
 	private int hashCode = Integer.MIN_VALUE;
@@ -37,6 +38,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	private java.lang.String _description;
 	private java.util.Calendar _endDate;
 	private java.util.Calendar _beginDate;
+	private java.lang.Long _idCourse;
 
 	// many to one
 	private UnavailabilityType _idUnavailabilityType;
@@ -154,6 +156,22 @@ public abstract class BaseUnavailability  implements Serializable {
 	 */
 	public void setBeginDate (java.util.Calendar _beginDate) {
 		this._beginDate = _beginDate;
+	}
+	
+	
+	/**
+	 * Return the value associated with the column: id_cours
+	 */
+	public java.lang.Long getIdCourse() {
+		return _idCourse;
+	}
+
+	/**
+	 * Set the value related to the column: id_cours
+	 * @param _idCourse the id_cours value
+	 */
+	public void setIdCourse(java.lang.Long _idCourse) {
+		this._idCourse = _idCourse;
 	}
 
 
