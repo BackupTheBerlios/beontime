@@ -99,6 +99,8 @@ public class LdapManager {
 		        matchAttrs.put(new BasicAttribute("mail",filter.getEMail()));
 		    if (filter.getIdUser() != null)
 		        matchAttrs.put(new BasicAttribute("uidNumber",filter.getIdUser()));
+		    if (filter.getLogin() != null)
+		        matchAttrs.put(new BasicAttribute("uid",filter.getLogin()));
 		}
 		NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("users"),matchAttrs);
 		
