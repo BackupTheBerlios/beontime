@@ -1,25 +1,33 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.util.HashMap;
+
 import fr.umlv.smoreau.beontime.model.Group;
 
 /**
  * @author BeOnTime
  */
 public class GroupFilter extends Group implements Filter {
-    private static final String DB_ID_GROUPE = "id_groupe";
-    private static final String DB_ID_FORMATION = "id_formation";
-    private static final String DB_INTITULE = "intitule";
+    private static final HashMap corres;
     
+    static {
+        corres = new HashMap();
+        corres.put("IdGroupe", "id_groupe");
+        corres.put("IdFormation", "id_formation");
+        corres.put("Intitule", "intitule");
+    }
+
+
     public GroupFilter() {
         super();
     }
     
     public GroupFilter(Group group) {
-        this();
-        if (group != null) {
-            setIdFormation(group.getIdFormation());
-            setIdGroupe(group.getIdGroupe());
-            setIntitule(group.getIntitule());
+        super();
+        try {
+            FilterUtils.fillFilterClass(this, group, corres.keySet());
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de l'introspection", e);
         }
     }
 
@@ -27,23 +35,10 @@ public class GroupFilter extends Group implements Filter {
 	 * @see fr.umlv.smoreau.beontime.filter.Filter#getQueryHQL()
 	 */
 	public String getHQLQuery() {
-	    StringBuffer query = new StringBuffer();
-
-	    if (getIdGroupe() != null) {
-	        query.append(DB_ID_GROUPE).append("='").append(getIdGroupe()).append("'");
-	    }
-		if (getIdFormation() != null) {
-		    if (query.length() != 0)
-		        query.append(" AND ");
-		    query.append(DB_ID_FORMATION).append("='").append(getIdFormation()).append("'");
-		}
-		if (getIntitule() != null) {
-		    if (query.length() != 0)
-		        query.append(" AND ");
-		    query.append(DB_INTITULE).append("='").append(getIntitule()).append("'");
-		}
-		    
-		return query.toString();
+	    try {
+            return FilterUtils.createHQLQuery(this, corres);
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de l'introspection", e);
+        }
 	}
-
 }

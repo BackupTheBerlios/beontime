@@ -1,7 +1,5 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.dao;
+
 
 /**
  * @author BeOnTime

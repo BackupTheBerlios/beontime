@@ -44,51 +44,63 @@ public class UserDao extends Dao {
 	}
 	
 	public Collection getAdministrators(UserFilter filter) {
-	    if (filter == null)
-	        filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_ADMIN);
+	    UserFilter f = new UserFilter(filter);
+	    if (f == null)
+	        f = new UserFilter();
+	    f.setTypePersonne(TYPE_ADMIN);
 
-		return getUsers(filter);
+		return getUsers(f);
 	}
 	
 	public Collection getSecretaries(UserFilter filter) {
-	    if (filter == null)
-	        filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_SECRETARY);
+	    UserFilter f = new UserFilter(filter);
+	    if (f == null)
+	        f = new UserFilter();
+	    f.setTypePersonne(TYPE_SECRETARY);
 
-		return getUsers(filter);
+		return getUsers(f);
 	}
 	
 	public Collection getStudents(UserFilter filter) {
-	    if (filter == null)
-	        filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_STUDENT);
+	    UserFilter f = new UserFilter(filter);
+	    if (f == null)
+	        f = new UserFilter();
+	    f.setTypePersonne(TYPE_STUDENT);
 
-		return getUsers(filter);
+		return getUsers(f);
 	}
 	
 	public Collection getTeachers(UserFilter filter) {
-	    if (filter == null)
-	        filter = new UserFilter();
-	    filter.setTypePersonne(TYPE_TEACHER);
+	    UserFilter f = new UserFilter(filter);
+	    if (f == null)
+	        f = new UserFilter();
+	    f.setTypePersonne(TYPE_TEACHER);
 
-		return getUsers(filter);
+		return getUsers(f);
 	}
 	
 	public Collection getAdministrators() {
-		return getAdministrators(null);
+	    UserFilter filter = new UserFilter();
+	    filter.setTypePersonne(TYPE_ADMIN);
+		return getUsers(filter);
 	}
 	
 	public Collection getSecretaries() {
-		return getSecretaries(null);
+	    UserFilter filter = new UserFilter();
+	    filter.setTypePersonne(TYPE_SECRETARY);
+		return getUsers(filter);
 	}
 	
 	public Collection getStudents() {
-		return getStudents(null);
+	    UserFilter filter = new UserFilter();
+	    filter.setTypePersonne(TYPE_STUDENT);
+		return getUsers(filter);
 	}
 	
 	public Collection getTeachers() {
-		return getTeachers(null);
+	    UserFilter filter = new UserFilter();
+	    filter.setTypePersonne(TYPE_TEACHER);
+		return getUsers(filter);
 	}
 	
 	public void addUser(Person user) {
