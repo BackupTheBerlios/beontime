@@ -2,6 +2,7 @@ package junit;
 
 
 import fr.umlv.smoreau.beontime.dao.*;
+import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.Person;
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -5,6 +5,7 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.util.Collection;
 
+import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 
 /**

@@ -1,38 +1,31 @@
-package fr.umlv.smoreau.beontime.dao;
+package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
+import fr.umlv.smoreau.beontime.model.Group;
 
 /**
  * @author BeOnTime
  */
-public class SubjectFilter extends Subject implements Filter {
+public class GroupFilter extends Group implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("IdMatiere", "id_matiere");
+        corres.put("IdGroupe", "id_groupe");
         corres.put("IdFormation", "id_formation");
-        corres.put("IdTeacher", "id_enseignant");
         corres.put("Intitule", "intitule");
-        corres.put("NbHeureMag", "nb_heure_mag");
-        corres.put("NbHeureTd", "nb_heure_td");
-        corres.put("NbHeureTp", "nb_heure_tp");
-        corres.put("NbGroupeMag", "nb_groupe_mag");
-        corres.put("NbGroupeTd", "nb_groupe_td");
-        corres.put("NbGroupeTp", "nb_groupe_tp");
     }
 
 
-    public SubjectFilter() {
+    public GroupFilter() {
         super();
     }
     
-    public SubjectFilter(Subject subject) {
+    public GroupFilter(Group group) {
         super();
         try {
-            FilterUtils.fillFilterClass(this, subject, corres.keySet());
+            FilterUtils.fillFilterClass(this, group, corres.keySet());
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }

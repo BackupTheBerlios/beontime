@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.dao;
+package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 

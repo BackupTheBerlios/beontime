@@ -10,6 +10,8 @@ import net.sf.hibernate.Session;
 
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
+import fr.umlv.smoreau.beontime.filter.MaterialFilter;
+import fr.umlv.smoreau.beontime.filter.RoomFilter;
 import fr.umlv.smoreau.beontime.model.element.*;
 
 /**

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
 import fr.umlv.smoreau.beontime.Hibernate;
+import fr.umlv.smoreau.beontime.filter.Filter;
 
 /**
  * @author BeOnTime

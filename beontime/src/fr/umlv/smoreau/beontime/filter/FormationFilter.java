@@ -1,32 +1,32 @@
-package fr.umlv.smoreau.beontime.dao;
+package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.Formation;
 
 /**
  * @author BeOnTime
  */
-public class RoomFilter extends Room implements Filter {
+public class FormationFilter extends Formation implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("IdLocal", "id_local");
-        corres.put("Nom", "nom");
-        corres.put("NomBatiment", "nom_batiment");
-        corres.put("Description", "description");
+        corres.put("IdFormation", "id_formation");
+        corres.put("Intitule", "intitule");
+        corres.put("IdTeacher", "id_secretaire");
+        corres.put("IdEnseignant", "id_enseignant");
     }
 
 
-    public RoomFilter() {
+    public FormationFilter() {
         super();
     }
     
-    public RoomFilter(Room room) {
+    public FormationFilter(Formation formation) {
         super();
         try {
-            FilterUtils.fillFilterClass(this, room, corres.keySet());
+            FilterUtils.fillFilterClass(this, formation, corres.keySet());
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }
@@ -42,4 +42,5 @@ public class RoomFilter extends Room implements Filter {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }
 	}
+
 }

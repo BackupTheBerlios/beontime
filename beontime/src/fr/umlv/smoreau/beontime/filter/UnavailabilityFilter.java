@@ -1,31 +1,34 @@
-package fr.umlv.smoreau.beontime.dao;
+package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.Unavailability;
 
 /**
  * @author BeOnTime
  */
-public class MaterialFilter extends Material implements Filter {
+public class UnavailabilityFilter extends Unavailability implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("IdMateriel", "id_materiel");
-        corres.put("Nom", "nom");
+        corres.put("IdIndisponibilite", "id_indisponibilite");
+        corres.put("DateDebut", "date_debut");
+        corres.put("DateFin", "date_fin");
+        corres.put("IdTypeUnavailability", "id_type_indisponibilite");
+        corres.put("IdSujetIndisponibilite", "id_sujet_indisponibilite");
         corres.put("Description", "description");
     }
 
 
-    public MaterialFilter() {
+    public UnavailabilityFilter() {
         super();
     }
     
-    public MaterialFilter(Material material) {
+    public UnavailabilityFilter(Unavailability unavailability) {
         super();
         try {
-            FilterUtils.fillFilterClass(this, material, corres.keySet());
+            FilterUtils.fillFilterClass(this, unavailability, corres.keySet());
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }

@@ -7,6 +7,7 @@ import net.sf.hibernate.Session;
 
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
+import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 
 /**

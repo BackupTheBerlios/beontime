@@ -1,12 +1,12 @@
 /*
  * 
  */
-package fr.umlv.smoreau.beontime.dao;
+package fr.umlv.smoreau.beontime.filter;
 
 /**
  * @author BeOnTime
  */
-public class FormationFilter implements Filter {
+public class TimetableFilter implements Filter {
 
 	/* (non-Javadoc)
 	 * @see fr.umlv.smoreau.beontime.filter.Filter#getQueryHQL()

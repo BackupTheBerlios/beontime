@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.sf.hibernate.HibernateException;
 
 import fr.umlv.smoreau.beontime.TransactionManager;
+import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.*;
 
 /**

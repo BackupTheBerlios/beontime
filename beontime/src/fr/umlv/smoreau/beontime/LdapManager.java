@@ -1,8 +1,6 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -19,8 +17,9 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchResult;
 
-import fr.umlv.smoreau.beontime.dao.FormationFilter;
-import fr.umlv.smoreau.beontime.dao.UserFilter;
+import fr.umlv.smoreau.beontime.filter.FormationFilter;
+import fr.umlv.smoreau.beontime.filter.UserFilter;
+import fr.umlv.smoreau.beontime.model.Formation;
 
 /**
  * @author BeOnTime
@@ -33,9 +32,18 @@ public class LdapManager {
 		common.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 		common.put("java.naming.ldap.version", "3");
 	}
+	
+    private static final LdapManager INSTANCE = new LdapManager();
+
+    private LdapManager() {
+    }
+
+    public static LdapManager getInstance() {
+        return INSTANCE;
+    }
 
 
-    private static NamingEnumeration search(String base, Attributes matchAttrs) throws NamingException {
+    private NamingEnumeration search(String base, Attributes matchAttrs) throws NamingException {
         Hashtable env = new Hashtable(common);
         StringBuffer url = new StringBuffer("ldap://");
         url.append(DatabasesProperties.getLdapHost()).append(":");
@@ -46,29 +54,25 @@ public class LdapManager {
 
         return ctx.search(base, matchAttrs);
     }
-    
-    
-    /*public static void main(String[] args) {
-    	getFormations(null);
-    }*/
 
 
-	public static Collection getUsers(UserFilter filter) {
+	public Collection getUsers(UserFilter filter) {
 		//TODO à implémenter
 		return null;
 	}
 	
-	public static Collection getAdministrators(UserFilter filter) {
+	public Collection getAdministrators(UserFilter filter) {
+	    // gidNumber=150
 		//TODO à implémenter
 		return null;
 	}
 	
-	public static Collection getStudents(UserFilter filter) {
+	public Collection getStudents(UserFilter filter) {
 		//TODO à implémenter
 		return null;
 	}
 		
-	public static Collection getTeachers(UserFilter filter) {
+	public Collection getTeachers(UserFilter filter) {
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
 			matchAttrs.put(new BasicAttribute("gidNumber","801"));
@@ -98,43 +102,57 @@ public class LdapManager {
 		return null;
 	}
 
-	public static Collection getUsers() {
+	public Collection getUsers() {
 		return getUsers(null);
 	}
 	
-	public static Collection getAdministrators() {
+	public Collection getAdministrators() {
 		return getAdministrators(null);
 	}
 	
-	public static Collection getStudents() {
+	public Collection getStudents() {
 		return getStudents(null);
 	}
 
-	public static Collection getTeachers() {
+	public Collection getTeachers() {
 		return getTeachers(null);
 	}
 	
-	public static Collection getFormations(FormationFilter filter) {
+	public Collection getFormations(FormationFilter filter) {
+	    ArrayList result = new ArrayList();
+
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
+			if (filter != null) {
+			    if (filter.getIdFormation() != null)
+			        matchAttrs.put(new BasicAttribute("gidNumber",filter.getIdFormation()));
+			    if (filter.getIntitule() != null)
+			        matchAttrs.put(new BasicAttribute("cn",filter.getIntitule()));
+			}
 			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("groups"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();
+				Formation formation = new Formation();
 				
 				Attributes attrs = sr.getAttributes();
-				Attribute tmp = attrs.get("description");
+				Attribute tmp = attrs.get("gidNumber");
 				if (tmp != null)
-					System.out.println(tmp.get());
+				    formation.setIdFormation((Long) tmp.get());
+				tmp = attrs.get("cn");
+				if (tmp != null)
+				    formation.setIntitule((String) tmp.get());
+				
+				result.add(formation);
 			}
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		//TODO à terminer
-		return null;
+		//TODO à tester à la fac
+		return result;
 	}
 
-	public static Collection getFormations() {
+	public Collection getFormations() {
 		return getFormations(null);
 	}
 	

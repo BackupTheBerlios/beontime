@@ -7,6 +7,9 @@ import net.sf.hibernate.Session;
 
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
+import fr.umlv.smoreau.beontime.filter.CourseFilter;
+import fr.umlv.smoreau.beontime.filter.SubjectFilter;
+import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.timetable.*;
 
 /**
