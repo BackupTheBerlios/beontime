@@ -21,7 +21,7 @@
 		 />
 		<set inverse="true" name="CoursSet">
 			<key column="ID_type_cours" />
-			<one-to-many class="Cours" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" />
 		</set>
 	</class>
 </hibernate-mapping>

@@ -25,7 +25,7 @@ public class Unavailability extends BaseUnavailability {
 	 */
 	public Unavailability (
 		java.lang.Long _idIndisponibilite,
-		TypeUnvailability _idTypeIndisponibilite,
+		TypeUnavailability _idTypeIndisponibilite,
 		java.lang.Long _idSujetIndisponibilite) {
 
 		super (

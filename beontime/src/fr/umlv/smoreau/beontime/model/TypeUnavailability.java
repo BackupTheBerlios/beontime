@@ -6,17 +6,17 @@ import fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability;
  * This is the object class that relates to the Type_indisponibilite table.
  * Any customizations belong here.
  */
-public class TypeUnvailability extends BaseTypeUnvailability {
+public class TypeUnavailability extends BaseTypeUnvailability {
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
-	public TypeUnvailability () {
+	public TypeUnavailability () {
 		super();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public TypeUnvailability (java.lang.Long _idTypeIndisponibilite) {
+	public TypeUnavailability (java.lang.Long _idTypeIndisponibilite) {
 		super(_idTypeIndisponibilite);
 	}
 

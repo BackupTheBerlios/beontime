@@ -3,5 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/hibernate2.jar"/>
+	<classpathentry kind="lib" path="lib/pg72jdbc2.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/db-ojb-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-2.0.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

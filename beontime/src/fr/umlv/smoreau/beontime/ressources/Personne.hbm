@@ -64,19 +64,19 @@
 
 		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
 			<key column="ID_enseignant" />
-			<one-to-many class="ParticipeGroupeMatiereCours" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
 		<set inverse="true" name="FormationSetByIdEnseignant">
 			<key column="ID_enseignant" />
-			<one-to-many class="Formation" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
 		<set inverse="true" name="FormationSetByIdSecretaire">
 			<key column="ID_secretaire" />
-			<one-to-many class="Formation" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
 		<set inverse="true" name="MatiereSet">
 			<key column="ID_enseignant" />
-			<one-to-many class="Matiere" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Subject" />
 		</set>
 		<set
 			cascade="all"
@@ -84,7 +84,7 @@
 			table="Est_Dirige_par_Cours_Enseignant"
 		>
 			<key column="ID_enseignant" />
-			<many-to-many class="Cours" column="ID_cours" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="ID_cours" />
 		</set>
 	</class>
 </hibernate-mapping>

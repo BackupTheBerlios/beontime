@@ -31,7 +31,7 @@
 			table="Utilise_Cours_Materiel"
 		>
 			<key column="ID_materiel" />
-			<many-to-many class="Cours" column="ID_cours" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="ID_cours" />
 		</set>
 	</class>
 </hibernate-mapping>

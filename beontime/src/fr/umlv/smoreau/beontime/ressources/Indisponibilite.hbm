@@ -41,7 +41,7 @@
 		 />
 
 		<many-to-one
-			class="TypeIndisponibilite"
+			class="fr.umlv.smoreau.beontime.model.TypeUnavailability"
 			name="IdTypeIndisponibilite"
 			not-null="true"
 		>

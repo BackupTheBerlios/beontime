@@ -28,14 +28,14 @@
 		 />
 
 		<many-to-one
-			class="Personne"
+			class="fr.umlv.smoreau.beontime.model.user.Person"
 			name="IdSecretaire"
 			not-null="true"
 		>
 			<column name="ID_secretaire" />
 		</many-to-one>
 		<many-to-one
-			class="Personne"
+			class="fr.umlv.smoreau.beontime.model.user.Person"
 			name="IdEnseignant"
 			not-null="true"
 		>
@@ -43,11 +43,11 @@
 		</many-to-one>
 		<set inverse="true" name="GroupeSet">
 			<key column="ID_formation" />
-			<one-to-many class="Groupe" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.Group" />
 		</set>
 		<set inverse="true" name="MatiereSet">
 			<key column="ID_formation" />
-			<one-to-many class="Matiere" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Subject" />
 		</set>
 	</class>
 </hibernate-mapping>

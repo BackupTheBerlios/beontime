@@ -21,7 +21,7 @@
 		 />
 
 		<many-to-one
-			class="Formation"
+			class="fr.umlv.smoreau.beontime.model.Formation"
 			name="IdFormation"
 			not-null="true"
 		>
@@ -29,9 +29,9 @@
 		</many-to-one>
 		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
 			<key column="ID_groupe" />
-			<one-to-many class="ParticipeGroupeMatiereCours" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
-		<joined-subclass name="AppartientEtudiantGroupe" table="Appartient_Etudiant_Groupe">
+		<joined-subclass name="fr.umlv.smoreau.beontime.model.association.AppartientEtudiantGroupe" table="Appartient_Etudiant_Groupe">
 			<key column="ID_groupe" />
 			<property
 				column="ID_etudiant"

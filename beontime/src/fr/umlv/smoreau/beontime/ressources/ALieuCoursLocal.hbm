@@ -7,14 +7,14 @@
 	<class name="fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom" table="A_Lieu_Cours_Local">
 		<composite-id>
 			<key-many-to-one
-				class="Local"
+				class="fr.umlv.smoreau.beontime.model.element.Room"
 				column="ID_local"
-				name="IdLocal"
+				name="IdRoom"
 			 />
 			<key-many-to-one
-				class="Cours"
+				class="fr.umlv.smoreau.beontime.model.timetable.Course"
 				column="ID_cours"
-				name="IdCours"
+				name="IdCourse"
 			 />
 		</composite-id>
 	</class>

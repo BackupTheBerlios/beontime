@@ -7,14 +7,14 @@
 	<class name="fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher" table="Est_Dirige_par_Cours_Enseignant">
 		<composite-id>
 			<key-many-to-one
-				class="Personne"
+				class="fr.umlv.smoreau.beontime.model.user.Person"
 				column="ID_enseignant"
-				name="IdEnseignant"
+				name="IdTeacher"
 			 />
 			<key-many-to-one
-				class="Cours"
+				class="fr.umlv.smoreau.beontime.model.timetable.Course"
 				column="ID_cours"
-				name="IdCours"
+				name="IdCourse"
 			 />
 		</composite-id>
 	</class>

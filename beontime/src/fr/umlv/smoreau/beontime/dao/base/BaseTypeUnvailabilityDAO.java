@@ -27,22 +27,22 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * fr.umlv.smoreau.beontime.model.dao._RootDAO _RootDAO.getReferenceClass()
 	 */
 	public Class getReferenceClass () {
-		return fr.umlv.smoreau.beontime.model.TypeUnvailability.class;
+		return fr.umlv.smoreau.beontime.model.TypeUnavailability.class;
 	}
 	
-	public fr.umlv.smoreau.beontime.model.TypeUnvailability load(java.lang.Long key)
+	public fr.umlv.smoreau.beontime.model.TypeUnavailability load(java.lang.Long key)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.TypeUnvailability) load(getReferenceClass(), key);
+		return (fr.umlv.smoreau.beontime.model.TypeUnavailability) load(getReferenceClass(), key);
 	}
 
-	public fr.umlv.smoreau.beontime.model.TypeUnvailability load(java.lang.Long key, Session s)
+	public fr.umlv.smoreau.beontime.model.TypeUnavailability load(java.lang.Long key, Session s)
 		throws net.sf.hibernate.HibernateException {
-		return (fr.umlv.smoreau.beontime.model.TypeUnvailability) load(getReferenceClass(), key, s);
+		return (fr.umlv.smoreau.beontime.model.TypeUnavailability) load(getReferenceClass(), key, s);
 	}
 
-	public fr.umlv.smoreau.beontime.model.TypeUnvailability loadInitialize(java.lang.Long key, Session s) 
+	public fr.umlv.smoreau.beontime.model.TypeUnavailability loadInitialize(java.lang.Long key, Session s) 
 			throws net.sf.hibernate.HibernateException { 
-		fr.umlv.smoreau.beontime.model.TypeUnvailability obj = load(key, s); 
+		fr.umlv.smoreau.beontime.model.TypeUnavailability obj = load(key, s); 
 		if (!Hibernate.isInitialized(obj)) {
 			Hibernate.initialize(obj);
 		} 
@@ -55,7 +55,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * @param typeUnvailability a transient instance of a persistent class 
 	 * @return the class identifier
 	 */
-	public java.lang.Long save(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability)
+	public java.lang.Long save(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability)
 		throws net.sf.hibernate.HibernateException {
 		return (java.lang.Long) super.save(typeUnvailability);
 	}
@@ -68,7 +68,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * @param s the Session
 	 * @return the class identifier
 	 */
-	public java.lang.Long save(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability, Session s)
+	public java.lang.Long save(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability, Session s)
 		throws net.sf.hibernate.HibernateException {
 		return (java.lang.Long) super.save(typeUnvailability, s);
 	}
@@ -79,7 +79,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * identifier property mapping. 
 	 * @param typeUnvailability a transient instance containing new or updated state 
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(typeUnvailability);
 	}
@@ -92,7 +92,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * @param typeUnvailability a transient instance containing new or updated state.
 	 * @param s the Session.
 	 */
-	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability, Session s)
+	public void saveOrUpdate(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.saveOrUpdate(typeUnvailability, s);
 	}
@@ -102,7 +102,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * instance with the same identifier in the current session.
 	 * @param typeUnvailability a transient instance containing updated state
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability) 
+	public void update(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability) 
 		throws net.sf.hibernate.HibernateException {
 		super.update(typeUnvailability);
 	}
@@ -114,7 +114,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * @param typeUnvailability a transient instance containing updated state
 	 * @param the Session
 	 */
-	public void update(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability, Session s)
+	public void update(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.update(typeUnvailability, s);
 	}
@@ -146,7 +146,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * Session or a transient instance with an identifier associated with existing persistent state. 
 	 * @param typeUnvailability the instance to be removed
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability)
+	public void delete(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(typeUnvailability);
 	}
@@ -158,7 +158,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * @param typeUnvailability the instance to be removed
 	 * @param s the Session
 	 */
-	public void delete(fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability, Session s)
+	public void delete(fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.delete(typeUnvailability, s);
 	}
@@ -173,7 +173,7 @@ public class BaseTypeUnvailabilityDAO extends _RootDAO {
 	 * <li>after inserting a Blob or Clob</li>
 	 * </ul>
 	 */
-	public void refresh (fr.umlv.smoreau.beontime.model.TypeUnvailability typeUnvailability, Session s)
+	public void refresh (fr.umlv.smoreau.beontime.model.TypeUnavailability typeUnvailability, Session s)
 		throws net.sf.hibernate.HibernateException {
 		super.refresh(typeUnvailability, s);
 	}

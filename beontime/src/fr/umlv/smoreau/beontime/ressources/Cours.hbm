@@ -42,7 +42,7 @@
 		 />
 
 		<many-to-one
-			class="TypeCours"
+			class="fr.umlv.smoreau.beontime.model.timetable.TypeCourse"
 			name="IdTypeCours"
 			not-null="true"
 		>
@@ -50,7 +50,7 @@
 		</many-to-one>
 		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
 			<key column="ID_cours" />
-			<one-to-many class="ParticipeGroupeMatiereCours" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
 		<set
 			cascade="all"
@@ -58,7 +58,7 @@
 			table="Est_Dirige_par_Cours_Enseignant"
 		>
 			<key column="ID_cours" />
-			<many-to-many class="Personne" column="ID_enseignant" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.user.Person" column="ID_enseignant" />
 		</set>
 		<set
 			cascade="all"
@@ -66,7 +66,7 @@
 			table="Utilise_Cours_Materiel"
 		>
 			<key column="ID_cours" />
-			<many-to-many class="Materiel" column="ID_materiel" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Material" column="ID_materiel" />
 		</set>
 		<set
 			cascade="all"
@@ -74,7 +74,7 @@
 			table="A_Lieu_Cours_Local"
 		>
 			<key column="ID_cours" />
-			<many-to-many class="Local" column="ID_local" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Room" column="ID_local" />
 		</set>
 	</class>
 </hibernate-mapping>

@@ -7,14 +7,14 @@
 	<class name="fr.umlv.smoreau.beontime.model.association.UseCourseMaterial" table="Utilise_Cours_Materiel">
 		<composite-id>
 			<key-many-to-one
-				class="Materiel"
+				class="fr.umlv.smoreau.beontime.model.element.Material"
 				column="ID_materiel"
-				name="IdMateriel"
+				name="IdMaterial"
 			 />
 			<key-many-to-one
-				class="Cours"
+				class="fr.umlv.smoreau.beontime.model.timetable.Course"
 				column="ID_cours"
-				name="IdCours"
+				name="IdCourse"
 			 />
 		</composite-id>
 	</class>

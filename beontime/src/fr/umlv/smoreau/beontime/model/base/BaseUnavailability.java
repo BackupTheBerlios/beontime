@@ -2,7 +2,7 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.TypeUnvailability;
+import fr.umlv.smoreau.beontime.model.TypeUnavailability;
 
 
 /**
@@ -39,7 +39,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	private java.util.Date _dateDebut;
 
 	// many to one
-	private TypeUnvailability _idTypeIndisponibilite;
+	private TypeUnavailability _idTypeIndisponibilite;
 
 
 	// constructors
@@ -60,7 +60,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	 */
 	public BaseUnavailability (
 		java.lang.Long _idIndisponibilite,
-		TypeUnvailability _idTypeIndisponibilite,
+		TypeUnavailability _idTypeIndisponibilite,
 		java.lang.Long _idSujetIndisponibilite) {
 
 		this.setIdIndisponibilite(_idIndisponibilite);
@@ -162,7 +162,7 @@ public abstract class BaseUnavailability  implements Serializable {
      *  column=ID_type_indisponibilite
 	 * not-null=true
 	 */
-	public TypeUnvailability getIdTypeUnvailability () {
+	public TypeUnavailability getIdTypeUnvailability () {
 		return this._idTypeIndisponibilite;
 	}
 
@@ -170,7 +170,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	 * Set the value related to the column: ID_type_indisponibilite
 	 * @param _idTypeIndisponibilite the ID_type_indisponibilite value
 	 */
-	public void setIdTypeUnvailability (TypeUnvailability _idTypeIndisponibilite) {
+	public void setIdTypeUnvailability (TypeUnavailability _idTypeIndisponibilite) {
 		this._idTypeIndisponibilite = _idTypeIndisponibilite;
 	}
 

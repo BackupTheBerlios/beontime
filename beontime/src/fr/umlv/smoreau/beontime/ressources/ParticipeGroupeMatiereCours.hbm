@@ -5,26 +5,26 @@
 
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" table="Participe_Groupe_Matiere_Cours">
-		<composite-id class="ParticipeGroupSubjectCoursePK" name="Id">
+		<composite-id class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCoursePK" name="Id">
 			<key-many-to-one
-				class="Personne"
+				class="fr.umlv.smoreau.beontime.model.user.Person"
 				column="ID_enseignant"
-				name="IdEnseignant"
+				name="IdTeacher"
 			 />
 			<key-many-to-one
-				class="Matiere"
+				class="fr.umlv.smoreau.beontime.model.timetable.Subject"
 				column="ID_matiere"
-				name="IdMatiere"
+				name="IdSubject"
 			 />
 			<key-many-to-one
-				class="Groupe"
+				class="fr.umlv.smoreau.beontime.model.Group"
 				column="ID_groupe"
-				name="IdGroupe"
+				name="IdGroup"
 			 />
 			<key-many-to-one
-				class="Cours"
+				class="fr.umlv.smoreau.beontime.model.timetable.Course"
 				column="ID_cours"
-				name="IdCours"
+				name="IdCourse"
 			 />
 		</composite-id>
 		<property

@@ -39,7 +39,7 @@
 			table="A_Lieu_Cours_Local"
 		>
 			<key column="ID_local" />
-			<many-to-many class="Cours" column="ID_cours" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="ID_cours" />
 		</set>
 	</class>
 </hibernate-mapping>
