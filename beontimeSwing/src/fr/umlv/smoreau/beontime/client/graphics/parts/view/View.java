@@ -23,10 +23,6 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 
-
-/**
- * @author BeOnTime
- */
 public class View {
 	private JScrollPane jScrollPane;
 	private MultiSpanCellTable table;
@@ -41,10 +37,36 @@ public class View {
 	private JList columnHeader;
 
 	
-    public View(MainFrame mainframe, BoTModel model) {
+    public View(MainFrame mainframe, final BoTModel model) {
     	mainFrame=mainframe;
     	this.model = model;
     	init();
+    	final PopupMenu popupMenu = new PopupMenu(null);
+		table.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				// Popup Menus
+				if (e.getButton() == MouseEvent.BUTTON3 && model.getTimetable() != null) {
+					int row = table.rowAtPoint(new Point(e.getX(),e.getY()));
+					int column=table.columnAtPoint(new Point(e.getX(),e.getY()));
+					table.changeSelection(row,column,false,false);
+					Course c=(Course)table.getModel().getValueAt(row,column);
+					
+					if (c != null) {
+						mainFrame.setCourseSelected(c);
+						popupMenu.show(e.getComponent(), e.getX(), e.getY());
+						
+					}
+				}
+			}
+			public void mousePressed(MouseEvent e) {
+			}
+			public void mouseReleased(MouseEvent e) {
+			}
+			public void mouseEntered(MouseEvent e) {
+			}
+			public void mouseExited(MouseEvent e) {
+			}
+		});
     }
     public void init(){
     	UIManager.put(GroupableTableHeader.uiClassID, "fr.umlv.smoreau.beontime.client.graphics.parts.view.GroupableTableHeaderUI");
@@ -166,7 +188,9 @@ public class View {
 	    
 	    public PopupMenu(Object object) {
 	        super();
-            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddCourse"));
+            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("ModifyCourse"));
+			add(menuItem);
+			menuItem = new JMenuItem(ActionsList.getAction("RemoveCourse"));
 			add(menuItem);
 	    }
 	}
