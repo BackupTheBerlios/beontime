@@ -17,7 +17,16 @@ public class MultiSpanCellTable extends JTable {
     setRowSelectionAllowed(false);
     setCellSelectionEnabled(true);   
     setRowHeight(77);
-    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);    
+    int vColIndex = 0;
+    Enumeration e=getColumnModel().getColumns();
+    while (e.hasMoreElements()) {
+        TableColumn aColumn = (TableColumn)e.nextElement();
+        int width = 15;
+        aColumn.setPreferredWidth(width);
+      }
+    	
+    
+    setAutoResizeMode(JTable.AUTO_RESIZE_OFF);    
     setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
   }
   

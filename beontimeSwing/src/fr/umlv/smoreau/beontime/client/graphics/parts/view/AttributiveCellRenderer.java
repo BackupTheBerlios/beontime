@@ -71,6 +71,7 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
   		Course c=(Course)value;
   		if (value==null){
   			setText("");
+  			setToolTipText("");
   		}
   		else{
   			String prtScreen="";
@@ -79,25 +80,42 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
   			Subject subj=c.getSubject();
   			if (subj!=null) {
   				prtScreen=subj.getHeading();
+  				if((c.getIdCourseType().getIdCourseType().intValue())==2){
+  					prtScreen=prtScreen+" ( TD )";
+  				}
+  				else if((c.getIdCourseType().getIdCourseType().intValue())==3){
+  					prtScreen=prtScreen+" ( TP )";
+  				}
   				
   				for (Iterator i = c.getTeachers().iterator(); i.hasNext(); ) {
   					User user=(User) i.next();
-  					teachers=teachers+" "+user.getName();
+  					teachers=teachers+" - "+user.getFirstName()+" "+user.getName();
+  				}
+  				if(teachers.length()>3){
+  					teachers=teachers.substring(2);
   				}
   				teachers=teachers.trim();
   				//prtScreen=prtScreen+"\r"+teachers;
   				for (Iterator i = c.getRooms().iterator(); i.hasNext(); ) {
   					Room room=(Room) i.next();
-  					rooms=rooms+" "+room.getName();
+  					rooms=rooms+" - "+room.getName();
+  					
+  				}
+  				if(rooms.length()>3){
+  					rooms=rooms.substring(2);
   				}
   				rooms=rooms.trim();
+  				if (rooms!=""){
+  					rooms="Salles : "+rooms;
+  				}
   				//prtScreen=prtScreen+"\n"+rooms;
   			}
   			else{
   				prtScreen="matiere inconnue";
   			}
-  			prtScreen="<html>"+prtScreen+"<br>"+teachers+"<br>"+rooms+"</html>";
-  			setText(prtScreen);
+  			String prtScreen1="<html>"+prtScreen+"<br>"+teachers+"<br>"+rooms+"</html>";
+  			setText(prtScreen1);
+  			setToolTipText(prtScreen1);
   		}
   		this.setHorizontalAlignment(JLabel.CENTER);
   		this.setHorizontalTextPosition(JLabel.CENTER);

@@ -76,8 +76,10 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	public DefaultCellAttribute getCellAttribute() {
 	    return cellAtt;
 	}
+	public void setCellAttribute(DefaultCellAttribute cellatt) {
+	    cellAtt=cellatt;
+	}
 	public void addDataRow(){
-		
 		Course[][] data2=new Course[rowNb+1][colNb];
 		for(int i=0;i<rowNb;i++){
 			for(int j=0;j<colNb;j++){
@@ -91,17 +93,19 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		rowNb=rowNb+1;
 	}
 	public void addDataColumn(){
-		
-		Course[][] data2=new Course[rowNb][colNb+1];
+		Course[][] data2=new Course[rowNb][colNb+4];
 		for(int i=0;i<rowNb;i++){
 			for(int j=0;j<colNb;j++){
 				data2[i][j]=data[i][j];
 			}
 		}
 	    for (int i=0;i<rowNb;i++) {
-	        data2[i][colNb-1]=null;
+	    	for(int j=0;j<4;j++){
+	    		data2[i][colNb+j]=null;
+	    	}
 	      }
 		data=data2;
+		colNb=colNb+4;
 	}
 
 	public void setCellAttribute(CellAttribute newCellAtt) {
@@ -121,7 +125,9 @@ public class AttributiveCellTableModel extends AbstractTableModel {
    
 	private class ViewListener extends DefaultBoTListener {
 		public void refreshAll(BoTEvent e) {
-		    Timetable timetable = e.getTimetable();
+		    view.getTable().setVisible(true);
+		    view.getJScrollPane().getVerticalScrollBar().setEnabled(true);
+			Timetable timetable = e.getTimetable();
 		    Collection courses = timetable.getCourses();
 		    initDataTab();
 		    for (Iterator i = courses.iterator(); i.hasNext(); ) {
@@ -134,7 +140,6 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        		day=cellAtt.rowSize;
 	        		cellAtt.addRow();
 	        		addDataRow();
-	        		System.out.println("ttt");
 	                ListModel listModel = new AbstractListModel() {
 	                    String headers[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
 	                    public int getSize() { return headers.length; }
@@ -147,31 +152,32 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        		day=6;
 
 	        	}
-	        	int hour_deb=beginDate.get(Calendar.HOUR_OF_DAY);
-	        	int hour_end=endDate.get(Calendar.HOUR_OF_DAY);
-	        	int begin=view.getHour_begin();
-	        	int end=view.getHour_end();
-	        	if((hour_deb<begin)||(hour_end>end)){
-	        		
-	        	}
+	        	/*
+	        	if((beginDate.get(Calendar.HOUR_OF_DAY)>view.getHour_end())||((endDate.get(Calendar.HOUR_OF_DAY)-1)>view.getHour_end())){
+	        		System.out.println("add column");
+	        		cellAtt.addColumn();
+	        		addDataColumn();
+	        		//GroupableTableHeader header = view.createHeader(view.getHour_begin(),(view.getHour_end()+1));
+	        		//view.getTable().setTableHeader(header);
+	        	}*/
+	        	
 		        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
 		        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));
+
 		        if (endColumn>startColumn){
 			        int[] columns=new int[(endColumn-startColumn)+1];
 			        for(int j=0;j<=(endColumn-startColumn);j++){
 			        	columns[j]=startColumn+j;
 			        	}
 			        int [] row=new int[]{day};
-			        changeColor(false,row,columns,course.getSubject().getColor());
-			        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
-			        setValueAt(course,row[0],columns[0]);
-			        cellAtt.combine(row,columns);
-
+			        if(cellAtt.combine(row,columns)){
+			        	setValueAt(course,row[0],columns[0]);
+			        	changeColor(false,row,columns,course.getSubject().getColor());
+				        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
+			        }
 		        }
 
 		    }
-		    view.getTable().setVisible(true);
-		    view.getJScrollPane().getVerticalScrollBar().setEnabled(true);
 		    fireTableDataChanged();
 		}
 		
@@ -203,6 +209,14 @@ public class AttributiveCellTableModel extends AbstractTableModel {
         		day=cellAtt.rowSize-1;
 
         	}
+        	/*
+        	if((beginDate.get(Calendar.HOUR_OF_DAY)>view.getHour_end())||(endDate.get(Calendar.HOUR_OF_DAY)>view.getHour_end())){
+        		System.out.println("ok");
+        		cellAtt.addColumn();
+        		addDataColumn();
+        		//GroupableTableHeader header = view.createHeader(view.getHour_begin(),view.getHour_end()+1,data);
+        		//view.getTable().setTableHeader(header);
+        	}*/
 	        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
 	        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));
 	        if (endColumn>startColumn){
@@ -211,10 +225,11 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		        	columns[j]=startColumn+j;
 		        	}
 		        int [] row=new int[]{day};
-		        changeColor(false,row,columns,course.getSubject().getColor());
-		        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
-		        setValueAt(course,row[0],columns[0]);
-		        cellAtt.combine(row,columns);
+		        if(cellAtt.combine(row,columns)){
+		        	setValueAt(course,row[0],columns[0]);
+		        	changeColor(false,row,columns,course.getSubject().getColor());
+			        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
+		        }
 		        fireTableDataChanged();
 
 	        }
@@ -273,7 +288,6 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		}
 
 		private int getStartColumnHour(int hour,int minute){
-			
 			int ret;
 			if(hour<8){
 				ret=0;

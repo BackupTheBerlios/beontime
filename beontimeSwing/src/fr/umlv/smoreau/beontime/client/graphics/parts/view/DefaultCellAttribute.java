@@ -22,8 +22,8 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
   protected void initValue() {
     for(int i=0; i<span.length;i++) {
       for(int j=0; j<span[i].length; j++) {
-	span[i][j][CellSpan.COLUMN] = 1;
-	span[i][j][CellSpan.ROW]    = 1;
+      		span[i][j][CellSpan.COLUMN] = 1;
+      		span[i][j][CellSpan.ROW]    = 1;
       }
     }
   }
@@ -48,8 +48,10 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
     return true;
   }
 
-  public void combine(int[] rows, int[] columns) {
-    if (isOutOfBounds(rows, columns)) return;
+  public boolean combine(int[] rows, int[] columns) {
+    if (isOutOfBounds(rows, columns)){
+    	return false;
+    }
     int    rowSpan  = rows.length;
     int columnSpan  = columns.length;
     int startRow    = rows[0];
@@ -59,7 +61,7 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
 	if ((span[startRow +i][startColumn +j][CellSpan.COLUMN] != 1)
 	  ||(span[startRow +i][startColumn +j][CellSpan.ROW]    != 1)) {
 	  //System.out.println("can't combine");
-	  return ;
+	  return false;
 	}
       }
     }
@@ -71,7 +73,7 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
     }
     span[startRow][startColumn][CellSpan.COLUMN] = columnSpan;
     span[startRow][startColumn][CellSpan.ROW]    =    rowSpan;
-    
+    return true;
   }
 
   public void split(int row, int column) {
@@ -127,15 +129,25 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
 
   public void addColumn() {
     int[][][] oldSpan = span;
+    Color[][] oldForeground=foreground;
+    Color[][] oldBackground=background;
+    Font[][]  oldFont=font;
     int numRows    = oldSpan.length;
-    int numColumns = oldSpan[0].length;
-    span = new int[numRows][numColumns + 1][2];
-    System.arraycopy(oldSpan,0,span,0,numRows);
-    for (int i=0;i<numRows;i++) {
-      span[i][numColumns][CellSpan.COLUMN] = 1;
-      span[i][numColumns][CellSpan.ROW]    = 1;
+    int numColumns = oldSpan[0].length+4;
+    System.out.println("numColumns :"+numColumns);
+    setSize(new Dimension(numColumns, numRows));
+    //System.arraycopy(oldSpan,0,span,0,numRows);
+    for(int i=0;i<numRows;i++){
+    	for(int j=0;j<numColumns-4;j++){
+    		span[i][j][CellSpan.COLUMN]=oldSpan[i][j][CellSpan.COLUMN];
+    		span[i][j][CellSpan.ROW]=oldSpan[i][j][CellSpan.ROW];
+    		foreground[i][j]=oldForeground[i][j];
+    		background[i][j]=oldBackground[i][j];
+    		font[i][j]=oldFont[i][j];
+    	}
     }
   }
+
 
   public void addRow() {
     int[][][] oldSpan = span;

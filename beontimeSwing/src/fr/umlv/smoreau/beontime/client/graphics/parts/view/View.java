@@ -38,6 +38,7 @@ public class View {
 	private GroupableTableHeader header;
 	private int hour_begin;
 	private int hour_end;
+	private JList columnHeader;
 
 	
     public View(MainFrame mainframe, BoTModel model) {
@@ -84,15 +85,14 @@ public class View {
             public Object getElementAt(int index) { return headers[index]; }
         };
         rowHeader = new JList(listModel);
-        
         rowHeader.setFixedCellWidth(50);
         rowHeader.setFixedCellHeight(table.getRowHeight()+1);
         rowHeader.setCellRenderer(new RowHeaderRenderer(table));
 		jScrollPane=new JScrollPane(table);
 		jScrollPane.setRowHeaderView(rowHeader);
-		jScrollPane.getVerticalScrollBar().setEnabled(false);
+		jScrollPane.getVerticalScrollBar().setEnabled(false);		
 		//header.setSize(table.getWidth(),50);
-		table.setVisible(false);
+		table.setVisible(false); 
     }
 	/**
 	 * @param i
@@ -123,6 +123,36 @@ public class View {
 			
 		}
 		header.setResizingAllowed(false);
+	}
+	public GroupableTableHeader createHeader(int deb, int fin) {
+
+		hour_begin=deb;
+		hour_end=fin;
+
+		TableColumnModel columns = table.getColumnModel();
+		String [] hours=new String[fin-deb+1];
+		int j=0;
+		for (int i=deb;i<=fin;i++){
+			Integer ind=new Integer(i);
+			hours[j]=ind.toString()+"H";
+			j++;
+		}
+		ColumnGroup hoursGroup;
+		j=0;
+		GroupableTableHeader header1 = new GroupableTableHeader(table.getColumnModel());
+		for(int i=0;i<hours.length;i++){
+			
+			hoursGroup= new ColumnGroup(hours[i]);
+			hoursGroup.add(columns.getColumn(j));
+			hoursGroup.add(columns.getColumn(j+1));
+			hoursGroup.add(columns.getColumn(j+2));
+			hoursGroup.add(columns.getColumn(j+3));
+			j=j+4;
+			header1.addGroup(hoursGroup);
+			
+		}
+		header1.setResizingAllowed(false);
+		return header1;
 	}
 	/**
 	 * @return Returns the jPanel.
@@ -175,7 +205,6 @@ public class View {
 	public int getHour_end() {
 		return hour_end;
 	}
-
 }
 class RowHeaderRenderer extends JLabel implements ListCellRenderer {
     
