@@ -1,10 +1,5 @@
-/*
- * Created on 27 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -24,10 +19,7 @@ import javax.swing.table.TableColumnModel;
 
 
 /**
- * @author Mohamed
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class GroupableTableHeaderUI extends BasicTableHeaderUI
 {

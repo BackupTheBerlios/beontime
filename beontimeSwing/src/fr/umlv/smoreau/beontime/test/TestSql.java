@@ -84,7 +84,6 @@ public class TestSql {
 			rs.next();
 			i = rs.getInt(1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return i;

@@ -1,10 +1,5 @@
-/*
- * Created on 27 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,11 +7,10 @@ import java.util.List;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+
 /**
- * @author Mohamed
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class GroupableTableHeader extends JTableHeader
 {
