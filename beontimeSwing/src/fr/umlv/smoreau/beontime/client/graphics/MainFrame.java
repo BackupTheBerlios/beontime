@@ -74,11 +74,7 @@ public class MainFrame {
      * Initialise la fenetre principale de l'application.
      */
     public void initMainFrame() {
-    	try {
-			UIManager.setLookAndFeel(new MetalLookAndFeel());
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+
         menuBar = new MenuBar();
         buttonBar = new ButtonBar();
         titleBar = new TitleBar();
@@ -119,9 +115,16 @@ public class MainFrame {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		mainFrame.setResizable(true);
-		//mainFrame.setLocation(X_POSITION, Y_POSITION);
+		mainFrame.setLocation(X_POSITION, Y_POSITION);
 		mainFrame.setSize(WIDTH,HEIGHT);
-       /*
+    	try {
+			UIManager.setLookAndFeel(new MetalLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
+		
+		/*
         JPanel panelHaut = new JPanel();
         panelHaut.setLayout(new BoxLayout(panelHaut, BoxLayout.Y_AXIS));
         panelHaut.add(menuBar.getPanel());
