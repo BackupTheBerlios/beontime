@@ -37,14 +37,13 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
     private static final String TABLE      = "Unavailability";
     private static final String TABLE_TYPE = "UnavailabilityType";
     
-    private String[] DEFAULT_TYPES = { "enseignant", "étudiant", "cours", "matériel", "local", "calendrier" };
-    
+
     private UnavailabilityDaoImpl() throws RemoteException, HibernateException {
         Collection types = getTypesUnavailability();
         if (types != null && types.size() == 0) {
-            for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
+            for (int i = 0; i < ALL_TYPES.length; ++i) {
                 UnavailabilityType type = new UnavailabilityType();
-                type.setNameUnavailabilityType(DEFAULT_TYPES[i]);
+                type.setNameUnavailabilityType(ALL_TYPES[i]);
                 addTypeUnavailability(type);
             }
         }
