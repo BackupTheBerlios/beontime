@@ -113,6 +113,7 @@ public class TimetableDao extends Dao {
             modify(course);
             TransactionManager.commit();
         } catch (HibernateException e) {
+            e.printStackTrace();
             System.err.println("Erreur lors de la modification d'un cours : " + e.getMessage());
             return false;
         }
