@@ -377,18 +377,21 @@ public class AddModifyUserWindow {
     
     public Set getFormations() {
 		HashSet list = new HashSet();
-		Component[] components = formationsPanel.getComponents();
 		
-		for(int i = 0; i < components.length; ++i) {
-		    if (components[i] instanceof JComboBox) {
-		        int index = ((JComboBox)components[i]).getSelectedIndex();
-		        if (index > 0) {
-			        Formation formation = new Formation();
-			        formation.setHeading(formationsName[index]);
-			        formation.setIdFormation(formationsId[index]);
-			        list.add(formation);
-		        }
-		    }
+		if (formationsPanel != null) {
+			Component[] components = formationsPanel.getComponents();
+			
+			for(int i = 0; i < components.length; ++i) {
+			    if (components[i] instanceof JComboBox) {
+			        int index = ((JComboBox)components[i]).getSelectedIndex();
+			        if (index > 0) {
+				        Formation formation = new Formation();
+				        formation.setHeading(formationsName[index]);
+				        formation.setIdFormation(formationsId[index]);
+				        list.add(formation);
+			        }
+			    }
+			}
 		}
 		
 		return list;
