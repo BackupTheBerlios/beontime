@@ -20,6 +20,20 @@
 			type="string"
 		 />
 		<property
+			column="login"
+			length="20"
+			name="Login"
+			not-null="true"
+			type="string"
+		 />
+		<property
+			column="password"
+			length="32"
+			name="Password"
+			not-null="true"
+			type="string"
+		 />
+		<property
 			column="telephone"
 			length="14"
 			name="Telephone"

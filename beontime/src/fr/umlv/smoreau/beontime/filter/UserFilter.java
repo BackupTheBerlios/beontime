@@ -20,6 +20,8 @@ public class UserFilter extends User implements Filter {
         corres.put("EMail", "e_mail");
         corres.put("OfficeName", "nom_bureau");
         corres.put("BuildingNameForOffice", "nom_batiment_bureau");
+        corres.put("Login", "login");
+        corres.put("Password", "password");
     }
 
 

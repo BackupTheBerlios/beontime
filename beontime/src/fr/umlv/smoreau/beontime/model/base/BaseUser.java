@@ -25,6 +25,8 @@ public abstract class BaseUser  implements Serializable {
 	public static String PROP_ID_PERSONNE = "IdUser";
 	public static String PROP_NOM_BATIMENT_BUREAU = "BuildingNameForOffice";
 	public static String PROP_TYPE_PERSONNE = "UserType";
+	public static String PROP_LOGIN = "Login";
+	public static String PROP_PASSWORD = "Password";
 
 
 	private int hashCode = Integer.MIN_VALUE;
@@ -40,6 +42,8 @@ public abstract class BaseUser  implements Serializable {
 	private java.lang.String _buildingNameForOffice;
 	private java.lang.String _eMail;
 	private java.lang.String _userType;
+	private java.lang.String _login;
+	private java.lang.String _password;
 
 	// collections
 	private java.util.Set _formationsResponsible;
@@ -206,6 +210,36 @@ public abstract class BaseUser  implements Serializable {
 	 */
 	public void setUserType (java.lang.String _userType) {
 		this._userType = _userType;
+	}
+	
+	/**
+	 * Return the value associated with the column: login
+	 */
+	public java.lang.String getLogin () {
+		return _login;
+	}
+
+	/**
+	 * Set the value related to the column: login
+	 * @param _login the login value
+	 */
+	public void setLogin (java.lang.String _login) {
+		this._login = _login;
+	}
+	
+	/**
+	 * Return the value associated with the column: password
+	 */
+	public java.lang.String getPassword () {
+		return _password;
+	}
+
+	/**
+	 * Set the value related to the column: password
+	 * @param _password the password value
+	 */
+	public void setPassword (java.lang.String _password) {
+		this._password = _password;
 	}
 
 

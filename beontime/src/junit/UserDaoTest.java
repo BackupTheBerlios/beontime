@@ -2,6 +2,8 @@ package junit;
 
 
 import java.rmi.RemoteException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import net.sf.hibernate.HibernateException;
 
@@ -47,8 +49,17 @@ public class UserDaoTest extends TestCase {
     
     public void testAddRemoveUser() {
         User person = new User();
-        person.setName("toto");
+        person.setFirstName("Prénom");
+        person.setName("Nom");
         person.setUserType("secretaire");
+        person.setLogin("login");
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update("password".getBytes());
+            person.setPassword(new String(md.digest()));
+        } catch (NoSuchAlgorithmException e1) {
+            assertTrue(false);
+        }
         try {
             userDao.addUser(person);
             userDao.removeUser(person);
@@ -56,6 +67,7 @@ public class UserDaoTest extends TestCase {
         } catch (RemoteException e) {
             assertTrue(false);
         } catch (HibernateException e) {
+            e.printStackTrace();
             assertTrue(false);
         }
     }
