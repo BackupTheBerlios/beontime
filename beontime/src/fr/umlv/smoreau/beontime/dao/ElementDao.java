@@ -69,63 +69,75 @@ public class ElementDao extends Dao {
 		return getMaterials(null);
 	}
 	
-	public void addRoom(Room room) {
+	public boolean addRoom(Room room) {
         try {
             TransactionManager.beginTransaction();
             add(room);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'un local : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void addMaterial(Material material) {
+	public boolean addMaterial(Material material) {
         try {
             TransactionManager.beginTransaction();
             add(material);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'un matériel : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void modifyRoom(Room room) {
+	public boolean modifyRoom(Room room) {
         try {
             TransactionManager.beginTransaction();
             modify(room);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la modification d'un local : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void modifyMaterial(Material material) {
+	public boolean modifyMaterial(Material material) {
         try {
             TransactionManager.beginTransaction();
             modify(material);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la modification d'un matériel : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void removeRoom(Room room) {
+	public boolean removeRoom(Room room) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE_ROOM, new RoomFilter(room));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'un local : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void removeMaterial(Material material) {
+	public boolean removeMaterial(Material material) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE_MATERIAL, new MaterialFilter(material));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'un matériel : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 }

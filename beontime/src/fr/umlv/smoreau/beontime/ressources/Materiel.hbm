@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.element.Material" table="Materiel">
+	<class name="fr.umlv.smoreau.beontime.model.element.Material" table="materiel">
 		<id
 			column="ID_materiel"
 			name="IdMateriel"

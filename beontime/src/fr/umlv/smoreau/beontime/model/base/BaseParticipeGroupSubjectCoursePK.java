@@ -33,7 +33,7 @@ public class BaseParticipeGroupSubjectCoursePK implements Serializable {
 
 		this.setIdTeacher(_idEnseignant);
 		this.setIdSubject(_idMatiere);
-		this.setIdGroup(_idGroupe);
+		this.setIdGroupe(_idGroupe);
 		this.setIdCourse(_idCours);
 	}
 
@@ -56,11 +56,11 @@ public class BaseParticipeGroupSubjectCoursePK implements Serializable {
 		this._idMatiere = _idMatiere;
 	}
 
-	public Group getIdGroup () {
+	public Group getIdGroupe () {
 		return _idGroupe;
 	}
 
-	public void setIdGroup (Group _idGroupe) {
+	public void setIdGroupe (Group _idGroupe) {
 		hashCode = Integer.MIN_VALUE;
 		this._idGroupe = _idGroupe;
 	}
@@ -95,8 +95,8 @@ public class BaseParticipeGroupSubjectCoursePK implements Serializable {
 			else {
 				return false;
 			}
-			if (null != this.getIdGroup() && null != mObj.getIdGroup()) {
-				if (!this.getIdGroup().equals(mObj.getIdGroup())) {
+			if (null != this.getIdGroupe() && null != mObj.getIdGroupe()) {
+				if (!this.getIdGroupe().equals(mObj.getIdGroupe())) {
 					return false;
 				}
 			}
@@ -132,8 +132,8 @@ public class BaseParticipeGroupSubjectCoursePK implements Serializable {
 			else {
 				return super.hashCode();
 			}
-			if (null != this.getIdGroup()) {
-				sb.append(this.getIdGroup().hashCode());
+			if (null != this.getIdGroupe()) {
+				sb.append(this.getIdGroupe().hashCode());
 				sb.append(":");
 			}
 			else {

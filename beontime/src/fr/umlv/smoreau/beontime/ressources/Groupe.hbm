@@ -29,7 +29,7 @@
 			<key column="id_groupe" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
-		<joined-subclass name="fr.umlv.smoreau.beontime.model.association.AppartientEtudiantGroupe" table="Appartient_Etudiant_Groupe">
+		<joined-subclass name="fr.umlv.smoreau.beontime.model.association.AppartientEtudiantGroupe" table="appartient_etudiant_groupe">
 			<key column="id_groupe" />
 			<property
 				column="id_etudiant"

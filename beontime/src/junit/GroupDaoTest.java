@@ -21,11 +21,13 @@ public class GroupDaoTest extends TestCase {
         assertNotNull(groupDao.getGroups());
     }
     
-    public void testAddRemoveUser() {
+    public void testAddRemoveGroup() {
         Group group = new Group();
         group.setIdFormation(new Long(1));
         group.setIntitule("groupe pour essayer");
         assertTrue(groupDao.addGroup(group));
+        group.setIntitule("groupe pour ressayer");
+        assertTrue(groupDao.modifyGroup(group));
         assertTrue(groupDao.removeGroup(group));
     }
     

@@ -18,8 +18,8 @@
 			 />
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.Group"
-				column="ID_groupe"
-				name="IdGroup"
+				column="id_groupe"
+				name="IdGroupe"
 			 />
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.timetable.Course"

@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.element.Room" table="Local">
+	<class name="fr.umlv.smoreau.beontime.model.element.Room" table="local">
 		<id
 			column="ID_local"
 			name="IdLocal"
