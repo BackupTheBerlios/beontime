@@ -7,9 +7,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.toedter.calendar.JDateChooser;
+
+import fr.umlv.smoreau.beontime.client.actions.forms.ButtonPlusListener;
 
 /**
  * @author BeOnTime
@@ -63,12 +64,18 @@ public class AddModifyCourseWindow {
 	
 	private JButton teacherPlus;
 	private JButton placeCoursePlus;
-	private JButton CourseEquipmentPlus;
+	private JButton courseEquipmentPlus;
 	private JButton ok;
 	private JButton annuler;
 	
+	
+	
+	private JPanel teacherPanel = new JPanel();
+	private JPanel teacherPlusPanel = new JPanel();
 	private JPanel placeCoursePanel = new JPanel();
 	private JPanel placeCoursePlusPanel = new JPanel();
+	private JPanel courseEquipmentPanel = new JPanel();
+	private JPanel courseEquipmentPlusPanel = new JPanel();
 	
 	private JFrame AMCWFrame;
 	private GridBagLayout AMCWLayout = new GridBagLayout();
@@ -93,12 +100,23 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(teacherLabel);
 
     	teacherCourseJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,teacherCourseJcb,4,1,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
-    	AMCWFrame.getContentPane().add(teacherCourseJcb);
+    	
+    	teacherPanel.setLayout(new BoxLayout(teacherPanel, BoxLayout.Y_AXIS));
+    	teacherPanel.add(teacherCourseJcb);
+    	teacherPanel.add(Box.createVerticalStrut(5));
+    	
+    	addComponent(AMCWLayout,layoutConstraints,teacherPanel,4,1,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
+    	AMCWFrame.getContentPane().add(teacherPanel);
     	
     	teacherPlus = new JButton("+");
-    	addComponent(AMCWLayout,layoutConstraints,teacherPlus,6,1,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,15,10));
-    	AMCWFrame.getContentPane().add(teacherPlus);
+    	teacherPlus.addActionListener(new ButtonPlusListener(teacherPlusPanel, teacherPanel, AMCWFrame));
+    	
+    	teacherPlusPanel.setLayout(new BoxLayout(teacherPlusPanel, BoxLayout.Y_AXIS));
+    	teacherPlusPanel.add(teacherPlus);
+    	teacherPlusPanel.add(Box.createVerticalStrut(5));
+    	
+    	addComponent(AMCWLayout,layoutConstraints,teacherPlusPanel,6,1,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,15,10));
+    	AMCWFrame.getContentPane().add(teacherPlusPanel);
     	
     	
     	
@@ -161,35 +179,29 @@ public class AddModifyCourseWindow {
 
     	
     	
-    	
     	placeCourseLabel = new JLabel("dans le local ou les locaux :");
     	addComponent(AMCWLayout,layoutConstraints,placeCourseLabel,1,5,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(placeCourseLabel);
     	
     	placeCourseJcb = new JComboBox();
-    	/*addComponent(AMCWLayout,layoutConstraints,placeCourseJcb,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMCWFrame.getContentPane().add(placeCourseJcb);*/
-
-    	BoxLayout layout = new BoxLayout(placeCoursePanel, BoxLayout.Y_AXIS);
-    	placeCoursePanel.setLayout(layout);
+    	
+    	placeCoursePanel.setLayout(new BoxLayout(placeCoursePanel, BoxLayout.Y_AXIS));
     	placeCoursePanel.add(placeCourseJcb);
+    	placeCoursePanel.add(Box.createVerticalStrut(5));
     	addComponent(AMCWLayout,layoutConstraints,placeCoursePanel,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(placeCoursePanel);
     	
-    	placeCoursePlus = new JButton("+");
-    	placeCoursePlus.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				placeCoursePanel.add(new JComboBox());
-				System.out.println("coucou");
-				placeCoursePlus.setLabel("x");
-				AMCWFrame.pack();
-			}
-    		
-    	});
     	
-    	addComponent(AMCWLayout,layoutConstraints,placeCoursePlus,6,5,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
-    	AMCWFrame.getContentPane().add(placeCoursePlus);
+    	
+    	placeCoursePlus = new JButton("+");
+    	placeCoursePlus.addActionListener(new ButtonPlusListener(placeCoursePlusPanel, placeCoursePanel, AMCWFrame));
+    	
+    	placeCoursePlusPanel.setLayout(new BoxLayout(placeCoursePlusPanel, BoxLayout.Y_AXIS));
+    	placeCoursePlusPanel.add(placeCoursePlus);
+    	placeCoursePlusPanel.add(Box.createVerticalStrut(5));
+    	
+    	addComponent(AMCWLayout,layoutConstraints,placeCoursePlusPanel,6,5,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
+    	AMCWFrame.getContentPane().add(placeCoursePlusPanel);
     	
 
     	
@@ -209,12 +221,23 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(courseEquipmentLabel);
     	
     	courseEquipmentJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentJcb,4,7,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMCWFrame.getContentPane().add(courseEquipmentJcb);
     	
-    	CourseEquipmentPlus = new JButton("+");
-    	addComponent(AMCWLayout,layoutConstraints,CourseEquipmentPlus,6,7,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
-    	AMCWFrame.getContentPane().add(CourseEquipmentPlus);
+    	courseEquipmentPanel.setLayout(new BoxLayout(courseEquipmentPanel, BoxLayout.Y_AXIS));
+    	courseEquipmentPanel.add(courseEquipmentJcb);
+    	courseEquipmentPanel.add(Box.createVerticalStrut(5));
+    	
+    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentPanel,4,7,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+    	AMCWFrame.getContentPane().add(courseEquipmentPanel);
+    	
+    	courseEquipmentPlus = new JButton("+");
+    	courseEquipmentPlus.addActionListener(new ButtonPlusListener(courseEquipmentPlusPanel, courseEquipmentPanel, AMCWFrame));
+        
+    	courseEquipmentPlusPanel.setLayout(new BoxLayout(courseEquipmentPlusPanel, BoxLayout.Y_AXIS));
+    	courseEquipmentPlusPanel.add(courseEquipmentPlus);
+    	courseEquipmentPlusPanel.add(Box.createVerticalStrut(5));
+    	
+    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentPlusPanel,6,7,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
+    	AMCWFrame.getContentPane().add(courseEquipmentPlusPanel);
     	
     	
     	
