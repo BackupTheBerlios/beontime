@@ -1,10 +1,11 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
@@ -14,15 +15,15 @@ import fr.umlv.smoreau.beontime.model.element.Room;
 /**
  * @author BeOnTime
  */
-public class ManageRoomsAdapter implements TableModel {
+public class ManageRoomsAdapter extends AbstractTableModel {
 	private final EventListenerList list;
-	private Room[] rooms;
+	private ArrayList rooms;
 	private final static String[] columnNames = {"Nom","Description"};
 	
 	
 	public ManageRoomsAdapter(BoTModel model, Collection rooms) {
 		this.list = new EventListenerList();
-		this.rooms = (Room[]) rooms.toArray(new Room[rooms.size()]);
+		this.rooms = new ArrayList(rooms);
 		
 		model.addBoTListener(new ManageRoomsListener());
 	}
@@ -31,7 +32,7 @@ public class ManageRoomsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
 	public int getRowCount() {
-		return rooms.length;
+		return rooms.size();
 	}
 	
 	/* (non-Javadoc)
@@ -66,10 +67,10 @@ public class ManageRoomsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-	    if (rowIndex < rooms.length) {
+	    if (rowIndex < rooms.size()) {
 		    switch(columnIndex) {
-		    	case 0: return rooms[rowIndex].getName();
-		    	case 1: return rooms[rowIndex].getDescription();
+		    	case 0: return ((Room) rooms.get(rowIndex)).getName();
+		    	case 1: return ((Room) rooms.get(rowIndex)).getDescription();
 		    }
 	    }
 	    
@@ -83,7 +84,7 @@ public class ManageRoomsAdapter implements TableModel {
 	}
 
 	public Object getObjectAt(int rowIndex) {
-		return rooms[rowIndex];	
+		return rooms.get(rowIndex);
 	}
 	
 	/* (non-Javadoc)
@@ -103,7 +104,10 @@ public class ManageRoomsAdapter implements TableModel {
 	
 	private class ManageRoomsListener extends DefaultBoTListener {
 	    public void addRoom(BoTEvent e) throws InterruptedException {
+	    	System.out.println("coucou");
 	        Room room = (Room) e.getRoom();
+	        rooms.add(room);
+	        fireTableDataChanged();
 	        //TODO Ajoute la ligne du nouveau local
         }
 
