@@ -21,6 +21,8 @@ public interface UserDao extends Remote {
     public static final String TYPE_SECRETARY = "secretaire";
     public static final String TYPE_ADMIN     = "administrateur";
 
+
+    public Collection getUsers(UserFilter filter) throws RemoteException, HibernateException;
 	
 	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException;
 	//TODO virer les throws ?
@@ -45,6 +47,6 @@ public interface UserDao extends Remote {
 	
 	public void removeUser(User user) throws RemoteException, HibernateException;
 	
-	public boolean testLoginPwd(String login, String password) throws RemoteException;
+	public User testLoginPwd(String login, String password) throws RemoteException;
 	
 }

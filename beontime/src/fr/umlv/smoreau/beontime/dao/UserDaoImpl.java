@@ -3,6 +3,8 @@ package fr.umlv.smoreau.beontime.dao;
 /* Created on 19 febr. 2005 */
 
 import java.rmi.RemoteException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 
 import javax.naming.NamingException;
@@ -47,7 +49,7 @@ public class UserDaoImpl extends Dao implements UserDao {
     }
 
 
-	private Collection getUsers(UserFilter filter) throws RemoteException, HibernateException {
+	private Collection getUsers(UserFilter filter, boolean ldap) throws RemoteException, HibernateException {
 	    Collection result = null;
 
 	    Session session = null;
@@ -58,20 +60,19 @@ public class UserDaoImpl extends Dao implements UserDao {
             Hibernate.closeSession();
         }
         
-        try {
-            result.addAll(ldapManager.getUsers(filter));
-        } catch (NamingException e) {
-            System.err.println("LDAP est inaccessible : " + e.getMessage());
-            //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
-            User user = new User(new Long(33), filter.getUserType());
-            user.setFirstName("Toto");
-            user.setName("Nom2toto");
-            user.setEMail("toto@toto.fr");
-            result.add(user);
-            //finTODO
+        if (ldap) {
+	        try {
+	            result.addAll(ldapManager.getUsers(filter));
+	        } catch (NamingException e) {
+	            System.err.println("LDAP est inaccessible : " + e.getMessage());
+	        }
         }
 
 		return result;
+	}
+	
+	public Collection getUsers(UserFilter filter) throws RemoteException, HibernateException {
+	    return getUsers(filter, true);
 	}
 	
 	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException {
@@ -180,7 +181,39 @@ public class UserDaoImpl extends Dao implements UserDao {
 	}
 
 
-	public boolean testLoginPwd(String login, String password) throws RemoteException {
-	    return ldapManager.testLoginPwd(login, password);
+	public User testLoginPwd(String login, String password) throws RemoteException {
+	    boolean test = ldapManager.testLoginPwd(login, password);
+	    if (!test) {
+            try {
+                UserFilter filter = new UserFilter();
+    	        filter.setLogin(login);
+
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes());
+                filter.setPassword(new String(md.digest()));
+                
+                Collection c = getUsers(filter, false);
+                if (c.size() == 1)
+                    return (User) c.toArray()[0];
+            } catch (NoSuchAlgorithmException e) {
+                // impossible avec le paramètre 'MD5'
+            } catch (RemoteException e) {
+                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données SQL");
+            } catch (HibernateException e) {
+                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données SQL");
+            }
+	    } else {
+	        try {
+		        UserFilter filter = new UserFilter();
+		        filter.setLogin(login);
+		        Collection c = getUsers(filter);
+		        return (User) c.toArray()[0];
+	        } catch (RemoteException e) {
+                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données LDAP");
+            } catch (HibernateException e) {
+                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données LDAP");
+            }
+	    }
+	    return null;
 	}
 }
