@@ -42,9 +42,9 @@ public class ActionFactory {
 			try {
 				Class classe=Class.forName("fr.umlv.smoreau.beontime.client.actions.forms." + strActionClass);
 				Object obj=classe.newInstance();
-				Class[] types={Class.forName("java.lang.String")};
+				Class[] types=new Class[]{name.getClass(),mainFrame.getClass()};
 				Method methode=classe.getMethod("getAction",types);
-				String[] params={name};
+				Object[] params=new Object[]{name,mainFrame};
 				a= (Action) methode.invoke(obj,params);
 				
 				
@@ -57,7 +57,7 @@ public class ActionFactory {
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (SecurityException e) {
+			} catch(SecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {

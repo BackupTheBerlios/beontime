@@ -1,5 +1,5 @@
 /*
- * Created on 21 févr. 2005
+ * Created on 23 févr. 2005
  *
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
@@ -19,16 +19,12 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class PasteCourse extends Action {
-	
+public class RemoveButtonToToolBar extends Action {
 	public static javax.swing.Action getAction(String name,final MainFrame mainFrame){
-		AbstractAction va=new AbstractAction(name,getImage("images/Paste24.gif")) {
+		AbstractAction va=new AbstractAction(name,getImage("images/Back24.gif")) {
 		public void actionPerformed(ActionEvent e) {
 			}
 		};
-		
 		return va;
 	}
-
-
 }

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
 
 /**
@@ -21,7 +22,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
  */
 public class ViewTimetable extends Action {
 	
-	public static javax.swing.Action getAction(String name){
+	public static javax.swing.Action getAction(String name,final MainFrame mainFrame){
 		AbstractAction va=new AbstractAction(name,getImage("images/Find24.gif")) {
 		public void actionPerformed(ActionEvent e) {
 			ViewTimetableWindow vtw=new ViewTimetableWindow();

@@ -200,6 +200,9 @@ public class MainFrame {
 		//TODO à implémenter
 		return null;
 	}
+	public ButtonBar getToolBar() {
+		return buttonBar;
+	}
 	public static void main(String[] args){
 		MainFrame mf=new MainFrame();
 		mf.open();
