@@ -8,11 +8,20 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.toedter.calendar.JDateChooser;
+
+import fr.umlv.smoreau.beontime.client.actions.Action;
+
 
 /**
  * @author BeOnTime
@@ -28,7 +37,8 @@ public class TitleBar extends JPanel {
 	
 	private JPanel periodPanel = new JPanel();
 	private JPanel titleBarPanel = new JPanel();
-	
+	protected TitleBar titleBar=this;
+	 
 	
 	
 	public TitleBar() {
@@ -92,13 +102,21 @@ public class TitleBar extends JPanel {
 		
 		periodPanel.setLayout(new BorderLayout());
 		
-		periodButton = new JButton("14 janvier 2005");
+		final JDateChooser myDateChooser = new JDateChooser();
+		Date date=myDateChooser.getDate();
+		SimpleDateFormat df = new SimpleDateFormat( "dd/MM/yyyy" );
+		periodButton = new JButton(df.format(date));
 		periodPanel.add(periodButton, BorderLayout.CENTER);
+		periodButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				new fr.umlv.smoreau.beontime.client.graphics.windows.CalendarDialog(titleBar);
+			}
+		});
 		
-		previousButton = new JButton();
+		previousButton = new JButton(Action.getImage("images/Back24.gif"));
 		periodPanel.add(previousButton, BorderLayout.WEST);
 		
-		nextButton = new JButton();
+		nextButton = new JButton(Action.getImage("images/Forward24.gif"));
 		periodPanel.add(nextButton, BorderLayout.EAST);
 		
 	}

@@ -132,20 +132,7 @@ public class MainFrame {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		
-		
-		/*
-        JPanel panelHaut = new JPanel();
-        panelHaut.setLayout(new BoxLayout(panelHaut, BoxLayout.Y_AXIS));
-        panelHaut.add(menuBar.getPanel());
-        panelHaut.add(buttonBar.getButtonBarPanel());
-        panelHaut.add(titleBar.getTitleBarPanel());
-        
-        mainFrame = new JFrame();
-        mainFrame.getContentPane().add(panelHaut,BorderLayout.NORTH);
-        mainFrame.getContentPane().add(splitPaneVertical,BorderLayout.CENTER);
-        mainFrame.getContentPane().add(stateBar,BorderLayout.CENTER);
-        */
+
     }
     
 
