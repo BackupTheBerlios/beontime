@@ -129,12 +129,12 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
 	        setValueAt(course,row[0],columns[0]);
 	        cellAtt.combine(row,columns);
-	        fireTableCellUpdated(row[0],columns[0]);
+	        fireTableDataChanged();
 		}
 		
 		public void modifyCourse(BoTEvent e) {
 		    Course course = e.getCourse();
-		    
+
 		}
 		
 		public void removeCourse(BoTEvent e) {
@@ -145,7 +145,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    		if (courseRead.equals(course)){
 		    			cellAtt.split(i,j);
 		    	        setValueAt(null,i,j);
-		    	        fireTableCellUpdated(i,j);
+		    	        fireTableDataChanged();
 		    			return;
 		    		}
 		    		
