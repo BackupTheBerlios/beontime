@@ -18,7 +18,6 @@ public abstract class Dao extends UnicastRemoteObject {
 	 */
 	protected Dao() throws RemoteException {
 		super();
-		// TODO virer ?
 	}
 
 	protected Collection get(String databaseName, Filter filter, Session session) throws HibernateException {

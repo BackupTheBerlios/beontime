@@ -41,9 +41,10 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 			INSTANCE = new TimetableDaoImpl();
 		} catch (RemoteException e) {
 			System.err.println("problème RMI à l'instanciation du TimeTable DAO");
-			//TODO gerer
+			System.exit(1);
 		} catch (HibernateException e) {
 		    System.err.println("Erreur lors de l'instanciation : " + e.getMessage());
+		    System.exit(1);
         }
     }
 

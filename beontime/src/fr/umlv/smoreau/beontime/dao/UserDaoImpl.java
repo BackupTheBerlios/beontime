@@ -28,7 +28,7 @@ import fr.umlv.smoreau.beontime.model.user.*;
  * @author BeOnTime team
  */
 public class UserDaoImpl extends Dao implements UserDao {
-	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	// Attention : en cas de modif refaire le rmic et rebalancer coté client
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 			INSTANCE = new UserDaoImpl();
 		} catch (RemoteException e) {
 			System.err.println("problème RMI à l'instanciation du User DAO");
-			//TODO gerer
+			System.exit(1);
 		}
 	}
      

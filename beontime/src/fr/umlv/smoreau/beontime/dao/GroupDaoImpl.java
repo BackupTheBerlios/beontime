@@ -23,7 +23,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime team
  */
 public class GroupDaoImpl extends Dao implements GroupDao {
-	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	// Attention : en cas de modif refaire le rmic et rebalancer coté client
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 			INSTANCE = new GroupDaoImpl();
 		} catch (RemoteException e) {
 			System.err.println("problème RMI à l'instanciation du Group DAO");
-			//TODO gerer
+			System.exit(1);
 		}
     }
     

@@ -37,7 +37,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
 			INSTANCE= new ElementDaoImpl();
 		} catch (RemoteException e) {
 			System.err.println("problème RMI à l'instanciation de l'Element DAO");
-			//TODO gerer
+			System.exit(1);
 		}
     }
     

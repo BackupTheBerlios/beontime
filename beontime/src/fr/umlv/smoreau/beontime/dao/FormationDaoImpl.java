@@ -24,7 +24,7 @@ import fr.umlv.smoreau.beontime.model.Formation;
  * @author BeOnTime team
  */
 public class FormationDaoImpl extends Dao implements FormationDao {
-	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	// Attention : en cas de modif refaire le rmic et rebalancer coté client
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 			INSTANCE = new FormationDaoImpl();
 		} catch (RemoteException e) {
 			System.err.println("problème RMI à l'instanciation du Formation DAO");
-			//TODO gerer
+			System.exit(1);
 		}
     }
     
