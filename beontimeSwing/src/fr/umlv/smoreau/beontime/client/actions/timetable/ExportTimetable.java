@@ -3,7 +3,10 @@
  */
 package fr.umlv.smoreau.beontime.client.actions.timetable;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,10 +22,18 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
+
 
 import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
@@ -99,6 +110,62 @@ public class ExportTimetable extends Action {
 	}
 	
 	
+	public static String createSubjectHeader(Timetable timetable) {
+		
+		StringBuffer header = new StringBuffer();
+		if (timetable.getGroup() != null) {
+			header.append("GROUPE : ");
+			header.append(timetable.getGroup().getHeading());
+		} else if (timetable.getFormation() != null) {
+			header.append("FORMATION : ");
+			header.append(timetable.getFormation().getHeading());
+		} else if (timetable.getTeacher() != null) {
+			header.append("ENSEIGNANT : ");
+			header.append(timetable.getTeacher().getName());
+			header.append(" ");
+			header.append(timetable.getTeacher().getFirstName());
+		} else if (timetable.getRoom() != null) {
+			header.append("LOCAL: ");
+			header.append(timetable.getRoom().getName());
+		} else if (timetable.getMaterial() != null) {
+			header.append("MATERIEL : ");
+			header.append(timetable.getMaterial().getName());
+		}
+		
+		return header.toString();
+	}
+	
+	public static String createResponsableHeader(Timetable timetable) {
+		
+		StringBuffer header = new StringBuffer();
+		
+		header.append("RESPONSABLE : ");
+		header.append(timetable.getPersonInCharge().getName());
+		header.append(" ");
+		header.append(timetable.getPersonInCharge().getFirstName());
+		
+		return header.toString();
+	}
+	
+	public static String createDateHeader(Timetable timetable) {
+		
+		StringBuffer header = new StringBuffer();
+		
+		header.append("EMPLOI DU TEMPS DU ");
+		Calendar beginPeriod = MainFrame.getInstance().getBeginPeriod();
+		
+		header.append(beginPeriod.get(Calendar.DAY_OF_MONTH)+" "+getMonth(beginPeriod)+" "+beginPeriod.get(Calendar.YEAR));
+		//header.append(MainFrame.getInstance().getBeginPeriod().getTime());
+		header.append(" AU ");
+		
+		Calendar endPeriod = MainFrame.getInstance().getEndPeriod();
+		header.append(endPeriod.get(Calendar.DAY_OF_MONTH)+" "+getMonth(endPeriod)+" "+endPeriod.get(Calendar.YEAR));
+		//header.append(MainFrame.getInstance().getEndPeriod().getTime());	
+		
+		
+		
+		return header.toString();
+	}
 	
 	public static String createHeader(Timetable timetable) {
 		
@@ -144,7 +211,7 @@ public class ExportTimetable extends Action {
 	}
 	
 	public static String getDay(Calendar calendar) {
-	
+		
 		if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
 			return "Lundi";
 		
@@ -167,12 +234,12 @@ public class ExportTimetable extends Action {
 			return "Dimanche";
 		
 		
-	
+		
 		
 	}
 	
 	public static String getMonth(Calendar calendar) {
-	
+		
 		if (calendar.get(Calendar.MONTH) == Calendar.JANUARY)
 			return "Janvier";
 		
@@ -312,6 +379,61 @@ public class ExportTimetable extends Action {
 	}
 	
 	
+	public static JFrame organizeTask() {
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JLabel subjectHeader = new JLabel(createSubjectHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
+		subjectHeader.setFont(new Font("Arial", Font.BOLD, 16));
+		subjectHeader.setHorizontalTextPosition(JLabel.CENTER);
+		
+		panel.add(subjectHeader);
+		panel.add(Box.createVerticalStrut(5));
+		
+		JLabel responsibleHeader = null;
+		
+		if (MainFrame.getInstance().getModel().getTimetable().getFormation() != null) {
+			responsibleHeader = new JLabel( createResponsableHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
+			responsibleHeader.setFont(new Font("Arial", Font.BOLD, 16));
+			responsibleHeader.setHorizontalTextPosition(JLabel.CENTER);
+			
+			panel.add(responsibleHeader);
+			panel.add(Box.createVerticalStrut(10));
+		}
+		
+		JLabel dateheader = new JLabel( createDateHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
+		dateheader.setFont(new Font("Arial", Font.BOLD, 16));
+		dateheader.setHorizontalTextPosition(JLabel.CENTER);
+		
+		panel.add(dateheader,BorderLayout.CENTER);
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(BorderFactory.createEmptyBorder(10,0,20,0));
+	
+		
+		JFrame frame = new JFrame();
+		JScrollPane pane = MainFrame.getInstance().getView().getJScrollPane();
+		
+		
+		frame.getContentPane().add(panel, BorderLayout.NORTH);
+		frame.getContentPane().add(pane, BorderLayout.CENTER);
+		
+		
+		int nbDay = MainFrame.getInstance().getView() .getTable().getModel().getRowCount();
+		
+		if((nbDay ==6) && (responsibleHeader == null))
+			frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 537+107);
+		else if((nbDay ==6) && (responsibleHeader != null))
+			frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 537+136);
+		else if ((nbDay == 7) && (responsibleHeader == null))
+			frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 615+107);
+		else if ((nbDay == 7) && (responsibleHeader != null))
+			frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 615+136);
+		
+		return frame;
+	}
+	
+	
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
@@ -413,9 +535,65 @@ public class ExportTimetable extends Action {
 					return;
 				}
 				
-				Image image = ExportTimetable.getImage(MainFrame.getInstance().getView().getJScrollPane());
-				ImageIO.write(ExportTimetable.toBufferedImage(image), formatName, file);
+				/*
 				
+				JPanel panel = new JPanel();
+				panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+				
+				JLabel subjectHeader = new JLabel(createSubjectHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
+				subjectHeader.setFont(new Font("Arial", Font.BOLD, 16));
+				subjectHeader.setHorizontalTextPosition(JLabel.CENTER);
+				
+				panel.add(subjectHeader);
+				panel.add(Box.createVerticalStrut(5));
+				
+				JLabel responsibleHeader = null;
+				
+				if (MainFrame.getInstance().getModel().getTimetable().getFormation() != null) {
+					responsibleHeader = new JLabel( createResponsableHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
+					responsibleHeader.setFont(new Font("Arial", Font.BOLD, 16));
+					responsibleHeader.setHorizontalTextPosition(JLabel.CENTER);
+					
+					panel.add(responsibleHeader);
+					panel.add(Box.createVerticalStrut(10));
+				}
+				
+				JLabel dateheader = new JLabel( createDateHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
+				dateheader.setFont(new Font("Arial", Font.BOLD, 16));
+				dateheader.setHorizontalTextPosition(JLabel.CENTER);
+				
+				panel.add(dateheader,BorderLayout.CENTER);
+				panel.setBackground(Color.WHITE);
+				panel.setBorder(BorderFactory.createEmptyBorder(10,0,20,0));
+				
+				
+				
+				JFrame frame = new JFrame();
+				JScrollPane pane = MainFrame.getInstance().getView().getJScrollPane();
+				
+				
+				frame.getContentPane().add(panel, BorderLayout.NORTH);
+				frame.getContentPane().add(pane, BorderLayout.CENTER);
+				
+				
+				int nbDay = MainFrame.getInstance().getView() .getTable().getModel().getRowCount();
+				
+				if((nbDay ==6) && (responsibleHeader == null))
+					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 537+107);
+				else if((nbDay ==6) && (responsibleHeader != null))
+					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 537+136);
+				else if ((nbDay == 7) && (responsibleHeader == null))
+					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 615+107);
+				else if ((nbDay == 7) && (responsibleHeader != null))
+					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 615+136);*/
+				
+				JFrame frame = organizeTask();
+				frame.setVisible(true);
+				
+				Image image = ExportTimetable.getImage(frame.getContentPane());
+				frame.setVisible(false);
+				ImageIO.write(ExportTimetable.toBufferedImage(image), formatName, file);
+				MainFrame.getInstance().setView(MainFrame.getInstance().getView());
 				
 			} catch (IOException e) {		
 				JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);

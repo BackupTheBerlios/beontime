@@ -206,7 +206,8 @@ public class View {
 		return hour_end;
 	}
 }
-class RowHeaderRenderer extends JLabel implements ListCellRenderer {
+
+ class RowHeaderRenderer extends JLabel implements ListCellRenderer {
     
     /**
      * Constructor creates all cells the same

@@ -66,6 +66,8 @@ public class MainFrame {
     private JSplitPane splitPaneVertical;
     private JFrame mainFrame;
 
+    private JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+    
 	private final static int X_POSITION = 0;
 	private final static int Y_POSITION = 0;
 	private final static int WIDTH = 1024;
@@ -104,7 +106,7 @@ public class MainFrame {
         mainFrame = new JFrame();
 		mainFrame.setSize(WIDTH,HEIGHT);
 
-        JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        //JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		JSplitPane splitPaneVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		final JSplitPane splitPaneVertical2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		
@@ -179,6 +181,9 @@ public class MainFrame {
 		return view;
     }
 
+    public void setView(View view) {
+    	splitPaneHorizontal.setRightComponent(view.getJScrollPane());
+    }
     public fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel getTableModel(){
 		return view.getTableModel();
     }
