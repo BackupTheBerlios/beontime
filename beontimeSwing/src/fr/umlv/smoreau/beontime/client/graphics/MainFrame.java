@@ -1,4 +1,5 @@
 package fr.umlv.smoreau.beontime.client.graphics;
+/* DESS CRI - BeOnTime - timetable project */
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -38,7 +39,8 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
- * @author BeOnTime
+ * Manages the Main UI Frame
+ * @author BeOnTime team
  */
 public class MainFrame {
 	private static final String TITRE = "BeOnTime";
@@ -56,7 +58,7 @@ public class MainFrame {
 	private View view;
     private JSplitPane splitPaneVertical;
     private JFrame mainFrame;
-	private static MainFrame instance;	
+//	private static MainFrame instance;	//TODO virer ?
 	private final static int X_POSITION = 0;
 	private final static int Y_POSITION = 0;
 	private final static int WIDTH = 1024;
@@ -64,6 +66,12 @@ public class MainFrame {
 
 	private TimeTableViewPanelBar timetableviewpanel;
 	private JSplitPane splitPaneHorizontal2;
+	
+	/* type d'affichage semaine / semestre */
+	private int view_type = 0;
+	public static final int VIEW_WEEK     = 0;
+	public static final int VIEW_HALF_YEAR = 1;
+	
 	
     /** Creates a new instance of FenetreConjugaison */
     private MainFrame() {
@@ -276,5 +284,18 @@ public class MainFrame {
 
 	public void refresh() {
 	    mainFrame.setVisible(true);
+	}
+	
+	/**
+	 * @return Returns the view_type.
+	 */
+	public int getViewType() {
+		return view_type;
+	}
+	/**
+	 * @param view_type The view_type to set.
+	 */
+	public void setViewType(int view_type) {
+		this.view_type = view_type;
 	}
 }

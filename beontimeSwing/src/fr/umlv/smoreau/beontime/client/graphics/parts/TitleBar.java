@@ -21,6 +21,7 @@ import com.toedter.calendar.JDateChooser;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
@@ -128,15 +129,14 @@ public class TitleBar extends JPanel {
 		
 		previousButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				//TODO prendre en considération le type d'affichage : semaine / semestre
-				//if week
-				periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
-				//if semestre
-		//		periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));	
+				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
+				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));	
 				try {			
 					model.fireShowTimetable(model.getTimetable()); //TODO modifier
 				} catch (InterruptedException e) {
-					System.err.println("calendar -- fire exception");
+					System.err.println("calendar -- fire exception : "+e.getMessage());
 					e.printStackTrace();
 				}
 			
@@ -144,15 +144,14 @@ public class TitleBar extends JPanel {
 		});
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				//TODO prendre en considération le type d'affichage : semaine / semestre
-				//if week
-				periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
-				//if semestre
-		//		periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
+				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
+				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
 				try {			
 					model.fireShowTimetable(model.getTimetable()); //TODO modifier
 				} catch (InterruptedException e) {
-					System.err.println("calendar ++ fire exception");
+					System.err.println("calendar ++ fire exception : "+e.getMessage());
 					e.printStackTrace();
 				}
 			}
