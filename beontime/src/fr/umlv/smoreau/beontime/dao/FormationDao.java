@@ -10,7 +10,6 @@ import net.sf.hibernate.HibernateException;
 
 import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
-import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * RMI interface for the Formation DAO
@@ -27,8 +26,6 @@ public interface FormationDao extends Remote {
 	public Collection getFormations() throws RemoteException, HibernateException;
 	
 	public Formation getFormation(Formation formation, String[] join) throws RemoteException, HibernateException;
-	
-	public Collection getFormationsResponsible(User user) throws RemoteException, HibernateException;
 	
 	public Formation addFormation(Formation formation) throws RemoteException, HibernateException;
 	

@@ -6,7 +6,7 @@ import fr.umlv.smoreau.beontime.model.base.BaseUser;
  * This is the object class that relates to the Personne table.
  * Any customizations belong here.
  */
-public class User extends BaseUser {
+public class User extends BaseUser implements Comparable {
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
 	public User () {
@@ -42,5 +42,14 @@ public class User extends BaseUser {
 	
 	public Long getIdFormation() {
 	    return _idFormation;
+	}
+
+
+	public int compareTo(Object obj) {
+		User user = (User) obj;
+		int comp = getName().toLowerCase().compareTo(user.getName().toLowerCase());
+		if (comp == 0)
+			return getFirstName().toLowerCase().compareTo(user.getFirstName().toLowerCase());
+		return comp;
 	}
 }

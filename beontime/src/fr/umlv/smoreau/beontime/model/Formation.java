@@ -7,7 +7,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * This is the object class that relates to the Formation table.
  * Any customizations belong here.
  */
-public class Formation extends BaseFormation {
+public class Formation extends BaseFormation implements Comparable {
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
 	public Formation () {
@@ -35,4 +35,10 @@ public class Formation extends BaseFormation {
 			_idTeacher);
 	}
 /*[CONSTRUCTOR MARKER END]*/
+	
+	
+	public int compareTo(Object obj) {
+		Formation formation = (Formation) obj;
+		return getHeading().toLowerCase().compareTo(formation.getHeading().toLowerCase());
+	}
 }

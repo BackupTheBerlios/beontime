@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -54,12 +55,12 @@ public class UserDaoImpl extends Dao implements UserDao {
 
 
 	private Collection getUsers(UserFilter filter, boolean ldap) throws RemoteException, HibernateException {
-	    Collection result = null;
+	    ArrayList result = null;
 
 	    Session session = null;
         try {
             session = Hibernate.getCurrentSession();
-            result = get(TABLE, filter, session);
+            result = (ArrayList) get(TABLE, filter, session);
         } finally {
             Hibernate.closeSession();
         }
@@ -71,6 +72,8 @@ public class UserDaoImpl extends Dao implements UserDao {
 	            System.err.println("LDAP est inaccessible : " + e.getMessage());
 	        }
         }
+        
+        Collections.sort(result);
 
 		return result;
 	}
@@ -78,7 +81,17 @@ public class UserDaoImpl extends Dao implements UserDao {
 	public User getUser(User user, String[] join) throws RemoteException, HibernateException {
         try {
             Session session = Hibernate.getCurrentSession();
-            user = (User) get(TABLE, new UserFilter(user), session).toArray()[0];
+            Collection users = get(TABLE, new UserFilter(user), session);
+            if (users.size() == 0) {
+            	try {
+    	            users = ldapManager.getUsers(new UserFilter(user));
+    	        } catch (NamingException e) {
+    	            System.err.println("LDAP est inaccessible : " + e.getMessage());
+    	        }
+    	        if (users.size() == 0)
+    	        	return null;
+            }
+            user = (User) users.toArray()[0];
             join(user, join);
         } finally {
             Hibernate.closeSession();
