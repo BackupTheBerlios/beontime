@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -11,8 +12,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 public class AttributiveCellRenderer extends JLabel implements TableCellRenderer {
   protected static Border noFocusBorder; 
@@ -71,13 +74,29 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
   		}
   		else{
   			String prtScreen="";
+  			String teachers="";
+  			String rooms="";
   			Subject subj=c.getSubject();
   			if (subj!=null) {
-  				prtScreen=subj.getHeading();  				
+  				prtScreen=subj.getHeading();
+  				
+  				for (Iterator i = c.getTeachersDirecting().iterator(); i.hasNext(); ) {
+  					User user=(User) i.next();
+  					teachers=teachers+" "+user.getName();
+  				}
+  				teachers=teachers.trim();
+  				//prtScreen=prtScreen+"\r"+teachers;
+  				for (Iterator i = c.getRooms().iterator(); i.hasNext(); ) {
+  					Room room=(Room) i.next();
+  					rooms=rooms+" "+room.getName();
+  				}
+  				rooms=rooms.trim();
+  				//prtScreen=prtScreen+"\n"+rooms;
   			}
   			else{
-  				prtScreen="Abcdef";
+  				prtScreen="matiere inconnue";
   			}
+  			prtScreen="<html>"+prtScreen+"<br>"+teachers+"<br>"+rooms+"</html>";
   			setText(prtScreen);
   		}
   		this.setHorizontalAlignment(JLabel.CENTER);

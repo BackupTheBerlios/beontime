@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.swing.AbstractListModel;
+import javax.swing.ListModel;
 import javax.swing.table.AbstractTableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
@@ -86,6 +88,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        data2[rowNb-1][i]=null;
 	      }
 		data=data2;
+		rowNb=rowNb+1;
 	}
 	public void addDataColumn(){
 		
@@ -114,6 +117,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	public String getColumnName(int columnIndex) {
 		return plage[columnIndex%4];
 	}
+	
    
 	private class ViewListener extends DefaultBoTListener {
 		public void refreshAll(BoTEvent e) {
@@ -130,9 +134,18 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        		day=cellAtt.rowSize;
 	        		cellAtt.addRow();
 	        		addDataRow();
+	        		System.out.println("ttt");
+	                ListModel listModel = new AbstractListModel() {
+	                    String headers[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+	                    public int getSize() { return headers.length; }
+	                    public Object getElementAt(int index) { return headers[index]; }
+	                };	                
+	        		view.getRowHeader().setModel(listModel);
+	        		view.getJScrollPane().repaint();
 	        	}
 	        	if(day<0){
 	        		day=6;
+
 	        	}
 	        	int hour_deb=beginDate.get(Calendar.HOUR_OF_DAY);
 	        	int hour_end=endDate.get(Calendar.HOUR_OF_DAY);
@@ -178,9 +191,17 @@ public class AttributiveCellTableModel extends AbstractTableModel {
         		day=cellAtt.rowSize;
         		cellAtt.addRow();
         		addDataRow();
+                ListModel listModel = new AbstractListModel() {
+                    String headers[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                    public int getSize() { return headers.length; }
+                    public Object getElementAt(int index) { return headers[index]; }
+                };
+                view.getRowHeader().setModel(listModel);
+        		view.getJScrollPane().repaint();
         	}
         	if(day<0){
         		day=cellAtt.rowSize-1;
+
         	}
 	        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
 	        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));

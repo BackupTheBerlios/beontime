@@ -1,13 +1,21 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.AbstractListModel;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
 import javax.swing.UIManager;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
@@ -26,12 +34,10 @@ public class View {
 	private static MainFrame mainFrame;
 	private BoTModel model;
 	private AttributiveCellTableModel ml;
+	private JList rowHeader;
 	private GroupableTableHeader header;
 	private int hour_begin;
 	private int hour_end;
-	/**
-	 * @return Returns the table.
-	 */
 
 	
     public View(MainFrame mainframe, BoTModel model) {
@@ -84,10 +90,21 @@ public class View {
 		header = new GroupableTableHeader(table.getColumnModel());
 		initHeader(8,20);
 		table.setTableHeader(header);
+        ListModel listModel = new AbstractListModel() {
+            String headers[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+            public int getSize() { return headers.length; }
+            public Object getElementAt(int index) { return headers[index]; }
+        };
+        rowHeader = new JList(listModel);
+        
+        rowHeader.setFixedCellWidth(50);
+        rowHeader.setFixedCellHeight(table.getRowHeight()+1);
+        rowHeader.setCellRenderer(new RowHeaderRenderer(table));
 		jScrollPane=new JScrollPane(table);
+		jScrollPane.setRowHeaderView(rowHeader);
+		jScrollPane.getVerticalScrollBar().setEnabled(false);
 		//header.setSize(table.getWidth(),50);
 		table.setVisible(false);
-		jScrollPane.getVerticalScrollBar().setEnabled(false);
     }
 	/**
 	 * @param i
@@ -118,7 +135,6 @@ public class View {
 			
 		}
 		header.setResizingAllowed(false);
-		
 	}
 	/**
 	 * @return Returns the jPanel.
@@ -162,10 +178,41 @@ public class View {
 		Course course=(Course)ml.getValueAt(row,column);
 		return course;
 	}
+	public JList getRowHeader() {
+		return rowHeader;
+	}
 	public int getHour_begin() {
 		return hour_begin;
 	}
 	public int getHour_end() {
 		return hour_end;
 	}
+
+}
+class RowHeaderRenderer extends JLabel implements ListCellRenderer {
+    
+    /**
+     * Constructor creates all cells the same
+     * To change look for individual cells put code in
+     * getListCellRendererComponent method
+     **/
+    RowHeaderRenderer(JTable table) {
+        JTableHeader header = table.getTableHeader();
+        setOpaque(true);
+        setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+        setHorizontalAlignment(CENTER);
+        setForeground(header.getForeground());
+        setBackground(header.getBackground());
+        setFont(header.getFont());
+    }
+    
+    /**
+     * Returns the JLabel after setting the text of the cell
+     **/
+    public Component getListCellRendererComponent( JList list,
+    Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        
+        setText((value == null) ? "" : value.toString());
+        return this;
+    }
 }

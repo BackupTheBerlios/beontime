@@ -68,7 +68,7 @@ public class MultiSpanCellTable extends JTable {
   private int[] rowColumnAtPoint(Point point) {
   	
     int[] retValue = {-1,-1};
-    int row = point.y / (rowHeight + rowMargin);
+    int row = point.y / (rowHeight);// + rowMargin);
     if ((row <0)||(getRowCount() <= row)) return retValue;
     int column = getColumnModel().getColumnIndexAtX((int)((point.getX())));
     CellSpan cellAtt = (CellSpan)((AttributiveCellTableModel)getModel()).getCellAttribute();
