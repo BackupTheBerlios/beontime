@@ -1,10 +1,12 @@
 package fr.umlv.smoreau.beontime.client;
 /* DESS CRI - BeOnTime - timetable project */
 
+import java.io.FileInputStream;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Properties;
 
 import net.sf.hibernate.HibernateException;
 
@@ -12,12 +14,25 @@ import fr.umlv.smoreau.beontime.dao.*;
 
 
 /**
+ * The Manager of the DAOs
  * @author BeOnTime team
  */
 public class DaoManager {
-	private static String host="localhost";
-//	private static String host="saadouni.dyndns.org";
-	//TODO gerer une ip fixe ? en param ? en properties ?
+	/* Configuration du serveur RMI par les properties */
+	private static String host;
+    private static final String CONFIG_BOT = "config/beontime.properties";
+    private static final Properties properties;
+    static {
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CONFIG_BOT));
+            host = properties.getProperty("rmi.host");
+        } catch (Exception e) {
+            throw new RuntimeException("Problème de lecture du fichier de configuration : " + e.getMessage(), e);
+        }
+    }
+    
+	/* instances des differents DAO */
 	private static /*final*/ DatabaseConfiguration databaseConf;
 	private static /*final*/ ElementDao elementDao;
 	private static /*final*/ FormationDao formationDao;
@@ -27,6 +42,7 @@ public class DaoManager {
 	private static /*final*/ UserDao userDao;
 	static {
 		try {
+			/* initialisation des DAO par RMI */
 			databaseConf = (DatabaseConfiguration) Naming.lookup("rmi://"+host+"/DbConfiguration");
 			elementDao = (ElementDao) Naming.lookup("rmi://"+host+"/ElementDao");
 			formationDao = (FormationDao) Naming.lookup("rmi://"+host+"/FormationDao");
@@ -34,7 +50,6 @@ public class DaoManager {
 			timetableDao = (TimetableDao) Naming.lookup("rmi://"+host+"/TimeTableDao");
 			unavailabilityDao = (UnavailabilityDao) Naming.lookup("rmi://"+host+"/UnavailabitityDao");
 			userDao = (UserDao) Naming.lookup("rmi://"+host+"/UserDao");
-			
 		} catch (MalformedURLException e) {
 			System.err.println("pb RMI");
 			e.printStackTrace();
@@ -99,10 +114,10 @@ public class DaoManager {
     	try {
             ud.getSecretaries();
         } catch (RemoteException e) {
-            // TODO Bloc catch auto-généré
+        	System.err.println("remote exception");
             e.printStackTrace();
         } catch (HibernateException e) {
-            // TODO Bloc catch auto-généré
+        	System.err.println("hibernate exception");
             e.printStackTrace();
         }
     }
