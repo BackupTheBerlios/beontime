@@ -40,6 +40,8 @@ public class TimeTableViewPanelBar extends JPanel {
 	private JComboBox jcbSubjectEDT;
 	private JComboBox jcbGroupEDT;
 	
+	private boolean noLoadTimetable;
+	
 	public static final String TYPE_VIDE = "";
 	public static final String TYPE_FORMATION = "Formation";
 	public static final String TYPE_ENSEIGNANT = "Enseignant";
@@ -51,6 +53,7 @@ public class TimeTableViewPanelBar extends JPanel {
 	
 	public TimeTableViewPanelBar(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
+		this.noLoadTimetable = false;
 		
 		final GridBagLayout visuEDTPanelLayout = new GridBagLayout();
 		final GridBagConstraints layoutConstraints = new GridBagConstraints();
@@ -118,7 +121,7 @@ public class TimeTableViewPanelBar extends JPanel {
 				try {
 				    jcbSubjectEDT.setEnabled(false);
 				    jcbGroupEDT.setEnabled(false);
-				    if (mainFrame.getModel().getTimetable() != null) {
+				    if (!noLoadTimetable && mainFrame.getModel().getTimetable() != null) {
 					    mainFrame.getModel().setTimetable(null);
 					    mainFrame.getModel().fireCloseTimetable(false);
 				    }
@@ -180,7 +183,7 @@ public class TimeTableViewPanelBar extends JPanel {
 				try {
 				    jcbGroupEDT.removeAllItems();
 				    jcbGroupEDT.setEnabled(false);
-				    if (mainFrame.getModel().getTimetable() != null) {
+				    if (!noLoadTimetable && mainFrame.getModel().getTimetable() != null) {
 					    mainFrame.getModel().setTimetable(null);
 					    mainFrame.getModel().fireCloseTimetable(false);
 				    }
@@ -214,7 +217,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							jcbGroupEDT.setEnabled(true);
 					    }
 					    
-					    if (show) {
+					    if (!noLoadTimetable && show) {
 					        filter.setBeginPeriod(mainFrame.getBeginPeriod());
 							filter.setEndPeriod(mainFrame.getEndPeriod());
 							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
@@ -232,7 +235,7 @@ public class TimeTableViewPanelBar extends JPanel {
 		public void itemStateChanged(ItemEvent event) {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				try {
-				    if (mainFrame.getModel().getTimetable() != null) {
+				    if (!noLoadTimetable && mainFrame.getModel().getTimetable() != null) {
 					    mainFrame.getModel().setTimetable(null);
 					    mainFrame.getModel().fireCloseTimetable(false);
 				    }
@@ -243,8 +246,10 @@ public class TimeTableViewPanelBar extends JPanel {
 					    filter.setFormation(new Formation(((ComboBoxItem)jcbSubjectEDT.getSelectedItem()).getId()));
 					    filter.setBeginPeriod(mainFrame.getBeginPeriod());
 						filter.setEndPeriod(mainFrame.getEndPeriod());
-						Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
-						mainFrame.getModel().fireShowTimetable(timetable);
+						if (!noLoadTimetable) {
+							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+							mainFrame.getModel().fireShowTimetable(timetable);
+						}
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -254,6 +259,38 @@ public class TimeTableViewPanelBar extends JPanel {
 	}
 	
 	private class TimeTableViewListener extends DefaultBoTListener {
+	    public void refreshAll(BoTEvent e) {
+	        Timetable timetable = e.getTimetable();
+	        
+	        noLoadTimetable = true;
+	        
+	        if (timetable.getGroup() != null) {
+	            jcbTypeEDT.setSelectedItem(TYPE_GROUPE);
+	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getFormation().getHeading(), timetable.getFormation().getIdFormation()));
+	            jcbGroupEDT.setSelectedItem(new ComboBoxItem(timetable.getGroup().getHeading(), timetable.getGroup().getIdGroup()));
+	        } else if (timetable.getFormation() != null) {
+	            jcbTypeEDT.setSelectedItem(TYPE_FORMATION);
+	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getFormation().getHeading(), timetable.getFormation().getIdFormation()));
+	        } else if (timetable.getRoom() != null) {
+	            jcbTypeEDT.setSelectedItem(TYPE_LOCAL);
+	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getRoom().getName(), timetable.getRoom().getIdRoom()));
+	            jcbSubjectEDT.revalidate();
+	        } else if (timetable.getMaterial() != null) {
+	            jcbTypeEDT.setSelectedItem(TYPE_MATERIEL);
+	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getRoom().getName(), timetable.getMaterial().getIdMaterial()));
+	        } else if (timetable.getTeacher() != null) {
+	            jcbTypeEDT.setSelectedItem(TYPE_ENSEIGNANT);
+	            jcbSubjectEDT.setSelectedItem(new ComboBoxItem(timetable.getTeacher().getName() + " " + timetable.getTeacher().getFirstName(), timetable.getTeacher().getIdUser()));
+	        }
+	        
+	        noLoadTimetable = false;
+	    }
+
+	    public void closeTimetable(BoTEvent e) {
+		    if (e.isInitTimetableViewPanel())
+		        init();
+		}
+
 	    public void addGroup(BoTEvent e) throws InterruptedException {
 	        if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {

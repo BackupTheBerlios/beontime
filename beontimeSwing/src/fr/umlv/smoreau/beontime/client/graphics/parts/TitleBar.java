@@ -36,8 +36,6 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
  * @author BeOnTime
  */
 public class TitleBar extends JPanel {
-	private TimeTableViewPanelBar timetableViewPanel;
-	
 	private JDateChooser periodChooser;
 	private JButton previousButton;
 	private JButton nextButton;
@@ -49,6 +47,8 @@ public class TitleBar extends JPanel {
 	private BoTModel model;
 	private MainFrame mainFrame;
 	
+	private boolean noLoadTimetable;
+	
 	/** time in millis for a week*/
 	private static final long aWeek = new GregorianCalendar(2005, 02, 14).getTimeInMillis() - (new GregorianCalendar(2005, 02, 07).getTimeInMillis());
 	/** time in millis for half a year*/
@@ -58,9 +58,10 @@ public class TitleBar extends JPanel {
 	public TitleBar(BoTModel model, MainFrame mainFrame) {
 		this.model = model;
 		this.mainFrame = mainFrame;
+		this.noLoadTimetable = false;
 		titleBarPanel.setLayout(new BorderLayout());
 		
-		timetableViewPanel = new TimeTableViewPanelBar(mainFrame);
+		TimeTableViewPanelBar timetableViewPanel = new TimeTableViewPanelBar(mainFrame);
 
 		initPeriodPanel();
 		periodPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
@@ -101,7 +102,7 @@ public class TitleBar extends JPanel {
                 date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
                 periodChooser.setDate(date.getTime());
                 periodChooser.revalidate();
-                if (mainFrame.getModel().getTimetable() == null)
+                if (noLoadTimetable || mainFrame.getModel().getTimetable() == null)
                     return;
 				TimetableFilter filter = new TimetableFilter(mainFrame.getModel().getTimetable());
 				filter.setBeginPeriod(mainFrame.getBeginPeriod());
@@ -168,12 +169,14 @@ public class TitleBar extends JPanel {
 		public void refreshAll(BoTEvent e) {
 		    Timetable timetable = e.getTimetable();
 		    
-		    //TODO à voir quand le formulaire 'Visualiser un emploi du temps' sera fonctionnel
+		    noLoadTimetable = true;
+
+		    periodChooser.setDate(timetable.getBeginPeriod().getTime());
+
+		    noLoadTimetable = false;
 		}
 		
 		public void closeTimetable(BoTEvent e) {
-		    if (e.isInitTimetableViewPanel())
-		        timetableViewPanel.init();
 			initPeriodPanel();
 		}
 	}
