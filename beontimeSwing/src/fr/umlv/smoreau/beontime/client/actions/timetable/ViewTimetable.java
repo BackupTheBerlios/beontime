@@ -1,35 +1,40 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.actions.timetable;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
 
 /**
  * @author BeOnTime
  */
 public class ViewTimetable extends Action{
+    private static final String NAME = "Visualiser un emploi du temps";
+    private static final String ICON = "Find24.gif";
 
-    /* (non-Javadoc)
-     * @see fr.umlv.smoreau.beontimeSwing.actions.Action#exec()
-     */
-    public void exec() {
-        // TODO Raccord de méthode auto-généré
 
+    public ViewTimetable(MainFrame mainFrame) {
+        super(NAME, ICON, mainFrame);
     }
-	public static javax.swing.Action getAction(){
-		AbstractAction vtta=new AbstractAction("View TimeTable",getImage("mages/.gif")) {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		};
-		
-		return vtta;
-		
-	}
-
+    
+    public ViewTimetable(boolean showIcon, MainFrame mainFrame) {
+        super(NAME, showIcon ? ICON : null, mainFrame);
+    }
+    
+    public ViewTimetable(String name, MainFrame mainFrame) {
+        super(name, ICON, mainFrame);
+    }
+    
+    public ViewTimetable(String name, boolean showIcon, MainFrame mainFrame) {
+        super(name, showIcon ? ICON : null, mainFrame);
+    }
+    
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent arg0) {
+        ViewTimetableWindow window = new ViewTimetableWindow();
+		window.show();
+    }
 }

@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts;
 
 import java.awt.FlowLayout;
@@ -14,20 +11,35 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionFactory;
 import fr.umlv.smoreau.beontime.client.actions.ActionFormList;
+import fr.umlv.smoreau.beontime.client.actions.element.AddMaterial;
+import fr.umlv.smoreau.beontime.client.actions.element.AddRoom;
+import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ExportTimetable;
+import fr.umlv.smoreau.beontime.client.actions.timetable.PrintTimetable;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ShowTimetableBySixMonthPeriod;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ShowTimetableByWeek;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ViewTimetable;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.CopyCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.CutCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.PasteCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.RemoveCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
+import fr.umlv.smoreau.beontime.client.actions.toolbar.ManageButtons;
+import fr.umlv.smoreau.beontime.client.actions.user.AddUser;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 /**
  * @author BeOnTime
  */
-public class ButtonBar{
-
+public class ButtonBar {
 	private static JToolBar toolBar;
 	private JMenuItem[] view;
 	private MainFrame mainFrame;
@@ -46,40 +58,35 @@ public class ButtonBar{
 		loadToolBar();
 		changeAll(defToolBar);	
 	}
-	
-	
-	/**
-	 * 
-	 */
 
-
-	public void addButton(String action, String text) {
-		ActionFactory.init(mainFrame);
-		JButton bouton = toolBar.add((Action) ActionFactory.getActionForName(action,""));
-		bouton.setToolTipText(text);
-		bouton.setText("");
-		//bouton.setBackground(new Color(255,255,255,2));
-		bouton.setBorderPainted(true);
-		bouton.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent arg0) {
-				mainFrame.refresh();
-				
-			}
-		});
-		defToolBar.add(text);
+	public void addButton(Action action) {
+	    if (action == null) {
+	        defToolBar.add(null);
+	    } else {
+			JButton bouton = toolBar.add(action);
+			bouton.setToolTipText((String) action.getValue(AbstractAction.NAME));
+			bouton.setText("");
+			bouton.setBorderPainted(true);
+			bouton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					mainFrame.refresh();
+				}
+			});
+			defToolBar.add(action);
+	    }
 	}
+
 	public void changeAll(ArrayList buttons) {
 		toolBar.removeAll();
 		toolBar.repaint();
 		defToolBar = new ArrayList(buttons);
 		int tmp = defToolBar.size();
 		for (int i = deb_index; i < tmp; ++i) {
-			String act = (String) defToolBar.get(i);
-			if (act.compareTo("----------") == 0)
+			Action act = (Action) defToolBar.get(i);
+			if (act == null)
 				toolBar.addSeparator();
 			else {
-				addButton((String) afl.getActionForName(act),act);
+			    addButton(act);
 			}
 		}
 		defToolBar = new ArrayList(buttons);
@@ -110,47 +117,36 @@ public class ButtonBar{
 			fis =new FileInputStream(System.getProperty("user.home") + "/.BoTtoolBar");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			defToolBar = (ArrayList) ois.readObject();
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			setDefaultToolBar();
-			return;
-		} catch (IOException e1) {
-			setDefaultToolBar();
-			return;
-		} catch (ClassNotFoundException e) {
-			setDefaultToolBar();
-			return;
 		}
-
 	}
 
 	public void setDefaultToolBar() {
 		defToolBar = new ArrayList();
-		addButton("ViewTimetable","Visualiser un EDT");
-		addButton("PrintTimetable","Imprimer l'EDT");
-		addButton("ExportTimetable","Exporter l'EDT");
-		defToolBar.add("----------");
+		addButton(new ViewTimetable(mainFrame));
+		addButton(new PrintTimetable(mainFrame));
+		addButton(new ExportTimetable(mainFrame));
+		addButton(null);
 		toolBar.addSeparator();
-		addButton("CutCourse","Couper un cours");
-		addButton("CopyCourse","Copier un cours");
-		addButton("PasteCourse","Coller le cours");
-		defToolBar.add("----------");
+		addButton(new CutCourse(mainFrame));
+		addButton(new CopyCourse(mainFrame));
+		addButton(new PasteCourse(mainFrame));
+		addButton(null);
 		toolBar.addSeparator();
-		addButton("AddUser","Créer un utilisateur");
-		addButton("AddSubject","Ajouter une matière");
-		addButton("AddRoom","Créer un local");
-		addButton("AddMaterial","Créer un matériel");
-		addButton("GenerateGroups","Générer des groupes");
-		defToolBar.add("----------");
-		toolBar.addSeparator();		
-		addButton("AddCourse","Placer un cours");
-		addButton("DeleteCourse","Supprimer le cours");
-		defToolBar.add("----------");
-		toolBar.addSeparator();
-		addButton("ShowTimetable","Afficher l'EDT par semaines");
-		addButton("ShowTimetable","Afficher l'EDT par semestre");
-		defToolBar.add("----------");
-		toolBar.addSeparator();
-		addButton("ActionManageButtonWindow", "Configurer la toolbar");
+		addButton(new AddUser(mainFrame));
+		addButton(new AddSubject(mainFrame));
+		addButton(new AddRoom(mainFrame));
+		addButton(new AddMaterial(mainFrame));
+		addButton(new GenerateGroups(mainFrame));
+		addButton(null);
+		addButton(new AddCourse(mainFrame));
+		addButton(new RemoveCourse(mainFrame));
+		addButton(null);
+		addButton(new ShowTimetableByWeek(mainFrame));
+		addButton(new ShowTimetableBySixMonthPeriod(mainFrame));
+		addButton(null);
+		addButton(new ManageButtons(mainFrame));
 
 	}
 
@@ -159,11 +155,11 @@ public class ButtonBar{
 		int tmp = defToolBar.size();
 		ArrayList al = new ArrayList(defToolBar);
 		for (int i = deb_index; i < tmp; ++i) {
-			String act = (String) defToolBar.get(i);
-			if (act.compareTo("----------") == 0)
+			Action act = (Action) defToolBar.get(i);
+			if (act == null)
 				toolBar.addSeparator();
 			else {
-				addButton((String) afl.getActionForName(act),act);
+			    addButton(act);
 			}
 		}
 		defToolBar = new ArrayList(al);

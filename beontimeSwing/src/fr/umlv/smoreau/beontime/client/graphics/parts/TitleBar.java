@@ -115,10 +115,10 @@ public class TitleBar extends JPanel {
 			}
 		});
 		
-		previousButton = new JButton(Action.getImage("images/Back24.gif"));
+		previousButton = new JButton(Action.getImage("Back24.gif"));
 		periodPanel.add(previousButton, BorderLayout.WEST);
 		
-		nextButton = new JButton(Action.getImage("images/Forward24.gif"));
+		nextButton = new JButton(Action.getImage("Forward24.gif"));
 		periodPanel.add(nextButton, BorderLayout.EAST);
 		
 		previousButton.addActionListener(new ActionListener() {

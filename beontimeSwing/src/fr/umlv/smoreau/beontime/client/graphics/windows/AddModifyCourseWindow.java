@@ -20,7 +20,6 @@ import javax.swing.JRadioButton;
 
 import com.toedter.calendar.JDateChooser;
 
-import fr.umlv.smoreau.beontime.client.actions.forms.ButtonPlusListener;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 /**

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.client.actions.forms;
+package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,13 +13,11 @@ import javax.swing.JPanel;
  * @author BeOnTime
  */
 public class ButtonPlusListener implements ActionListener {
-
 	private JPanel ownPanel;
 	private JPanel jcbPanel;
-	
 	private JDialog formFrame;
 	
-	public ButtonPlusListener(JPanel ownPanel, JPanel jcbPanel, JDialog formFrame) {
+	protected ButtonPlusListener(JPanel ownPanel, JPanel jcbPanel, JDialog formFrame) {
 		this.ownPanel = ownPanel;
 		this.jcbPanel = jcbPanel;
 		
@@ -30,11 +28,9 @@ public class ButtonPlusListener implements ActionListener {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
 		String text = ((JButton)e.getSource()).getText();
 		
 		if(text.compareTo("+") == 0) {
-			
 			jcbPanel.add(new JComboBox());
 			jcbPanel.add(Box.createVerticalStrut(5));
 		
@@ -46,10 +42,7 @@ public class ButtonPlusListener implements ActionListener {
 			((JButton)e.getSource()).setText("x");
 			
 			formFrame.pack();
-		}
-		
-		else {
-	
+		} else {
 			int position = ownPanel.getComponentZOrder(((JButton)e.getSource()));
 			
 			jcbPanel.remove(position);
@@ -59,8 +52,6 @@ public class ButtonPlusListener implements ActionListener {
 			ownPanel.remove(position);
 			
 			formFrame.pack();
-			
 		}
 	}
-
 }

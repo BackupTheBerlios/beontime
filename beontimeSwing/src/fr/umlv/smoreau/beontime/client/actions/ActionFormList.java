@@ -1,72 +1,45 @@
-/*
- * Created on 23 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+
+import fr.umlv.smoreau.beontime.client.actions.element.AddMaterial;
+import fr.umlv.smoreau.beontime.client.actions.element.AddRoom;
+import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ExportTimetable;
+import fr.umlv.smoreau.beontime.client.actions.timetable.PrintTimetable;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ShowTimetableBySixMonthPeriod;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ShowTimetableByWeek;
+import fr.umlv.smoreau.beontime.client.actions.timetable.ViewTimetable;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.CopyCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.CutCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.PasteCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.RemoveCourse;
+import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
+import fr.umlv.smoreau.beontime.client.actions.user.AddUser;
 
 /**
- * @author Mohamed
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ActionFormList {
-	private HashMap action=new HashMap();
+	public static final ArrayList ACTIONS;
 	
-	/**
-	 * 
-	 */
-	public ActionFormList() {
-		init();
-	}
-
-	/**
-	 * 
-	 */
-	private void init() {
-		action.put("Visualiser un EDT","ViewTimetable");
-		action.put("Imprimer l'EDT","PrintTimetable");
-		action.put("Exporter l'EDT","ExportTimetable");
-		action.put("Couper un cours","CutCourse");
-		action.put("Copier un cours","CopyCourse");
-		action.put("Coller le cours","PasteCourse");
-		action.put("Créer un utilisateur","AddUser");
-		action.put("Ajouter une matière","AddSubject");
-		action.put("Créer un local","AddRoom");
-		action.put("Créer un matériel","AddMaterial");
-		action.put("Générer des groupes","GenerateGroups");
-		action.put("Placer un cours","AddCourse");
-		action.put("Supprimer le cours","DeleteCourse");
-		action.put("Afficher l'EDT par semaines","ShowTimetable");
-		action.put("Afficher l'EDT par semestre","ShowTimetable");
-		action.put("Configurer la toolbar","ActionManageButtonWindow");
-	}
-	
-	public String getActionForName(String name){
-		String s=(String) action.get(name);
-		return s;
-		
-	}
-	
-	public ArrayList getActions(){
-		Collection col=action.values();
-		ArrayList al=new ArrayList(col);
-		return al;
-	}
-	
-	public ArrayList getToolTips(){
-		Object[] obj=action.keySet().toArray();
-		ArrayList al=new ArrayList();
-		for(int i=0;i<obj.length;i++){
-			al.add(obj[i].toString());
-		}
-		return al;
-		
+	static {
+	    ACTIONS = new ArrayList();
+	    ACTIONS.add(new ViewTimetable(null));
+		ACTIONS.add(new PrintTimetable(null));
+		ACTIONS.add(new ExportTimetable(null));
+		ACTIONS.add(new CutCourse(null));
+		ACTIONS.add(new CopyCourse(null));
+		ACTIONS.add(new PasteCourse(null));
+		ACTIONS.add(new AddUser(null));
+		ACTIONS.add(new AddSubject(null));
+		ACTIONS.add(new AddRoom(null));
+		ACTIONS.add(new AddMaterial(null));
+		ACTIONS.add(new GenerateGroups(null));
+		ACTIONS.add(new AddCourse(null));
+		ACTIONS.add(new RemoveCourse(null));
+		ACTIONS.add(new ShowTimetableByWeek(null));
+		ACTIONS.add(new ShowTimetableBySixMonthPeriod(null));
 	}
 }

@@ -1,11 +1,10 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Collection;
 
 import javax.swing.BorderFactory;
@@ -31,6 +30,7 @@ import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
@@ -39,11 +39,15 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class MainFrame {
 	
 	private static final String TITRE = "BeOnTime";
+	
+	private BoTModel model;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
 	private TitleBar titleBar;
 	private StateBar stateBar;	
+	private Edit edit;
+	private View view;
     private JSplitPane splitPaneVertical;
     private JFrame mainFrame;
 	private static MainFrame instance;	
@@ -66,24 +70,28 @@ public class MainFrame {
     	if (null == instance) instance = new MainFrame();
 		return instance;
 	}
+
     /**
      * Initialise la fenetre principale de l'application.
      */
     public void initMainFrame() {
-
-        menuBar = new MenuBar();
+        model = new BoTModel();
+        menuBar = new MenuBar(this);
         buttonBar = new ButtonBar(this);
         titleBar = new TitleBar();
         stateBar = new StateBar();
-        timetableviewpanel=new TimeTableViewPanelBar();
-        Edit edit=new Edit();
-        View view=new View();
+        timetableviewpanel = new TimeTableViewPanelBar();
+        edit = new Edit(model, this);
+        view = new View();
+        
+        mainFrame = new JFrame();
+		mainFrame.setSize(WIDTH,HEIGHT);
         
         //splitPaneVertical = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JPanel(),new JPanel());
         JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         JSplitPane splitPaneHorizontal2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		JSplitPane splitPaneVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		JSplitPane splitPaneVertical2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		final JSplitPane splitPaneVertical2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		
         splitPaneVertical2.setContinuousLayout(true);
         splitPaneVertical.setContinuousLayout(true);
@@ -91,28 +99,32 @@ public class MainFrame {
         splitPaneVertical2.setOneTouchExpandable(true);
         splitPaneHorizontal.setContinuousLayout(true);
         splitPaneHorizontal.setOneTouchExpandable(true);
-        mainFrame = new JFrame();
+
         Container container=mainFrame.getContentPane();
         Border beveledBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(153, 204, 255), new Color(204, 204, 255));
 		titleBar.setBorder(beveledBorder);
 		
-        splitPaneHorizontal.setLeftComponent(edit);
+        splitPaneHorizontal.setLeftComponent(edit.getPane());
         splitPaneHorizontal.setRightComponent(view);
         splitPaneHorizontal.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         splitPaneHorizontal.setDividerLocation((int)(WIDTH*0.15));
-        splitPaneHorizontal.setDividerSize(8);
+        splitPaneHorizontal.setDividerSize(6);
+        splitPaneHorizontal.setOneTouchExpandable(false);
         
         splitPaneVertical.setTopComponent(titleBar.getTitleBarPanel());
         splitPaneVertical.setBottomComponent(splitPaneHorizontal);
         splitPaneVertical.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         splitPaneVertical.setDividerLocation((int)(HEIGHT*0.05));
-        splitPaneVertical.setDividerSize(8);
+        splitPaneVertical.setDividerSize(4);
+        splitPaneVertical.setOneTouchExpandable(false);
+        splitPaneVertical.setEnabled(false);
 		
         splitPaneVertical2.setTopComponent(splitPaneVertical);
         splitPaneVertical2.setBottomComponent(stateBar.getStateBarPanel());
         splitPaneVertical2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        splitPaneVertical2.setDividerLocation((int)(HEIGHT*0.7));
-        splitPaneVertical2.setDividerSize(8);
+        splitPaneVertical2.setDividerLocation((int)mainFrame.getHeight()-160);
+        splitPaneVertical2.setDividerSize(1);
+        splitPaneVertical2.setEnabled(false);
         
 		container.setLayout(new BorderLayout()); 
 		splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
@@ -125,23 +137,33 @@ public class MainFrame {
 		container.add(splitPaneVertical2); 
 		mainFrame.setTitle("BeOnTime");
 		mainFrame.setJMenuBar(menuBar);
-		mainFrame.setSize(WIDTH,HEIGHT);
 		mainFrame.setResizable(true);
 		try {
 			UIManager.setLookAndFeel(new MetalLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
+			System.err.println("Look And Feel non supporté ...");
 		}
+		
+		mainFrame.addComponentListener(new ComponentListener() {
+			public void componentResized(ComponentEvent e) {
+			    splitPaneVertical2.setDividerLocation((int)mainFrame.getHeight()-160);
+			    refresh();
+			}
+			public void componentHidden(ComponentEvent e) {
+			}
+			public void componentMoved(ComponentEvent e) {
+			}
+			public void componentShown(ComponentEvent e) {
+			}
+		});
 
     }
     
 
     
 	public void open() {
-		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
-	
 	}
 	
 	public void close() {
@@ -154,8 +176,7 @@ public class MainFrame {
 	}
 	
 	public Subject getSubjectSelected() {
-		//TODO à implémenter
-		return null;
+		return edit.getSubjectSelected();
 	}
 	
 	public Unavailability getUnavailabilitySelected() {
@@ -174,7 +195,10 @@ public class MainFrame {
 	}
 	
 	public Formation getFormationSelected() {
-		//TODO à implémenter
+	    Timetable timetable = model.getTimetable();
+	    if (timetable != null) {
+	        return timetable.getFormation();
+	    }
 		return null;
 	}
 	
@@ -192,9 +216,11 @@ public class MainFrame {
 		//TODO à implémenter
 		return null;
 	}
+
 	public ButtonBar getToolBar() {
 		return buttonBar;
 	}
+
 	public static void main(String[] args){
 		MainFrame mf=new MainFrame();
 		mf.open();
@@ -205,11 +231,7 @@ public class MainFrame {
 	}
 
 
-	/**
-	 * 
-	 */
 	public void refresh() {
-		// TODO Auto-generated method stub
-		
+	    mainFrame.setVisible(true);
 	}
 }

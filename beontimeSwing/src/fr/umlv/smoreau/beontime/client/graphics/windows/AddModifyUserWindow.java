@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import fr.umlv.smoreau.beontime.client.actions.forms.ButtonPlusListener;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.client.actions.timetable.course;
+package fr.umlv.smoreau.beontime.client.actions.timetable;
 
 import java.awt.event.ActionEvent;
 
@@ -8,24 +8,24 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 /**
  * @author BeOnTime
  */
-public class PasteCourse extends Action {
-    private static final String NAME = "Coller le cours";
-    private static final String ICON = "Paste24.gif";
+public class ShowTimetableBySixMonthPeriod extends Action{
+    private static final String NAME = "Afficher l'emploi du temps par semestre";
+    private static final String ICON = "New24.gif";
 
 
-    public PasteCourse(MainFrame mainFrame) {
+    public ShowTimetableBySixMonthPeriod(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
     
-    public PasteCourse(boolean showIcon, MainFrame mainFrame) {
+    public ShowTimetableBySixMonthPeriod(boolean showIcon, MainFrame mainFrame) {
         super(NAME, showIcon ? ICON : null, mainFrame);
     }
     
-    public PasteCourse(String name, MainFrame mainFrame) {
+    public ShowTimetableBySixMonthPeriod(String name, MainFrame mainFrame) {
         super(name, ICON, mainFrame);
     }
     
-    public PasteCourse(String name, boolean showIcon, MainFrame mainFrame) {
+    public ShowTimetableBySixMonthPeriod(String name, boolean showIcon, MainFrame mainFrame) {
         super(name, showIcon ? ICON : null, mainFrame);
     }
     

@@ -1,9 +1,3 @@
-/*
- * Created on 23 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
@@ -15,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,19 +20,20 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionFactory;
 import fr.umlv.smoreau.beontime.client.actions.ActionFormList;
+import fr.umlv.smoreau.beontime.client.actions.toolbar.AddButton;
+import fr.umlv.smoreau.beontime.client.actions.toolbar.MoveDownButton;
+import fr.umlv.smoreau.beontime.client.actions.toolbar.MoveUpButton;
+import fr.umlv.smoreau.beontime.client.actions.toolbar.RemoveButton;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 /**
- * @author Mohamed
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ManageButtonWindow {
+    private static final String SEPARATE = "-------------------";
+
 	private ArrayList buttons;
-	private ArrayList ref;
 	private final JList list_d;
 	private static GridBagLayout lm;
 	private static GridBagConstraints gbc;
@@ -50,13 +47,10 @@ public class ManageButtonWindow {
 
 	public ManageButtonWindow(MainFrame mainFrame,ArrayList buttons) {
 		this.buttons = buttons;
-		if (buttons.get(buttons.size()-1).equals("Configurer la toolbar")){
+		/*if (buttons.get(buttons.size()-1).equals("Configurer la toolbar")){
 			buttons.remove(buttons.size()-1);
-		}
+		}*/
 		ActionFormList afl=new ActionFormList();
-		this.ref = afl.getToolTips();
-		ref.remove("Configurer la toolbar");
-		ref.add("----------");
 		this.mainFrame = mainFrame;
 		operationOk = false;
 		lm = new GridBagLayout();
@@ -73,21 +67,29 @@ public class ManageButtonWindow {
 		list_d.setToolTipText("Contenu de la barre");
 		JScrollPane sc_d = new JScrollPane();
 		sc_d.getViewport().setView(list_d);
-		JButton add=new JButton(ActionFactory.getActionForName("AddButtonToToolBar",""));
-		add.setToolTipText("Ajouter un icon à la ToolBar");
-		JButton rem = new JButton(ActionFactory.getActionForName("RemoveButtonToToolBar",""));
-		rem.setToolTipText("Supprimer un icon de la ToolBar");
-		JButton up = new JButton(ActionFactory.getActionForName("MoveUpButtonToToolBar",""));
-		up.setToolTipText("Remonter un icon dans la ToolBar");
-		JButton dw = new JButton(ActionFactory.getActionForName("MoveDownButtonToToolBar",""));
-		dw.setToolTipText("Descendre un icon dans la ToolBar");
+		JButton add = new JButton(new AddButton(mainFrame));
+		add.setText("");
+		add.setToolTipText((String) add.getAction().getValue(AbstractAction.NAME));
+		JButton rem = new JButton(new RemoveButton(mainFrame));
+		rem.setText("");
+		rem.setToolTipText((String) rem.getAction().getValue(AbstractAction.NAME));
+		JButton up = new JButton(new MoveUpButton(mainFrame));
+		up.setText("");
+		up.setToolTipText((String) up.getAction().getValue(AbstractAction.NAME));
+		JButton dw = new JButton(new MoveDownButton(mainFrame));
+		dw.setText("");
+		dw.setToolTipText((String) dw.getAction().getValue(AbstractAction.NAME));
 		JButton ok = new JButton("OK");
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String tmp = (String) list_g.getSelectedValue();
-				if (tmp != null)
-					model_d.add(tmp);
-				
+			    int index = list_g.getSelectedIndex();
+			    if (index == ActionFormList.ACTIONS.size())
+			        model_d.add(null);
+			    else {
+					Action tmp = (Action) ActionFormList.ACTIONS.get(index);
+					if (tmp != null)
+						model_d.add(tmp);
+			    }
 			}
 		});
 		rem.addActionListener(new ActionListener() {
@@ -156,7 +158,7 @@ public class ManageButtonWindow {
 		int y = (int) ((d.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 		frame.setResizable(true);
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	public static void addComponent(JPanel panel, Component co,
@@ -172,21 +174,22 @@ public class ManageButtonWindow {
 
 	private class RefListModel implements ListModel {
 		public int getSize() {
-			return ref.size();
+			return ActionFormList.ACTIONS.size() + 1;
 		}
 
 		public Object getElementAt(int index) {
-			return ref.get(index);
+		    if (index == ActionFormList.ACTIONS.size())
+		        return SEPARATE;
+		    Action action = (Action) ActionFormList.ACTIONS.get(index);
+			return action.getValue(AbstractAction.NAME);
 		}
 
 		public void addListDataListener(ListDataListener arg0) {
-			// TODO Auto-generated method stub
-			
+			// ne rien faire
 		}
 
 		public void removeListDataListener(ListDataListener arg0) {
-			// TODO Auto-generated method stub
-			
+		    // ne rien faire
 		}
 	}
 
@@ -218,22 +221,24 @@ public class ManageButtonWindow {
 			super();
 		}
 
-		public void add(String value) {
-			buttons.add(buttons.size(), value);
-			fireIntervalAdded(this, buttons.size(), buttons.size());
+		public void add(Action value) {
+			buttons.add(buttons.size()-2, value);
+			fireIntervalAdded(this, buttons.size()-2, buttons.size()-2);
 		}
 
 		public int getSize() {
-			return buttons.size();
+			return buttons.size() - 2;
 		}
 
 		public Object getElementAt(int index) {
-			return buttons.get(index);
+		    Action action = (Action) buttons.get(index);
+		    if (action != null)
+		        return action.getValue(AbstractAction.NAME);
+		    return SEPARATE;
 		}
 	}
 
 	public ArrayList getButtons() {
-
 		return buttons;
 	}
 }

@@ -18,7 +18,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 /**
  * @author BeOnTime
  */
-public class IdentificationWindow {
+public class AuthenticationWindow {
 
 	private static final String TITRE = "Connexion";
 
@@ -37,7 +37,7 @@ public class IdentificationWindow {
 
 	
 	
-	public IdentificationWindow() {
+	public AuthenticationWindow() {
 		IWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		IWFrame.getContentPane().setLayout(IWLayout);
         
@@ -107,7 +107,7 @@ public class IdentificationWindow {
     	MainFrame frame = MainFrame.getInstance();
      	frame.open();
      	
-     	IdentificationWindow form = new IdentificationWindow();
+     	AuthenticationWindow form = new AuthenticationWindow();
      	form.show();
 			
     }    

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.client.actions.timetable.course;
+package fr.umlv.smoreau.beontime.client.actions.toolbar;
 
 import java.awt.event.ActionEvent;
 
@@ -8,27 +8,28 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 /**
  * @author BeOnTime
  */
-public class PasteCourse extends Action {
-    private static final String NAME = "Coller le cours";
-    private static final String ICON = "Paste24.gif";
+public class AddButton extends Action {
+    private static final String NAME = "Ajouter un bouton à la barre d'outils";
+    private static final String ICON = "Forward24.gif";
 
 
-    public PasteCourse(MainFrame mainFrame) {
+    public AddButton(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
     
-    public PasteCourse(boolean showIcon, MainFrame mainFrame) {
+    public AddButton(boolean showIcon, MainFrame mainFrame) {
         super(NAME, showIcon ? ICON : null, mainFrame);
     }
     
-    public PasteCourse(String name, MainFrame mainFrame) {
+    public AddButton(String name, MainFrame mainFrame) {
         super(name, ICON, mainFrame);
     }
     
-    public PasteCourse(String name, boolean showIcon, MainFrame mainFrame) {
+    public AddButton(String name, boolean showIcon, MainFrame mainFrame) {
         super(name, showIcon ? ICON : null, mainFrame);
     }
-    
+
+
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */

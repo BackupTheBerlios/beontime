@@ -1,37 +1,41 @@
-package fr.umlv.smoreau.beontime.client.actions.timetable.course;
+package fr.umlv.smoreau.beontime.client.actions;
 
 import java.awt.event.ActionEvent;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.windows.AboutWindow;
 
 /**
  * @author BeOnTime
  */
-public class PasteCourse extends Action {
-    private static final String NAME = "Coller le cours";
-    private static final String ICON = "Paste24.gif";
+public class About extends Action {
+    private static final String NAME = "A propose de BeOnTime";
+    private static final String ICON = "Help24.gif";
 
 
-    public PasteCourse(MainFrame mainFrame) {
+    public About(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
     
-    public PasteCourse(boolean showIcon, MainFrame mainFrame) {
+    public About(boolean showIcon, MainFrame mainFrame) {
         super(NAME, showIcon ? ICON : null, mainFrame);
     }
     
-    public PasteCourse(String name, MainFrame mainFrame) {
+    public About(String name, MainFrame mainFrame) {
         super(name, ICON, mainFrame);
     }
     
-    public PasteCourse(String name, boolean showIcon, MainFrame mainFrame) {
+    public About(String name, boolean showIcon, MainFrame mainFrame) {
         super(name, showIcon ? ICON : null, mainFrame);
     }
-    
+
+
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
+        AboutWindow window = new AboutWindow();
+        window.show(null);
     }
 }
