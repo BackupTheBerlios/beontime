@@ -2,15 +2,19 @@ package fr.umlv.smoreau.beontime.client.actions.group;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyGroupWindow;
+import fr.umlv.smoreau.beontime.model.Group;
 
 /**
  * @author BeOnTime
  */
 public class AddGroup extends Action {
-    private static final String NAME = "Créer un groupe";
+    private static final String NAME = "Créer un groupe d'étudiants";
     private static final String ICON = "creer_groupe.png";
 
 
@@ -36,5 +40,20 @@ public class AddGroup extends Action {
     public void actionPerformed(ActionEvent arg0) {
         AddModifyGroupWindow window = new AddModifyGroupWindow();
         window.show();
+        
+        if (window.isOk()) {
+            Group group = new Group();
+            group.setHeading(window.getIntitule());
+            
+            group.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
+            
+            try {
+                DaoManager.getGroupDao().addGroup(group);
+
+                JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }

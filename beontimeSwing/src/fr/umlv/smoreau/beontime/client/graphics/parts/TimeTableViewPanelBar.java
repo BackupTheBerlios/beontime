@@ -16,8 +16,10 @@ import javax.swing.JPanel;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
@@ -60,7 +62,8 @@ public class TimeTableViewPanelBar extends JPanel {
 		jcbSubjectEDT.addItemListener(new ItemListenerSubject());
 		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,3,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(2,2,2,2));
 		add(jcbSubjectEDT);
-		jcbGroupEDT = new JComboBox(); 
+		jcbGroupEDT = new JComboBox();
+		jcbGroupEDT.addItemListener(new ItemListenerGroup());
 		addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,3,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(2,2,2,2));
 		add(jcbGroupEDT);
 		jcbSubjectEDT.setEnabled(false);
@@ -68,7 +71,6 @@ public class TimeTableViewPanelBar extends JPanel {
 	}
 	
 	private static void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
-		
 		constraints. gridx= gridx;
 		constraints. gridy = gridy;
 		constraints. gridwidth= gridwidth;
@@ -80,7 +82,6 @@ public class TimeTableViewPanelBar extends JPanel {
 		constraints.insets = insets;
 		
 		gbLayout.setConstraints(comp,constraints);
-		
 	}
 	
 	private class ItemListenerType implements ItemListener {
@@ -161,8 +162,30 @@ public class TimeTableViewPanelBar extends JPanel {
 							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 							mainFrame.getModel().fireShowTimetable(timetable);
 					    } else if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem())) {
-					        jcbGroupEDT.setEnabled(true);
+					        Long id = ((Item)event.getItem()).getId();
+							GroupFilter filter = new GroupFilter();
+							filter.setIdFormation(id);
+							Collection groups = DaoManager.getGroupDao().getGroups(filter);
+							jcbGroupEDT.removeAll();
+							jcbGroupEDT.addItem("");
+							for (Iterator i = groups.iterator(); i.hasNext(); )
+							    jcbGroupEDT.addItem(((Group) i.next()).getHeading());
+							jcbGroupEDT.setEnabled(true);
 					    }
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
+	
+	private class ItemListenerGroup implements ItemListener {
+		public void itemStateChanged(ItemEvent event) {
+			if (ItemEvent.SELECTED == event.getStateChange()) {
+				try {
+					if (!TYPE_VIDE.equals(event.getItem())) {
+					    //TODO récupérer l'emploi du temps du groupe (sans doute modifier le noyau)
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);

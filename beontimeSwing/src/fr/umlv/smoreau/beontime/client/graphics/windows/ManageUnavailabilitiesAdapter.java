@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.util.ArrayList;
@@ -16,12 +10,9 @@ import javax.swing.tree.TreePath;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
-import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
-import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**

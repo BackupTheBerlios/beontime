@@ -1,18 +1,10 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
