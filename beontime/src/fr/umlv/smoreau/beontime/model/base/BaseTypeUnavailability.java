@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @hibernate.class
  *  table="Type_indisponibilite"
  */
-public abstract class BaseTypeUnvailability  implements Serializable {
+public abstract class BaseTypeUnavailability  implements Serializable {
 
 	public static String PROP_NOM_TYPE_INDISPONIBILITE = "NomTypeIndisponibilite";
 	public static String PROP_ID_TYPE_INDISPONIBILITE = "IdTypeIndisponibilite";
@@ -34,14 +34,14 @@ public abstract class BaseTypeUnvailability  implements Serializable {
 
 
 	// constructors
-	public BaseTypeUnvailability () {
+	public BaseTypeUnavailability () {
 		initialize();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseTypeUnvailability (java.lang.Long _idTypeIndisponibilite) {
+	public BaseTypeUnavailability (java.lang.Long _idTypeIndisponibilite) {
 		this.setIdTypeIndisponibilite(_idTypeIndisponibilite);
 		initialize();
 	}
@@ -110,9 +110,9 @@ public abstract class BaseTypeUnvailability  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseTypeUnavailability)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability mObj = (fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseTypeUnavailability mObj = (fr.umlv.smoreau.beontime.model.base.BaseTypeUnavailability) obj;
 			if (null == this.getIdTypeIndisponibilite() || null == mObj.getIdTypeIndisponibilite()) return false;
 			else return (this.getIdTypeIndisponibilite().equals(mObj.getIdTypeIndisponibilite()));
 		}

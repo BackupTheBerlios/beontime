@@ -1,6 +1,9 @@
 package junit;
 
+import java.util.Collection;
+
 import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
+import fr.umlv.smoreau.beontime.model.TypeUnavailability;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -20,14 +23,20 @@ public class UnavailabilityDaoTest extends TestCase {
         assertNotNull(unavailabilityDao.getUnavailabilities());
     }
     
+    public void testGetTypeUnavailabilities() {
+        assertNotNull(unavailabilityDao.getTypesUnavailability());
+    }
+    
     public void testAddRemoveUnavailability() {
         Unavailability unavailability = new Unavailability();
-        /*group.setIdFormation(new Long(1));
-        group.setIntitule("groupe pour essayer");
-        assertTrue(groupDao.addGroup(group));
-        group.setIntitule("groupe pour ressayer");
-        assertTrue(groupDao.modifyGroup(group));
-        assertTrue(groupDao.removeGroup(group));*/
+        Collection t = unavailabilityDao.getTypesUnavailability();
+        TypeUnavailability[] types = (TypeUnavailability[]) t.toArray(new TypeUnavailability[t.size()]);
+        unavailability.setIdTypeUnavailability(types[0]);
+        unavailability.setIdSujetIndisponibilite(new Long(1));
+        assertTrue(unavailabilityDao.addUnavailability(unavailability));
+        unavailability.setDescription("voici l'essai pour l'indisponibilité");
+        assertTrue(unavailabilityDao.modifyUnavailability(unavailability));
+        assertTrue(unavailabilityDao.removeUnavailability(unavailability));
     }
 
     public static Test suite() {

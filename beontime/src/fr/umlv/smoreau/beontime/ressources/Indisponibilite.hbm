@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.Unavailability" table="Indisponibilite">
+	<class name="fr.umlv.smoreau.beontime.model.Unavailability" table="indisponibilite">
 		<id
 			column="ID_indisponibilite"
 			name="IdIndisponibilite"

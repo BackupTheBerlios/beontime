@@ -15,7 +15,7 @@ public class UnavailabilityFilter extends Unavailability implements Filter {
         corres.put("IdIndisponibilite", "id_indisponibilite");
         corres.put("DateDebut", "date_debut");
         corres.put("DateFin", "date_fin");
-        corres.put("IdTypeUnavailability", "id_type_indisponibilite");
+        corres.put("IdTypeUnavailability.IdTypeIndisponibilite", "id_type_indisponibilite");
         corres.put("IdSujetIndisponibilite", "id_sujet_indisponibilite");
         corres.put("Description", "description");
     }

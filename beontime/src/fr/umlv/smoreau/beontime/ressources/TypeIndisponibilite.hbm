@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.TypeUnavailability" table="Type_indisponibilite">
+	<class name="fr.umlv.smoreau.beontime.model.TypeUnavailability" table="type_indisponibilite">
 		<id
 			column="ID_type_indisponibilite"
 			name="IdTypeIndisponibilite"
@@ -15,7 +15,6 @@
 		<property
 			column="Nom_type_indisponibilite"
 			name="NomTypeIndisponibilite"
-			not-null="false"
 			type="string"
 		 />
 		<set inverse="true" name="IndisponibiliteSet">
