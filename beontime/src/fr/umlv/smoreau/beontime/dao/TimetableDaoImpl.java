@@ -218,16 +218,24 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(course, session);
+            
+            _TakePartGroupSubjectCourseFilter f1 = new _TakePartGroupSubjectCourseFilter();
+            f1.setIdCourse(course.getIdCourse());
+            remove(TABLE_ASSOCIATION, f1, session);
             Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); )
-	                addOrModify((TakePartGroupSubjectCourse)i.next(), session);
+	                add((TakePartGroupSubjectCourse)i.next(), session);
             }
+            
+            _IsDirectedByCourseTeacherFilter f2 = new _IsDirectedByCourseTeacherFilter();
+            f2.setIdCourse(course);
+            remove(TABLE_ISDIRECTING, f2, session);
             Collection c = course.getTeachersDirecting();
             if (c != null) {
 	            for (Iterator i = c.iterator(); i.hasNext(); ) {
 	                IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) i.next();//new IsDirectedByCourseTeacher((User) i.next(), course);
-                	addOrModify(isDirected, session);
+                	add(isDirected, session);
 	            }
             }
             TransactionManager.commit();
