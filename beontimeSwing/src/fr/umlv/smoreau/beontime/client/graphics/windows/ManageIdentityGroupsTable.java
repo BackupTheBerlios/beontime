@@ -150,6 +150,7 @@ public class ManageIdentityGroupsTable extends JTable {
     		if (value instanceof User) {
     			User student = (User) value;
     			setText(student.getName() + " " + student.getFirstName());
+    			setHorizontalAlignment(LEFT);
     		}
 
     		return this;
