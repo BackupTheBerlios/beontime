@@ -40,13 +40,13 @@ public class TimeTableViewPanelBar extends JPanel {
 	private JComboBox jcbSubjectEDT;
 	private JComboBox jcbGroupEDT;
 	
-	private static final String TYPE_VIDE = "";
-	private static final String TYPE_FORMATION = "Formation";
-	private static final String TYPE_ENSEIGNANT = "Enseignant";
-	private static final String TYPE_GROUPE = "Groupe";
-	private static final String TYPE_LOCAL = "Local";
-	private static final String TYPE_MATERIEL = "Matériel";
-	private static final String[] ALL_TYPES = { TYPE_VIDE, TYPE_FORMATION, TYPE_ENSEIGNANT, TYPE_GROUPE, TYPE_LOCAL, TYPE_MATERIEL };
+	public static final String TYPE_VIDE = "";
+	public static final String TYPE_FORMATION = "Formation";
+	public static final String TYPE_ENSEIGNANT = "Enseignant";
+	public static final String TYPE_GROUPE = "Groupe";
+	public static final String TYPE_LOCAL = "Local";
+	public static final String TYPE_MATERIEL = "Matériel";
+	public static final String[] ALL_TYPES = { TYPE_VIDE, TYPE_FORMATION, TYPE_ENSEIGNANT, TYPE_GROUPE, TYPE_LOCAL, TYPE_MATERIEL };
 	
 	
 	public TimeTableViewPanelBar(MainFrame mainFrame) {

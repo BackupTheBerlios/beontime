@@ -506,6 +506,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(dateCourseTheLabel);
 		
 		dateCourse = new JDateChooser();
+		dateCourse.setDateFormatString("dd MMMMM yyyy");
 		addComponent(AMCWLayout,layoutConstraints,dateCourse,2,2,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(dateCourse);
 		

@@ -47,6 +47,7 @@ public class TitleBar extends JPanel {
 	protected TitleBar titleBar=this;
 	 
 	private BoTModel model;
+	private MainFrame mainFrame;
 	
 	/** time in millis for a week*/
 	private static final long aWeek = new GregorianCalendar(2005, 02, 14).getTimeInMillis() - (new GregorianCalendar(2005, 02, 07).getTimeInMillis());
@@ -56,6 +57,7 @@ public class TitleBar extends JPanel {
 	
 	public TitleBar(BoTModel model, MainFrame mainFrame) {
 		this.model = model;
+		this.mainFrame = mainFrame;
 		titleBarPanel.setLayout(new BorderLayout());
 		
 		timetableViewPanel = new TimeTableViewPanelBar(mainFrame);
@@ -94,7 +96,11 @@ public class TitleBar extends JPanel {
 		periodChooser = new JDateChooser();
 		periodChooser.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
-                MainFrame mainFrame = MainFrame.getInstance();
+                Calendar date = Calendar.getInstance();
+                date.setTime(periodChooser.getDate());
+                date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                periodChooser.setDate(date.getTime());
+                periodChooser.revalidate();
                 if (mainFrame.getModel().getTimetable() == null)
                     return;
 				TimetableFilter filter = new TimetableFilter(mainFrame.getModel().getTimetable());
@@ -104,11 +110,12 @@ public class TitleBar extends JPanel {
 					Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 					mainFrame.getModel().fireShowTimetable(timetable);
 				} catch (Exception e) {
-				    e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
             }
 		});
+		periodChooser.setDateFormatString("dd MMMMM yyyy");
+		periodChooser.setDate(Calendar.getInstance().getTime());
 
 		periodPanel.add(periodChooser, BorderLayout.CENTER);
 		previousButton = new JButton(Action.getImage("gauche_small.png"));
@@ -119,17 +126,17 @@ public class TitleBar extends JPanel {
 		
 		previousButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+				if (mainFrame.getViewType()==MainFrame.VIEW_WEEK)
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
-				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_HALF_YEAR) 
+				else if (mainFrame.getViewType()==MainFrame.VIEW_HALF_YEAR) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));
 			}
 		});
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK) 
+				if (mainFrame.getViewType()==MainFrame.VIEW_WEEK) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
-				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_HALF_YEAR) 
+				else if (mainFrame.getViewType()==MainFrame.VIEW_HALF_YEAR) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
 			}
 		});

@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -247,7 +246,7 @@ public class ModifyFormationWindow {
             startHalfYear1Jc.setDate(FORMAT_DATE.parse(beginFirstHalfYear));
         } catch (ParseException e) {
         }
-		startHalfYear1Jc.setLocale(Locale.FRENCH);
+		startHalfYear1Jc.setDateFormatString("dd MMMMM");
 		addComponent(MFWLayout,layoutConstraints,startHalfYear1Jc,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(startHalfYear1Jc);
 			
@@ -260,6 +259,7 @@ public class ModifyFormationWindow {
 		    endHalfYear1Jc.setDate(FORMAT_DATE.parse(endFirstHalfYear));
         } catch (ParseException e) {
         }
+        endHalfYear1Jc.setDateFormatString("dd MMMMM");
 		addComponent(MFWLayout,layoutConstraints,endHalfYear1Jc,4,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(endHalfYear1Jc);
 		
@@ -277,6 +277,7 @@ public class ModifyFormationWindow {
 		    startHalfYear2Jc.setDate(FORMAT_DATE.parse(beginSecondHalfYear));
         } catch (ParseException e) {
         }
+        startHalfYear2Jc.setDateFormatString("dd MMMMM");
 		addComponent(MFWLayout,layoutConstraints,startHalfYear2Jc,2,7,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(startHalfYear2Jc);
 		
@@ -289,6 +290,7 @@ public class ModifyFormationWindow {
 		    endHalfYear2Jc.setDate(FORMAT_DATE.parse(endSecondHalfYear));
         } catch (ParseException e) {
         }
+        endHalfYear2Jc.setDateFormatString("dd MMMMM");
 		addComponent(MFWLayout,layoutConstraints,endHalfYear2Jc,4,7,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(endHalfYear2Jc);
 		

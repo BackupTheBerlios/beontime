@@ -8,8 +8,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -21,11 +21,12 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import com.toedter.calendar.JDateChooser;
+
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.parts.ButtonBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.MenuBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.StateBar;
-import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.MultiSpanCellTable;
@@ -73,7 +74,6 @@ public class MainFrame {
 	private final static int WIDTH = 1024;
 	private final static int HEIGHT = 700;
 
-	private TimeTableViewPanelBar timetableviewpanel;
 	private Container container;
 	
 	/* type d'affichage semaine / semestre */
@@ -86,6 +86,7 @@ public class MainFrame {
     private MainFrame() {
         initMainFrame();
         ActionsList.initActions(this);
+        (new JDateChooser()).setLocale(Locale.FRENCH);
     }
     
     
@@ -133,7 +134,6 @@ public class MainFrame {
         splitPaneVertical.setTopComponent(titleBar.getTitleBarPanel());
         splitPaneVertical.setBottomComponent(splitPaneHorizontal);
         splitPaneVertical.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        splitPaneVertical.setDividerLocation((int)(HEIGHT*0.05));
         splitPaneVertical.setDividerSize(4);
         splitPaneVertical.setOneTouchExpandable(false);
         splitPaneVertical.setEnabled(false);
@@ -255,11 +255,6 @@ public class MainFrame {
 		ActionsList.getAction("ManageIdentitiesToGroups").setEnabled(enable);
 
 	    this.groupSelected = group;
-	}
-	
-	public Collection getGroupsSelected() {
-		//TODO à implémenter
-		return null;
 	}
 	
 	public Formation getFormationSelected() {

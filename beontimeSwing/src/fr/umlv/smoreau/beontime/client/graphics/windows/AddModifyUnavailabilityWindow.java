@@ -137,6 +137,8 @@ public class AddModifyUnavailabilityWindow {
         AMUWFrame.getContentPane().add(startUnavailabilityTheLabel);
         
         startUnavailabilityDate = new JDateChooser();
+        startUnavailabilityDate.setDateFormatString("dd MMMMM yyyy");
+        startUnavailabilityDate.setDate(Calendar.getInstance().getTime());
         addComponent(AMUWLayout,layoutConstraints,startUnavailabilityDate,2,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
         AMUWFrame.getContentPane().add(startUnavailabilityDate);
         
@@ -169,6 +171,8 @@ public class AddModifyUnavailabilityWindow {
         AMUWFrame.getContentPane().add(endUnavailabilityTheLabel);
         
         endUnavailabilityDate = new JDateChooser();
+        endUnavailabilityDate.setDateFormatString("dd MMMMM yyyy");
+        endUnavailabilityDate.setDate(Calendar.getInstance().getTime());
         addComponent(AMUWLayout,layoutConstraints,endUnavailabilityDate,2,7,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
         AMUWFrame.getContentPane().add(endUnavailabilityDate);
         

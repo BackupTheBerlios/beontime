@@ -76,9 +76,5 @@ public class AboutWindow {
 		JDialog dialog = jop.createDialog(parent, "A propos de BeOnTime");
 		dialog.setVisible(true);
 	}
-	
-	public static final void main(String[] args) {
-	    (new AboutWindow()).show(null);
-	}
 }
 

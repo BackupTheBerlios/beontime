@@ -106,6 +106,8 @@ public class SearchAvailabilityWindow {
 		SAWFrame.getContentPane().add(dateAvailabilityTheLabel);
 		
 		dateAvailability = new JDateChooser();
+		dateAvailability.setDateFormatString("dd MMMMM yyyy");
+		dateAvailability.setDate(Calendar.getInstance().getTime());
 		addComponent(SAWLayout,layoutConstraints,dateAvailability,2,2,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		SAWFrame.getContentPane().add(dateAvailability);
 		
