@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.timetable.CourseType;
-import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
