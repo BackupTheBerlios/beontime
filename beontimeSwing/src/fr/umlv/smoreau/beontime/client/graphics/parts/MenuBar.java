@@ -1,12 +1,8 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
 /**
  * @author BeOnTime
@@ -47,9 +43,9 @@ public class MenuBar extends JMenuBar {
 		
 		
 		JMenu affichage = new JMenu("Affichage");
-		JMenu presentation = new JMenu("Presentation");		
-		presentation.add(new JMenuItem("Vertical"));
-		presentation.add(new JMenuItem("Horizontal"));
+		JMenu presentation = new JMenu("Présentation");		
+		presentation.add(new JMenuItem("Verticale"));
+		presentation.add(new JMenuItem("Horizontale"));
 		affichage.add(presentation);
 		JMenu vue = new JMenu("Vue");
 		vue.add(new JMenuItem("Semaine"));		
@@ -64,7 +60,7 @@ public class MenuBar extends JMenuBar {
 		
 		
 		
-		JMenu emploi_du_temps = new JMenu("emploi du temps");
+		JMenu emploi_du_temps = new JMenu("Emploi du temps");
 		
 		JMenu matiere = new JMenu("Matière");
 		matiere.add(new JMenuItem("Ajouter"));
@@ -108,12 +104,11 @@ public class MenuBar extends JMenuBar {
 		emploi_du_temps.add(materiel);
 		
 		
-		JMenu indisponibilite = new JMenu("indisponibilite");
+		
+		JMenu indisponibilite = new JMenu("Indisponibilite");
 		indisponibilite.add(new JMenuItem("Ajouter"));
 		indisponibilite.add(new JMenuItem("Gérer les indisponibilités"));
 		indisponibilite.add(new JMenuItem("Recherher une disponibilité"));
-		
-		emploi_du_temps.add(indisponibilite);
 		
 		
 		JMenu a_propos_de = new JMenu("?");
@@ -125,10 +120,6 @@ public class MenuBar extends JMenuBar {
 		add(affichage);
 		add(utilisateur);
 		add(emploi_du_temps);
-		add(cours);
-		add(groupe);
-		add(local);
-		add(materiel);
 		add(indisponibilite);
 		add(a_propos_de);
 	}
