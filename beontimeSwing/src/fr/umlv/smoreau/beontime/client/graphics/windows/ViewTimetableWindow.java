@@ -8,11 +8,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
 
 
 /**
@@ -45,9 +47,8 @@ public class ViewTimetableWindow {
     
 	public ViewTimetableWindow() {
 		
-		
-		VTWFrame = new JFrame(TITRE);
-	    VTWFrame.getContentPane().setLayout(VTWLayout);
+		VTWFrame = new JFrame();
+		VTWFrame.getContentPane().setLayout(VTWLayout);
 	    
 	    initViewTimetableWindow();  
 	    
@@ -76,7 +77,6 @@ public class ViewTimetableWindow {
 		addComponent(VTWLayout,layoutConstraints,choiceEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,5,10));
 		VTWFrame.getContentPane().add(choiceEDTLabel);
 		
-		
 		choiceEDTJcb = new JComboBox();
 		addComponent(VTWLayout,layoutConstraints,choiceEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,5,10));
 		VTWFrame.getContentPane().add(choiceEDTJcb);
@@ -85,26 +85,29 @@ public class ViewTimetableWindow {
 		modeViewEDTLabel = new JLabel("Affichage de l'emploi du temps :");
 		addComponent(VTWLayout,layoutConstraints,modeViewEDTLabel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,5,10));
 		VTWFrame.getContentPane().add(modeViewEDTLabel);
+
 		
-		
-		semestriel = new JRadioButton("semestriel");
+		semestriel = new JRadioButton("semestriel",true);
 		addComponent(VTWLayout,layoutConstraints,semestriel,1,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,5,10));
-		VTWFrame.getContentPane().add(semestriel);
-		
+		VTWFrame.getContentPane().add(semestriel);		
 		
 		hebdomadaire = new JRadioButton("hebdomadaire");
 		addComponent(VTWLayout,layoutConstraints,hebdomadaire,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,5,10));
 		VTWFrame.getContentPane().add(hebdomadaire);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup.add(semestriel);
+		buttonGroup.add(hebdomadaire);
 		
 		
 		periodViewEDTLabel = new JLabel("Veuillez choisir le semestre à visualiser");
 		addComponent(VTWLayout,layoutConstraints,periodViewEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,10,10));
 		VTWFrame.getContentPane().add(periodViewEDTLabel);
 		
-		
 		periodViewEDTJcb = new JComboBox();
 		addComponent(VTWLayout,layoutConstraints,periodViewEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
 		VTWFrame.getContentPane().add(periodViewEDTJcb);
+		
 		
 		ok = new JButton("OK");
 		addComponent(VTWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(10,10,10,10));
@@ -113,6 +116,7 @@ public class ViewTimetableWindow {
 		annuler = new JButton("Annuler");
 		addComponent(VTWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(10,10,10,10));
 		VTWFrame.getContentPane().add(annuler);
+		
 	}
 	
 	
