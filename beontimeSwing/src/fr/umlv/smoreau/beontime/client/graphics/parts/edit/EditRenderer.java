@@ -7,7 +7,6 @@ import java.awt.Font;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import fr.umlv.smoreau.beontime.client.graphics.ColorBoT;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
@@ -49,7 +48,7 @@ public class EditRenderer extends DefaultTreeCellRenderer {
             font = new Font("Arial", Font.PLAIN, 14);
             Subject subject = (Subject) value;
             setText(subject.getHeading());
-            setForeground(ColorBoT.getColorAt(subject.getIdSubject().intValue()));
+            setForeground(subject.getColor());
         } else if (value instanceof String) {
             font = new Font("Arial", Font.PLAIN, 13);
             setText((String) value);

@@ -1,4 +1,5 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,7 +12,6 @@ import javax.swing.ListModel;
 import javax.swing.table.AbstractTableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
-import fr.umlv.smoreau.beontime.client.graphics.ColorBoT;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
@@ -162,7 +162,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 			        	columns[j]=startColumn+j;
 			        	}
 			        int [] row=new int[]{day};
-			        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
+			        changeColor(false,row,columns,course.getSubject().getColor());
 			        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
 			        setValueAt(course,row[0],columns[0]);
 			        cellAtt.combine(row,columns);
@@ -211,7 +211,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		        	columns[j]=startColumn+j;
 		        	}
 		        int [] row=new int[]{day};
-		        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
+		        changeColor(false,row,columns,course.getSubject().getColor());
 		        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
 		        setValueAt(course,row[0],columns[0]);
 		        cellAtt.combine(row,columns);
@@ -246,7 +246,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        	columns[j]=startColumn+j;
 	        }
 	        int [] row=new int[]{day};
-	        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
+	        changeColor(false,row,columns,course.getSubject().getColor());
 	        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
 	        setValueAt(course,row[0],columns[0]);
 	        cellAtt.combine(row,columns);
