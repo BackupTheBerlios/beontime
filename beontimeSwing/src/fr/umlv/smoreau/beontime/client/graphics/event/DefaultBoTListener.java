@@ -54,4 +54,13 @@ public class DefaultBoTListener implements BoTListener {
     
     public void removeMaterial(BoTEvent e) throws InterruptedException {
     }
+    
+    public void addGroup(BoTEvent e) throws InterruptedException {
+    }
+
+	public void modifyGroup(BoTEvent e) throws InterruptedException {
+    }
+
+	public void removeGroup(BoTEvent e) throws InterruptedException {
+    }
 }

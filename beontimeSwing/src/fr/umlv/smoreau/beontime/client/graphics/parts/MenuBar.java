@@ -182,7 +182,11 @@ public class MenuBar extends JMenuBar {
 		    } else if (timetable.getMaterial() != null) {
 		        ActionsList.getAction("ModifyMaterial").setEnabled(true);
 		        ActionsList.getAction("RemoveMaterial").setEnabled(true);
-		    } else {
+		    } else if (timetable.getGroup() != null) {
+		        ActionsList.getAction("ModifyGroup").setEnabled(true);
+		        ActionsList.getAction("RemoveGroup").setEnabled(true);
+		    }
+		    if (timetable.getRoom() == null && timetable.getMaterial() == null) {
 			    ActionsList.getAction("AddSubject").setEnabled(true);
 			    ActionsList.getAction("ManageSubjects").setEnabled(true);
 			    ActionsList.getAction("AddGroup").setEnabled(true);
@@ -208,6 +212,8 @@ public class MenuBar extends JMenuBar {
 	        ActionsList.getAction("RemoveRoom").setEnabled(false);
 	        ActionsList.getAction("ModifyMaterial").setEnabled(false);
 	        ActionsList.getAction("RemoveMaterial").setEnabled(false);
+	        ActionsList.getAction("ModifyGroup").setEnabled(false);
+	        ActionsList.getAction("RemoveGroup").setEnabled(false);
 		}
 	}
 }

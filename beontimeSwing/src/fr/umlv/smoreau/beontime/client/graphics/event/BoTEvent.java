@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.client.graphics.event;
 
 import java.util.EventObject;
 
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
@@ -19,6 +20,7 @@ public class BoTEvent extends EventObject {
 	private User user;
 	private Room room;
 	private Material material;
+	private Group group;
 	private boolean initTimetableViewPanel;
 	
 	public BoTEvent(Object source, boolean initTimetableViewPanel) {
@@ -54,6 +56,11 @@ public class BoTEvent extends EventObject {
 	public BoTEvent(Object source, Material material) {
 		super(source);
 		this.material = material;
+	}
+	
+	public BoTEvent(Object source, Group group) {
+		super(source);
+		this.group = group;
 	}
 	
 	public Timetable getTimetable() {

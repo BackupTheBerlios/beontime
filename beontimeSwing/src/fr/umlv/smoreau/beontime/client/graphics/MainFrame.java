@@ -53,6 +53,7 @@ public class MainFrame {
 	private User userSelected;
 	private Room roomSelected;
 	private Material materialSelected;
+	private Group groupSelected;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
@@ -216,11 +217,19 @@ public class MainFrame {
 	}
 	
 	public Group getGroupSelected() {
-	    Timetable timetable = model.getTimetable();
-	    if (timetable != null) {
-	        return timetable.getGroup();
-	    }
-		return null;
+		return groupSelected;
+	}
+	
+	public void setGroupSelected(Group group) {
+	    boolean enable;
+	    if (group == null && (model.getTimetable() == null || model.getTimetable().getGroup() == null))
+	        enable = false;
+	    else
+	        enable = true;
+		ActionsList.getAction("ModifyGroup").setEnabled(enable);
+		ActionsList.getAction("RemoveGroup").setEnabled(enable);
+
+	    this.groupSelected = group;
 	}
 	
 	public Collection getGroupsSelected() {

@@ -40,7 +40,7 @@ public class AddModifySubjectWindow {
 	public static final int TYPE_MODIFY = 1;
 	
 	//private JComboBox formationFieldJcb;
-	private JTextField intitleFieldJtf;
+	private JTextField intituleFieldJtf;
 	private JComboBox teacherFieldJcb;
 	private JComboBox magistrauxJcb;
 	private JComboBox tdJcb;
@@ -233,9 +233,9 @@ public class AddModifySubjectWindow {
     	addComponent(AMFWLayout,layoutConstraints,intitleFieldLabel,1,4,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMFWFrame.getContentPane().add(intitleFieldLabel);
     	
-    	intitleFieldJtf = new TextFieldBoT(40);   	
-    	addComponent(AMFWLayout,layoutConstraints,intitleFieldJtf,4,4,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
-    	AMFWFrame.getContentPane().add(intitleFieldJtf);
+    	intituleFieldJtf = new TextFieldBoT(40);   	
+    	addComponent(AMFWLayout,layoutConstraints,intituleFieldJtf,4,4,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
+    	AMFWFrame.getContentPane().add(intituleFieldJtf);
     	
     	
     	
@@ -505,12 +505,12 @@ public class AddModifySubjectWindow {
     
     
     public String getIntitule() {
-        return intitleFieldJtf.getText();
+        return intituleFieldJtf.getText().trim();
     }
     
     public void setIntitule(String intitule) {
-        intitleFieldJtf.setText(intitule);
-        intitleFieldJtf.setEnabled(false);
+        intituleFieldJtf.setText(intitule);
+        intituleFieldJtf.setEnabled(false);
     }
     
     public User getTeacher() {

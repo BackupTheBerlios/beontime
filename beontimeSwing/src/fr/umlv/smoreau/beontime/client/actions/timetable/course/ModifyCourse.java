@@ -3,6 +3,7 @@ package fr.umlv.smoreau.beontime.client.actions.timetable.course;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
@@ -75,7 +76,7 @@ public class ModifyCourse extends Action {
             if (window.isOk()) {
         	    Calendar beginDate = Calendar.getInstance();
         	    beginDate.setTime(window.getDateCourse());
-        	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+2);
+        	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
         	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
         	    beginDate.set(Calendar.SECOND, 0);
         	    beginDate.set(Calendar.MILLISECOND, 0);
@@ -83,23 +84,27 @@ public class ModifyCourse extends Action {
         	    
         	    Calendar endDate = Calendar.getInstance();
         	    endDate.setTime(window.getDateCourse());
-        	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+2);
+        	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+1);
         	    endDate.set(Calendar.MINUTE, window.getEndMinute());
         	    endDate.set(Calendar.SECOND, 0);
         	    endDate.set(Calendar.MILLISECOND, 0);
         	    course.setEndDate(endDate);
         	    
-        	    course.setTeachersDirecting(null);
+        	    course.setTeachersDirecting(new HashSet());
+        	    course.setTeachers(new HashSet());
         	    Collection teachers = window.getTeachers();
-        	    for (Iterator i = teachers.iterator(); i.hasNext(); )
-        	        course.addTeacherDirecting(new IsDirectedByCourseTeacher((User) i.next(),course));
+        	    for (Iterator i = teachers.iterator(); i.hasNext(); ) {
+        	        User user = (User) i.next();
+        	        course.addTeacherDirecting(new IsDirectedByCourseTeacher(user,course));
+        	        course.addTeacher(user);
+        	    }
         	    
-        	    course.setRooms(null);
+        	    course.setRooms(new HashSet());
         	    Collection rooms = window.getPlaceCourse();
         	    for (Iterator i = rooms.iterator(); i.hasNext(); )
         	        course.addRoom((Room) i.next());
         	    
-        	    course.setMaterials(null);
+        	    course.setMaterials(new HashSet());
         	    Collection materials = window.getCourseEquipment();
         	    for (Iterator i = materials.iterator(); i.hasNext(); )
         	        course.addMaterial((Material) i.next());

@@ -80,7 +80,7 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
   			if (subj!=null) {
   				prtScreen=subj.getHeading();
   				
-  				for (Iterator i = c.getTeachersDirecting().iterator(); i.hasNext(); ) {
+  				for (Iterator i = c.getTeachers().iterator(); i.hasNext(); ) {
   					User user=(User) i.next();
   					teachers=teachers+" "+user.getName();
   				}

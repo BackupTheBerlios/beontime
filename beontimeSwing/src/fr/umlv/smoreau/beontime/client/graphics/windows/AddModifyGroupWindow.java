@@ -14,8 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
+import fr.umlv.smoreau.beontime.filter.GroupFilter;
 
 /**
  * @author BeOnTime
@@ -25,7 +27,7 @@ public class AddModifyGroupWindow {
     
     private JComboBox formationGroupJcb;
     
-    private JTextField intitleGroupJtf;
+    private JTextField intituleGroupJtf;
     
     private boolean isOk;
     
@@ -62,9 +64,9 @@ public class AddModifyGroupWindow {
         addComponent(AMGWLayout,layoutConstraints,intitleGroupLabel,1,2,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
         AMGWFrame.getContentPane().add(intitleGroupLabel);
         
-        intitleGroupJtf = new TextFieldBoT(20);
-        addComponent(AMGWLayout,layoutConstraints,intitleGroupJtf,2,2,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-        AMGWFrame.getContentPane().add(intitleGroupJtf);
+        intituleGroupJtf = new TextFieldBoT(20);
+        addComponent(AMGWLayout,layoutConstraints,intituleGroupJtf,2,2,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+        AMGWFrame.getContentPane().add(intituleGroupJtf);
         
         
         
@@ -91,6 +93,7 @@ public class AddModifyGroupWindow {
         AMGWFrame.pack();
         AMGWFrame.setResizable(false);
         AMGWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        AMGWFrame.setLocationRelativeTo(null);
         AMGWFrame.setVisible(true);
     }
     
@@ -110,7 +113,11 @@ public class AddModifyGroupWindow {
     }
     
     public String getIntitule() {
-        return intitleGroupJtf.getText();
+        return intituleGroupJtf.getText().trim();
+    }
+    
+    public void setIntitule(String intitule) {
+        intituleGroupJtf.setText(intitule);
     }
     
     public boolean isOk() {
@@ -121,6 +128,14 @@ public class AddModifyGroupWindow {
         String intitule = getIntitule();
         if (intitule == null || "".equals(intitule))
             return 1;
+        try {
+            GroupFilter filter = new GroupFilter();
+            filter.setHeading(intitule);
+            if (DaoManager.getGroupDao().getGroups(filter).size() > 0)
+                return 2;
+        } catch (Exception e) {
+            return 3;
+        }
         return 0;
     }
     
@@ -138,6 +153,12 @@ public class AddModifyGroupWindow {
                 return;
             case 1:
                 errorMessage = "L'intitulé est obligatoire";
+                break;
+            case 2:
+                errorMessage = "Le nom est déjà utilisé par un groupe existant";
+                break;
+            case 3:
+                errorMessage = "Erreur lors de la vérification de l'intitulé ...";
                 break;
             default:
                 errorMessage = "Erreur inconnue";

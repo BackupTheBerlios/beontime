@@ -1,9 +1,20 @@
 package fr.umlv.smoreau.beontime.client.actions.group;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.GroupDao;
+import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
@@ -23,5 +34,41 @@ public class RemoveGroup extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
+        Group group = mainFrame.getGroupSelected();
+        if (group == null) {
+            group = mainFrame.getModel().getTimetable().getGroup();
+            if (group == null)
+                return;
+        }
+        
+        int select = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer le groupe '"+group.getHeading()+"'", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (select == JOptionPane.YES_OPTION) {
+            Timetable timetable = mainFrame.getModel().getTimetable();
+            try {
+                group = DaoManager.getGroupDao().getGroup(group, new String[] {GroupDao.JOIN_STUDENTS, GroupDao.JOIN_SUBJECTS_COURSES_TAKEPART});
+                if (group.getSubjectsCoursesTakePart().size() > 0) {
+                    select = JOptionPane.showConfirmDialog(null, "Des cours sont liés à ce groupe.\nLa suppression du groupe supprima aussi les cours liés.\nContinuer ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                    if (select == JOptionPane.NO_OPTION)
+                        return;
+                    for (Iterator i = group.getSubjectsCoursesTakePart().iterator(); i.hasNext(); ) {
+                        Course course = new Course(((TakePartGroupSubjectCourse) i.next()).getIdCourse());
+                        course = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_TEACHERS_DIRECTING, TimetableDao.JOIN_GROUPS_SUBJECTS});
+                        DaoManager.getTimetableDao().removeCourse(course);
+                        timetable.removeCourse(course);
+                        mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);
+                    }
+                }
+
+                DaoManager.getGroupDao().removeGroup(group);
+
+                mainFrame.getModel().fireRefreshGroup(group, BoTModel.TYPE_REMOVE);
+                if (mainFrame.getGroupSelected() == null)
+                    mainFrame.getModel().fireCloseTimetable();
+                
+                JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
