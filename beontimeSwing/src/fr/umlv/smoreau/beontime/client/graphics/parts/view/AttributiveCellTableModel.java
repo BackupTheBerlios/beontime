@@ -291,16 +291,18 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    Course course = e.getCourse();
 		    for(int i=0;i<rowNb;i++){
 		    	for(int j=0;j<colNb;j++){
-		    		if(((Course)getValueAt(i,j))!=null){
-		    			Course courseRead=(Course)getValueAt(i,j);
-		    			if (courseRead.equals(course)){
-		    				cellAtt.split(i,j);
-		    				setValueAt(null,i,j);
-		    				fireTableDataChanged();
-		    				return;
-		    			}
+		    		Object obj = getValueAt(i,j);
+		    		if (obj instanceof Course) {
+			    		if(((Course)obj)!=null){
+			    			Course courseRead=(Course)getValueAt(i,j);
+			    			if (courseRead.equals(course)){
+			    				cellAtt.split(i,j);
+			    				setValueAt(null,i,j);
+			    				fireTableDataChanged();
+			    				return;
+			    			}
+			    		}
 		    		}
-		    		
 		    	}
 		    }
 		}
