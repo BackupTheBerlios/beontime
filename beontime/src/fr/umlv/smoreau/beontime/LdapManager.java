@@ -5,6 +5,7 @@ package fr.umlv.smoreau.beontime;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.naming.Context;
@@ -25,14 +26,21 @@ import fr.umlv.smoreau.beontime.dao.UserFilter;
  * @author BeOnTime
  */
 public class LdapManager {
+	private static HashMap common;
+	
+	static {
+		common = new HashMap();
+		common.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+		common.put("java.naming.ldap.version", "3");
+	}
+
+
     private static NamingEnumeration search(String base, Attributes matchAttrs) throws NamingException {
-        Hashtable env = new Hashtable();
-        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        Hashtable env = new Hashtable(common);
         StringBuffer url = new StringBuffer("ldap://");
         url.append(DatabasesProperties.getLdapHost()).append(":");
         url.append(DatabasesProperties.getLdapPort());
         env.put(Context.PROVIDER_URL, url.toString());
-        env.put("java.naming.ldap.version", "3");
        
         DirContext ctx = new InitialDirContext(env);
 
@@ -40,9 +48,9 @@ public class LdapManager {
     }
     
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
     	getFormations(null);
-    }
+    }*/
 
 
 	public static Collection getUsers(UserFilter filter) {
@@ -128,5 +136,31 @@ public class LdapManager {
 
 	public static Collection getFormations() {
 		return getFormations(null);
+	}
+	
+	
+	public static boolean testConnection(String host, String port, String dnBase) {
+		Hashtable env = new Hashtable(common);
+		StringBuffer url = new StringBuffer("ldap://");
+		url.append(host).append(":");
+		url.append(port);
+		env.put(Context.PROVIDER_URL, url.toString());
+		
+		DirContext ctx = null;
+		try {
+			ctx = new InitialDirContext(env);
+		} catch (NamingException e) {
+			System.err.println("L'hôte ou le port est invalide : " + e.getMessage());
+			return false;
+		}
+		
+		try {
+			ctx.search(dnBase, null);
+		} catch (NamingException e) {
+			System.err.println("La base '"+dnBase+"' est invalide : " + e.getMessage());
+			return false;
+		}
+
+		return true;
 	}
 }

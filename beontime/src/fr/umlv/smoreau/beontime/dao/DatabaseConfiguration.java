@@ -1,6 +1,9 @@
 package fr.umlv.smoreau.beontime.dao;
 
+
 import fr.umlv.smoreau.beontime.DatabasesProperties;
+import fr.umlv.smoreau.beontime.Hibernate;
+import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.model.Database;
 
 /**
@@ -57,7 +60,17 @@ public class DatabaseConfiguration {
 	}
 	
 	public boolean testDatabase(Database database) {
-		//TODO à implémenter
+		if (database == null)
+			return false;
+
+		if (database.getType() == Database.LDAP) {
+			return LdapManager.testConnection(database.getHost(), database.getPort(),
+					database.getDNBase());			
+		} else if (database.getType() == Database.SQL) {
+			return Hibernate.testConnection(database.getHost(), database.getPort(),
+					database.getBaseName(), database.getLogin(), database.getPassword());
+		}
+
 		return false;
 	}
 }

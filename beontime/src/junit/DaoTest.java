@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
 public class DaoTest extends TestCase {
     private static final UserDao userDao = UserDao.getInstance();
     private static final GroupDao groupDao = GroupDao.getInstance();
-    private static final DatabaseConfiguration databaseConfig = DatabaseConfiguration.getInstance();
     
     public DaoTest(String name) {
         super(name);
