@@ -101,6 +101,7 @@ public class TitleBar extends JPanel {
 					Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 					mainFrame.getModel().fireShowTimetable(timetable);
 				} catch (Exception e) {
+				    e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
             }

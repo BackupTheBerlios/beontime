@@ -15,12 +15,13 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.Courses;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 public class AttributiveCellTableModel extends AbstractTableModel {
 	private int colNb=0;
 	private DefaultCellAttribute cellAtt;
-	private Course[][] data;
+	private Object[][] data;
 	private String[] plage=new String[]{"00","15","30","45"};
 	private int rowNb=0;
 	private View view;
@@ -53,7 +54,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		}
 	}
 	private void initDataTab() {
-		data =new Course[rowNb][colNb];
+		data =new Object[rowNb][colNb];
 	    cellAtt = new DefaultCellAttribute(rowNb,colNb);
 	    init();
 	}
@@ -66,11 +67,10 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return (Course)(data[rowIndex][columnIndex]);
+		return data[rowIndex][columnIndex];
 	}
 	public void setValueAt(Object o,int rowIndex, int columnIndex){
-		//System.out.println("setValueAt");
-		data[rowIndex][columnIndex]=(Course)o;
+		data[rowIndex][columnIndex]=o;
 	}
 	
 	public DefaultCellAttribute getCellAttribute() {
@@ -80,7 +80,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	    cellAtt=cellatt;
 	}
 	public void addDataRow(){
-		Course[][] data2=new Course[rowNb+1][colNb];
+		Object[][] data2=new Object[rowNb+1][colNb];
 		for(int i=0;i<rowNb;i++){
 			for(int j=0;j<colNb;j++){
 				data2[i][j]=data[i][j];
@@ -93,7 +93,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		rowNb=rowNb+1;
 	}
 	public void addDataColumn(){
-		Course[][] data2=new Course[rowNb][colNb+4];
+		Object[][] data2=new Object[rowNb][colNb+4];
 		for(int i=0;i<rowNb;i++){
 			for(int j=0;j<colNb;j++){
 				data2[i][j]=data[i][j];
@@ -129,12 +129,28 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    view.getJScrollPane().getVerticalScrollBar().setEnabled(true);
 		    view.getJScrollPane().getHorizontalScrollBar().setEnabled(true);
 			Timetable timetable = e.getTimetable();
-		    Collection courses = timetable.getCourses();
+		    Collection courses = timetable.getCoursesArranged();
 		    initDataTab();
 		    for (Iterator i = courses.iterator(); i.hasNext(); ) {
-		        Course course = (Course) i.next();
-		        Calendar beginDate=course.getBeginDate();
-		        Calendar endDate=course.getEndDate();
+		        Object object = (Object) i.next();
+
+		        Calendar beginDate;
+		        Calendar endDate;
+		        Color color;
+		        
+		        if (object instanceof Course) {
+		            Course tmp = (Course) object;
+		            beginDate = tmp.getBeginDate();
+		            endDate = tmp.getEndDate();
+		            color = tmp.getSubject().getColor();
+		        } else if (object instanceof Courses) {
+		            Courses tmp = (Courses) object;
+		            beginDate = tmp.getBeginDate();
+		            endDate = tmp.getEndDate();
+		            color = tmp.getColor();
+		        } else {
+		            continue;
+		        }
 		        
 		        int day=beginDate.get(Calendar.DAY_OF_WEEK)-2;
 	        	if ((cellAtt.rowSize<7) && (day<0)){
@@ -172,8 +188,8 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 			        	}
 			        int [] row=new int[]{day};
 			        if(cellAtt.combine(row,columns)){
-			        	setValueAt(course,row[0],columns[0]);
-			        	changeColor(false,row,columns,course.getSubject().getColor());
+			        	setValueAt(object,row[0],columns[0]);
+			        	changeColor(false,row,columns,color);
 				        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
 			        }
 		        }

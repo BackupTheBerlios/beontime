@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.Courses;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.user.User;
 
@@ -78,11 +80,24 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
     }
 
     protected void setValue(Object value) {
-        Course c = (Course)value;
-        if (value==null) {
+        ArrayList courses = new ArrayList();
+        if (value instanceof Course) {
+            courses.add(value);
+        } else if (value instanceof Courses) {
+            courses.addAll(((Courses) value).getCourses()); 
+        } else {
             setText(null);
             setToolTipText(null);
-        } else {
+            return;
+        }
+
+        StringBuffer text = new StringBuffer();
+        text.append("<html>");
+        StringBuffer tooltip = new StringBuffer();
+        tooltip.append("<html>");
+
+        for (Iterator j = courses.iterator(); j.hasNext(); ) {
+            Course c = (Course) j.next();
             StringBuffer prtScreen = new StringBuffer();
             StringBuffer schedule = new StringBuffer();
             StringBuffer teachers = new StringBuffer();
@@ -126,31 +141,38 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
                 prtScreen.append("Matière inconnue");
             }
 
-            StringBuffer prtScreen1 = new StringBuffer();
-            prtScreen1.append("<html>");
-            prtScreen1.append(prtScreen);
-            prtScreen1.append("<br>").append(schedule);
+            text.append(prtScreen);
+            text.append("<br>").append(schedule);
             if (teachers.length() > 0)
-                prtScreen1.append("<br>").append(teachers);
-            if (rooms.length() > 0)
-                prtScreen1.append("<br>").append(rooms);
-            prtScreen1.append("</html>");
-            setText(prtScreen1.toString());
-            
-            StringBuffer prtScreen2 = new StringBuffer();
-            prtScreen2.append("<html>");
-            prtScreen2.append("Matière: ").append(prtScreen);
-            prtScreen2.append("<br>").append("Horaires: ");
-            prtScreen2.append(schedule);
+                text.append("<br>").append(teachers);
+            if (rooms.length() > 0) {
+                if (courses.size() > 1)
+                    text.append(" | ");
+                else
+                    text.append("<br>");
+                text.append(rooms);
+            }
+
+            tooltip.append("Matière: ").append(prtScreen);
+            tooltip.append("<br>").append("Horaires: ");
+            tooltip.append(schedule);
             if (teachers.length() > 0)
-                prtScreen2.append("<br>").append("Enseignant(s): ").append(teachers);
+                tooltip.append("<br>").append("Enseignant(s): ").append(teachers);
             if (rooms.length() > 0)
-                prtScreen2.append("<br>").append("Salle(s): ").append(rooms);
+                tooltip.append("<br>").append("Salle(s): ").append(rooms);
             if (materials.length() > 0)
-                prtScreen2.append("<br>").append("Matériel(s): ").append(materials);
-            prtScreen2.append("</html>");
-            setToolTipText(prtScreen2.toString());
+                tooltip.append("<br>").append("Matériel(s): ").append(materials);
+            
+            if (j.hasNext()) {
+                text.append("<br>");
+                tooltip.append("<br><br>");
+            }
         }
+
+        tooltip.append("</html>");
+        setToolTipText(tooltip.toString());
+        text.append("</html>");
+        setText(text.toString());
 
         this.setHorizontalAlignment(JLabel.CENTER);
         this.setHorizontalTextPosition(JLabel.CENTER);

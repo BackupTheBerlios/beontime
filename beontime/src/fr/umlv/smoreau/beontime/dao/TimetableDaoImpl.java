@@ -214,7 +214,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             }
 
             UserDao userDao = UserDaoImpl.getInstance();
-            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
+            for (Iterator i = timetable.getCoursesNotArranged().iterator(); i.hasNext(); ) {
                 Course tmp = (Course) i.next();
                 
                 // matière correspondante pour chaque cours

@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.actions.timetable;
 
 import java.awt.BorderLayout;
@@ -219,7 +216,7 @@ public class ExportTimetable extends Action {
 			return "Mardi";
 		
 		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY)
-			return "Marcredi";
+			return "Mercredi";
 		
 		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY)
 			return "Jeudi";
@@ -301,7 +298,7 @@ public class ExportTimetable extends Action {
 		
 		
 		
-		Collection courses = timetable.getCourses();
+		Collection courses = timetable.getCoursesNotArranged();
 		
 		
 		

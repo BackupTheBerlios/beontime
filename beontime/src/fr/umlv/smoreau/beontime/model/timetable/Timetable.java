@@ -23,12 +23,13 @@ public class Timetable implements Serializable {
     private Material material;
     private Collection groups;
     private Collection subjects;
-    private Collection courses;
+    private ArrangeCourses courses;
     private User personInCharge;
     private Calendar beginPeriod;
     private Calendar endPeriod;
     
     public Timetable() {
+        courses = new ArrangeCourses();
     }
     
     public Timetable(Formation formation) {
@@ -93,32 +94,38 @@ public class Timetable implements Serializable {
     /**
      * @return Renvoie courses.
      */
-    public Collection getCourses() {
-        return courses;
+    public Collection getCoursesArranged() {
+        return courses.getCoursesArranged();
+    }
+    
+    public Collection getCoursesNotArranged() {
+        return courses.getCoursesNotArranged();
     }
     
     public void setCourses(Collection courses) {
-        this.courses = courses;
+        this.courses.setCourses(courses);
     }
     
     public Collection getCourses(Subject subject) {
         ArrayList list = new ArrayList();
-        for (Iterator i = courses.iterator(); i.hasNext(); ) {
+        for (Iterator i = courses.getCoursesNotArranged().iterator(); i.hasNext(); ) {
             Course course = (Course) i.next();
-            if (course.getSubject().equals(subject))
-                list.add(course);
+	        if (course.getSubject().equals(subject))
+	            list.add(course);
         }
         return list;
     }
     
+    public Collection getCoursesArranged(String day) {
+        return courses.getCoursesArranged(day);
+    }
+    
     public void addCourse(Course course) {
-        if (courses == null)
-            courses = new ArrayList();
-        courses.add(course);
+        courses.addCourse(course);
     }
     
     public boolean removeCourse(Course course) {
-        return courses.remove(course);
+        return courses.removeCourse(course);
     }
 
     /**
@@ -196,5 +203,13 @@ public class Timetable implements Serializable {
 
     public void setEndPeriod(Calendar endPeriod) {
         this.endPeriod = endPeriod;
+    }
+    
+    public int getHourEarliest() {
+        return courses.getHourEarliest();
+    }
+    
+    public int getHourLatest() {
+        return courses.getHourLatest();
     }
 }

@@ -5,8 +5,8 @@ import="fr.umlv.smoreau.beontime.dao.*,
 		fr.umlv.smoreau.beontime.model.user.User,
 		fr.umlv.smoreau.beontime.model.element.Room,
 		fr.umlv.smoreau.beontime.model.timetable.*,
-		fr.umlv.smoreau.beontime.client.ArrangeCourses,
 		java.util.*,
+		java.awt.Color,
 		java.text.SimpleDateFormat" %>
 
 <%
@@ -49,7 +49,7 @@ if (teacher == null) {
 if (teacher == null && (date.get(Calendar.WEEK_OF_YEAR) - Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)) > 2)
 	idFormation = null;
 
-ArrangeCourses arranged = null;
+Timetable timetable = null;
 if (idFormation != null && !"".equals(idFormation)) {
 	TimetableFilter filter = new TimetableFilter();
 
@@ -74,8 +74,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 	end.set(Calendar.SECOND, 59);
 	filter.setEndPeriod(end);
 
-	Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
-	arranged = new ArrangeCourses(timetable.getCourses());
+	timetable = DaoManager.getTimetableDao().getTimetable(filter);
 }
 %>
 
@@ -113,7 +112,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 		<table width="100%">
 			<tr>
 				<td align="center">
-					<% if (arranged != null) { %>
+					<% if (timetable != null) { %>
 					<img src="miniLogoBoT.png" />
 					<% } else { %>
 					<img src="logoBoT.png" />
@@ -122,7 +121,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 				<td align="center">
 					<font color="#0033FF" size="+7">
 						<strong>
-							<% if (arranged == null) { %>Bienvenue sur <% } %>BeOnTime
+							<% if (timetable == null) { %>Bienvenue sur <% } %>BeOnTime
 						</strong>
 					</font>
 				</td>
@@ -190,7 +189,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 			</form>
 		</fieldset>
 
-<% if (arranged != null) { %>
+<% if (timetable != null) { %>
 		<br/><br/>
 		
 		<table align="center">
@@ -235,20 +234,20 @@ if (idFormation != null && !"".equals(idFormation)) {
 		<table width="100%" border="0" cellspacing="0" class="edt">
 			<%
 			int nbDay = ArrangeCourses.ALL_DAYS.length;
-			if (arranged.getCourses(ArrangeCourses.SUNDAY).size() == 0) {
+			if (timetable.getCoursesArranged(ArrangeCourses.SUNDAY).size() == 0) {
 				--nbDay;
-				if (arranged.getCourses(ArrangeCourses.SATURDAY).size() == 0)
+				if (timetable.getCoursesArranged(ArrangeCourses.SATURDAY).size() == 0)
 					--nbDay;
 			}
 			%>
 			<tr>
 				<td rowspan="2"></td>
-				<% for (int i = arranged.getHourEarliest(); i < arranged.getHourLatest(); ++i) { %>
+				<% for (int i = timetable.getHourEarliest(); i < timetable.getHourLatest(); ++i) { %>
 				<td colspan="4" class="titre"><strong><%=i %>H</strong></td>
 				<% } %>
 			</tr>
 			<tr>
-				<% for (int i = arranged.getHourEarliest(); i < arranged.getHourLatest(); ++i) { %>
+				<% for (int i = timetable.getHourEarliest(); i < timetable.getHourLatest(); ++i) { %>
 				<td class="titre">00</td>
 				<td class="titre">15</td>
 				<td class="titre">30</td>
@@ -259,27 +258,45 @@ if (idFormation != null && !"".equals(idFormation)) {
 			<tr height="75">
 				<td class="titre"><strong><%=ArrangeCourses.ALL_DAYS[i] %></strong></td>
 				<%
-					int defaultHour = arranged.getHourEarliest();
-					for (Iterator it = arranged.getCourses(ArrangeCourses.ALL_DAYS[i]).iterator(); it.hasNext(); ) {
-						Course course = (Course) it.next();
-						int beginHour = course.getBeginDate().get(Calendar.HOUR_OF_DAY);
-						int colspan = (beginHour - defaultHour) * 4;
-						int minuteHour = course.getBeginDate().get(Calendar.MINUTE);
-						colspan += minuteHour / 15;
-						if (colspan > 0) {
-				%>
-				<td colspan="<%=colspan %>"></td>
-				<%
+					int defaultHour = timetable.getHourEarliest();
+					for (Iterator it = timetable.getCoursesArranged(ArrangeCourses.ALL_DAYS[i]).iterator(); it.hasNext(); ) {
+						Object object = it.next();
+						
+						Calendar beginDate;
+						Calendar endDate;
+						Color color;
+						ArrayList courses = new ArrayList();
+						
+						if (object instanceof Course) {
+							Course c = (Course) object;
+							beginDate = c.getBeginDate();
+							endDate = c.getEndDate();
+							color = c.getSubject().getColor();
+							courses.add(c);
+						} else if (object instanceof Courses) {
+							Courses c = (Courses) object;
+							beginDate = c.getBeginDate();
+							endDate = c.getEndDate();
+							color = c.getColor();
+							courses.addAll(c.getCourses());
+						} else {
+							continue;
 						}
-						int endHour = course.getEndDate().get(Calendar.HOUR_OF_DAY);
-						colspan = (endHour - beginHour) * 4;
-						colspan -= minuteHour / 15;
-						minuteHour = course.getEndDate().get(Calendar.MINUTE);
-						colspan += minuteHour / 15;
-						if (colspan > 0) {
+
+						int beginHour = beginDate.get(Calendar.HOUR_OF_DAY);
+						int beginMinute = beginDate.get(Calendar.MINUTE);
+						int endHour = endDate.get(Calendar.HOUR_OF_DAY);
+						int endMinute = endDate.get(Calendar.MINUTE);
+						int colspanBefore = ((beginHour - defaultHour) * 4) + (beginMinute / 15);
+						int colspanAfter = ((endHour - beginHour) * 4) - (beginMinute / 15) + (endMinute / 15);
+
+						String rgb = color.getRed() + "," + color.getGreen() + "," + color.getBlue();
 				%>
-				<% String schedule = FORMAT_HOUR.format(course.getBeginDate().getTime()) + " / " + FORMAT_HOUR.format(course.getEndDate().getTime()); %>
-				<td align="center" class="cours" colspan="<%=colspan %>" style="background-color:rgb(<%=course.getSubject().getColor().getRed() %>,<%=course.getSubject().getColor().getGreen() %>,<%=course.getSubject().getColor().getBlue() %>)">
+				<% if (colspanBefore > 0) { %><td colspan="<%=colspanBefore %>"></td><% } %>
+				<% if (colspanAfter > 0) { %>
+				<td align="center" class="cours" colspan="<%=colspanAfter %>" style="background-color:rgb(<%=rgb %>)">
+					<% for (Iterator j = courses.iterator(); j.hasNext(); ) {
+						Course course = (Course) j.next(); %>
 					<strong><%=course.getSubject().getHeading() %></strong>
 					<%
 						if (TimetableDao.TYPE_TD.equals(course.getIdCourseType().getNameCourseType()))
@@ -288,10 +305,8 @@ if (idFormation != null && !"".equals(idFormation)) {
 							out.println("(TP)");
 					%>
 					<br/>
-					<!--% if (beginHour < defaultHour) { %-->
-					<%=schedule %>
+					<%=FORMAT_HOUR.format(course.getBeginDate().getTime()) + " / " + FORMAT_HOUR.format(course.getEndDate().getTime()) %>
 					<br/>
-					<!--% } %-->
 					<%
 						for (Iterator it2 = course.getTeachers().iterator(); it2.hasNext(); ) {
 							User t = (User) it2.next();
@@ -302,7 +317,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 							}
 						}
 					%>
-					<br/>
+					<% if (courses.size() > 1) { %> | <% } else { %><br/><% } %>
 					<%
 						for (Iterator it2 = course.getRooms().iterator(); it2.hasNext(); ) {
 							Room r = (Room) it2.next();
@@ -311,6 +326,9 @@ if (idFormation != null && !"".equals(idFormation)) {
 								out.print(" - ");
 						}
 					%>
+					<% if (j.hasNext()) { %>
+					<br/>
+					<% } } %>
 				</td>
 				<%
 						}
