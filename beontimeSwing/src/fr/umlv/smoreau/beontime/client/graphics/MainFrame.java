@@ -78,7 +78,6 @@ public class MainFrame {
         mainFrame.getContentPane().add(panelHaut,BorderLayout.NORTH);
         mainFrame.getContentPane().add(splitPaneVertical,BorderLayout.CENTER);
         mainFrame.getContentPane().add(stateBar,BorderLayout.CENTER);
-
         
     }
     
@@ -139,5 +138,9 @@ public class MainFrame {
 	public Room getRoomSelected() {
 		//TODO à implémenter
 		return null;
+	}
+	public static void main(String[] args){
+		MainFrame mf=new MainFrame();
+		mf.open();
 	}
 }
