@@ -1,12 +1,10 @@
-package junit;
+package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
 
-import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
-import fr.umlv.smoreau.beontime.dao.UnavailabilityDaoImpl;
 import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import junit.framework.Test;

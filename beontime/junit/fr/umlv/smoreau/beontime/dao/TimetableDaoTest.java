@@ -1,14 +1,10 @@
-package junit;
+package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
 
-import fr.umlv.smoreau.beontime.dao.GroupDao;
-import fr.umlv.smoreau.beontime.dao.GroupDaoImpl;
-import fr.umlv.smoreau.beontime.dao.TimetableDao;
-import fr.umlv.smoreau.beontime.dao.TimetableDaoImpl;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;

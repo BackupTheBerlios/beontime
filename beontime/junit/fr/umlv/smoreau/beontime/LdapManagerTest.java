@@ -1,11 +1,10 @@
-package junit;
+package fr.umlv.smoreau.beontime;
 
 import javax.naming.NamingException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import fr.umlv.smoreau.beontime.LdapManager;
 
 /**
  * @author BeOnTime

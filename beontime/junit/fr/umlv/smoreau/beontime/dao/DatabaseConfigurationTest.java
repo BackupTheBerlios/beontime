@@ -1,9 +1,7 @@
-package junit;
+package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 
-import fr.umlv.smoreau.beontime.dao.DatabaseConfiguration;
-import fr.umlv.smoreau.beontime.dao.DatabaseConfigurationImpl;
 import fr.umlv.smoreau.beontime.model.Database;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -12,10 +10,10 @@ import junit.framework.TestSuite;
 /**
  * @author BeOnTime
  */
-public class DatabasesConfigTest extends TestCase {
+public class DatabaseConfigurationTest extends TestCase {
 	private static final DatabaseConfiguration databaseConfig = DatabaseConfigurationImpl.getInstance();
 	
-    public DatabasesConfigTest(String name) {
+    public DatabaseConfigurationTest(String name) {
         super(name);
     }
     
@@ -47,7 +45,7 @@ public class DatabasesConfigTest extends TestCase {
     }
     
     public static Test suite() {
-        return new TestSuite(DatabasesConfigTest.class);
+        return new TestSuite(DatabaseConfigurationTest.class);
     }
 
 

@@ -1,14 +1,10 @@
-package junit;
+package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
 
-import fr.umlv.smoreau.beontime.dao.FormationDao;
-import fr.umlv.smoreau.beontime.dao.FormationDaoImpl;
-import fr.umlv.smoreau.beontime.dao.UserDao;
-import fr.umlv.smoreau.beontime.dao.UserDaoImpl;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;

@@ -1,11 +1,9 @@
-package junit;
+package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 
 import net.sf.hibernate.HibernateException;
 
-import fr.umlv.smoreau.beontime.dao.ElementDao;
-import fr.umlv.smoreau.beontime.dao.ElementDaoImpl;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import junit.framework.Test;

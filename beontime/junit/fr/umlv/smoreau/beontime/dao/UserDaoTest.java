@@ -1,4 +1,4 @@
-package junit;
+package fr.umlv.smoreau.beontime.dao;
 
 
 import java.rmi.RemoteException;
@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
 
 import net.sf.hibernate.HibernateException;
 
-import fr.umlv.smoreau.beontime.dao.*;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
