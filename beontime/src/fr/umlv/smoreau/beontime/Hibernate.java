@@ -12,28 +12,39 @@ import net.sf.hibernate.cfg.Configuration;
  */
 public class Hibernate {
     private static final String CONFIG_HIBERNATE = "config/hibernate.cfg.xml";
+    private static final long TIMEOUT = 300000;
 
     private static SessionFactory sessionFactory;
     private static final ThreadLocal session = new ThreadLocal();
+    private static long time;
 
     static {
         try {
-            Configuration cfg = new Configuration().configure(new File(CONFIG_HIBERNATE));
-            StringBuffer url = new StringBuffer("jdbc:postgresql://");
-            url.append(DatabasesProperties.getSqlHost()).append(":");
-            url.append(DatabasesProperties.getSqlPort()).append("/");
-            url.append(DatabasesProperties.getSqlDatabaseName());
-            cfg.setProperty("hibernate.connection.url",url.toString());
-            cfg.setProperty("hibernate.connection.username",DatabasesProperties.getSqlUserName());
-            cfg.setProperty("hibernate.connection.password",DatabasesProperties.getSqlPassword());
-
-            sessionFactory = cfg.buildSessionFactory();
+            sessionFactory = getSessionFactory();
+            time = System.currentTimeMillis();
         } catch (HibernateException e) {
             throw new RuntimeException("Problème de configuration Hibernate : " + e.getMessage(), e);
         }
     }
+    
+    private static SessionFactory getSessionFactory() throws HibernateException {
+        Configuration cfg = new Configuration().configure(new File(CONFIG_HIBERNATE));
+        StringBuffer url = new StringBuffer("jdbc:postgresql://");
+        url.append(DatabasesProperties.getSqlHost()).append(":");
+        url.append(DatabasesProperties.getSqlPort()).append("/");
+        url.append(DatabasesProperties.getSqlDatabaseName());
+        cfg.setProperty("hibernate.connection.url",url.toString());
+        cfg.setProperty("hibernate.connection.username",DatabasesProperties.getSqlUserName());
+        cfg.setProperty("hibernate.connection.password",DatabasesProperties.getSqlPassword());
+
+        return cfg.buildSessionFactory();
+    }
 
 	public static Session getCurrentSession() throws HibernateException {
+	    if (System.currentTimeMillis() - time > TIMEOUT)
+	        sessionFactory = getSessionFactory();
+	    time = System.currentTimeMillis();
+
 	    Session s = (Session) session.get();
 	    
 	    // ouverture d'une nouvelle Session, si ce Thread n'en a aucune
