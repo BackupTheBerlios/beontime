@@ -1,6 +1,5 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -101,7 +100,6 @@ public class ManageGroupsTree extends JTree {
 			
 			setFont(font);
 			setToolTipText(tooltip);
-			setBackgroundSelectionColor(Color.WHITE);
 			
 			setIcon(null);
 			

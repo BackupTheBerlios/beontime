@@ -14,6 +14,12 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
  * @author BeOnTime
  */
 public class EditRenderer extends DefaultTreeCellRenderer {
+    private static Color DEFAULT_BACKGROUND_SELECTION_COLOR;
+
+    public EditRenderer() {
+        DEFAULT_BACKGROUND_SELECTION_COLOR = getBackgroundSelectionColor();
+    }
+
     /* (non-Javadoc)
      * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
@@ -44,18 +50,22 @@ public class EditRenderer extends DefaultTreeCellRenderer {
                 setText(timetable.getRoom().getName());
             else if (timetable.getMaterial() != null)
                 setText(timetable.getMaterial().getName());
+            setBackgroundSelectionColor(DEFAULT_BACKGROUND_SELECTION_COLOR);
         } else if (value instanceof Subject) {
             font = new Font("Arial", Font.PLAIN, 14);
             Subject subject = (Subject) value;
             setText(subject.getHeading());
-            setForeground(subject.getColor());
+            if (!selected)
+                setForeground(subject.getColor());
+            else
+                setBackgroundSelectionColor(subject.getColor());
         } else if (value instanceof String) {
             font = new Font("Arial", Font.PLAIN, 13);
             setText((String) value);
+            setBackgroundSelectionColor(DEFAULT_BACKGROUND_SELECTION_COLOR);
         }
         setFont(font);
         setToolTipText(tooltip);
-        setBackgroundSelectionColor(Color.WHITE);
         
         setIcon(null);
         
