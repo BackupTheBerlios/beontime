@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model;
 
-import fr.umlv.smoreau.beontime.base.BaseFormation;
+import fr.umlv.smoreau.beontime.model.base.BaseFormation;
 import fr.umlv.smoreau.beontime.model.user.Person;
 
 /**

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -177,9 +177,9 @@ public abstract class BaseUnavailability  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseUnavailability)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseUnavailability)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseUnavailability mObj = (fr.umlv.smoreau.beontime.base.BaseUnavailability) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseUnavailability mObj = (fr.umlv.smoreau.beontime.model.base.BaseUnavailability) obj;
 			if (null == this.getIdIndisponibilite() || null == mObj.getIdIndisponibilite()) return false;
 			else return (this.getIdIndisponibilite().equals(mObj.getIdIndisponibilite()));
 		}

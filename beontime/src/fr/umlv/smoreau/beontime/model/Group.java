@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model;
 
-import fr.umlv.smoreau.beontime.base.BaseGroup;
+import fr.umlv.smoreau.beontime.model.base.BaseGroup;
 
 /**
  * This is the object class that relates to the Groupe table.

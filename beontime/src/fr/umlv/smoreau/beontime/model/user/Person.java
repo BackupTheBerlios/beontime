@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.user;
 
-import fr.umlv.smoreau.beontime.base.BasePerson;
+import fr.umlv.smoreau.beontime.model.base.BasePerson;
 
 /**
  * This is the object class that relates to the Personne table.

@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.timetable;
 
-import fr.umlv.smoreau.beontime.base.BaseCourse;
+import fr.umlv.smoreau.beontime.model.base.BaseCourse;
 
 /**
  * This is the object class that relates to the Cours table.

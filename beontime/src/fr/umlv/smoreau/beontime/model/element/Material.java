@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.element;
 
-import fr.umlv.smoreau.beontime.base.BaseMaterial;
+import fr.umlv.smoreau.beontime.model.base.BaseMaterial;
 
 /**
  * This is the object class that relates to the Materiel table.

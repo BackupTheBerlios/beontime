@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.base.BaseParticipeGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse;
 
 /**
  * This is the object class that relates to the Participe_Groupe_Matiere_Cours table.

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -277,9 +277,9 @@ public abstract class BaseSubject  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseSubject)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseSubject)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseSubject mObj = (fr.umlv.smoreau.beontime.base.BaseSubject) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseSubject mObj = (fr.umlv.smoreau.beontime.model.base.BaseSubject) obj;
 			if (null == this.getIdMatiere() || null == mObj.getIdMatiere()) return false;
 			else return (this.getIdMatiere().equals(mObj.getIdMatiere()));
 		}

@@ -1,8 +1,8 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 
 
@@ -11,37 +11,37 @@ import fr.umlv.smoreau.beontime.model.timetable.Course;
  * For more information or documentation, visit The Hibernate Synchronizer page
  * at http://www.binamics.com/hibernatesync or contact Joe Hudson at joe@binamics.com.
  *
- * This is an object that contains data related to the A_Lieu_Cours_Local table.
+ * This is an object that contains data related to the Utilise_Cours_Materiel table.
  * Do not modify this class because it will be overwritten if the configuration file
  * related to this class is modified.
  *
  * @hibernate.class
- *  table="A_Lieu_Cours_Local"
+ *  table="Utilise_Cours_Materiel"
  */
-public abstract class BaseALieuCourseRoom  implements Serializable {
+public abstract class BaseUseCourseMaterial  implements Serializable {
 
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Room _idLocal;
+	private Material _idMateriel;
 	private Course _idCours;
 
 
 	// constructors
-	public BaseALieuCourseRoom () {
+	public BaseUseCourseMaterial () {
 		initialize();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseALieuCourseRoom (
-		Room _idLocal,
+	public BaseUseCourseMaterial (
+		Material _idMateriel,
 		Course _idCours) {
 
-		this.setIdRoom(_idLocal);
+		this.setIdMaterial(_idMateriel);
 		this.setIdCourse(_idCours);
 		initialize();
 	}
@@ -52,19 +52,19 @@ public abstract class BaseALieuCourseRoom  implements Serializable {
 
 	/**
      * @hibernate.property
-     *  column=ID_local
+     *  column=ID_materiel
 	 * not-null=true
 	 */
-	public Room getIdRoom () {
-		return this._idLocal;
+	public Material getIdMaterial () {
+		return this._idMateriel;
 	}
 
 	/**
-	 * Set the value related to the column: ID_local
-	 * @param _idLocal the ID_local value
+	 * Set the value related to the column: ID_materiel
+	 * @param _idMateriel the ID_materiel value
 	 */
-	public void setIdRoom (Room _idLocal) {
-		this._idLocal = _idLocal;
+	public void setIdMaterial (Material _idMateriel) {
+		this._idMateriel = _idMateriel;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -89,11 +89,11 @@ public abstract class BaseALieuCourseRoom  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.UseCourseMaterial)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom mObj = (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) obj;
-			if (null != this.getIdRoom() && null != mObj.getIdRoom()) {
-				if (!this.getIdRoom().equals(mObj.getIdRoom())) {
+			fr.umlv.smoreau.beontime.model.association.UseCourseMaterial mObj = (fr.umlv.smoreau.beontime.model.association.UseCourseMaterial) obj;
+			if (null != this.getIdMaterial() && null != mObj.getIdMaterial()) {
+				if (!this.getIdMaterial().equals(mObj.getIdMaterial())) {
 					return false;
 				}
 			}
@@ -116,8 +116,8 @@ public abstract class BaseALieuCourseRoom  implements Serializable {
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
 			StringBuffer sb = new StringBuffer();
-			if (null != this.getIdRoom()) {
-				sb.append(this.getIdRoom().hashCode());
+			if (null != this.getIdMaterial()) {
+				sb.append(this.getIdMaterial().hashCode());
 				sb.append(":");
 			}
 			else {

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -322,9 +322,9 @@ public abstract class BasePerson  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BasePerson)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BasePerson)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BasePerson mObj = (fr.umlv.smoreau.beontime.base.BasePerson) obj;
+			fr.umlv.smoreau.beontime.model.base.BasePerson mObj = (fr.umlv.smoreau.beontime.model.base.BasePerson) obj;
 			if (null == this.getIdPersonne() || null == mObj.getIdPersonne()) return false;
 			else return (this.getIdPersonne().equals(mObj.getIdPersonne()));
 		}

@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -96,9 +96,9 @@ public abstract class BaseAppartientEtudiantGroupe  extends fr.umlv.smoreau.beon
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseAppartientEtudiantGroupe)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseAppartientEtudiantGroupe mObj = (fr.umlv.smoreau.beontime.base.BaseAppartientEtudiantGroupe) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe mObj = (fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe) obj;
 			if (null == this.getIdGroupe() || null == mObj.getIdGroupe()) return false;
 			else return (this.getIdGroupe().equals(mObj.getIdGroupe()));
 		}

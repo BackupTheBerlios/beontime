@@ -1,9 +1,9 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.user.Person;
 
 
 /**
@@ -11,37 +11,37 @@ import fr.umlv.smoreau.beontime.model.user.Person;
  * For more information or documentation, visit The Hibernate Synchronizer page
  * at http://www.binamics.com/hibernatesync or contact Joe Hudson at joe@binamics.com.
  *
- * This is an object that contains data related to the Est_Dirige_par_Cours_Enseignant table.
+ * This is an object that contains data related to the A_Lieu_Cours_Local table.
  * Do not modify this class because it will be overwritten if the configuration file
  * related to this class is modified.
  *
  * @hibernate.class
- *  table="Est_Dirige_par_Cours_Enseignant"
+ *  table="A_Lieu_Cours_Local"
  */
-public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
+public abstract class BaseALieuCourseRoom  implements Serializable {
 
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Person _idEnseignant;
+	private Room _idLocal;
 	private Course _idCours;
 
 
 	// constructors
-	public BaseIsDirigeByCourseTeacher () {
+	public BaseALieuCourseRoom () {
 		initialize();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseIsDirigeByCourseTeacher (
-		Person _idEnseignant,
+	public BaseALieuCourseRoom (
+		Room _idLocal,
 		Course _idCours) {
 
-		this.setIdTeacher(_idEnseignant);
+		this.setIdRoom(_idLocal);
 		this.setIdCourse(_idCours);
 		initialize();
 	}
@@ -52,19 +52,19 @@ public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
 
 	/**
      * @hibernate.property
-     *  column=ID_enseignant
+     *  column=ID_local
 	 * not-null=true
 	 */
-	public Person getIdTeacher () {
-		return this._idEnseignant;
+	public Room getIdRoom () {
+		return this._idLocal;
 	}
 
 	/**
-	 * Set the value related to the column: ID_enseignant
-	 * @param _idEnseignant the ID_enseignant value
+	 * Set the value related to the column: ID_local
+	 * @param _idLocal the ID_local value
 	 */
-	public void setIdTeacher (Person _idEnseignant) {
-		this._idEnseignant = _idEnseignant;
+	public void setIdRoom (Room _idLocal) {
+		this._idLocal = _idLocal;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -89,11 +89,11 @@ public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher mObj = (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) obj;
-			if (null != this.getIdTeacher() && null != mObj.getIdTeacher()) {
-				if (!this.getIdTeacher().equals(mObj.getIdTeacher())) {
+			fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom mObj = (fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom) obj;
+			if (null != this.getIdRoom() && null != mObj.getIdRoom()) {
+				if (!this.getIdRoom().equals(mObj.getIdRoom())) {
 					return false;
 				}
 			}
@@ -116,8 +116,8 @@ public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
 			StringBuffer sb = new StringBuffer();
-			if (null != this.getIdTeacher()) {
-				sb.append(this.getIdTeacher().hashCode());
+			if (null != this.getIdRoom()) {
+				sb.append(this.getIdRoom().hashCode());
 				sb.append(":");
 			}
 			else {

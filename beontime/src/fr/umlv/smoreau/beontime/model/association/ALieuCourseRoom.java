@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.base.BaseALieuCourseRoom;
+import fr.umlv.smoreau.beontime.model.base.BaseALieuCourseRoom;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 

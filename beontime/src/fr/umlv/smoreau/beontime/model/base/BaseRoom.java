@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -146,9 +146,9 @@ public abstract class BaseRoom  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseRoom)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseRoom)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseRoom mObj = (fr.umlv.smoreau.beontime.base.BaseRoom) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseRoom mObj = (fr.umlv.smoreau.beontime.model.base.BaseRoom) obj;
 			if (null == this.getIdLocal() || null == mObj.getIdLocal()) return false;
 			else return (this.getIdLocal().equals(mObj.getIdLocal()));
 		}

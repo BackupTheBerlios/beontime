@@ -1,9 +1,9 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.user.Person;
 
 
 /**
@@ -11,37 +11,37 @@ import fr.umlv.smoreau.beontime.model.timetable.Course;
  * For more information or documentation, visit The Hibernate Synchronizer page
  * at http://www.binamics.com/hibernatesync or contact Joe Hudson at joe@binamics.com.
  *
- * This is an object that contains data related to the Utilise_Cours_Materiel table.
+ * This is an object that contains data related to the Est_Dirige_par_Cours_Enseignant table.
  * Do not modify this class because it will be overwritten if the configuration file
  * related to this class is modified.
  *
  * @hibernate.class
- *  table="Utilise_Cours_Materiel"
+ *  table="Est_Dirige_par_Cours_Enseignant"
  */
-public abstract class BaseUseCourseMaterial  implements Serializable {
+public abstract class BaseIsDirigeByCourseTeacher  implements Serializable {
 
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Material _idMateriel;
+	private Person _idEnseignant;
 	private Course _idCours;
 
 
 	// constructors
-	public BaseUseCourseMaterial () {
+	public BaseIsDirigeByCourseTeacher () {
 		initialize();
 	}
 
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseUseCourseMaterial (
-		Material _idMateriel,
+	public BaseIsDirigeByCourseTeacher (
+		Person _idEnseignant,
 		Course _idCours) {
 
-		this.setIdMaterial(_idMateriel);
+		this.setIdTeacher(_idEnseignant);
 		this.setIdCourse(_idCours);
 		initialize();
 	}
@@ -52,19 +52,19 @@ public abstract class BaseUseCourseMaterial  implements Serializable {
 
 	/**
      * @hibernate.property
-     *  column=ID_materiel
+     *  column=ID_enseignant
 	 * not-null=true
 	 */
-	public Material getIdMaterial () {
-		return this._idMateriel;
+	public Person getIdTeacher () {
+		return this._idEnseignant;
 	}
 
 	/**
-	 * Set the value related to the column: ID_materiel
-	 * @param _idMateriel the ID_materiel value
+	 * Set the value related to the column: ID_enseignant
+	 * @param _idEnseignant the ID_enseignant value
 	 */
-	public void setIdMaterial (Material _idMateriel) {
-		this._idMateriel = _idMateriel;
+	public void setIdTeacher (Person _idEnseignant) {
+		this._idEnseignant = _idEnseignant;
 		this.hashCode = Integer.MIN_VALUE;
 	}
 
@@ -89,11 +89,11 @@ public abstract class BaseUseCourseMaterial  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.UseCourseMaterial)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.association.UseCourseMaterial mObj = (fr.umlv.smoreau.beontime.model.association.UseCourseMaterial) obj;
-			if (null != this.getIdMaterial() && null != mObj.getIdMaterial()) {
-				if (!this.getIdMaterial().equals(mObj.getIdMaterial())) {
+			fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher mObj = (fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher) obj;
+			if (null != this.getIdTeacher() && null != mObj.getIdTeacher()) {
+				if (!this.getIdTeacher().equals(mObj.getIdTeacher())) {
 					return false;
 				}
 			}
@@ -116,8 +116,8 @@ public abstract class BaseUseCourseMaterial  implements Serializable {
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
 			StringBuffer sb = new StringBuffer();
-			if (null != this.getIdMaterial()) {
-				sb.append(this.getIdMaterial().hashCode());
+			if (null != this.getIdTeacher()) {
+				sb.append(this.getIdTeacher().hashCode());
 				sb.append(":");
 			}
 			else {

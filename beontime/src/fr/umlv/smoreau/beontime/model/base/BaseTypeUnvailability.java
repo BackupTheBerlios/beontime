@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -110,9 +110,9 @@ public abstract class BaseTypeUnvailability  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseTypeUnvailability)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseTypeUnvailability mObj = (fr.umlv.smoreau.beontime.base.BaseTypeUnvailability) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability mObj = (fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability) obj;
 			if (null == this.getIdTypeIndisponibilite() || null == mObj.getIdTypeIndisponibilite()) return false;
 			else return (this.getIdTypeIndisponibilite().equals(mObj.getIdTypeIndisponibilite()));
 		}

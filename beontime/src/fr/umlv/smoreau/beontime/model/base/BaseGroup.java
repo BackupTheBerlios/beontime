@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -146,9 +146,9 @@ public abstract class BaseGroup  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseGroup)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseGroup)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseGroup mObj = (fr.umlv.smoreau.beontime.base.BaseGroup) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseGroup mObj = (fr.umlv.smoreau.beontime.model.base.BaseGroup) obj;
 			if (null == this.getIdGroupe() || null == mObj.getIdGroupe()) return false;
 			else return (this.getIdGroupe().equals(mObj.getIdGroupe()));
 		}

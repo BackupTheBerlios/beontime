@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -193,9 +193,9 @@ public abstract class BaseFormation  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseFormation)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseFormation)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseFormation mObj = (fr.umlv.smoreau.beontime.base.BaseFormation) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseFormation mObj = (fr.umlv.smoreau.beontime.model.base.BaseFormation) obj;
 			if (null == this.getIdFormation() || null == mObj.getIdFormation()) return false;
 			else return (this.getIdFormation().equals(mObj.getIdFormation()));
 		}

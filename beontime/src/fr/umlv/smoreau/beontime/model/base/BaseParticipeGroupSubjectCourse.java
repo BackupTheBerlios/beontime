@@ -1,4 +1,4 @@
-package fr.umlv.smoreau.beontime.base;
+package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
@@ -85,9 +85,9 @@ public abstract class BaseParticipeGroupSubjectCourse  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.base.BaseParticipeGroupSubjectCourse)) return false;
+		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse)) return false;
 		else {
-			fr.umlv.smoreau.beontime.base.BaseParticipeGroupSubjectCourse mObj = (fr.umlv.smoreau.beontime.base.BaseParticipeGroupSubjectCourse) obj;
+			fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse mObj = (fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse) obj;
 			if (null == this.getId() || null == mObj.getId()) return false;
 			else return (this.getId().equals(mObj.getId()));
 		}

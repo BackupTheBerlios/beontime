@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.base.BaseAppartientEtudiantGroupe;
+import fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe;
 import fr.umlv.smoreau.beontime.model.Formation;
 
 /**

@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model;
 
-import fr.umlv.smoreau.beontime.base.BaseTypeUnvailability;
+import fr.umlv.smoreau.beontime.model.base.BaseTypeUnvailability;
 
 /**
  * This is the object class that relates to the Type_indisponibilite table.

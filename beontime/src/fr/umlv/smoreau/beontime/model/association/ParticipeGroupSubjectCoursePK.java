@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.base.BaseParticipeGroupSubjectCoursePK;
+import fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCoursePK;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;

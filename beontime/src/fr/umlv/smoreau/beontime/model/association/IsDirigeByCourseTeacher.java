@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.base.BaseIsDirigeByCourseTeacher;
+import fr.umlv.smoreau.beontime.model.base.BaseIsDirigeByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.user.Person;
 

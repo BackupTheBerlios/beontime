@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.model.element;
 
-import fr.umlv.smoreau.beontime.base.BaseRoom;
+import fr.umlv.smoreau.beontime.model.base.BaseRoom;
 
 /**
  * This is the object class that relates to the Local table.
