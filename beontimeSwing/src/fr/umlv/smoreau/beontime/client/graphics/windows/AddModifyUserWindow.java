@@ -31,6 +31,7 @@ import fr.umlv.smoreau.beontime.dao.UserDao;
 public class AddModifyUserWindow {
 	private static final String TITRE_SECRETAIRE = "Ajouter une secrétaire";
 	private static final String TITRE_ENSEIGNANT = "Ajouter un enseignant";
+	private static final String TITRE_ADMINISTRATEUR = "Ajouter un administrateur";
 	
 	private String type;
 
@@ -57,7 +58,9 @@ public class AddModifyUserWindow {
 	        titre = TITRE_SECRETAIRE;
 	    else if (type.equals(UserDao.TYPE_TEACHER))
 	        titre = TITRE_ENSEIGNANT;
-		
+	    else if (type.equals(UserDao.TYPE_ADMIN))
+	        titre = TITRE_ADMINISTRATEUR;
+	    
 		AMUWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);
 		AMUWFrame.getContentPane().setLayout(AMUWLayout);
         
@@ -209,6 +212,31 @@ public class AddModifyUserWindow {
             }
 		});
 		addComponent(AMUWLayout,layoutConstraints,annuler,4,9,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(annuler);
+	}
+	
+	private void initAdminParts() {
+	
+		JLabel courrielMailLabel = new JLabel("E-mail :");
+		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(courrielMailLabel);
+		
+		courrielMailJtf = new JTextField();
+		addComponent(AMUWLayout,layoutConstraints,courrielMailJtf,3,3,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(courrielMailJtf);
+		
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionOk());
+		addComponent(AMUWLayout,layoutConstraints,ok,3,4,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(ok);
+		
+		JButton annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                AMUWFrame.dispose();
+            }
+		});
+		addComponent(AMUWLayout,layoutConstraints,annuler,4,4,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(annuler);
 	}
 	
