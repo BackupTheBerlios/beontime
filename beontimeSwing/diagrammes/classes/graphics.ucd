@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" id="stf2PropriétairebeontimeSwing17795" metadata="nsuml-1.4" initialized="true" showWireOptions="7" scrolledX="-5" scrolledY="-5">
+  <children xsi:type="editmodel:PackageEditModel" size="778,772" id="stf2PropriétairebeontimeSwing145">
+    <children xsi:type="editmodel:PackageEditModel" location="10,34" size="344,242" id="stf2PropriétairebeontimeSwing17725">
+      <children xsi:type="editmodel:ClassEditModel" location="6,33" size="126,103" targetConnections="//@children.0/@children.0/@children.1/@sourceConnections.0 //@children.0/@children.0/@children.2/@sourceConnections.1" id="stf2PropriétairebeontimeSwing23085" runTimeClassModel="stf2PropriétairebeontimeSwing23092;stf2PropriétairebeontimeSwing23090;stf2PropriétairebeontimeSwing23102;stf2PropriétairebeontimeSwing23098;stf2PropriétairebeontimeSwing23087;stf2PropriétairebeontimeSwing23094">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="103,54">
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing23094"/>
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing23098"/>
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing23102"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <children xsi:type="editmodel:InterfaceEditModel" location="9,155" size="119,81" stereotype="interface" targetConnections="//@children.0/@children.0/@children.2/@sourceConnections.0 //@children.0/@children.3/@sourceConnections.0" id="stf2PropriétairebeontimeSwing17726" runTimeClassModel="stf2PropriétairebeontimeSwing23130">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="93,18">
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing23130"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <sourceConnections xsi:type="editmodel:DependencyEditModel" id="stf2PropriétairebeontimeSwing23134" connectionRouterKind="Manhattan" source="//@children.0/@children.0/@children.1" target="//@children.0/@children.0/@children.0" targetEnd="//@children.0/@children.0/@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.0/@children.1/@sourceConnections.0/@children.0">
+          <children xsi:type="editmodel:AssociationEndEditModel" location="0,17" attachSource="true"/>
+          <children xsi:type="editmodel:AssociationEndEditModel"/>
+        </sourceConnections>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" location="170,56" size="164,67" id="stf2PropriétairebeontimeSwing23136" runTimeClassModel="stf2PropriétairebeontimeSwing23138">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="93,18">
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing23138"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="stf2PropriétairebeontimeSwing23137" connectionRouterKind="Manual" source="//@children.0/@children.0/@children.2" target="//@children.0/@children.0/@children.1" targetEnd="//@children.0/@children.0/@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.0/@children.2/@sourceConnections.0/@children.0">
+          <children xsi:type="editmodel:AssociationEndEditModel" location="0,50" attachSource="true"/>
+          <children xsi:type="editmodel:AssociationEndEditModel"/>
+        </sourceConnections>
+        <sourceConnections xsi:type="editmodel:DependencyEditModel" id="stf2PropriétairebeontimeSwing23142" connectionRouterKind="Manhattan" source="//@children.0/@children.0/@children.2" target="//@children.0/@children.0/@children.0" targetEnd="//@children.0/@children.0/@children.2/@sourceConnections.1/@children.1" sourceEnd="//@children.0/@children.0/@children.2/@sourceConnections.1/@children.0">
+          <children xsi:type="editmodel:AssociationEndEditModel" location="0,12" attachSource="true"/>
+          <children xsi:type="editmodel:AssociationEndEditModel"/>
+        </sourceConnections>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <packagePreferences xsi:type="editmodel:UMLClassDiagramPackagePreference" showStereotype="true"/>
+    </children>
+    <children xsi:type="editmodel:PackageEditModel" location="363,35" size="406,651" id="stf2PropriétairebeontimeSwing183">
+      <children xsi:type="editmodel:PackageEditModel" location="10,32" size="369,251" id="stf2PropriétairebeontimeSwing17679">
+        <children xsi:type="editmodel:ClassEditModel" location="9,103" size="97,67" targetConnections="//@children.0/@children.4/@sourceConnections.1" id="stf2PropriétairebeontimeSwing459" runTimeClassModel="stf2PropriétairebeontimeSwing525">
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <children xsi:type="editmodel:CompartmentEditModel" size="74,18">
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing525"/>
+          </children>
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.1/@children.0/@children.0" target="//@children.0/@children.1/@children.0/@children.1" targetEnd="//@children.0/@children.1/@children.0/@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.1/@children.0/@children.0/@sourceConnections.0/@children.0">
+            <children xsi:type="editmodel:AssociationEndEditModel" location="97,42" attachSource="true"/>
+            <children xsi:type="editmodel:AssociationEndEditModel" location="-1,96"/>
+          </sourceConnections>
+          <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+        </children>
+        <children xsi:type="editmodel:ClassEditModel" location="153,31" size="205,211" targetConnections="//@children.0/@children.1/@children.0/@children.0/@sourceConnections.0" id="stf2PropriétairebeontimeSwing23158" runTimeClassModel="stf2PropriétairebeontimeSwing23157;stf2PropriétairebeontimeSwing25966;stf2PropriétairebeontimeSwing25970;stf2PropriétairebeontimeSwing25990;stf2PropriétairebeontimeSwing25993;stf2PropriétairebeontimeSwing25982;stf2PropriétairebeontimeSwing25965;stf2PropriétairebeontimeSwing25976;stf2PropriétairebeontimeSwing25986;stf2PropriétairebeontimeSwing25964;stf2PropriétairebeontimeSwing25972;stf2PropriétairebeontimeSwing25979;stf2PropriétairebeontimeSwing25963">
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <children xsi:type="editmodel:CompartmentEditModel" size="182,162">
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25966"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25990"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25972"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25976"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25986"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25970"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25979"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25993"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing25982"/>
+          </children>
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <sourceConnections xsi:type="editmodel:DependencyEditModel" id="stf2PropriétairebeontimeSwing26003" connectionRouterKind="Manhattan" source="//@children.0/@children.1/@children.0/@children.1" target="//@children.0/@children.3" targetEnd="//@children.0/@children.1/@children.0/@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.1/@children.0/@children.1/@sourceConnections.0/@children.0">
+            <children xsi:type="editmodel:AssociationEndEditModel" location="21,211" attachSource="true"/>
+            <children xsi:type="editmodel:AssociationEndEditModel"/>
+          </sourceConnections>
+          <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+        </children>
+        <packagePreferences xsi:type="editmodel:UMLClassDiagramPackagePreference" showStereotype="true"/>
+      </children>
+      <children xsi:type="editmodel:PackageEditModel" location="12,289" size="374,280" id="stf2PropriétairebeontimeSwing17783">
+        <children xsi:type="editmodel:ClassEditModel" location="11,112" size="106,67" targetConnections="//@children.0/@children.4/@sourceConnections.0" id="stf2PropriétairebeontimeSwing182" runTimeClassModel="stf2PropriétairebeontimeSwing545">
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <children xsi:type="editmodel:CompartmentEditModel" size="83,18">
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing545"/>
+          </children>
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.1/@children.1/@children.0" target="//@children.0/@children.1/@children.1/@children.1" targetEnd="//@children.0/@children.1/@children.1/@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.1/@children.1/@children.0/@sourceConnections.0/@children.0">
+            <children xsi:type="editmodel:AssociationEndEditModel" location="106,41" attachSource="true"/>
+            <children xsi:type="editmodel:AssociationEndEditModel" location="-1,106"/>
+          </sourceConnections>
+          <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+        </children>
+        <children xsi:type="editmodel:ClassEditModel" location="155,33" size="209,229" targetConnections="//@children.0/@children.1/@children.1/@children.0/@sourceConnections.0" id="stf2PropriétairebeontimeSwing23146" runTimeClassModel="stf2PropriétairebeontimeSwing27977;stf2PropriétairebeontimeSwing27955;stf2PropriétairebeontimeSwing27966;stf2PropriétairebeontimeSwing27959;stf2PropriétairebeontimeSwing27961;stf2PropriétairebeontimeSwing27956;stf2PropriétairebeontimeSwing23145;stf2PropriétairebeontimeSwing27982;stf2PropriétairebeontimeSwing27963;stf2PropriétairebeontimeSwing27985;stf2PropriétairebeontimeSwing27969;stf2PropriétairebeontimeSwing27973;stf2PropriétairebeontimeSwing27954">
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <children xsi:type="editmodel:CompartmentEditModel" size="186,180">
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27956"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27982"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27966"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27961"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27963"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27959"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27973"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27969"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27985"/>
+            <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing27977"/>
+          </children>
+          <children xsi:type="editmodel:CompartmentEditModel"/>
+          <sourceConnections xsi:type="editmodel:DependencyEditModel" id="stf2PropriétairebeontimeSwing27991" connectionRouterKind="Manhattan" source="//@children.0/@children.1/@children.1/@children.1" target="//@children.0/@children.3" targetEnd="//@children.0/@children.1/@children.1/@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.1/@children.1/@children.1/@sourceConnections.0/@children.0">
+            <children xsi:type="editmodel:AssociationEndEditModel" location="104,114" attachSource="true"/>
+            <children xsi:type="editmodel:AssociationEndEditModel" location="120,105"/>
+          </sourceConnections>
+          <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+        </children>
+        <packagePreferences xsi:type="editmodel:UMLClassDiagramPackagePreference" showStereotype="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" location="147,572" size="106,29" targetConnections="//@children.0/@children.4/@sourceConnections.3" id="stf2PropriétairebeontimeSwing28040" runTimeClassModel="">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" location="152,607" size="100,29" targetConnections="//@children.0/@children.4/@sourceConnections.4" id="stf2PropriétairebeontimeSwing28042" runTimeClassModel="">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" location="17,575" size="122,67" targetConnections="//@children.0/@children.4/@sourceConnections.2" id="stf2PropriétairebeontimeSwing475" runTimeClassModel="stf2PropriétairebeontimeSwing565">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="99,18">
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing565"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" location="263,573" size="116,67" targetConnections="//@children.0/@children.4/@sourceConnections.5" id="stf2PropriétairebeontimeSwing199" runTimeClassModel="stf2PropriétairebeontimeSwing505">
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="93,18">
+          <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing505"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+      </children>
+      <packagePreferences xsi:type="editmodel:UMLClassDiagramPackagePreference" showStereotype="true"/>
+    </children>
+    <children xsi:type="editmodel:PackageEditModel" location="382,698" size="365,51" id="stf2PropriétairebeontimeSwing71">
+      <packagePreferences xsi:type="editmodel:UMLClassDiagramPackagePreference" showStereotype="true"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="10,300" size="241,211" targetConnections="//@children.0/@children.1/@children.0/@children.1/@sourceConnections.0 //@children.0/@children.1/@children.1/@children.1/@sourceConnections.0" id="stf2PropriétairebeontimeSwing144" runTimeClassModel="stf2PropriétairebeontimeSwing21479;stf2PropriétairebeontimeSwing17769;stf2PropriétairebeontimeSwing21475;stf2PropriétairebeontimeSwing17722;stf2PropriétairebeontimeSwing606;stf2PropriétairebeontimeSwing17743;stf2PropriétairebeontimeSwing19560;stf2PropriétairebeontimeSwing7534;stf2PropriétairebeontimeSwing17745;stf2PropriétairebeontimeSwing17756;stf2PropriétairebeontimeSwing21477;stf2PropriétairebeontimeSwing17752;stf2PropriétairebeontimeSwing608;stf2PropriétairebeontimeSwing17766">
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="218,162">
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing17743"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing608"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing17752"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing17769"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing19560"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing17745"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing17756"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing7534"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing17766"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" id="stf2PropriétairebeontimeSwing17737" connectionRouterKind="Manhattan" source="//@children.0/@children.3" target="//@children.0/@children.0/@children.1" targetEnd="//@children.0/@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.3/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="62,0" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel"/>
+      </sourceConnections>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+    </children>
+    <children xsi:type="editmodel:ClassEditModel" location="12,518" size="241,247" id="stf2PropriétairebeontimeSwing20653" runTimeClassModel="stf2PropriétairebeontimeSwing22916;stf2PropriétairebeontimeSwing21831;stf2PropriétairebeontimeSwing20668;stf2PropriétairebeontimeSwing22216;stf2PropriétairebeontimeSwing21858;stf2PropriétairebeontimeSwing22450;stf2PropriétairebeontimeSwing21944;stf2PropriétairebeontimeSwing22452;stf2PropriétairebeontimeSwing20670;stf2PropriétairebeontimeSwing22880;stf2PropriétairebeontimeSwing22062">
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <children xsi:type="editmodel:CompartmentEditModel" size="218,198">
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing22916"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing20668"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing22062"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing21944"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing21858"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing22450"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing22452"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing20670"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing21831"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing22216"/>
+        <children xsi:type="editmodel:MethodEditModel" id="stf2PropriétairebeontimeSwing22880"/>
+      </children>
+      <children xsi:type="editmodel:CompartmentEditModel"/>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.4" target="//@children.0/@children.1/@children.1/@children.0" targetEnd="//@children.0/@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@children.4/@sourceConnections.0/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="241,55" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1,63"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.4" target="//@children.0/@children.1/@children.0/@children.0" targetEnd="//@children.0/@children.4/@sourceConnections.1/@children.1" sourceEnd="//@children.0/@children.4/@sourceConnections.1/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="205,-1" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="25,67"/>
+        <bendpoints secondRelativeDimension="-115,297" firstRelativeDimension="184,-141"/>
+        <bendpoints secondRelativeDimension="-108,103" firstRelativeDimension="191,-335"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.4" target="//@children.0/@children.1/@children.4" targetEnd="//@children.0/@children.4/@sourceConnections.2/@children.1" sourceEnd="//@children.0/@children.4/@sourceConnections.2/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="241,125" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1,31"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.4" target="//@children.0/@children.1/@children.2" targetEnd="//@children.0/@children.4/@sourceConnections.3/@children.1" sourceEnd="//@children.0/@children.4/@sourceConnections.3/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="241,103" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1,16"/>
+        <bendpoints secondRelativeDimension="-261,-14" firstRelativeDimension="170,-34"/>
+        <bendpoints secondRelativeDimension="-66,-14" firstRelativeDimension="365,-34"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.4" target="//@children.0/@children.1/@children.3" targetEnd="//@children.0/@children.4/@sourceConnections.4/@children.1" sourceEnd="//@children.0/@children.4/@sourceConnections.4/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="241,138" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1,-1"/>
+        <bendpoints secondRelativeDimension="-259,19" firstRelativeDimension="174,34"/>
+        <bendpoints secondRelativeDimension="-59,21" firstRelativeDimension="374,36"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:DependencyEditModel" connectionRouterKind="Manual" source="//@children.0/@children.4" target="//@children.0/@children.1/@children.5" targetEnd="//@children.0/@children.4/@sourceConnections.5/@children.1" sourceEnd="//@children.0/@children.4/@sourceConnections.5/@children.0">
+        <children xsi:type="editmodel:AssociationEndEditModel" location="241,123" attachSource="true"/>
+        <children xsi:type="editmodel:AssociationEndEditModel" location="-1,33"/>
+        <bendpoints secondRelativeDimension="-393,39" firstRelativeDimension="159,39"/>
+        <bendpoints secondRelativeDimension="-73,39" firstRelativeDimension="479,39"/>
+      </sourceConnections>
+      <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true"/>
+    </children>
+    <packagePreferences xsi:type="editmodel:UMLClassDiagramPackagePreference" showStereotype="true"/>
+  </children>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showMethodsReturnType="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showInterfaceStereotype="true" showClassStereotype="true" showPackageStereotype="true"/>
+</editmodel:ClassDiagramEditModel>
