@@ -113,11 +113,17 @@ if (idFormation != null && !"".equals(idFormation)) {
 		<table width="100%">
 			<tr>
 				<td align="center">
+					<% if (arranged != null) { %>
+					<img src="miniLogoBoT.png" />
+					<% } else { %>
 					<img src="logoBoT.png" />
+					<% } %>
 				</td>
 				<td align="center">
 					<font color="#0033FF" size="+7">
-						<strong>Bienvenue sur BeOnTime</strong>
+						<strong>
+							<% if (arranged == null) { %>Bienvenue sur <% } %>BeOnTime
+						</strong>
 					</font>
 				</td>
 			</tr>
@@ -155,7 +161,7 @@ if (idFormation != null && !"".equals(idFormation)) {
 						<td align="center">
 							<form method="post" action="">
 								<input type="hidden" name="id_formation" value="0" />
-								<input type="submit" value="Visualiser votre emploi du temps" class="link" />
+								<input type="submit" value="Visualiser votre emploi du temps" class="link" <% if ("0".equals(idFormation)) { %>disabled="disabled" style="color: #808080;"<% } %> />
 							</form>
 							<form method="post" action="">
 								<input type="hidden" name="disconnect" />
