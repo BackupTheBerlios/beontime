@@ -350,19 +350,29 @@ public class AddModifySubjectWindow {
     	JLabel teacherGroupsLabel;
     	teacherGroupsLabel = new JLabel("Enseignant :");
     	
-    	if (groupsName == null) {
-    	    groupsName = new String[formation.getGroups().size()+1];
-    	    groups = new Group[formation.getGroups().size()+1];
-    	    
-    	    groupsName[0] = "";
-    	    int j = 1;
-    	    for (Iterator i = formation.getGroups().iterator(); i.hasNext(); ++j) {
-    	        groups[j] = (Group) i.next();
-    	        groupsName[j] = groups[j].getHeading();
-    	    }
+    	/*if (groupsName == null) {
+    	    try {
+                formation = DaoManager.getFormationDao().getFormation(formation, new String[] {FormationDao.JOIN_GROUPS});
+                
+                groupsName = new String[formation.getGroups().size()+1];
+        	    groups = new Group[formation.getGroups().size()+1];
+        	    
+        	    groupsName[0] = "";
+        	    int j = 1;
+        	    for (Iterator i = formation.getGroups().iterator(); i.hasNext(); ++j) {
+        	        groups[j] = (Group) i.next();
+        	        groupsName[j] = groups[j].getHeading();
+        	    }
+        	    throw new Exception();
+            } catch (Exception e) {
+                JLabel label = new JLabel("Erreur lors de la récupération des groupes");
+                label.setForeground(Color.RED);
+                addComponent(AMFWLayout,layoutConstraints,label,7,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
+                panel.add(label);
+            }
     	}
     	JComboBox nameGroupJcb = new JComboBox(groupsName);
-    	JComboBox teacherGroupsJcB = new JComboBox(teachersName);
+    	JComboBox teacherGroupsJcB = new JComboBox(teachersName);*/
     	
     	/*
     	JPanel nameGroupsPanel = new JPanel();
@@ -492,7 +502,6 @@ public class AddModifySubjectWindow {
     public void setIdTeacher(Long idTeacher) {
         for (int i = 1; i < teachers.length; ++i) {
             if (teachers[i].getIdUser().equals(idTeacher)) {
-                System.out.println(teachers[i].getIdUser() + " "+idTeacher);
                 teacherFieldJcb.setSelectedIndex(i);
                 break;
             }
