@@ -1,26 +1,17 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable;
 
 
+import java.awt.Graphics;
+import java.awt.JobAttributes;
+import java.awt.PageAttributes;
+import java.awt.PrintJob;
 import java.awt.event.ActionEvent;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.text.MessageFormat;
 
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttribute;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Chromaticity;
-import javax.print.attribute.standard.MultipleDocumentHandling;
-import javax.print.attribute.standard.NumberUp;
-import javax.print.attribute.standard.OrientationRequested;
-import javax.print.attribute.standard.SheetCollate;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+
+import javax.swing.JFrame;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
@@ -35,6 +26,7 @@ public class PrintTimetable extends Action {
         super(NAME, SMALL_ICON, ICON, mainFrame);
     }
 
+    
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
@@ -70,7 +62,56 @@ public class PrintTimetable extends Action {
 			demandeDImpression.end();
 		}*/
     	
-    	Timetable timetable = mainFrame.getModel().getTimetable();
+    	
+    	JobAttributes jobAttributes = new JobAttributes();
+		jobAttributes.setDestination(JobAttributes.DestinationType.PRINTER);
+		
+		PageAttributes pageAttributes = new PageAttributes();
+		pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
+		pageAttributes.setColor(PageAttributes.ColorType.COLOR);
+		//pageAttributes.setOrigin(PageAttributes.OriginType.PRINTABLE);
+		pageAttributes.setMedia(PageAttributes.MediaType.A4);
+    	
+    	
+		 //Properties props = new Properties();
+
+		 
+		/* # awt.print.destination - can be "printer" or "file"
+		 # awt.print.printer - print command
+		 # awt.print.fileName - name of the file to print
+		 # awt.print.numCopies - the number of copies to print
+		 # awt.print.options - options to pass to the print command
+		 # awt.print.orientation - can be "portrait" or "landscape"
+		 # awt.print.paperSize - can be "letter," "legal," "executive" or "a4"*/
+		  
+		   /*   props.put("awt.print.paperSize", "a4");
+		    props.put("awt.print.destination", "printer");
+		    props.put("awt.print.orientation","landscape");*/
+    	
+    	
+		
+		
+		
+    	PrintJob pJob = mainFrame.getMainFrame().getToolkit().getPrintJob(mainFrame.getMainFrame(), "Impression",jobAttributes, pageAttributes);
+		    
+    	   
+		    if (pJob != null)
+		      {
+		        Graphics pg = pJob.getGraphics();
+		        
+		        JFrame frame = ExportTimetable.organizeTask();
+				frame.setVisible(true);
+				frame.getContentPane().printAll(pg);
+				frame.setVisible(false);
+		        pg.dispose();
+		        pJob.end();
+		        
+		      }
+
+    	
+    	
+    	
+    	/*Timetable timetable = mainFrame.getModel().getTimetable();
     	StringBuffer header = new StringBuffer();
     	if (timetable.getGroup() != null) {
     	    header.append("Groupe: ");
@@ -121,6 +162,6 @@ public class PrintTimetable extends Action {
             
         } catch (PrinterException e) {
             JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'impression", "Erreur", JOptionPane.ERROR_MESSAGE);
-		}
+		}*/
     }
 }
