@@ -82,11 +82,11 @@ public class ButtonBar extends JToolBar{
 		defaultButtonName[3] = new String[]{"Placer un cours","Supprimer le cours"};
 		defaultButtonName[4] = new String[]{"Afficher l'EDT par semaines","Afficher l'EDT par semestre"};
 
-		defaultAction[0] = new Action[]{ViewTimetable.getAction(),PrintTimetable.getAction(),ExportTimetable.getAction()};
-		defaultAction[1] = new Action[]{CutCourse.getAction(),CopyCourse.getAction(),PasteCourse.getAction()};
-		defaultAction[2] = new Action[]{AddUser.getAction(),AddSubject.getAction(),AddRoom.getAction(),AddMaterial.getAction(),GenerateGroups.getAction()};
-		defaultAction[3] = new Action[]{AddCourse.getAction(),DeleteCourse.getAction()};
-		defaultAction[4] = new Action[]{ShowTimetable.getAction(),ShowTimetable.getAction()};
+		defaultAction[0] = new Action[]{ViewTimetable.getAction(""),PrintTimetable.getAction(""),ExportTimetable.getAction("")};
+		defaultAction[1] = new Action[]{CutCourse.getAction(""),CopyCourse.getAction(""),PasteCourse.getAction("")};
+		defaultAction[2] = new Action[]{AddUser.getAction(""),AddSubject.getAction(""),AddRoom.getAction(""),AddMaterial.getAction(""),GenerateGroups.getAction("")};
+		defaultAction[3] = new Action[]{AddCourse.getAction(""),DeleteCourse.getAction("")};
+		defaultAction[4] = new Action[]{ShowTimetable.getAction(""),ShowTimetable.getAction("")};
 		initButtonPanel();
 		for(int i=0;i<nbGroups;i++){
 			for(int j=0;j<defaultButtonName[i].length;j++){

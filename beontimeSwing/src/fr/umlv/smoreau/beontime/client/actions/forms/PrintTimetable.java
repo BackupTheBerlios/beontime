@@ -21,8 +21,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
  */
 public class PrintTimetable extends Action {
 	
-	private static String name="";
-	public static javax.swing.Action getAction(){
+	public static javax.swing.Action getAction(String name){
 		AbstractAction va=new AbstractAction(name,getImage("images/Print24.gif")) {
 		public void actionPerformed(ActionEvent e) {
 			}

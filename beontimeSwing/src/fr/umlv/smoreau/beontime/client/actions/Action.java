@@ -17,7 +17,7 @@ public abstract class Action {
 		if (url==null) return null;
 		return new ImageIcon(url);
 	}
-	public static javax.swing.Action getAction(){
+	public static javax.swing.Action getAction(String name){
 		return null;		
 	}
 }

@@ -21,9 +21,8 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
  */
 public class ViewTimetable extends Action {
 	
-	private static String title="";
-	public static javax.swing.Action getAction(){
-		AbstractAction va=new AbstractAction(title,getImage("images/Find24.gif")) {
+	public static javax.swing.Action getAction(String name){
+		AbstractAction va=new AbstractAction(name,getImage("images/Find24.gif")) {
 		public void actionPerformed(ActionEvent e) {
 			ViewTimetableWindow vtw=new ViewTimetableWindow();
 			vtw.show();
