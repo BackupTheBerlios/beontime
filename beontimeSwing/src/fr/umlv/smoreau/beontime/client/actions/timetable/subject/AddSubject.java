@@ -38,7 +38,7 @@ public class AddSubject extends Action {
         AddModifySubjectWindow window = new AddModifySubjectWindow();
         window.show();
         
-        if (window.isOk()) {
-        }
+        //if (window.isOk()) {
+        //}
     }
 }
