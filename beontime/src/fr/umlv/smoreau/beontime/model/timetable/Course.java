@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.model.base.BaseCourse;
  * Any customizations belong here.
  */
 public class Course extends BaseCourse {
-    private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private Calendar beginPeriod;
     private Calendar endPeriod;
