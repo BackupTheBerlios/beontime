@@ -31,17 +31,26 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	    model.addBoTListener(new ViewListener());
 	}
 	
-	  public AttributiveCellTableModel(BoTModel model, Course[][] data, int nbcolumn) {
+	public AttributiveCellTableModel(BoTModel model, Course[][] data, int nbcolumn) {
 	  	colNb=nbcolumn;
 	  	rowNb=data.length;
 	  	this.data=data;
 	  	cellAtt = new DefaultCellAttribute(data.length,nbcolumn);
-	  	
+	  	init();
 	  	model.addBoTListener(new ViewListener());
 	  }
+	
+	private void init(){
+		for(int i=0;i<rowNb;i++){
+			for(int j=0;j<colNb;j++){
+				data[i][j]=null;
+			}
+		}
+	}
 	private void initDataTab() {
 		data =new Course[rowNb][colNb];
 	    cellAtt = new DefaultCellAttribute(rowNb,colNb);
+	    init();
 	}
 	public int getRowCount() {
 		return data.length;
