@@ -22,6 +22,18 @@ public class LdapManagerTest extends TestCase {
     public void testGetTeachers() {
     	assertNotNull(ldapManager.getTeachers());
     }
+    
+    public void testGetAdministrators() {
+    	assertNotNull(ldapManager.getAdministrators());
+    }
+    
+    public void testGetStudents() {
+    	assertNotNull(ldapManager.getStudents());
+    }
+    
+    public void testTestLoginPwd() {
+    	assertFalse(ldapManager.testLoginPwd("forax","forax"));
+    }
 
     public static Test suite() {
         return new TestSuite(LdapManagerTest.class);

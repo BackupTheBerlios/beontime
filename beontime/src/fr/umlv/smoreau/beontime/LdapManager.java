@@ -56,21 +56,42 @@ public class LdapManager {
         return ctx.search(base, matchAttrs);
     }
 
+    
+    public boolean testLoginPwd(String login, String password) {
+    	if ("".equals(password))
+    		return false;
+
+        Hashtable env = new Hashtable(common);
+        StringBuffer tmp = new StringBuffer("ldap://");
+        tmp.append(DatabasesProperties.getLdapHost()).append(":");
+        tmp.append(DatabasesProperties.getLdapPort());
+        env.put(Context.PROVIDER_URL, tmp.toString());
+        tmp = new StringBuffer("uid=");
+        tmp.append(login).append(",");
+        tmp.append(DatabasesProperties.getLdapDNBase("users"));
+        env.put(Context.SECURITY_PRINCIPAL, tmp.toString());
+        env.put(Context.SECURITY_CREDENTIALS, password);
+       
+        try {
+			DirContext ctx = new InitialDirContext(env);
+		} catch (NamingException e) {
+			// mot de passe invalide
+			return false;
+		}
+
+        return true;
+    }
 
 	public Collection getUsers(UserFilter filter) {
 	    ArrayList result = new ArrayList();
 
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
-			matchAttrs.put(new BasicAttribute("gidNumber","801"));
 			if (filter != null) {
 				if (filter.getTypePersonne().equals(UserDao.TYPE_ADMIN))
 					matchAttrs.put(new BasicAttribute("gidNumber","150"));
 				else if (filter.getTypePersonne().equals(UserDao.TYPE_TEACHER))
 					matchAttrs.put(new BasicAttribute("gidNumber","801"));
-				//TODO ajouter le gidNumber != pour les étudiants
-				/*else if (filter.getTypePersonne().equals(UserDao.TYPE_STUDENT))
-					matchAttrs.put(new BasicAttribute(*/
 			    if (filter.getNom() != null)
 			        matchAttrs.put(new BasicAttribute("sn",filter.getNom()));
 			    if (filter.getPrenom() != null)
@@ -87,7 +108,11 @@ public class LdapManager {
 				Person person = new Person();
 				
 				Attributes attrs = sr.getAttributes();
-				Attribute tmp = attrs.get("sn");
+				Attribute tmp = attrs.get("gidNumber");
+				if (filter.getTypePersonne().equals(UserDao.TYPE_STUDENT) &&
+						(((String)tmp.get()).equals("150") || ((String)tmp.get()).equals("801")))
+					continue;
+				tmp = attrs.get("sn");
 				if (tmp != null)
 				    person.setNom((String) tmp.get());
 				tmp = attrs.get("givenName");
@@ -208,5 +233,4 @@ public class LdapManager {
 
 		return true;
 	}
-
 }
