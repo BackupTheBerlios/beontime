@@ -13,7 +13,6 @@ import fr.umlv.smoreau.beontime.dao.*;
  */
 public class Server {
 	public static void main(String[] args) {
-		//	userDaoThread.start();
 		
 		try {
 			System.out.println("-- starting RMI server");
@@ -24,7 +23,6 @@ public class Server {
 			// Exposition de l'objet
 //			UnicastRemoteObject.exportObject(user); // pas besoin si les implementations extends de UnicastRemoteObject
 			//publication de l'objet auprès du serveur de noms
-//			Naming.rebind("rmi://"+InetAddress.getLocalHost().getHostAddress()+":1099/UserDao", user);
 			Naming.rebind("/UserDao", user);
 			System.out.println(" -> user Dao available");
 			
