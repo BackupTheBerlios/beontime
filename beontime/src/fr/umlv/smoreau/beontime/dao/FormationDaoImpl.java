@@ -67,11 +67,14 @@ public class FormationDaoImpl extends Dao implements FormationDao {
         Session session = null;
         try {
             session = Hibernate.getCurrentSession();
+
             Collection tmp = get(TABLE, null, session);
             for (Iterator i = tmp.iterator(); i.hasNext(); ) {
                 Formation formation = (Formation) i.next();
                 if (formation.getIdSecretary() != null)
                     result.remove(formation);
+                else
+                    result.add(formation);
             }
         } finally {
             Hibernate.closeSession();
