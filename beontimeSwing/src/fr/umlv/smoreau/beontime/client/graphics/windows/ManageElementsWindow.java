@@ -63,7 +63,8 @@ public class ManageElementsWindow {
 	private void initPanel() {
 		
 		//panel = new ManageSubjectsTree(model).getPanel();
-		panel = new ManageGroupsTree(model).getPanel();
+		//panel = new ManageGroupsTree(model).getPanel();
+		panel = new ManageUsersTable(model).getPanel();
 	}
 	
 	private void initManageButtonPanel() {

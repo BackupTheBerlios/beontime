@@ -43,6 +43,10 @@ public class ManageUnavailabilitiesAdapter implements TreeModel {
 		ArrayList listUnavailabilities = new ArrayList();
 		
 		Unavailability i1 = new Unavailability();
+		
+		i1.setIdUnavailability(new Long(1));
+		i1.setDescription("perdue");
+		
 		Unavailability i2 = new Unavailability();
 		Unavailability i3 = new Unavailability();
 		Unavailability i4 = new Unavailability();
