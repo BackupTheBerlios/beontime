@@ -52,6 +52,7 @@ public class View {
 				int row=table.rowAtPoint(p);
 				int column=table.columnAtPoint(p);
 				if (((Course) table.getValueAt(row,column))!=null){
+					ActionsList.getAction("AddCourse").setEnabled(false);
 					ActionsList.getAction("ModifyCourse").setEnabled(true);
 					ActionsList.getAction("RemoveCourse").setEnabled(true);
 					ActionsList.getAction("CutCourse").setEnabled(true);
@@ -67,23 +68,15 @@ public class View {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		GroupableTableHeader header = new GroupableTableHeader(table.getColumnModel());

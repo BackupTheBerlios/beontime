@@ -52,6 +52,7 @@ public class ActionsList {
 		ACTIONS.put("ModifyGroup", new ModifyGroup(null));
 		ACTIONS.put("RemoveGroup", new RemoveGroup(null));
 		ACTIONS.put("ManageGroups", new ManageGroups(null));
+		ACTIONS.put("ManageIdentitiesToGroups", new ManageIdentitiesToGroups(null));
 		ACTIONS.put("GenerateGroups", new GenerateGroups(null));
 		ACTIONS.put("AddRoom", new AddRoom(null));
 		ACTIONS.put("ModifyRoom", new ModifyRoom(null));
@@ -107,6 +108,7 @@ public class ActionsList {
 	    getAction("ModifyGroup").setEnabled(false);
 	    getAction("RemoveGroup").setEnabled(false);
 	    getAction("ManageGroups").setEnabled(false);
+	    getAction("ManageIdentitiesToGroups").setEnabled(false);
 	    getAction("GenerateGroups").setEnabled(false);
 	    getAction("ModifyUser").setEnabled(false);
 	    getAction("RemoveUser").setEnabled(false);

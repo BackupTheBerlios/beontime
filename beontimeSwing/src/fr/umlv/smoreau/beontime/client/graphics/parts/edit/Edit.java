@@ -38,7 +38,7 @@ public class Edit extends JTree {
     private String courseTypeSelected;
     private static MainFrame mainFrame;
 
-    public Edit(final BoTModel model, MainFrame mainFrame) {
+    public Edit(final BoTModel model, final MainFrame mainFrame) {
         super();
         super.setModel(new EditAdapter(model, this));
         Edit.mainFrame = mainFrame;
@@ -107,6 +107,12 @@ public class Edit extends JTree {
                     subjectSelected = (Subject) treePath.getPathComponent(treePath.getPathCount()-2);
                     courseTypeSelected = (String) selected;
                 }
+                
+                mainFrame.getTable().clearSelection();
+                ActionsList.getAction("ModifyCourse").setEnabled(false);
+                ActionsList.getAction("RemoveCourse").setEnabled(false);
+				ActionsList.getAction("CutCourse").setEnabled(false);
+				ActionsList.getAction("CopyCourse").setEnabled(false);
             }
 		});
 
