@@ -32,24 +32,6 @@ public class Database {
 		this.host = host;
 		this.port = port;
 	}
-	
-	public void connect() {
-		
-	}
-	
-	public void disconnect() {
-		
-	}
-	
-	public static boolean testConnection(String baseName, String host, String port, String login, String password) {
-		
-		return true;
-	}
-	
-	public static boolean testConnection(String DNBase, String host, String port) {
-	
-		return true;
-	}
 
 	public int getType() {
 		return type;

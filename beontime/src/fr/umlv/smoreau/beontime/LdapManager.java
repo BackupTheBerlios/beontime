@@ -27,7 +27,7 @@ import fr.umlv.smoreau.beontime.dao.UserFilter;
 public class LdapManager {
     private static NamingEnumeration search(String base, Attributes matchAttrs) throws NamingException {
         Hashtable env = new Hashtable();
-        env.put(Context.INITIAL_CONTEXT_FACTORY, DatabasesProperties.getLdapContext());
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         StringBuffer url = new StringBuffer("ldap://");
         url.append(DatabasesProperties.getLdapHost()).append(":");
         url.append(DatabasesProperties.getLdapPort());
@@ -64,7 +64,7 @@ public class LdapManager {
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
 			matchAttrs.put(new BasicAttribute("gidNumber","801"));
-			NamingEnumeration items = search(DatabasesProperties.getLdapBase("users"),matchAttrs);
+			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("users"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();
@@ -109,7 +109,7 @@ public class LdapManager {
 	public static Collection getFormations(FormationFilter filter) {
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
-			NamingEnumeration items = search(DatabasesProperties.getLdapBase("groups"),matchAttrs);
+			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("groups"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();

@@ -1,8 +1,6 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.dao;
 
+import fr.umlv.smoreau.beontime.DatabasesProperties;
 import fr.umlv.smoreau.beontime.model.Database;
 
 /**
@@ -20,29 +18,45 @@ public class DatabaseConfiguration {
 
 
 	public Database getLDAPDatabase() {
-		//TODO à implémenter
-		return null;
+	    String dnBase = DatabasesProperties.getLdapDNBase();
+	    String host = DatabasesProperties.getLdapHost();
+	    String port = DatabasesProperties.getLdapPort();
+
+		return new Database(dnBase, host, port);
 	}
 	
 	public Database getSQLDatabase() {
-		//TODO à implémenter
-		return null;
-	}
-	
-	public void modifyLDAPDatabase(Database database) {
-		//TODO à implémenter
-	}
-	
-	public void modifySQLDatabase(Database database) {
-		//TODO à implémenter
-	}
-	
-	public boolean testLDAPDatabase(Database database) {
-		//TODO à implémenter
-		return false;
-	}
+	    String baseName = DatabasesProperties.getSqlDatabaseName();
+	    String host = DatabasesProperties.getSqlHost();
+	    String port = DatabasesProperties.getSqlPort();
+	    String login = DatabasesProperties.getSqlUserName();
+	    String password = DatabasesProperties.getSqlPassword();
 
-	public boolean testSQLDatabase(Database database) {
+		return new Database(baseName, host, port, login, password);
+	}
+	
+	public void modifyDatabase(Database database) {
+	    if (database.getHost() != null)
+	        DatabasesProperties.setLdapHost(database.getHost());
+	    if (database.getPort() != null)
+	        DatabasesProperties.setLdapPort(database.getPort());
+
+		if (database.getType() == Database.LDAP) {
+		    if (database.getDNBase() != null)
+		        DatabasesProperties.setLdapDNBase(database.getDNBase());
+		} else if (database.getType() == Database.SQL) {
+		    if (database.getLogin() != null)
+		        DatabasesProperties.setSqlUserName(database.getLogin());
+		    if (database.getPassword() != null)
+		        DatabasesProperties.setSqlPassword(database.getPassword());
+		    if (database.getBaseName() != null)
+		        DatabasesProperties.setSqlDatabaseName(database.getBaseName());
+		}
+
+		DatabasesProperties.save();
+	}
+	
+	public boolean testDatabase(Database database) {
 		//TODO à implémenter
 		return false;
 	}
