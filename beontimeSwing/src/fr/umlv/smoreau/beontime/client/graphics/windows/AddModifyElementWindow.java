@@ -168,6 +168,7 @@ public class AddModifyElementWindow {
     
     public void setEquipmentName(String name) {
         equipmentNameJtf.setText(name);
+        equipmentNameJtf.setEnabled(false);
     }
     
     public String getDescriptionEquipment() {

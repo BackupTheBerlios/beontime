@@ -312,6 +312,7 @@ public class AddModifyUserWindow {
 	
 	public void setName(String name) {
 		nameJtf.setText(name);
+		nameJtf.setEnabled(false);
 	}
 	
 	public String getSurname() {
@@ -320,6 +321,7 @@ public class AddModifyUserWindow {
 	
 	public void setSurname(String surname) {
 		surnameJtf.setText(surname);
+		surnameJtf.setEnabled(false);
 	}
 	
 	public String getCourrielMail() {
