@@ -23,6 +23,10 @@ public abstract class BaseFormation implements Serializable {
 	public static String PROP_ID_FORMATION = "IdFormation";
 	public static String PROP_ID_ENSEIGNANT = "IdTeacher";
 	public static String PROP_INTITULE = "Heading";
+	public static String PROP_DEBUT_SEMESTRE1 = "BeginFirstHalfYear";
+	public static String PROP_FIN_SEMESTRE1 = "EndFirstHalfYear";
+	public static String PROP_DEBUT_SEMESTRE2 = "BeginSecondHalfYear";
+	public static String PROP_FIN_SEMESTRE2 = "EndSecondHalfYear";
 
 
 	private int hashCode = Integer.MIN_VALUE;
@@ -33,6 +37,10 @@ public abstract class BaseFormation implements Serializable {
 	// fields
 	private java.lang.String _heading;
 	private java.lang.Long _idTeacher;
+	private java.util.Calendar _beginFirstHalfYear;
+	private java.util.Calendar _endFirstHalfYear;
+	private java.util.Calendar _beginSecondHalfYear;
+	private java.util.Calendar _endSecondHalfYear;
 
 
 	// many to one
@@ -145,7 +153,38 @@ public abstract class BaseFormation implements Serializable {
 	public void setIdTeacher (java.lang.Long _idTeacher) {
 		this._idTeacher = _idTeacher;
 	}
+	
+	public java.util.Calendar getBeginFirstHalfYear() {
+	    return _beginFirstHalfYear;
+	}
+	
+	public void setBeginFirstHalfYear(java.util.Calendar _beginFirstHalfYear) {
+	    this._beginFirstHalfYear = _beginFirstHalfYear;
+	}
+	
+	public java.util.Calendar getEndFirstHalfYear() {
+	    return _endFirstHalfYear;
+	}
+	
+	public void setEndFirstHalfYear(java.util.Calendar _endFirstHalfYear) {
+	    this._endFirstHalfYear = _endFirstHalfYear;
+	}
 
+	public java.util.Calendar getBeginSecondHalfYear() {
+	    return _beginSecondHalfYear;
+	}
+	
+	public void setBeginSecondHalfYear(java.util.Calendar _beginSecondHalfYear) {
+	    this._beginSecondHalfYear = _beginSecondHalfYear;
+	}
+
+	public java.util.Calendar getEndSecondHalfYear() {
+	    return _endSecondHalfYear;
+	}
+	
+	public void setEndSecondHalfYear(java.util.Calendar _endSecondHalfYear) {
+	    this._endSecondHalfYear = _endSecondHalfYear;
+	}
 
 	/**
 	 * Return the value associated with the column: GroupeSet

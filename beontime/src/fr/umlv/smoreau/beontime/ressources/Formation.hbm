@@ -33,6 +33,31 @@
 			type="java.lang.Long"
 			not-null="false"
 		 />
+		 
+		 <property
+			column="debut_semestre1"
+			name="BeginFirstHalfYear"
+			not-null="false"
+			type="calendar"
+		 />
+		 <property
+			column="fin_semestre1"
+			name="EndFirstHalfYear"
+			not-null="false"
+			type="calendar"
+		 />
+		 <property
+			column="debut_semestre2"
+			name="BeginSecondHalfYear"
+			not-null="false"
+			type="calendar"
+		 />
+		 <property
+			column="fin_semestre2"
+			name="EndSecondHalfYear"
+			not-null="false"
+			type="calendar"
+		 />
 
 		<set inverse="true" name="Groups" lazy="true">
 			<key column="id_formation" />
