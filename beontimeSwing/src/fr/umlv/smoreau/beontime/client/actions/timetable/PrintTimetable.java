@@ -103,6 +103,7 @@ public class PrintTimetable extends Action {
 				frame.setVisible(true);
 				frame.getContentPane().printAll(pg);
 				frame.setVisible(false);
+				MainFrame.getInstance().setView(MainFrame.getInstance().getView());
 		        pg.dispose();
 		        pJob.end();
 		        
