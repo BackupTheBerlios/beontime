@@ -47,7 +47,7 @@ public class ViewTimetableWindow {
     
 	public ViewTimetableWindow() {
 		
-		VTWFrame = new JFrame();
+		VTWFrame = new JFrame(TITRE);
 		VTWFrame.getContentPane().setLayout(VTWLayout);
 	    
 	    initViewTimetableWindow();  
@@ -59,7 +59,7 @@ public class ViewTimetableWindow {
 		
 		
 		visuEDTLabel = new JLabel("Visualisation d'un emploi du temps d'un(e)");
-		addComponent(VTWLayout,layoutConstraints,visuEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,visuEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		VTWFrame.getContentPane().add(visuEDTLabel);
 		
 		
@@ -69,30 +69,30 @@ public class ViewTimetableWindow {
 		visuEDTJcb.addItem("Groupe");
 		visuEDTJcb.addItem("Local");
 		visuEDTJcb.addItem("Materiel");
-		addComponent(VTWLayout,layoutConstraints,visuEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,visuEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		VTWFrame.getContentPane().add(visuEDTJcb);
 		
 		
 		choiceEDTLabel = new JLabel("Veuillez choisir <l'emploi du temps>");
-		addComponent(VTWLayout,layoutConstraints,choiceEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,choiceEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,20,10));
 		VTWFrame.getContentPane().add(choiceEDTLabel);
 		
 		choiceEDTJcb = new JComboBox();
-		addComponent(VTWLayout,layoutConstraints,choiceEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,choiceEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
 		VTWFrame.getContentPane().add(choiceEDTJcb);
 		
 		
 		modeViewEDTLabel = new JLabel("Affichage de l'emploi du temps :");
-		addComponent(VTWLayout,layoutConstraints,modeViewEDTLabel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,modeViewEDTLabel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,5,10));
 		VTWFrame.getContentPane().add(modeViewEDTLabel);
 
 		
 		semestriel = new JRadioButton("semestriel",true);
-		addComponent(VTWLayout,layoutConstraints,semestriel,1,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,semestriel,1,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,10,10));
 		VTWFrame.getContentPane().add(semestriel);		
 		
 		hebdomadaire = new JRadioButton("hebdomadaire");
-		addComponent(VTWLayout,layoutConstraints,hebdomadaire,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,5,10));
+		addComponent(VTWLayout,layoutConstraints,hebdomadaire,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,10,10));
 		VTWFrame.getContentPane().add(hebdomadaire);
 		
 		ButtonGroup buttonGroup = new ButtonGroup();
@@ -101,20 +101,20 @@ public class ViewTimetableWindow {
 		
 		
 		periodViewEDTLabel = new JLabel("Veuillez choisir le semestre à visualiser");
-		addComponent(VTWLayout,layoutConstraints,periodViewEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,10,10));
+		addComponent(VTWLayout,layoutConstraints,periodViewEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,20,10));
 		VTWFrame.getContentPane().add(periodViewEDTLabel);
 		
 		periodViewEDTJcb = new JComboBox();
-		addComponent(VTWLayout,layoutConstraints,periodViewEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
+		addComponent(VTWLayout,layoutConstraints,periodViewEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
 		VTWFrame.getContentPane().add(periodViewEDTJcb);
 		
 		
 		ok = new JButton("OK");
-		addComponent(VTWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+		addComponent(VTWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		VTWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
-		addComponent(VTWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(10,10,10,10));
+		addComponent(VTWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		VTWFrame.getContentPane().add(annuler);
 		
 	}
