@@ -64,13 +64,17 @@ public class BoTModel {
 	}
 	
 	public void fireCloseTimetable() throws InterruptedException {
+	    fireCloseTimetable(true);
+	}
+	
+	public void fireCloseTimetable(boolean initTimetableViewPanel) throws InterruptedException {
 		BoTEvent event = null;
 
 		Object[] listeners = list.getListenerList();
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
-					event = new BoTEvent(this);
+					event = new BoTEvent(this, initTimetableViewPanel);
 				((BoTListener) listeners[i + 1]).closeTimetable(event);
 			}
 		}

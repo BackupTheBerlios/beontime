@@ -86,8 +86,8 @@ public class View {
 		table.setTableHeader(header);
 		jScrollPane=new JScrollPane(table);
 		//header.setSize(table.getWidth(),50);
-		
-		
+		table.setVisible(false);
+		jScrollPane.getVerticalScrollBar().setEnabled(false);
     }
 	/**
 	 * @param i

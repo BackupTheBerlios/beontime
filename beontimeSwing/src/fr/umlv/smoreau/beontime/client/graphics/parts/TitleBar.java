@@ -16,7 +16,6 @@ import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -37,11 +36,7 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
  * @author BeOnTime
  */
 public class TitleBar extends JPanel {
-	/** This class must be serializable */
-	private static final long serialVersionUID = 1L;
-	
-	private JLabel responsibleLabel;
-	private JLabel intitleLabel;
+	private TimeTableViewPanelBar timetableViewPanel;
 	
 	private JDateChooser periodChooser;
 	private JButton previousButton;
@@ -59,29 +54,18 @@ public class TitleBar extends JPanel {
 	private static final long anHalfYear = new GregorianCalendar(2005, 07, 01).getTimeInMillis() - (new GregorianCalendar(2005, 01, 01).getTimeInMillis());
 
 	
-	public TitleBar(BoTModel model) {
+	public TitleBar(BoTModel model, MainFrame mainFrame) {
 		this.model = model;
 		titleBarPanel.setLayout(new BorderLayout());
 		
-		initTitleBarPanel();
-		responsibleLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		timetableViewPanel = new TimeTableViewPanelBar(mainFrame);
+
+		initPeriodPanel();
 		periodPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
-		titleBarPanel.add(responsibleLabel, BorderLayout.WEST);
-		titleBarPanel.add(intitleLabel, BorderLayout.CENTER);
+		titleBarPanel.add(timetableViewPanel, BorderLayout.CENTER);
 		titleBarPanel.add(periodPanel, BorderLayout.EAST);
     
 		model.addBoTListener(new TitleBarListener(this));
-	}
-	
-	
-	public void setResponsible(String name) {
-		//responsibleLabel.setName(name);
-		responsibleLabel.setText(name);
-	}
-	
-	public void setIntitle(String intitle) {
-		//intitleLabel.setName(intitle);
-		intitleLabel.setText(intitle);
 	}
 	
 	public void setPeriod(Calendar period) {
@@ -96,16 +80,6 @@ public class TitleBar extends JPanel {
 		titleBarPanel = panel;
 	}
 	
-	public String getResponsible() {
-		//return responsibleLabel.getName();
-		return responsibleLabel.getText();
-	}
-	
-	public String getIntitleLabel() {
-		//return intitleLabel.getName();
-		return intitleLabel.getText();
-	}
-	
 	public Date getPeriod() {
 		return periodChooser.getDate();
 	}
@@ -114,15 +88,7 @@ public class TitleBar extends JPanel {
 		return titleBarPanel;
 	}
 	
-	
-	private void initTitleBarPanel() {
-		responsibleLabel = new JLabel("");
-		intitleLabel = new JLabel("");
-		initPeriodPanel();
-	}
-	
 	private void initPeriodPanel() {
-		
 		periodPanel.setLayout(new BorderLayout());
 		
 		periodChooser = new JDateChooser();
@@ -200,24 +166,14 @@ public class TitleBar extends JPanel {
 
 		public void refreshAll(BoTEvent e) {
 		    Timetable timetable = e.getTimetable();
-		    intitleLabel.setText("Formation : " + timetable.getFormation().getHeading());
-		    if (timetable.getPersonInCharge()==null) {
-		    	responsibleLabel.setEnabled(false);
-		    	intitleLabel.setEnabled(false);
-		    }
-		    else {
-		    	responsibleLabel.setEnabled(true);
-		    	intitleLabel.setEnabled(true);
-		    	responsibleLabel.setText("Responsable : " + timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
-		    }
-
-		    panel.validate();
+		    
+		    //TODO à voir quand le formulaire 'Visualiser un emploi du temps' sera fonctionnel
 		}
 		
 		public void closeTimetable(BoTEvent e) {
-		    intitleLabel.setText("");
-		    responsibleLabel.setText("");
-		    panel.validate();
+		    if (e.isInitTimetableViewPanel())
+		        timetableViewPanel.init();
+			initPeriodPanel();
 		}
 	}
 }

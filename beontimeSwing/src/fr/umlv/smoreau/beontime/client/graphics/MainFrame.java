@@ -68,7 +68,7 @@ public class MainFrame {
 	private final static int HEIGHT = 700;
 
 	private TimeTableViewPanelBar timetableviewpanel;
-	private JSplitPane splitPaneHorizontal2;
+	private Container container;
 	
 	/* type d'affichage semaine / semestre */
 	private int view_type = 0;
@@ -92,18 +92,15 @@ public class MainFrame {
      */
     public void initMainFrame() {
         model = new BoTModel();
-        titleBar = new TitleBar(model);
+        titleBar = new TitleBar(model, this);
         stateBar = new StateBar();
-        timetableviewpanel = new TimeTableViewPanelBar(this);
         edit = new Edit(model, this);
         view = new View(this, model);
         
         mainFrame = new JFrame();
 		mainFrame.setSize(WIDTH,HEIGHT);
-        
-        //splitPaneVertical = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JPanel(),new JPanel());
+
         JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPaneHorizontal2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		JSplitPane splitPaneVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		final JSplitPane splitPaneVertical2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		
@@ -114,7 +111,7 @@ public class MainFrame {
         splitPaneHorizontal.setContinuousLayout(true);
         splitPaneHorizontal.setOneTouchExpandable(true);
 
-        Container container=mainFrame.getContentPane();
+        container=mainFrame.getContentPane();
         Border beveledBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(153, 204, 255), new Color(204, 204, 255));
 		titleBar.setBorder(beveledBorder);
 		
@@ -138,18 +135,12 @@ public class MainFrame {
         splitPaneVertical2.setTopComponent(splitPaneVertical);
         splitPaneVertical2.setBottomComponent(stateBar.getStateBarPanel());
         splitPaneVertical2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        splitPaneVertical2.setDividerLocation((int)mainFrame.getHeight()-160);
+        splitPaneVertical2.setDividerLocation((int)mainFrame.getHeight()-125);
         splitPaneVertical2.setDividerSize(1);
         splitPaneVertical2.setEnabled(false);
         
 		container.setLayout(new BorderLayout()); 
-		//splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
-		splitPaneHorizontal2.setRightComponent(timetableviewpanel);
-		splitPaneHorizontal2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		//splitPaneHorizontal2.setDividerLocation((int)(WIDTH*0.68));
-		splitPaneHorizontal2.setDividerSize(0);
-		
-		container.add(splitPaneHorizontal2, BorderLayout.NORTH);
+
 		container.add(splitPaneVertical2); 
 		mainFrame.setTitle("BeOnTime");
 		mainFrame.setResizable(true);
@@ -168,7 +159,7 @@ public class MainFrame {
 		
 		mainFrame.addComponentListener(new ComponentListener() {
 			public void componentResized(ComponentEvent e) {
-			    splitPaneVertical2.setDividerLocation((int)mainFrame.getHeight()-160);
+			    splitPaneVertical2.setDividerLocation((int)mainFrame.getHeight()-125);
 			    refresh();
 			}
 			public void componentHidden(ComponentEvent e) {
@@ -197,8 +188,7 @@ public class MainFrame {
         menuBar = new MenuBar(this, model, userConnected.getUserType());
 		mainFrame.setJMenuBar(menuBar);
         buttonBar = new ButtonBar(this);
-        splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
-        splitPaneHorizontal2.setDividerLocation((int)(WIDTH*0.68));
+        container.add(buttonBar.getToolBar(), BorderLayout.NORTH);
 		mainFrame.setVisible(true);
 	}
 	

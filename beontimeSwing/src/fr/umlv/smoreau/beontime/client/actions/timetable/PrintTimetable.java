@@ -16,6 +16,7 @@ import javax.swing.JTable;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
@@ -65,8 +66,20 @@ public class PrintTimetable extends Action {
 			demandeDImpression.end();
 		}*/
     	
-    	
-    	MessageFormat headerFormat = new MessageFormat(mainFrame.getTitleBar().getIntitleLabel()+"\r\n"+mainFrame.getTitleBar().getResponsible()+"\r\nEmploi du temps "+mainFrame.getTitleBar().getPeriod());
+    	Timetable timetable = mainFrame.getModel().getTimetable();
+    	StringBuffer header = new StringBuffer();
+    	if (timetable.getFormation() != null) {
+    	    header.append("Formation: ");
+    	    header.append(timetable.getFormation().getHeading());
+    	    header.append("\r\n");
+    	    header.append("Responsable: ");
+    	    header.append(timetable.getPersonInCharge().getName());
+    	    header.append(" ");
+    	    header.append(timetable.getPersonInCharge().getFirstName());
+    	    header.append("\r\nEmploi du temps ");
+    	    header.append(mainFrame.getTitleBar().getPeriod());
+    	}
+    	MessageFormat headerFormat = new MessageFormat(header.toString());
 		MessageFormat footerFormat = new MessageFormat(mainFrame.getStateBar().getRemark()+"\r\nPage {0}");
     	
         try {

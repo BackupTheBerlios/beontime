@@ -31,6 +31,7 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
+		tree.setVisible(false);
 		
 		model.addBoTListener(new EditListener());
 	}
@@ -135,7 +136,6 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		}
 		
 		public void closeTimetable(BoTEvent e) {
-		    //TODO Ad: regarde si ça te plait. Moi ce qui m'embête c'est qu'au début c'est blanc et que quand on ferme l'emploi du temps, c'est gris ... :o(
 		    tree.setVisible(false);
 		}
 		

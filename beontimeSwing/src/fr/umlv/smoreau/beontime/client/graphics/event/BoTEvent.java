@@ -19,9 +19,11 @@ public class BoTEvent extends EventObject {
 	private User user;
 	private Room room;
 	private Material material;
+	private boolean initTimetableViewPanel;
 	
-	public BoTEvent(Object source) {
+	public BoTEvent(Object source, boolean initTimetableViewPanel) {
 		super(source);
+		this.initTimetableViewPanel = initTimetableViewPanel;
 	}
 
 	public BoTEvent(Object source, Timetable timetable) {
@@ -76,5 +78,9 @@ public class BoTEvent extends EventObject {
 	
 	public Material getMaterial() {
 	    return material;
+	}
+	
+	public boolean isInitTimetableViewPanel() {
+	    return initTimetableViewPanel;
 	}
 }

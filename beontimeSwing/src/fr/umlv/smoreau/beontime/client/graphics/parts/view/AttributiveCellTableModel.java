@@ -157,11 +157,15 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		        }
 
 		    }
+		    view.getTable().setVisible(true);
+		    view.getJScrollPane().getVerticalScrollBar().setEnabled(true);
 		    fireTableDataChanged();
 		}
 		
 		public void closeTimetable(BoTEvent e) {
 		    initDataTab();
+		    view.getTable().setVisible(false);
+		    view.getJScrollPane().getVerticalScrollBar().setEnabled(false);
 		    fireTableDataChanged();
 		}
 
