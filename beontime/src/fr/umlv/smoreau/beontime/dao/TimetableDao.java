@@ -18,7 +18,10 @@ import fr.umlv.smoreau.beontime.model.timetable.*;
  * @author BeOnTime team
  */
 public interface TimetableDao extends Remote {
-    public static final String[] TYPES_COURSES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
+    public static final String TYPE_COURSE = "cours magistraux";
+    public static final String TYPE_TD     = "travaux dirigés";
+    public static final String TYPE_TP     = "travaux pratiques";
+    public static final String[] TYPES_COURSES = { TYPE_COURSE, TYPE_TD, TYPE_TP };
     
     public static final String JOIN_GROUPS_SUBJECTS = "GroupsSubjectsTakingPart";
     public static final String JOIN_TEACHERS_DIRECTING = "TeachersDirecting";
