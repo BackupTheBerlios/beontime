@@ -15,8 +15,8 @@ import fr.umlv.smoreau.beontime.model.Formation;
  */
 public class ModifyFormation extends Action{
     private static final String NAME = "Modifier la formation";
-    private static final String ICON = "";
-    private static final String SMALL_ICON = "";
+    private static final String ICON = "formation.png";
+    private static final String SMALL_ICON = "formation_small.png";
 
 
     public ModifyFormation(MainFrame mainFrame) {
