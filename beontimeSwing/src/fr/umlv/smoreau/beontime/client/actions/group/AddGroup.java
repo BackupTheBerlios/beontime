@@ -39,8 +39,9 @@ public class AddGroup extends Action {
             group.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
             
             try {
-                DaoManager.getGroupDao().addGroup(group);
+                group = DaoManager.getGroupDao().addGroup(group);
                 
+                mainFrame.getModel().getTimetable().addGroup(group);
                 mainFrame.getModel().fireRefreshGroup(group, BoTModel.TYPE_ADD);
 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);

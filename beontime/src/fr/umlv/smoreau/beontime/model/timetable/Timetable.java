@@ -149,6 +149,16 @@ public class Timetable implements Serializable {
     public void setGroups(Collection groups) {
         this.groups = groups;
     }
+    
+    public void addGroup(Group group) {
+        if (groups == null)
+            groups = new ArrayList();
+        groups.add(group);
+    }
+    
+    public void removeGroup(Group group) {
+        groups.remove(group);
+    }
 
     /**
      * @return Renvoie group.

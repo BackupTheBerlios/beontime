@@ -107,12 +107,15 @@ public class ManageElementsWindow {
 	    JLabel label = null;
 
 		if (type == TYPE_SUBJECTS)
-			panel = new ManageSubjectsTree(model, modifyButton, removeButton).getPanel();
-		else if (type == TYPE_GROUPS)
-			panel = new ManageGroupsTree(model, modifyButton, removeButton, manageIdentityButton, generateButton).getPanel();
-		else if (type == TYPE_UNAVAILABILITIES)
-			panel = new ManageUnavailabilitiesTree(model, modifyButton, removeButton, searchUnavailabilitiesButton).getPanel();
-		else if (type == TYPE_USERS_BY_ADMIN) {
+			panel = new ManageSubjectsTree(model).getPanel();
+		else if (type == TYPE_GROUPS) {
+			panel = new ManageGroupsTree(model).getPanel();
+			manageIdentityButton.setVisible(true);
+			generateButton.setVisible(true);
+		} else if (type == TYPE_UNAVAILABILITIES) {
+			panel = new ManageUnavailabilitiesTree(model).getPanel();
+			searchUnavailabilitiesButton.setVisible(true);
+		} else if (type == TYPE_USERS_BY_ADMIN) {
 		    try {
                 Collection users = DaoManager.getUserDao().getUsers(false);
                 users.remove(MainFrame.getInstance().getUserConnected());
@@ -235,9 +238,9 @@ public class ManageElementsWindow {
 			else if(nameButton.compareTo("removeButton") == 0)
 				return ActionsList.getAction("RemoveGroup");
 			else if(nameButton.compareTo("manageIdentityButton") == 0)
-				return ActionsList.getAction("GenerateGroups");
-			else if(nameButton.compareTo("generateButton") == 0)
 				return ActionsList.getAction("ManageIdentitiesToGroups");
+			else if(nameButton.compareTo("generateButton") == 0)
+				return ActionsList.getAction("GenerateGroups");
 		}
 		
 		else if (type == TYPE_UNAVAILABILITIES) {
@@ -343,6 +346,8 @@ public class ManageElementsWindow {
 	            MainFrame.getInstance().setRoomSelected(null);
 	        if (TYPE_MATERIALS == type)
 	            MainFrame.getInstance().setMaterialSelected(null);
+	        if (TYPE_GROUPS == type)
+	            MainFrame.getInstance().setGroupSelected(null);
 	        if (TYPE_SUBJECTS == type) {
 	            Edit edit = MainFrame.getInstance().getEdit();
 	            edit.addSelectionPath(new TreePath(edit.getModel().getRoot()));

@@ -60,7 +60,7 @@ public class RemoveGroup extends Action {
                 }
 
                 DaoManager.getGroupDao().removeGroup(group);
-
+                timetable.removeGroup(group);
                 mainFrame.getModel().fireRefreshGroup(group, BoTModel.TYPE_REMOVE);
                 if (mainFrame.getGroupSelected() == null)
                     mainFrame.getModel().fireCloseTimetable();

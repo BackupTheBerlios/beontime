@@ -119,6 +119,11 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	            FormationDao formationDao = FormationDaoImpl.getInstance();
 	            timetable.setFormation(formationDao.getFormation(filter.getFormation(), null));
 	            
+	            // groupes de la formation
+	            Group group = new Group();
+	            group.setIdFormation(filter.getFormation().getIdFormation());
+	            timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
+	            
 	            // matières de la formation
 	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
 	                Subject subject = (Subject) i.next();

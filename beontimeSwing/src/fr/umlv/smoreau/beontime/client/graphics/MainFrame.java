@@ -240,6 +240,7 @@ public class MainFrame {
 	        enable = true;
 		ActionsList.getAction("ModifyGroup").setEnabled(enable);
 		ActionsList.getAction("RemoveGroup").setEnabled(enable);
+		ActionsList.getAction("ManageIdentitiesToGroups").setEnabled(enable);
 
 	    this.groupSelected = group;
 	}

@@ -4,7 +4,6 @@ package fr.umlv.smoreau.beontime.client.graphics.windows;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -29,7 +28,7 @@ public class ManageSubjectsTree extends JTree {
 	private static MainFrame mainFrame;
 
 	
-	public ManageSubjectsTree(final BoTModel model, final JButton modifyButton, final JButton removeButton) {
+	public ManageSubjectsTree(final BoTModel model) {
 		super();
 		super.setModel(new ManageSubjectsAdapter(model, this));
 		ManageSubjectsTree.mainFrame = MainFrame.getInstance();

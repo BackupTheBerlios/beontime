@@ -1,9 +1,3 @@
-/*
- * Created on 3 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Color;
@@ -14,7 +8,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -32,10 +25,7 @@ import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
- * @author smalouin
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ManageUnavailabilitiesTree extends JTree {
 	
@@ -47,7 +37,7 @@ public class ManageUnavailabilitiesTree extends JTree {
 	
 	
 	
-	public ManageUnavailabilitiesTree(final BoTModel model, final JButton modifyButton, final JButton removeButton, final JButton searchUnavailabilitiesButton) {
+	public ManageUnavailabilitiesTree(final BoTModel model) {
 		super();
 		super.setModel(new ManageUnavailabilitiesAdapter(model, this));
 		ManageUnavailabilitiesTree.mainFrame = MainFrame.getInstance();
@@ -67,9 +57,9 @@ public class ManageUnavailabilitiesTree extends JTree {
 		super.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				
-				modifyButton.setEnabled(true);
+				/*modifyButton.setEnabled(true);
 				removeButton.setEnabled(true);
-				searchUnavailabilitiesButton.setVisible(true);
+				searchUnavailabilitiesButton.setVisible(true);*/
 				
 				// Popup Menus
 				if (e.getButton() == MouseEvent.BUTTON3) {
