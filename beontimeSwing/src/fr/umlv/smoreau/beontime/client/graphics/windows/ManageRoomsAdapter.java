@@ -14,7 +14,7 @@ import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
-import fr.umlv.smoreau.beontime.model.user.User;
+import fr.umlv.smoreau.beontime.model.element.Room;
 
 /**
  * @author BeOnTime
@@ -22,55 +22,44 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ManageUsersAdapter implements TableModel {
+public class ManageRoomsAdapter implements TableModel {
 
-	
 	private final EventListenerList list;
 	private BoTModel model;
-	private ArrayList listUsers;
-	private final static String[] columnNames = {"Nom","Prénom","Courriel"};
+	private ArrayList listRooms;
+	private final static String[] columnNames = {"Nom","Description"};
 	
 	
-	public ManageUsersAdapter(BoTModel model) {
+	public ManageRoomsAdapter(BoTModel model) {
 		this.model = model;
 		this.list = new EventListenerList();
 		
 		//TODO pour tester en local
-		User user1 = new User(new Long(1), "enseignant"); 
-		user1.setName("Nom1");
-		user1.setFirstName("prenom1");
-		user1.setEMail("user1@yahoo.fr");
+		Room room1 = new Room(new Long(1)); 
+		room1.setName("Nom1");
 		
-		User user2 = new User(new Long(2), "enseignant"); 
-		user2.setName("Nom2");
-		user2.setFirstName("prenom2");
-		user2.setEMail("user2@yahoo.fr");
+		Room room2 = new Room(new Long(2)); 
+		room2.setName("Nom2");
 		
-		User user3 = new User(new Long(3), "enseignant"); 
-		user3.setName("Nom3");
-		user3.setFirstName("prenom3");
-		user3.setEMail("user3@yahoo.fr");
+		Room room3 = new Room(new Long(3)); 
+		room3.setName("Nom3");
 		
-		User user4 = new User(new Long(4), "enseignant"); 
-		user4.setName("Nom4");
-		user4.setFirstName("prenom4");
-		user4.setEMail("user4@yahoo.fr");
+		Room room4 = new Room(new Long(4)); 
+		room4.setName("Nom4");
 		
-		User user5 = new User(new Long(5), "enseignant"); 
-		user5.setName("Nom5");
-		user5.setFirstName("prenom5");
-		user5.setEMail("user5@yahoo.fr");
+		Room room5 = new Room(new Long(5)); 
+		room5.setName("Nom5");
 		//finTODO
 		
 		
-		listUsers = new ArrayList();
-		listUsers.add(user1);
-		listUsers.add(user2);
-		listUsers.add(user3);
-		listUsers.add(user4);
-		listUsers.add(user5);
+		listRooms = new ArrayList();
+		listRooms.add(room1);
+		listRooms.add(room2);
+		listRooms.add(room3);
+		listRooms.add(room4);
+		listRooms.add(room5);
 		
-		model.addBoTListener(new ManageUsersListener(this));
+		model.addBoTListener(new ManageRoomsListener(this));
 	}
 	
 	/* (non-Javadoc)
@@ -78,14 +67,14 @@ public class ManageUsersAdapter implements TableModel {
 	 */
 	public int getRowCount() {
 		
-		return listUsers.size();
+		return listRooms.size();
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#getColumnCount()
 	 */
 	public int getColumnCount() {
-		return 3;
+		return 2;
 	}
 
 	/* (non-Javadoc)
@@ -116,13 +105,12 @@ public class ManageUsersAdapter implements TableModel {
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		
-		User user  = (User)listUsers.get(rowIndex);
+		Room room  = (Room)listRooms.get(rowIndex);
 		
 		switch(columnIndex) {
 		
-		case 0: return user.getName();
-		case 1: return user.getFirstName();
-		case 2: return user.getEMail();
+		case 0: return room.getName();
+		case 1: return room.getDescription();
 		}
 		
 		throw new IllegalArgumentException("colonne invalide ("+rowIndex+','+columnIndex+')');
@@ -153,10 +141,10 @@ public class ManageUsersAdapter implements TableModel {
 		 list.remove(l.getClass(), l);
 	}
 
-	private class ManageUsersListener extends DefaultBoTListener {
+	private class ManageRoomsListener extends DefaultBoTListener {
 		private TableModel source;
 
-		public ManageUsersListener(TableModel source) {
+		public ManageRoomsListener(TableModel source) {
 			this.source = source;
 		}	
 	}

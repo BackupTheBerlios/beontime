@@ -16,7 +16,7 @@ import javax.swing.ListSelectionModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.model.user.User;
+import fr.umlv.smoreau.beontime.model.element.Room;
 
 /**
  * @author BeOnTime
@@ -24,25 +24,23 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ManageUsersTable extends JTable {
-	
+public class ManageRoomsTable extends JTable {
 	private JPanel panel;
     private final JTable table;
     private static MainFrame mainFrame;
-    private User userSelected;
+    private Room roomlected;
     
-    public ManageUsersTable(final BoTModel model) {
+    public ManageRoomsTable(final BoTModel model) {
         super();
-        super.setModel(new ManageUsersAdapter(model));
-        ManageUsersTable.mainFrame = MainFrame.getInstance();
+        super.setModel(new ManageRoomsAdapter(model));
+        ManageRoomsTable.mainFrame = MainFrame.getInstance();
         
         panel = new JPanel(new GridLayout(1, 0));
-       
+        
         
         table = this;
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        
+      
         
         JScrollPane scrollPane = new JScrollPane(this);
 
@@ -56,8 +54,6 @@ public class ManageUsersTable extends JTable {
     }
     
     /*public Subject getSubjectSelected() {
-        return subjectSelected;
+        return roomSelected;
     }*/
-    
-    
 }

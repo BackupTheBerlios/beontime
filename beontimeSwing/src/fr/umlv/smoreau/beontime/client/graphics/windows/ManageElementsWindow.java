@@ -64,7 +64,8 @@ public class ManageElementsWindow {
 		
 		//panel = new ManageSubjectsTree(model).getPanel();
 		//panel = new ManageGroupsTree(model).getPanel();
-		panel = new ManageUsersTable(model).getPanel();
+		//panel = new ManageUsersTable(model).getPanel();
+		panel = new ManageRoomsTable(model).getPanel();
 	}
 	
 	private void initManageButtonPanel() {
