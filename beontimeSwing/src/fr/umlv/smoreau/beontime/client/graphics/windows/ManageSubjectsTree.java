@@ -14,6 +14,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -48,7 +49,7 @@ public class ManageSubjectsTree extends JTree {
 	
 	
 	
-	public ManageSubjectsTree(final BoTModel model) {
+	public ManageSubjectsTree(final BoTModel model, final JButton modifyButton, final JButton removeButton) {
 		super();
 		super.setModel(new ManageSubjectsAdapter(model, this));
 		ManageSubjectsTree.mainFrame = MainFrame.getInstance();
@@ -67,6 +68,10 @@ public class ManageSubjectsTree extends JTree {
 		
 		super.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+				
+				modifyButton.setEnabled(true);
+				removeButton.setEnabled(true);
+				
 				// Popup Menus
 				if (e.getButton() == MouseEvent.BUTTON3) {
 					int row = tree.getRowForLocation(e.getX(), e.getY());

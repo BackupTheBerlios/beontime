@@ -14,6 +14,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -47,7 +48,7 @@ public class ManageGroupsTree extends JTree {
 	
 	
 	
-	public ManageGroupsTree(final BoTModel model) {
+	public ManageGroupsTree(final BoTModel model, final JButton modifyButton, final JButton removeButton, final JButton manageIdentityButton, final JButton generateButton) {
 		super();
 		super.setModel(new ManageGroupsAdapter(model, this));
 		ManageGroupsTree.mainFrame = MainFrame.getInstance();
@@ -66,6 +67,13 @@ public class ManageGroupsTree extends JTree {
 		
 		super.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+				
+				modifyButton.setEnabled(true);
+				removeButton.setEnabled(true);
+				manageIdentityButton.setVisible(true);
+				generateButton.setVisible(true);
+				
+				
 				// Popup Menus
 				if (e.getButton() == MouseEvent.BUTTON3) {
 					int row = tree.getRowForLocation(e.getX(), e.getY());
