@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.model.timetable;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -8,7 +9,7 @@ import fr.umlv.smoreau.beontime.model.Group;
 /**
  * @author BeOnTime
  */
-public class Timetable {
+public class Timetable implements Serializable {
     private Formation formation;
     private Group group;
     private Collection groups;

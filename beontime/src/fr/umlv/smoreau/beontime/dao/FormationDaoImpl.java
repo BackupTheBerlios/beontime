@@ -65,7 +65,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
             System.err.println("LDAP est inaccessible : " + e.getMessage());
             //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
             Formation formation = new Formation(new Long(66));
-            formation.setHeading("formation de test sans LDAP");
+            formation.setHeading("dslg01");
             result.add(formation);
             //finTODO
         }
