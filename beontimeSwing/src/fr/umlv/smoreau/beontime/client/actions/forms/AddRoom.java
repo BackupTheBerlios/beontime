@@ -22,7 +22,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
  */
 public class AddRoom extends Action {
 	
-	private static String name="Ajouter Local";
+	private static String name="";
 
 	public static javax.swing.Action getAction(){
 		AbstractAction va=new AbstractAction(name,getImage("images/New24.gif")) {

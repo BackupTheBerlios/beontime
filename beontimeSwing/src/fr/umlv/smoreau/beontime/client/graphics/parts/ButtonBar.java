@@ -66,7 +66,7 @@ public class ButtonBar extends JToolBar{
 		BorderLayout buttonBarPanelLayout = new BorderLayout();
 		setLayout(buttonBarPanelLayout);
 		
-		add(buttonPanel, BorderLayout.CENTER);
+		add(buttonPanel, BorderLayout.WEST);
 		add(visuEDTPanel, BorderLayout.EAST);
 		
 	}
