@@ -78,7 +78,7 @@ public class Hibernate {
 
             SessionFactory sessionFactory = cfg.buildSessionFactory();
             Session s = sessionFactory.openSession();
-            s.find("from Person");
+            s.find("from User");
         } catch (HibernateException e) {
             System.err.println("Connection échouée sur la base de données SQL : " + e.getMessage());
             return false;
