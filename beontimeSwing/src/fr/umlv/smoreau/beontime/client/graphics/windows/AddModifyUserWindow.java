@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.utils.ComboBoxBoT;
+import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -43,7 +45,7 @@ public class AddModifyUserWindow {
 	private JTextField nameJtf;
 	private JTextField surnameJtf;
 	private JTextField courrielMailJtf;
-	private JComboBox buildingJcb;
+	private ComboBoxBoT buildingJcb;
 	private JTextField localJtf;
 	private JTextField phoneJtf;
 	private JComboBox formationsJcb;
@@ -84,7 +86,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,nameLabel,1,1,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(nameLabel);
 		
-		nameJtf = new JTextField();
+		nameJtf = new TextFieldBoT(20);
 		addComponent(AMUWLayout,layoutConstraints,nameJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(nameJtf);
 		
@@ -92,7 +94,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,surnameLabel,1,2,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(surnameLabel);
 		
-		surnameJtf = new JTextField();
+		surnameJtf = new TextFieldBoT(20);
 		addComponent(AMUWLayout,layoutConstraints,surnameJtf,3,2,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(surnameJtf);
 		
@@ -111,7 +113,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailLabel);
 		
-		courrielMailJtf = new JTextField();
+		courrielMailJtf = new TextFieldBoT(50);
 		addComponent(AMUWLayout,layoutConstraints,courrielMailJtf,3,3,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailJtf);
 		
@@ -188,7 +190,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailLabel);
 		
-		courrielMailJtf = new JTextField();
+		courrielMailJtf = new TextFieldBoT(50);
 		addComponent(AMUWLayout,layoutConstraints,courrielMailJtf,3,3,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailJtf);
 		
@@ -205,20 +207,20 @@ public class AddModifyUserWindow {
 			int j = 1;
 			for (Iterator i = buildings.iterator(); i.hasNext(); ++j)
 				b[j] = (String) i.next();
-			buildingJcb = new JComboBox(b);
+			buildingJcb = new ComboBoxBoT(b);
 		} catch (Exception e) {
 			JLabel label = new JLabel("Erreur lors de la récupération des batiments existants");
 			label.setForeground(Color.RED);
 			addComponent(AMUWLayout,layoutConstraints,label,2,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 			AMUWFrame.getContentPane().add(label);
-			buildingJcb = new JComboBox();
+			buildingJcb = new ComboBoxBoT();
 		}
 		
 		JLabel buildingLabel = new JLabel("Batiment :");
 		addComponent(AMUWLayout,layoutConstraints,buildingLabel,2,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingLabel);
 		
-		buildingJcb.setEditable(true);
+		buildingJcb.setEditable(true, 40);
 		addComponent(AMUWLayout,layoutConstraints,buildingJcb,3,6,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingJcb);
 		
@@ -228,7 +230,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,localLabel,2,7,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(localLabel);
 		
-		localJtf = new JTextField();
+		localJtf = new TextFieldBoT(20);
 		addComponent(AMUWLayout,layoutConstraints,localJtf,3,7,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(localJtf);
 		
@@ -238,7 +240,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,phoneLabel,1,8,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(phoneLabel);
 		
-		phoneJtf = new JTextField();
+		phoneJtf = new TextFieldBoT(14);
 		addComponent(AMUWLayout,layoutConstraints,phoneJtf,3,8,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(phoneJtf);
 		
@@ -263,7 +265,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailLabel);
 		
-		courrielMailJtf = new JTextField();
+		courrielMailJtf = new TextFieldBoT(50);
 		addComponent(AMUWLayout,layoutConstraints,courrielMailJtf,3,3,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailJtf);
 		

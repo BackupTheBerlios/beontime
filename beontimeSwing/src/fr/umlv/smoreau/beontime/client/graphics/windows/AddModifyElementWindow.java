@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +20,8 @@ import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.utils.ComboBoxBoT;
+import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 import fr.umlv.smoreau.beontime.dao.ElementDao;
 import fr.umlv.smoreau.beontime.filter.MaterialFilter;
 import fr.umlv.smoreau.beontime.filter.RoomFilter;
@@ -34,7 +35,7 @@ public class AddModifyElementWindow {
 
 	private JTextField equipmentNameJtf;
 	
-	private JComboBox buildingNameJcB;
+	private ComboBoxBoT buildingNameJcB;
 	
 	private JTextArea descriptionEquipmentJta;
 	
@@ -104,8 +105,8 @@ public class AddModifyElementWindow {
 	    JLabel equipmentNameLabel = new JLabel("Nom du matériel :");
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameLabel);
-		
-		equipmentNameJtf = new JTextField();
+
+		equipmentNameJtf = new TextFieldBoT(20);
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameJtf);
 	}
@@ -115,26 +116,26 @@ public class AddModifyElementWindow {
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameLabel);
 		
-		equipmentNameJtf = new JTextField();
+		equipmentNameJtf = new TextFieldBoT(20);
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameJtf);
 		
 		try {
             Collection buildings = DaoManager.getElementDao().getBuildings();
-            buildingNameJcB = new JComboBox(buildings.toArray(new String[buildings.size()]));
+            buildingNameJcB = new ComboBoxBoT(buildings.toArray(new String[buildings.size()]));
         } catch (Exception e) {
             JLabel label = new JLabel("Erreur lors de la récupération des batiments existants");
             label.setForeground(Color.RED);
             addComponent(AMEWLayout,layoutConstraints,label,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
             AMEWFrame.getContentPane().add(label);
-            buildingNameJcB = new JComboBox();
+            buildingNameJcB = new ComboBoxBoT();
         }
         
         JLabel buildingNameLabel = new JLabel("Nom du batiment:");
 		addComponent(AMEWLayout,layoutConstraints,buildingNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(buildingNameLabel);
 
-		buildingNameJcB.setEditable(true);
+		buildingNameJcB.setEditable(true, 40);
 		addComponent(AMEWLayout,layoutConstraints,buildingNameJcB,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(buildingNameJcB);
 	}

@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.user.User;
@@ -232,7 +233,7 @@ public class AddModifySubjectWindow {
     	addComponent(AMFWLayout,layoutConstraints,intitleFieldLabel,1,4,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMFWFrame.getContentPane().add(intitleFieldLabel);
     	
-    	intitleFieldJtf = new JTextField();   	
+    	intitleFieldJtf = new TextFieldBoT(40);   	
     	addComponent(AMFWLayout,layoutConstraints,intitleFieldJtf,4,4,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
     	AMFWFrame.getContentPane().add(intitleFieldJtf);
     	

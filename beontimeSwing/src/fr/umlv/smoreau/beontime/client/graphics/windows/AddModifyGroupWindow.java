@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 
 /**
  * @author BeOnTime
@@ -61,7 +62,7 @@ public class AddModifyGroupWindow {
         addComponent(AMGWLayout,layoutConstraints,intitleGroupLabel,1,2,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
         AMGWFrame.getContentPane().add(intitleGroupLabel);
         
-        intitleGroupJtf = new JTextField();
+        intitleGroupJtf = new TextFieldBoT(20);
         addComponent(AMGWLayout,layoutConstraints,intitleGroupJtf,2,2,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
         AMGWFrame.getContentPane().add(intitleGroupJtf);
         
