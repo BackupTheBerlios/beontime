@@ -9,10 +9,13 @@ package fr.umlv.smoreau.beontime.client.graphics.windows;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -31,7 +34,7 @@ public class ManageUsersTable extends JTable {
     private static MainFrame mainFrame;
     private User userSelected;
     
-    public ManageUsersTable(final BoTModel model) {
+    public ManageUsersTable(final BoTModel model, final JButton modifyButton, final JButton deleteButton) {
         super();
         super.setModel(new ManageUsersAdapter(model));
         ManageUsersTable.mainFrame = MainFrame.getInstance();
@@ -42,6 +45,15 @@ public class ManageUsersTable extends JTable {
         table = this;
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
+        
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent e) {
+				modifyButton.setEnabled(true);
+				deleteButton.setEnabled(true);
+			}
+			
+		});
         
         
         JScrollPane scrollPane = new JScrollPane(this);

@@ -49,7 +49,13 @@ public class ManageIdentityGroupsTable extends JTable {
         
         table = this;
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setCellSelectionEnabled(true);
         
+        //table.setRowSelectionAllowed(true);
+        //table.setColumnSelectionAllowed(true);
+        
+        
+        //table.setDefaultRenderer(Object.class, new CrossRenderer());
         TableColumnModel tableColumnModel = new DefaultTableColumnModel();
         TableColumn tableColumn = new TableColumn(0);
         tableColumnModel.addColumn(tableColumn);
@@ -60,8 +66,9 @@ public class ManageIdentityGroupsTable extends JTable {
 			tableColumn.setHeaderValue(group.getHeading());
 			tableColumnModel.addColumn(tableColumn);
         }
+        //tableColumnModel.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setColumnModel(tableColumnModel);
-      
+		
         
         JScrollPane scrollPane = new JScrollPane(this);
 
@@ -92,11 +99,13 @@ public class ManageIdentityGroupsTable extends JTable {
     	 * @param column the column index of the cell being drawn.
     	 */
     	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    	    String v = (String) value;
+    	    
+    		
+    		String v = (String) value;
     	    
     	    if ("oui".equals(v))
     	        return new CrossDrawing();
-
+    		
     		return this;
     	}
     }
