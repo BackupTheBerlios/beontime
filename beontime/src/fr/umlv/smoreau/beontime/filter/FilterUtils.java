@@ -39,7 +39,7 @@ public class FilterUtils {
 	        else
 	            split = new String[] { methodName };
 	        Object obj = object;
-	        for (int j = 0; j < split.length; ++j) {
+	        for (int j = 0; j < split.length && obj != null; ++j) {
 	            Class clazz = obj.getClass();
 	            obj = clazz.getMethod("get"+split[j], (java.lang.Class[]) null).invoke(obj, (java.lang.Object[]) null);
 	        }
