@@ -42,6 +42,7 @@ public class RemoveCourse extends Action {
                 
                 DaoManager.getTimetableDao().removeCourse(course);
                 timetable.removeCourse(course);
+                mainFrame.setCourseSelected(null);
                 mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
