@@ -27,6 +27,7 @@ public class AddModifyElementWindow {
 	private static String TITRE = "Ajouter une secrétaire ou un enseignant";
 
 	private JLabel equipmentNameLabel;
+	private JLabel buildingNameLabel;
 	private JLabel descriptionEquipmentLabel;
 
 	private JTextField equipmentNameJtf;
@@ -68,24 +69,6 @@ public class AddModifyElementWindow {
 		case 2: initLocalParts();break;
 		}
 		
-		
-	}
-	
-	
-	
-	private void initEquipmentParts() {
-		
-		
-		equipmentNameLabel = new JLabel("Nom du matériel :");
-		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
-		AMEWFrame.getContentPane().add(equipmentNameLabel);
-		
-		equipmentNameJtf = new JTextField();
-		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		AMEWFrame.getContentPane().add(equipmentNameJtf);
-		
-		
-		
 		descriptionEquipmentLabel = new JLabel("Description");
 		addComponent(AMEWLayout,layoutConstraints,descriptionEquipmentLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(descriptionEquipmentLabel);
@@ -107,12 +90,45 @@ public class AddModifyElementWindow {
 		addComponent(AMEWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(annuler);
 		
+	}
+	
+	
+	
+	private void initEquipmentParts() {
 		
+		
+		equipmentNameLabel = new JLabel("Nom du matériel :");
+		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMEWFrame.getContentPane().add(equipmentNameLabel);
+		
+		equipmentNameJtf = new JTextField();
+		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		AMEWFrame.getContentPane().add(equipmentNameJtf);
 		
 		
 	}
 	
 	private void initLocalParts() {
+		
+		equipmentNameLabel = new JLabel("Nom du local :");
+		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMEWFrame.getContentPane().add(equipmentNameLabel);
+		
+		equipmentNameJtf = new JTextField();
+		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		AMEWFrame.getContentPane().add(equipmentNameJtf);
+		
+		
+		
+		buildingNameLabel = new JLabel("Nom du batiment:");
+		addComponent(AMEWLayout,layoutConstraints,buildingNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMEWFrame.getContentPane().add(buildingNameLabel);
+		
+		buildingNameJcB = new JComboBox();
+		addComponent(AMEWLayout,layoutConstraints,buildingNameJcB,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		AMEWFrame.getContentPane().add(buildingNameJcB);
+		
+		
 		
 	}
 	
@@ -145,7 +161,7 @@ public class AddModifyElementWindow {
         	MainFrame frame = MainFrame.getInstance();
          	frame.open();
          	
-         	AddModifyElementWindow form = new AddModifyElementWindow(1);
+         	AddModifyElementWindow form = new AddModifyElementWindow(2);
          	form.show();
     			
         } 
