@@ -67,6 +67,7 @@ public class AddCourse extends Action {
     	}
     	window.setCourseFormation(mainFrame.getFormationSelected());
     	window.setTypeCourse(mainFrame.getCourseTypeSelected());
+    	//TODO ajouter l'enseignant responsable de la matière pour le cours
     	window.show();
     	
     	if (window.isOk()) {

@@ -138,18 +138,6 @@ public class AddModifyUserWindow {
 				formationsName[j] = formation.getHeading();
 			}
 			
-			//TODO ajout à supprimer      	
-			formationsId = new Long[2];
-			formationsId[0] = null;
-			formationsId[1] = new Long(66);
-			
-			formationsName = new String[2];
-			formationsName[0] = "";
-			formationsName[1] = "dslg00";
-			// fin TODO
-			
-			
-			
 			formationsJcb = new JComboBox(formationsName);
 			formationsPanel.add(formationsJcb);
 			formationsPanel.add(Box.createVerticalStrut(5));
@@ -413,29 +401,50 @@ public class AddModifyUserWindow {
 	}
 	
 	public void setFormations(Collection formations) {
-		
+	    if (formationsId == null || formations == null)
+	        return;
+
+	    //TODO à améliorer ...
+	    Long[] ids = new Long[formationsId.length + formations.size()];
+	    String[] names = new String[formationsName.length + formations.size()];
+	    int i = 0;
+	    for (; i < formationsId.length; ++i) {
+	        ids[i] = formationsId[i];
+	        names[i] = formationsName[i];
+	    }
+	    for (Iterator j = formations.iterator(); j.hasNext(); ++i) {
+	        Formation f = (Formation) j.next();
+	        ids[i] = f.getIdFormation();
+	        names[i] = f.getHeading();
+	    }
+	    this.formationsId = ids;
+	    this.formationsName = names;
+	    
+	    formationsPanel.remove(formationsJcb);
+	    formationsJcb = new JComboBox(formationsName);
+	    formationsPanel.add(formationsJcb);
+	    //finTODO
+
 		int cpt = 0;
 		int sizeFormations = formations.size();
 		
-		for(Iterator it = formations.iterator();it.hasNext();) {
-			
+		for(Iterator it = formations.iterator(); it.hasNext(); ) {
 			Formation formation = (Formation) it.next();
 			
 			int pos = -1;
 			
-			for(int i=1; i<formationsId.length;i++) {
-				if(formationsId[i].compareTo(formation.getIdFormation()) == 0)
+			for(i = 1; i < formationsId.length; ++i) {
+				if (formationsId[i].equals(formation.getIdFormation()))
 					pos = i;
 			}
 			
 			if (cpt == 0) {
-				formationsJcb.setSelectedItem(formationsName[pos]);    			
+				formationsJcb.setSelectedIndex(pos);    			
 				
-				if(cpt != (sizeFormations-1))
+				if (cpt != (sizeFormations-1))
 					formationPlusButton.setText("x");  	
 			}
 			else {
-				
 				JComboBox jcb = new JComboBox(formationsName);
 				
 				jcb.setSelectedItem(formationsName[pos]);
@@ -455,8 +464,6 @@ public class AddModifyUserWindow {
 			}
 			cpt++;
 		}
-		
-		//AMUWFrame.pack();
 	}
 	
 	public boolean isOk() {
