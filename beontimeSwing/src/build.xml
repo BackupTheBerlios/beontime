@@ -53,7 +53,7 @@
     <mkdir dir="${dest}"/>
 
 	<!-- Put everything in ${classes} into the ${dest}/botServer.jar file -->
-	<jar jarfile="${dest}/botCustomer.jar" basedir="${classes}">
+	<jar jarfile="${dest}/botClient.jar" basedir="${classes}">
 		<manifest>
 			<attribute name="Main-class" value="fr.umlv.smoreau.beontime.client.BeOnTime"/>
 			<attribute name="Class-Path" value="../lib/hibernate2.jar ../lib/pg72jdbc2.jar ../lib/db-ojb-1.0.1.jar ../lib/jcalendar.jar ../lib/bot.jar"/>
@@ -65,7 +65,7 @@
   <target name="clean" description="clean up" >
     <!-- Delete the ${classes} and ${dest} directory trees -->
     <delete dir="${classes}"/>
-	<delete file="${dest}/botCustomer.jar"/>
+	<delete file="${dest}/botClient.jar"/>
 	<delete dir="${docs}/api"/>
   </target>
 </project>
