@@ -45,6 +45,9 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class AddModifyCourseWindow {
 	private static final String TITRE = "Placer un cours";
 	
+	private static final int FIRST_HOUR = 8;
+	private static final int LAST_HOUR = 19;
+	
 	public static final int TYPE_ADD = 0;
 	public static final int TYPE_MODIFY = 1;
 	
@@ -514,7 +517,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(dureeCourseDeLabel);
 		
 		startCourseHourJcb = new JComboBox();
-		initNumberJcb(startCourseHourJcb, 8, 19);
+		initNumberJcb(startCourseHourJcb, FIRST_HOUR, LAST_HOUR);
 		addComponent(AMCWLayout,layoutConstraints,startCourseHourJcb,2,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(startCourseHourJcb);
 		
@@ -527,7 +530,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(dureeCourseALabel);
 		
 		endCourseHourJcb = new JComboBox();
-		initNumberJcb(endCourseHourJcb, 8, 19);
+		initNumberJcb(endCourseHourJcb, FIRST_HOUR, LAST_HOUR);
 		addComponent(AMCWLayout,layoutConstraints,endCourseHourJcb,5,3,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(endCourseHourJcb);
 		
@@ -731,12 +734,12 @@ public class AddModifyCourseWindow {
     }
 
     public void setStartHour(int start){
-    	startCourseHourJcb.setSelectedIndex((start/4)+8);
+    	startCourseHourJcb.setSelectedIndex((start/4)+8 - FIRST_HOUR);
     	startCourseMinuteJcb.setSelectedIndex((start%4));
     }
     
     public void setBeginDate(Calendar date){
-    	startCourseHourJcb.setSelectedIndex(date.get(Calendar.HOUR_OF_DAY));
+    	startCourseHourJcb.setSelectedIndex(date.get(Calendar.HOUR_OF_DAY) - FIRST_HOUR);
     	startCourseMinuteJcb.setSelectedIndex(date.get(Calendar.MINUTE)/15);
     	dateCourse.setDate(date.getTime());
     }
@@ -752,12 +755,12 @@ public class AddModifyCourseWindow {
     }
 
     public void setEndHour(int end){
-    	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8);
+    	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8 - FIRST_HOUR);
     	endCourseMinuteJcb.setSelectedIndex(((end+1)%4));
     }
     
     public void setEndDate(Calendar date){
-    	endCourseHourJcb.setSelectedIndex(date.get(Calendar.HOUR_OF_DAY));
+    	endCourseHourJcb.setSelectedIndex(date.get(Calendar.HOUR_OF_DAY) - FIRST_HOUR);
     	endCourseMinuteJcb.setSelectedIndex(date.get(Calendar.MINUTE)/15);
     	dateCourse.setDate(date.getTime());
     }
