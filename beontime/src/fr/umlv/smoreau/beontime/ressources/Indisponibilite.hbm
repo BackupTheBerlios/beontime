@@ -27,17 +27,15 @@
 		 />
 		<property
 			column="date_fin"
-			length="4"
 			name="EndDate"
 			not-null="false"
-			type="date"
+			type="calendar"
 		 />
 		<property
 			column="date_debut"
-			length="4"
 			name="BeginDate"
 			not-null="false"
-			type="date"
+			type="calendar"
 		 />
 
 		<many-to-one

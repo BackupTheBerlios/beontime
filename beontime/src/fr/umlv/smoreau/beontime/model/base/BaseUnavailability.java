@@ -35,8 +35,8 @@ public abstract class BaseUnavailability  implements Serializable {
 	// fields
 	private java.lang.Long _idUnavailabilitySubject;
 	private java.lang.String _description;
-	private java.util.Date _endDate;
-	private java.util.Date _beginDate;
+	private java.util.Calendar _endDate;
+	private java.util.Calendar _beginDate;
 
 	// many to one
 	private UnavailabilityType _idUnavailabilityType;
@@ -128,7 +128,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	/**
 	 * Return the value associated with the column: Date_fin
 	 */
-	public java.util.Date getEndDate () {
+	public java.util.Calendar getEndDate () {
 		return _endDate;
 	}
 
@@ -136,7 +136,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	 * Set the value related to the column: Date_fin
 	 * @param _endDate the Date_fin value
 	 */
-	public void setEndDate (java.util.Date _endDate) {
+	public void setEndDate (java.util.Calendar _endDate) {
 		this._endDate = _endDate;
 	}
 
@@ -144,7 +144,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	/**
 	 * Return the value associated with the column: Date_debut
 	 */
-	public java.util.Date getBeginDate () {
+	public java.util.Calendar getBeginDate () {
 		return _beginDate;
 	}
 
@@ -152,7 +152,7 @@ public abstract class BaseUnavailability  implements Serializable {
 	 * Set the value related to the column: Date_debut
 	 * @param _beginDate the Date_debut value
 	 */
-	public void setBeginDate (java.util.Date _beginDate) {
+	public void setBeginDate (java.util.Calendar _beginDate) {
 		this._beginDate = _beginDate;
 	}
 
