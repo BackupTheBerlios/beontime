@@ -45,6 +45,11 @@ public abstract class BaseUnavailabilityType  implements Serializable {
 		this.setIdUnavailabilityType(_idUnavailabilityType);
 		initialize();
 	}
+	
+	public BaseUnavailabilityType (java.lang.String _nameUnavailabilityType) {
+		this.setNameUnavailabilityType(_nameUnavailabilityType);
+		initialize();
+	}
 
 	protected void initialize () {}
 

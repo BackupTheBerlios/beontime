@@ -3,6 +3,7 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
+import java.util.Iterator;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
@@ -37,14 +38,16 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
     private static final String TABLE      = "Unavailability";
     private static final String TABLE_TYPE = "UnavailabilityType";
     
+    private static Collection unavailabilityTypes;
+    
 
     private UnavailabilityDaoImpl() throws RemoteException, HibernateException {
-        Collection types = getTypesUnavailability();
-        if (types != null && types.size() == 0) {
+        unavailabilityTypes = getTypesUnavailability();
+        if (unavailabilityTypes != null && unavailabilityTypes.size() == 0) {
             for (int i = 0; i < ALL_TYPES.length; ++i) {
                 UnavailabilityType type = new UnavailabilityType();
                 type.setNameUnavailabilityType(ALL_TYPES[i]);
-                addTypeUnavailability(type);
+                unavailabilityTypes.add(addTypeUnavailability(type));
             }
         }
     }
@@ -116,6 +119,8 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
 	
 	
 	public Collection getTypesUnavailability() throws RemoteException, HibernateException {
+	    if (unavailabilityTypes != null)
+	        return unavailabilityTypes;
 	    Session session = null;
         try {
             session = Hibernate.getCurrentSession();
@@ -123,6 +128,15 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
         } finally {
             Hibernate.closeSession();
         }
+	}
+	
+	public UnavailabilityType getTypeUnavailability(String name) throws RemoteException {
+	    for (Iterator i = unavailabilityTypes.iterator(); i.hasNext(); ) {
+	        UnavailabilityType type = (UnavailabilityType) i.next();
+	        if (type.getNameUnavailabilityType().equals(name))
+	            return type;
+	    }
+	    return null;
 	}
 	
 	private UnavailabilityType addTypeUnavailability(UnavailabilityType typeUnavailability) throws HibernateException {

@@ -10,6 +10,7 @@ import net.sf.hibernate.HibernateException;
 
 import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.Unavailability;
+import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 
 /**
  * RMI interface for the Unavailability DAO
@@ -17,14 +18,17 @@ import fr.umlv.smoreau.beontime.model.Unavailability;
  */
 public interface UnavailabilityDao extends Remote {
     public static final String TYPE_TEACHER  = "enseignant";
-    public static final String TYPE_STUDENT  = "étudiant";
+    public static final String TYPE_GROUP    = "groupe";
     public static final String TYPE_COURSE   = "cours";
     public static final String TYPE_MATERIAL = "matériel";
     public static final String TYPE_ROOM     = "local";
     public static final String TYPE_CALENDAR = "calendrier";
     
-    public static final String[] ALL_TYPES = { TYPE_TEACHER, TYPE_STUDENT, TYPE_COURSE, TYPE_MATERIAL, TYPE_ROOM, TYPE_CALENDAR };
-    
+    public static String[] ALL_TYPES = { TYPE_TEACHER, TYPE_GROUP, TYPE_COURSE, TYPE_MATERIAL, TYPE_ROOM, TYPE_CALENDAR };
+
+
+    public static final String AUTO_DESCRIPTION = "Ajout automatique ...";
+
 
 	public Collection getUnavailabilities(UnavailabilityFilter filter) throws RemoteException, HibernateException;
 	
@@ -37,5 +41,6 @@ public interface UnavailabilityDao extends Remote {
 	public void removeUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
 	
 	public Collection getTypesUnavailability() throws RemoteException, HibernateException;
-		
+	
+	public UnavailabilityType getTypeUnavailability(String name) throws RemoteException;
 }

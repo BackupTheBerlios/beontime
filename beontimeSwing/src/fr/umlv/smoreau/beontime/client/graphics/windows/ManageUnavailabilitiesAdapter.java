@@ -49,7 +49,7 @@ public class ManageUnavailabilitiesAdapter implements TreeModel {
 		this.list = new EventListenerList();
 		this.tree = t;
 		
-		String [] tabTypesUnavailabilities = UnavailabilityDao.ALL_TYPES;
+		String[] tabTypesUnavailabilities = UnavailabilityDao.ALL_TYPES;
 		
 		listTypeUnavailabilities = new ArrayList();
 		
@@ -74,7 +74,7 @@ public class ManageUnavailabilitiesAdapter implements TreeModel {
 		u4.setNameUnavailabilityType(UnavailabilityDao.TYPE_ROOM);
 		
 		UnavailabilityType u5= new UnavailabilityType(new Long(5));
-		u5.setNameUnavailabilityType(UnavailabilityDao.TYPE_STUDENT);
+		u5.setNameUnavailabilityType(UnavailabilityDao.TYPE_GROUP);
 		
 		UnavailabilityType u6 = new UnavailabilityType(new Long(3));
 		u6.setNameUnavailabilityType(UnavailabilityDao.TYPE_TEACHER);

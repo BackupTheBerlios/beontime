@@ -19,6 +19,10 @@ public class UnavailabilityType extends BaseUnavailabilityType {
 	public UnavailabilityType (java.lang.Long _idUnavailabilityType) {
 		super(_idUnavailabilityType);
 	}
+	
+	public UnavailabilityType (java.lang.String _nameUnavailabilityType) {
+		super(_nameUnavailabilityType);
+	}
 
 /*[CONSTRUCTOR MARKER END]*/
 }
