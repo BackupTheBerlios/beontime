@@ -20,12 +20,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.tree.TreePath;
 
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
 
 /**
  * @author BeOnTime
@@ -330,18 +332,22 @@ public class ManageElementsWindow {
 	}
 	
 	
-    private class ActionButton implements ActionListener {
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public void actionPerformed(ActionEvent arg0) {
-            if (TYPE_USERS_BY_ADMIN == type || TYPE_USERS_BY_SECRETARY == type)
-                MainFrame.getInstance().setUserSelected(null);
-            if (TYPE_ROOMS == type)
-                MainFrame.getInstance().setRoomSelected(null);
-            if (TYPE_MATERIALS == type)
-                MainFrame.getInstance().setMaterialSelected(null);
-			MEWFrame.dispose();
-        }
-    }
+	private class ActionButton implements ActionListener {
+	    /* (non-Javadoc)
+	     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	     */
+	    public void actionPerformed(ActionEvent arg0) {
+	        if (TYPE_USERS_BY_ADMIN == type || TYPE_USERS_BY_SECRETARY == type)
+	            MainFrame.getInstance().setUserSelected(null);
+	        if (TYPE_ROOMS == type)
+	            MainFrame.getInstance().setRoomSelected(null);
+	        if (TYPE_MATERIALS == type)
+	            MainFrame.getInstance().setMaterialSelected(null);
+	        if (TYPE_SUBJECTS == type) {
+	            Edit edit = MainFrame.getInstance().getEdit();
+	            edit.addSelectionPath(new TreePath(edit.getModel().getRoot()));
+	        }
+	        MEWFrame.dispose();
+	    }
+	}
 }

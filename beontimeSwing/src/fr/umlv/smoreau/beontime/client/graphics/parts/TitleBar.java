@@ -98,19 +98,13 @@ public class TitleBar extends JPanel {
                 if (mainFrame.getModel().getTimetable() == null)
                     return;
 				TimetableFilter filter = new TimetableFilter(mainFrame.getModel().getTimetable());
-				//filter.setFormation(mainFrame.getFormationSelected());
-				Calendar begin = Calendar.getInstance();
-				begin.setTime(getPeriod());
-				begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-				filter.setBeginPeriod(begin);
-				Calendar end = Calendar.getInstance();
-				end.setTime(getPeriod());
-				end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-				filter.setEndPeriod(end);
+				filter.setBeginPeriod(mainFrame.getBeginPeriod());
+				filter.setEndPeriod(mainFrame.getEndPeriod());
 				try {
 					Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 					mainFrame.getModel().fireShowTimetable(timetable);
 				} catch (Exception e) {
+				    e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
             }

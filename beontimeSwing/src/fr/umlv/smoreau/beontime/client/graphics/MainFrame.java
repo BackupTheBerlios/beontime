@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -299,6 +300,10 @@ public class MainFrame {
 	public BoTModel getModel() {
 	    return model;
 	}
+	
+	public Edit getEdit() {
+	    return edit;
+	}
 
 	public void refresh() {
 	    mainFrame.setVisible(true);
@@ -319,5 +324,25 @@ public class MainFrame {
 	
 	public Date getDateSelected() {
 	    return titleBar.getPeriod();
+	}
+	
+	public Calendar getBeginPeriod() {
+	    Calendar begin = Calendar.getInstance();
+		begin.setTime(getDateSelected());
+		begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		begin.set(Calendar.HOUR_OF_DAY, 0);
+		begin.set(Calendar.MINUTE, 0);
+		begin.set(Calendar.SECOND, 0);
+		return begin;
+	}
+	
+	public Calendar getEndPeriod() {
+	    Calendar end = Calendar.getInstance();
+		end.setTime(getDateSelected());
+		end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		end.set(Calendar.HOUR_OF_DAY, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		return end;
 	}
 }

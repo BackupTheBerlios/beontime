@@ -1,9 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.edit;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,13 +13,11 @@ import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
-import fr.umlv.smoreau.beontime.client.graphics.ColorBoT;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
@@ -44,7 +39,7 @@ public class Edit extends JTree {
         Edit.mainFrame = mainFrame;
         
         pane = new JPanel(new GridLayout(1, 0));
-        this.setCellRenderer(new TreeRenderer());
+        this.setCellRenderer(new EditRenderer());
         this.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         
         ToolTipManager.sharedInstance().registerComponent(this);
@@ -134,51 +129,7 @@ public class Edit extends JTree {
     public String getCourseTypeSelected() {
         return courseTypeSelected;
     }
-    
-    
-    private class TreeRenderer extends DefaultTreeCellRenderer {
-        /* (non-Javadoc)
-         * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
-         */
-        public Component getTreeCellRendererComponent(
-                JTree tree,
-    			Object value,
-    			boolean selected,
-    			boolean expanded,
-    			boolean leaf,
-    			int row,
-    			boolean hasFocus) {
-            
-            super.getTreeCellRendererComponent(tree, value, selected,
-    				expanded, leaf, row, hasFocus);
 
-            Font font = null;
-            String tooltip = null;
-            if (value instanceof Timetable) {
-                font = new Font("Arial", Font.BOLD, 15);
-                Timetable timetable = (Timetable) value;
-                if (timetable.getFormation() != null)
-                    setText(timetable.getFormation().getHeading());
-                else if (timetable.getTeacher() != null)
-                    setText(timetable.getTeacher().getName() + " " + timetable.getTeacher().getFirstName());
-            } else if (value instanceof Subject) {
-                font = new Font("Arial", Font.PLAIN, 14);
-                Subject subject = (Subject) value;
-                setText(subject.getHeading());
-                setForeground(ColorBoT.getColorAt(subject.getIdSubject().intValue()));
-            } else if (value instanceof String) {
-                font = new Font("Arial", Font.PLAIN, 13);
-                setText((String) value);
-            }
-            setFont(font);
-            setToolTipText(tooltip);
-            setBackgroundSelectionColor(Color.WHITE);
-            
-            setIcon(null);
-            
-            return this;
-        }
-    }
     
 	private static class PopupMenu extends JPopupMenu {
 	    private Object selected;

@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -95,26 +94,6 @@ public class TimeTableViewPanelBar extends JPanel {
 		gbLayout.setConstraints(comp,constraints);
 	}
 	
-	private Calendar getBeginPeriod() {
-	    Calendar begin = Calendar.getInstance();
-		begin.setTime(mainFrame.getDateSelected());
-		begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-		begin.set(Calendar.HOUR_OF_DAY, 0);
-		begin.set(Calendar.MINUTE, 0);
-		begin.set(Calendar.SECOND, 0);
-		return begin;
-	}
-	
-	private Calendar getEndPeriod() {
-	    Calendar end = Calendar.getInstance();
-		end.setTime(mainFrame.getDateSelected());
-		end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-		end.set(Calendar.HOUR_OF_DAY, 23);
-		end.set(Calendar.MINUTE, 59);
-		end.set(Calendar.SECOND, 59);
-		return end;
-	}
-	
 	private class ItemListenerType implements ItemListener {
 	    private JPanel panel;
 	    GridBagLayout visuEDTPanelLayout;
@@ -124,12 +103,12 @@ public class TimeTableViewPanelBar extends JPanel {
 	        this.panel = panel;
 	        this.visuEDTPanelLayout = visuEDTPanelLayout;
 	        this.layoutConstraints = layoutConstraints;
-
 	    }
 
 		public void itemStateChanged(ItemEvent event) {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				jcbSubjectEDT.removeAllItems();
+				jcbGroupEDT.removeAllItems();
 				try {
 				    jcbSubjectEDT.setEnabled(false);
 				    jcbGroupEDT.setEnabled(false);
@@ -194,30 +173,36 @@ public class TimeTableViewPanelBar extends JPanel {
 					    mainFrame.getModel().fireCloseTimetable(false);
 				    }
 					if (!TYPE_VIDE.equals(event.getItem())) {
+					    boolean show = false;
+					    Long id = ((Item)event.getItem()).getId();
+					    TimetableFilter filter = new TimetableFilter();
+
 					    if (TYPE_FORMATION.equals(jcbTypeEDT.getSelectedItem())) {
-							Long id = ((Item)event.getItem()).getId();
-							TimetableFilter filter = new TimetableFilter();
 							filter.setFormation(new Formation(id));
-							filter.setBeginPeriod(getBeginPeriod());
-							filter.setEndPeriod(getEndPeriod());
-							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
-							mainFrame.getModel().fireShowTimetable(timetable);
+							show = true;
+						} else if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
+							filter.setTeacher(new User(id));
+							show = true;
+					    } else if (TYPE_LOCAL.equals(jcbTypeEDT.getSelectedItem())) {
+							filter.setRoom(new Room(id));
+							show = true;
+					    } else if (TYPE_MATERIEL.equals(jcbTypeEDT.getSelectedItem())) {
+							filter.setMaterial(new Material(id));
+							show = true;
 					    } else if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem())) {
-					        Long id = ((Item)event.getItem()).getId();
-							GroupFilter filter = new GroupFilter();
-							filter.setIdFormation(id);
-							Collection groups = DaoManager.getGroupDao().getGroups(filter);
+							GroupFilter groupFilter = new GroupFilter();
+							groupFilter.setIdFormation(id);
+							Collection groups = DaoManager.getGroupDao().getGroups(groupFilter);
 							jcbGroupEDT.removeAll();
 							jcbGroupEDT.addItem("");
 							for (Iterator i = groups.iterator(); i.hasNext(); )
 							    jcbGroupEDT.addItem(((Group) i.next()).getHeading());
 							jcbGroupEDT.setEnabled(true);
-					    } else if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
-					        Long id = ((Item)event.getItem()).getId();
-							TimetableFilter filter = new TimetableFilter();
-							filter.setTeacher(new User(id));
-							filter.setBeginPeriod(getBeginPeriod());
-							filter.setEndPeriod(getEndPeriod());
+					    }
+					    
+					    if (show) {
+					        filter.setBeginPeriod(mainFrame.getBeginPeriod());
+							filter.setEndPeriod(mainFrame.getEndPeriod());
 							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 							mainFrame.getModel().fireShowTimetable(timetable);
 					    }
