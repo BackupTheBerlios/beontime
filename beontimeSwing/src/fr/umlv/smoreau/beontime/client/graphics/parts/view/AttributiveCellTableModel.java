@@ -168,13 +168,15 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    Course course = e.getCourse();
 		    for(int i=0;i<rowNb;i++){
 		    	for(int j=0;j<colNb;j++){
-		    		Course courseRead=(Course)getValueAt(i,j);
-		    		//TODO Mohamed: j'ai mis le ==null car j'avais un NullPointerException, tu dois voir pourquoi ça ne supprime pas à l'affichage
-		    		if (courseRead == null/*.equals(course)*/){
-		    			cellAtt.split(i,j);
-		    	        setValueAt(null,i,j);
-		    	        fireTableDataChanged();
-		    			return;
+		    		if(((Course)getValueAt(i,j))!=null){
+		    			Course courseRead=(Course)getValueAt(i,j);
+		    			//TODO Mohamed: j'ai mis le ==null car j'avais un NullPointerException, tu dois voir pourquoi ça ne supprime pas à l'affichage
+		    			if (courseRead.equals(course)){
+		    				cellAtt.split(i,j);
+		    				setValueAt(null,i,j);
+		    				fireTableDataChanged();
+		    				return;
+		    			}
 		    		}
 		    		
 		    	}
