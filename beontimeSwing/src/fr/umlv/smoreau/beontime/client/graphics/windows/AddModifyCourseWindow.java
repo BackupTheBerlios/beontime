@@ -37,7 +37,6 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class AddModifyCourseWindow {
-	
 	private static final String TITRE = "Placer un cours";
 	
 	private JLabel teacherLabel;
@@ -178,8 +177,11 @@ public class AddModifyCourseWindow {
 			Component[] components = teacherPanel.getComponents();
 			
 			for(int i = 0; i < components.length; ++i) {
-			    if (components[i] instanceof JComboBox)
-			        list.add(teachers[((JComboBox)components[i]).getSelectedIndex()]);
+			    if (components[i] instanceof JComboBox) {
+			        int index = ((JComboBox)components[i]).getSelectedIndex();
+			        if (index > 0)
+			            list.add(teachers[index]);
+			    }
 			}
 		}
 		
@@ -199,8 +201,11 @@ public class AddModifyCourseWindow {
 			Component[] components = placeCoursePanel.getComponents();
 			
 			for(int i = 0; i < components.length; ++i)
-			    if (components[i] instanceof JComboBox)
-			        list.add(rooms[((JComboBox)components[i]).getSelectedIndex()]);
+			    if (components[i] instanceof JComboBox) {
+			        int index = ((JComboBox)components[i]).getSelectedIndex();
+			        if (index > 0)
+			            list.add(rooms[index]);
+			    }
 		}
 		
 		return list;
@@ -217,8 +222,10 @@ public class AddModifyCourseWindow {
 			Component[] components = courseEquipmentPanel.getComponents();
 			
 			for (int i = 0; i < components.length; ++i)
-			    if (components[i] instanceof JComboBox)
-			        list.add(materials[((JComboBox)components[i]).getSelectedIndex()]);
+			    if (components[i] instanceof JComboBox) {
+			        int index = ((JComboBox)components[i]).getSelectedIndex();
+			        list.add(materials[index]);
+			    }
 		}
 		
 		return list;
@@ -567,16 +574,10 @@ public class AddModifyCourseWindow {
     }
     
     private int checking() {
-        /*String name = getName();
-        if (name == null || "".equals(name))
+        if (getTeachers().size() == 0)
             return 1;
-        String surname = getSurname();
-        if (surname == null || "".equals(surname))
+        if (getStartHour() == getEndHour() && getStartMinute() == getEndMinute())
             return 2;
-        String email = getCourrielMail();
-        if (email != null && !"".equals(email) && !email.matches(".*@.*\\..*")) {
-            return 3;
-        }*/
         return 0;
     }
 
@@ -593,13 +594,10 @@ public class AddModifyCourseWindow {
                 AMCWFrame.dispose();
                 return;
             case 1:
-                errorMessage = "Le nom est obligatoire";
+                errorMessage = "Au moins un enseignant doit être sélectionné";
                 break;
             case 2:
-                errorMessage = "Le prénom est obligatoire";
-                break;
-            case 3:
-                errorMessage = "L'adresse email est invalide";
+                errorMessage = "Le cours ne peut pas avoir une durée nulle";
                 break;
             default:
                 errorMessage = "Erreur inconnue";

@@ -33,7 +33,11 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class AddModifySubjectWindow {
-	private static final String TITRE = "Ajouter une matière";
+	private static final String TITRE_AJOUTER = "Ajouter une matière";
+	private static final String TITRE_MODIFIER = "Ajouter une matière";
+	
+	public static final int TYPE_ADD = 0;
+	public static final int TYPE_MODIFY = 1;
 	
 	//private JComboBox formationFieldJcb;
 	private JTextField intitleFieldJtf;
@@ -148,9 +152,11 @@ public class AddModifySubjectWindow {
     }
     
     
-    public AddModifySubjectWindow() {
-    	
-    	AMFWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
+    public AddModifySubjectWindow(int type) {
+        if (type == TYPE_ADD)
+            AMFWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE_AJOUTER, true);
+        else if (type == TYPE_MODIFY)
+            AMFWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE_MODIFIER, true);
     	AMFWFrame.getContentPane().setLayout(AMFWLayout);
     	
     	this.isOk = false;
@@ -473,6 +479,10 @@ public class AddModifySubjectWindow {
         return intitleFieldJtf.getText();
     }
     
+    public void setIntitule(String intitule) {
+        intitleFieldJtf.setText(intitule);
+    }
+    
     public User getTeacher() {
         int index = teacherFieldJcb.getSelectedIndex();
         if (index == 0)
@@ -481,16 +491,37 @@ public class AddModifySubjectWindow {
             return teachers[index];
     }
     
+    public void setIdTeacher(Long idTeacher) {
+        for (int i = 1; i < teachers.length; ++i) {
+            if (teachers[i].getIdUser().equals(idTeacher)) {
+                teacherFieldJcb.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+    
     public Integer getNbMagHours() {
         return new Integer((String) magistrauxJcb.getSelectedItem());
+    }
+    
+    public void setNbMagHours(Integer value) {
+        magistrauxJcb.setSelectedItem(value.toString());
     }
     
     public Integer getNbTdHours() {
         return new Integer((String) tdJcb.getSelectedItem());
     }
     
+    public void setNbTdHours(Integer value) {
+        tdJcb.setSelectedItem(value.toString());
+    }
+    
     public Integer getNbTpHours() {
         return new Integer((String) tpJcb.getSelectedItem());
+    }
+    
+    public void setNbTpHours(Integer value) {
+        tpJcb.setSelectedItem(value.toString());
     }
     
     public Integer getNbMagGroups() {
@@ -499,16 +530,31 @@ public class AddModifySubjectWindow {
         return new Integer(0);
     }
     
+    public void setNbMagGroups(Integer value) {
+        if (value.intValue() > 0)
+            nbGroupsMag.setSelectedItem(value.toString());
+    }
+    
     public Integer getNbTdGroups() {
         if (nbGroupsTd != null)
             return new Integer((String) nbGroupsTd.getSelectedItem());
         return new Integer(0);
     }
     
+    public void setNbTdGroups(Integer value) {
+        if (value.intValue() > 0)
+            nbGroupsTd.setSelectedItem(value.toString());
+    }
+    
     public Integer getNbTpGroups() {
         if (nbGroupsTp != null)
             return new Integer((String) nbGroupsTp.getSelectedItem());
         return new Integer(0);
+    }
+    
+    public void setNbTpGroups(Integer value) {
+        if (value.intValue() > 0)
+            nbGroupsTp.setSelectedItem(value.toString());
     }
     
     public boolean isOk() {

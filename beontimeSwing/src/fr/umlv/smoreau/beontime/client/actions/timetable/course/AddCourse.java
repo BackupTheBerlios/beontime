@@ -15,6 +15,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.DefaultCellAttribute;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
@@ -99,9 +100,10 @@ public class AddCourse extends Action {
     	    
     	    Collection teachers = window.getTeachers();
     	    for (Iterator i = teachers.iterator(); i.hasNext(); )
-    	        course.addTeacherDirecting((User) i.next());
+    	        course.addTeacherDirecting(new IsDirectedByCourseTeacher((User) i.next(),course));
     	    
     	    Collection rooms = window.getPlaceCourse();
+    	    System.out.println(rooms.size());
     	    for (Iterator i = rooms.iterator(); i.hasNext(); )
     	        course.addRoom((Room) i.next());
     	    
@@ -121,9 +123,9 @@ public class AddCourse extends Action {
                 }
                 
                 DaoManager.getTimetableDao().addCourse(course);
-                
                 course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
                 course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
+                mainFrame.getModel().getTimetable().addCourse(course);
                 mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);

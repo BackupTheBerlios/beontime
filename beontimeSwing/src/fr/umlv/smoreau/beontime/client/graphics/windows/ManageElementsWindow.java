@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.BorderLayout;
@@ -18,24 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.actions.availability.AddUnavailability;
-import fr.umlv.smoreau.beontime.client.actions.availability.ModifyUnavailability;
-import fr.umlv.smoreau.beontime.client.actions.availability.RemoveUnavailability;
-import fr.umlv.smoreau.beontime.client.actions.availability.SearchAvailability;
-import fr.umlv.smoreau.beontime.client.actions.element.AddMaterial;
-import fr.umlv.smoreau.beontime.client.actions.element.AddRoom;
-import fr.umlv.smoreau.beontime.client.actions.element.ModifyMaterial;
-import fr.umlv.smoreau.beontime.client.actions.element.ModifyRoom;
-import fr.umlv.smoreau.beontime.client.actions.element.RemoveMaterial;
-import fr.umlv.smoreau.beontime.client.actions.element.RemoveRoom;
-import fr.umlv.smoreau.beontime.client.actions.group.AddGroup;
-import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
-import fr.umlv.smoreau.beontime.client.actions.group.ManageIdentitiesToGroups;
-import fr.umlv.smoreau.beontime.client.actions.group.ModifyGroup;
-import fr.umlv.smoreau.beontime.client.actions.group.RemoveGroup;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.ModifySubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
@@ -43,7 +23,6 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  * @author BeOnTime
  */
 public class ManageElementsWindow {
-	
 	private static final String TITRE_SUBJECTS = "Gérer les matières";
 	private static final String TITRE_GROUPS = "Gérer les groupes";
 	private static final String TITRE_UNAVAILABILITIES = "Gérer les indisponibilités";
@@ -196,15 +175,15 @@ public class ManageElementsWindow {
 		if (type.compareTo("TYPE_SUBJECTS") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return new AddSubject(null);
+				return ActionsList.getAction("AddSubject");
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return new ModifySubject(null);
+				return ActionsList.getAction("ModifySubject");
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveSubject(null);
+				return ActionsList.getAction("RemoveSubject");
 			}
 			
 		}
@@ -212,23 +191,23 @@ public class ManageElementsWindow {
 		else if (type.compareTo("TYPE_GROUPS") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return new AddGroup(null);
+				return ActionsList.getAction("AddGroup");
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return  new ModifyGroup(null);
+				return ActionsList.getAction("ModifyGroup");
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveGroup(null);
+				return ActionsList.getAction("RemoveGroup");
 			}
 			
 			else if(nameButton.compareTo("manageIdentityButton") == 0) {
-				return new GenerateGroups(null);
+				return ActionsList.getAction("GenerateGroups");
 			}
 			
 			else if(nameButton.compareTo("generateButton") == 0) {
-				return new  ManageIdentitiesToGroups(null);
+				return ActionsList.getAction("ManageIdentitiesToGroups");
 			}
 			
 			
@@ -238,20 +217,20 @@ public class ManageElementsWindow {
 		else if (type.compareTo("TYPE_UNAVAILABILITIES") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return new AddUnavailability(null);
+				return ActionsList.getAction("AddUnavailability");
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return new ModifyUnavailability(null);
+				return ActionsList.getAction("ModifyUnavailability");
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveUnavailability(null);
+				return ActionsList.getAction("RemoveUnavailability");
 			}
 			
 			
 			else if(nameButton.compareTo("searchUnavailabilitiesButton") == 0) {
-				return new SearchAvailability(null);
+				return ActionsList.getAction("SearchAvailability");
 			}
 			
 			
@@ -261,15 +240,15 @@ public class ManageElementsWindow {
 		else if (type.compareTo("TYPE_USERS") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return null;
+				return ActionsList.getAction("AddUser");
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return null;
+				return ActionsList.getAction("ModifyUser");
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return null;
+				return ActionsList.getAction("RemoveUser");
 			}
 			
 		}
@@ -277,15 +256,15 @@ public class ManageElementsWindow {
 		else if (type.compareTo("TYPE_ROOMS") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return new AddRoom(null);
+				return ActionsList.getAction("AddRoom");
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return new ModifyRoom(null);
+				return ActionsList.getAction("ModifyRoom");
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveRoom(null);
+				return ActionsList.getAction("RemoveRoom");
 			}
 			
 		}
@@ -294,15 +273,15 @@ public class ManageElementsWindow {
 		else if (type.compareTo("TYPE_MATERIALS") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return new AddMaterial(null);
+				return ActionsList.getAction("AddMaterial");
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return new ModifyMaterial(null);
+				return ActionsList.getAction("ModifyMaterial");
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveMaterial(null);
+				return ActionsList.getAction("RemoveMaterial");
 			}
 			
 		}

@@ -40,7 +40,7 @@ public class AddSubject extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifySubjectWindow window = new AddModifySubjectWindow();
+        AddModifySubjectWindow window = new AddModifySubjectWindow(AddModifySubjectWindow.TYPE_ADD);
         window.show();
         
         if (window.isOk()) {
@@ -56,11 +56,9 @@ public class AddSubject extends Action {
             
             subject.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
             
-            //TODO manque les différents groupes ...
-            
             try {
                 DaoManager.getTimetableDao().addSubject(subject);
-                
+                mainFrame.getModel().getTimetable().addSubject(subject);
                 mainFrame.getModel().fireRefreshSubject(subject, BoTModel.TYPE_ADD);
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);

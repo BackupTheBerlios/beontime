@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.util.ArrayList;
@@ -16,16 +10,12 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
-import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class ManageSubjectsAdapter implements TreeModel {
 
@@ -64,8 +54,6 @@ public class ManageSubjectsAdapter implements TreeModel {
 		
 		model.setTimetable(timetable);
 		//finTODO
-
-		model.addBoTListener(new TreeListener(this));
 	}
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeModel#getRoot()
@@ -139,14 +127,5 @@ public class ManageSubjectsAdapter implements TreeModel {
 	public void removeTreeModelListener(TreeModelListener l) {
 		list.remove(TreeModelListener.class, l);
 
-	}
-
-	
-	private class TreeListener extends DefaultBoTListener {
-		private TreeModel source;
-
-		public TreeListener(TreeModel source) {
-			this.source = source;
-		}	
 	}
 }
