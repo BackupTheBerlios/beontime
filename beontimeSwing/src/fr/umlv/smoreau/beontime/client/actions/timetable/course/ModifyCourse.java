@@ -50,7 +50,9 @@ public class ModifyCourse extends Action {
         window.setTypeCourse(course.getIdCourseType().getNameCourseType());
         
         try {
-            course = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_GROUPS_SUBJECTS, TimetableDao.JOIN_TEACHERS_DIRECTING, TimetableDao.JOIN_ROOMS, TimetableDao.JOIN_MATERIALS});
+            Course courseTmp = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_GROUPS_SUBJECTS, TimetableDao.JOIN_TEACHERS_DIRECTING, TimetableDao.JOIN_ROOMS, TimetableDao.JOIN_MATERIALS});
+            courseTmp.setSubject(course.getSubject());
+            course = courseTmp;
             TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) course.getGroupsSubjectsTakingPart().toArray()[0];
             window.setIdGroup(takePart.getIdGroup());
             window.setTeachers(course.getTeachersDirecting());
@@ -60,7 +62,7 @@ public class ModifyCourse extends Action {
             window.show();
 
             if (window.isOk()) {
-        	    /*Calendar beginDate = Calendar.getInstance();
+        	    Calendar beginDate = Calendar.getInstance();
         	    beginDate.setTime(window.getDateCourse());
         	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
         	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
@@ -76,14 +78,17 @@ public class ModifyCourse extends Action {
         	    endDate.set(Calendar.MILLISECOND, 0);
         	    course.setEndDate(endDate);
         	    
+        	    course.setTeachersDirecting(null);
         	    Collection teachers = window.getTeachers();
         	    for (Iterator i = teachers.iterator(); i.hasNext(); )
         	        course.addTeacherDirecting(new IsDirectedByCourseTeacher((User) i.next(),course));
         	    
+        	    course.setRooms(null);
         	    Collection rooms = window.getPlaceCourse();
         	    for (Iterator i = rooms.iterator(); i.hasNext(); )
         	        course.addRoom((Room) i.next());
         	    
+        	    course.setMaterials(null);
         	    Collection materials = window.getCourseEquipment();
         	    for (Iterator i = materials.iterator(); i.hasNext(); )
         	        course.addMaterial((Material) i.next());
@@ -104,9 +109,9 @@ public class ModifyCourse extends Action {
 	            mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_MODIFY);
 
 	            JOptionPane.showMessageDialog(null, "Modification effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
-	            */
             }
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
