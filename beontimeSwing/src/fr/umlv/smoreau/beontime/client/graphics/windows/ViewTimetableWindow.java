@@ -9,6 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -82,11 +85,28 @@ public class ViewTimetableWindow {
 		visuEDTJcb.addItem("Groupe");
 		visuEDTJcb.addItem("Local");
 		visuEDTJcb.addItem("Materiel");
+		
+		visuEDTJcb.addItemListener(new ItemListener() {
+    		public void itemStateChanged(ItemEvent e) {
+    			
+    		    String choice = ((JComboBox)e.getSource()).getSelectedItem().toString();
+				
+				if (choice.compareTo("Formation") == 0)
+					choiceEDTLabel.setText("Veuillez choisir la Formation :");
+				
+				else if (choice.compareTo("Enseignant") == 0)
+					choiceEDTLabel.setText("Veuillez choisir l'Enseignant :");
+				
+				else
+					choiceEDTLabel.setText("Veuillez choisir le "+choice.toLowerCase()+" :");
+    		}
+		});
+		
 		addComponent(VTWLayout,layoutConstraints,visuEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		VTWFrame.getContentPane().add(visuEDTJcb);
 		
 		
-		choiceEDTLabel = new JLabel("Veuillez choisir <l'emploi du temps>");
+		choiceEDTLabel = new JLabel("Veuillez choisir la formation :");
 		addComponent(VTWLayout,layoutConstraints,choiceEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,20,10));
 		VTWFrame.getContentPane().add(choiceEDTLabel);
 		
@@ -156,6 +176,41 @@ public class ViewTimetableWindow {
 		
 	}
 	
+	
+	
+	
+	
+	public String getVisuEDTJcb() {
+		return visuEDTJcb.getSelectedItem().toString();
+	}
+	
+	public String getChoiceEDTJcb() {
+		return choiceEDTJcb.getSelectedItem().toString();
+	}
+	
+	public String getPeriodViewEDTJcb() {
+		if(semestriel.isSelected())
+			return periodViewEDTJcb.getSelectedItem().toString();
+		
+		return null; 
+	}
+	
+	public String getModeViewEDT() {
+		
+		if(semestriel.isSelected())
+			return "semestriel";
+		
+		else return "hebdomadaire";
+	}
+	
+	 public Date getPeriodViewEDTDate () {
+	 	
+	 	if(hebdomadaire.isSelected())
+	 		return periodViewEDTDate.getDate();
+	 	
+	 	return null;
+	 }
+	 
 	
     /* (non-Javadoc)
      * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])

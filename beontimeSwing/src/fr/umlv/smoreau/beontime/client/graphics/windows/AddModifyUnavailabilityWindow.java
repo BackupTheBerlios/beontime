@@ -184,7 +184,7 @@ public class AddModifyUnavailabilityWindow {
     	
     	typeUnavailabilityJcb.addItemListener(new ItemListener() {
     		public void itemStateChanged(ItemEvent e) {
-    			subjectUnavailabilityLabel.setText(typeUnavailabilityJcb.getSelectedItem()+" indisponible :");
+    			subjectUnavailabilityLabel.setText(((JComboBox)e.getSource()).getSelectedItem()+" indisponible :");
     		}
 
     	});
@@ -193,7 +193,7 @@ public class AddModifyUnavailabilityWindow {
     	
     	
     	
-    	subjectUnavailabilityLabel = new JLabel("Enseignant indisponible :");
+    	subjectUnavailabilityLabel = new JLabel("Calendrier indisponible :");
     	addComponent(AMUWLayout,layoutConstraints,subjectUnavailabilityLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
     	AMUWFrame.getContentPane().add(subjectUnavailabilityLabel);
     	
