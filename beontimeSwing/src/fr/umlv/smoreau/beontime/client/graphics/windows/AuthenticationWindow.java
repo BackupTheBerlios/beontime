@@ -48,7 +48,6 @@ public class AuthenticationWindow {
 		loginJtf = new JTextField();
 		addComponent(IWLayout,layoutConstraints,loginJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(loginJtf);
-		loginJtf.setText("smalouines"); //TODO un coup de main pour les tests à virer
 
 
 		JLabel passwordLabel = new JLabel("Password :");
@@ -58,7 +57,6 @@ public class AuthenticationWindow {
 		passwordJtf = new JPasswordField();
 		addComponent(IWLayout,layoutConstraints,passwordJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(passwordJtf);
-		passwordJtf.setText("smalouines"); //TODO un coup de main pour les tests à virer
 
 		this.isOk = false;
 

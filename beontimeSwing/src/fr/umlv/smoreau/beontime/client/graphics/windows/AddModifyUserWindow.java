@@ -429,7 +429,6 @@ public class AddModifyUserWindow {
 	    if (formationsId == null || formations == null)
 	        return;
 
-	    //TODO à améliorer ...
 	    Long[] ids = new Long[formationsId.length + formations.size()];
 	    String[] names = new String[formationsName.length + formations.size()];
 	    int i = 0;
@@ -449,7 +448,6 @@ public class AddModifyUserWindow {
 	    formationsJcb = new JComboBox(formationsName);
 	    formationsPanel.add(formationsJcb);
 	    formationsPanel.add(Box.createVerticalStrut(5));
-	    //finTODO
 
 		int cpt = 0;
 		int sizeFormations = formations.size();
