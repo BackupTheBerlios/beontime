@@ -80,6 +80,7 @@ public class ButtonBar {
 	}
 	
 	private void initButtonPanel() {
+		
 	}
 	
 	public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
