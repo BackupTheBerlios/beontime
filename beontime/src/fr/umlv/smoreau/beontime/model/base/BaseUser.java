@@ -246,6 +246,7 @@ public abstract class BaseUser  implements Serializable {
 
 	/**
 	 * Return the value associated with the column: FormationSetByIdEnseignant
+	 * @deprecated
 	 */
 	public java.util.Set getFormationsResponsible () {
 		return this._formationsResponsible;
@@ -254,11 +255,15 @@ public abstract class BaseUser  implements Serializable {
 	/**
 	 * Set the value related to the column: FormationSetByIdEnseignant
 	 * @param _formationsResponsible the FormationSetByIdEnseignant value
+	 * @deprecated
 	 */
 	public void setFormationsResponsible (java.util.Set _formationsResponsible) {
 		this._formationsResponsible = _formationsResponsible;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public void addFormationResponsible (Object obj) {
 		if (null == this._formationsResponsible) this._formationsResponsible = new java.util.HashSet();
 		this._formationsResponsible.add(obj);
@@ -290,6 +295,7 @@ public abstract class BaseUser  implements Serializable {
 
 	/**
 	 * Return the value associated with the column: MatiereSet
+	 * @deprecated
 	 */
 	public java.util.Set getSubjectsResponsible () {
 		return this._subjectsResponsible;
@@ -298,11 +304,15 @@ public abstract class BaseUser  implements Serializable {
 	/**
 	 * Set the value related to the column: MatiereSet
 	 * @param _subjectsResponsible the MatiereSet value
+	 * @deprecated
 	 */
 	public void setSubjectsResponsible (java.util.Set _subjectsResponsible) {
 		this._subjectsResponsible = _subjectsResponsible;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public void addSubjectResponsible (Object obj) {
 		if (null == this._subjectsResponsible) this._subjectsResponsible = new java.util.HashSet();
 		this._subjectsResponsible.add(obj);
@@ -312,6 +322,7 @@ public abstract class BaseUser  implements Serializable {
 
 	/**
 	 * Return the value associated with the column: CoursSet
+	 * @deprecated
 	 */
 	public java.util.Set getCoursesDirected () {
 		return this._coursesDirected;
@@ -320,11 +331,15 @@ public abstract class BaseUser  implements Serializable {
 	/**
 	 * Set the value related to the column: CoursSet
 	 * @param _coursSet the CoursSet value
+	 * @deprecated
 	 */
 	public void setCoursesDirected (java.util.Set _coursSet) {
 		this._coursesDirected = _coursSet;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public void addCourseDirected (Object obj) {
 		if (null == this._coursesDirected) this._coursesDirected = new java.util.HashSet();
 		this._coursesDirected.add(obj);

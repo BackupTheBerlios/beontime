@@ -10,7 +10,9 @@ import net.sf.hibernate.HibernateException;
 import fr.umlv.smoreau.beontime.filter.CourseFilter;
 import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.timetable.*;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * RMI interface for the TimeTable DAO
@@ -21,7 +23,11 @@ public interface TimetableDao extends Remote {
 	
 	public Collection getCourses(CourseFilter filter) throws RemoteException, HibernateException;
 	
+	public Collection getCoursesDirected(User user) throws RemoteException, HibernateException;
+	
 	public Collection getSubjects(SubjectFilter filter) throws RemoteException, HibernateException;
+	
+	public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException;
 
 	public Timetable getTimetable(TimetableFilter filter) throws RemoteException, HibernateException;
 
@@ -44,4 +50,5 @@ public interface TimetableDao extends Remote {
 
 	public Collection getTypesCourse() throws RemoteException, HibernateException;
 	
+	public void removeLinkBetweenCourseAndTeacher(IsDirectedByCourseTeacher link) throws RemoteException, HibernateException;
 }

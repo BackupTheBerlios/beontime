@@ -17,6 +17,7 @@ import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -106,6 +107,30 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 
 	public Collection getFormations() throws RemoteException, HibernateException {
 		return getFormations(null);
+	}
+	
+	public Collection getFormationsInCharge(User user) throws RemoteException, HibernateException {
+	    Session session = null;
+        try {
+            FormationFilter filter = new FormationFilter();
+            filter.setIdSecretary(user);
+            session = Hibernate.getCurrentSession();
+            return get(TABLE, filter, session);
+        } finally {
+            Hibernate.closeSession();
+        }
+	}
+	
+	public Collection getFormationsResponsible(User user) throws RemoteException, HibernateException {
+	    Session session = null;
+        try {
+            FormationFilter filter = new FormationFilter();
+            filter.setIdTeacher(user.getIdUser());
+            session = Hibernate.getCurrentSession();
+            return get(TABLE, filter, session);
+        } finally {
+            Hibernate.closeSession();
+        }
 	}
 
 	public Formation addFormation(Formation formation) throws RemoteException, HibernateException {

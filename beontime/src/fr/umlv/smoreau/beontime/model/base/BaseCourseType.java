@@ -88,6 +88,7 @@ public abstract class BaseCourseType  implements Serializable {
 
 	/**
 	 * Return the value associated with the column: CoursSet
+	 * @deprecated
 	 */
 	public java.util.Set getCourses () {
 		return this._courses;
@@ -96,11 +97,15 @@ public abstract class BaseCourseType  implements Serializable {
 	/**
 	 * Set the value related to the column: CoursSet
 	 * @param _courses the CoursSet value
+	 * @deprecated
 	 */
 	public void setCourses (java.util.Set _courses) {
 		this._courses = _courses;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public void addCourse (Object obj) {
 		if (null == this._courses) this._courses = new java.util.HashSet();
 		this._courses.add(obj);

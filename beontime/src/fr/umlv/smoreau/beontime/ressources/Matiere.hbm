@@ -72,7 +72,7 @@
 			type="java.lang.Long"
 		 />
 
-		<set inverse="true" name="GroupsCoursesTakingPart">
+		<set inverse="true" name="GroupsCoursesTakingPart" lazy="true">
 			<key column="id_matiere" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>

@@ -88,6 +88,7 @@ public abstract class BaseUnavailabilityType  implements Serializable {
 
 	/**
 	 * Return the value associated with the column: IndisponibiliteSet
+	 * @deprecated
 	 */
 	public java.util.Set getUnavailabilities () {
 		return this._unavailabilities;
@@ -96,11 +97,15 @@ public abstract class BaseUnavailabilityType  implements Serializable {
 	/**
 	 * Set the value related to the column: IndisponibiliteSet
 	 * @param _unavailabilities the IndisponibiliteSet value
+	 * @deprecated
 	 */
 	public void setUnavailabilities (java.util.Set _unavailabilities) {
 		this._unavailabilities = _unavailabilities;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public void addUnavailability (Object obj) {
 		if (null == this._unavailabilities) this._unavailabilities = new java.util.HashSet();
 		this._unavailabilities.add(obj);

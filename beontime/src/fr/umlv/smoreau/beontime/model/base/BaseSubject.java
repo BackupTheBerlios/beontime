@@ -250,6 +250,7 @@ public abstract class BaseSubject  implements Serializable {
 
 	/**
 	 * Return the value associated with the column: ParticipeGroupeMatiereCoursSet
+	 * @deprecated
 	 */
 	public java.util.Set getGroupsCoursesTakingPart () {
 		return this._GroupsSubjectsTakingPart;
@@ -258,11 +259,15 @@ public abstract class BaseSubject  implements Serializable {
 	/**
 	 * Set the value related to the column: ParticipeGroupeMatiereCoursSet
 	 * @param _groupsCoursesTakingPart the ParticipeGroupeMatiereCoursSet value
+	 * @deprecated
 	 */
 	public void setGroupsCoursesTakingPart (java.util.Set _groupsCoursesTakingPart) {
 		this._GroupsSubjectsTakingPart = _groupsCoursesTakingPart;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public void addGroupCourseTakingPart (Object obj) {
 		if (null == this._GroupsSubjectsTakingPart) this._GroupsSubjectsTakingPart = new java.util.HashSet();
 		this._GroupsSubjectsTakingPart.add(obj);
