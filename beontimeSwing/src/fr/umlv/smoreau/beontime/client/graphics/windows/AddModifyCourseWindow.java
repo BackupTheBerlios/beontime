@@ -224,7 +224,8 @@ public class AddModifyCourseWindow {
 			for (int i = 0; i < components.length; ++i)
 			    if (components[i] instanceof JComboBox) {
 			        int index = ((JComboBox)components[i]).getSelectedIndex();
-			        list.add(materials[index]);
+			        if (index > 0)
+			            list.add(materials[index]);
 			    }
 		}
 		
