@@ -25,8 +25,8 @@ import javax.swing.JRadioButton;
 
 import com.toedter.calendar.JDateChooser;
 
-import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.model.Formation;

@@ -22,12 +22,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.tree.TreePath;
 
-import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
+import fr.umlv.smoreau.beontime.dao.DaoManager;
 
 /**
  * @author BeOnTime

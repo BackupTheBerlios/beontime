@@ -18,10 +18,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.utils.ComboBoxBoT;
 import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
+import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.ElementDao;
 import fr.umlv.smoreau.beontime.filter.MaterialFilter;
 import fr.umlv.smoreau.beontime.filter.RoomFilter;
