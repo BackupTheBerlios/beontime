@@ -26,6 +26,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import com.toedter.calendar.JDateChooser;
 
+import fr.umlv.smoreau.beontime.client.BoTConfig;
 import fr.umlv.smoreau.beontime.client.ChangeMonitor;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.parts.ButtonBar;
@@ -391,6 +392,7 @@ public class MainFrame {
 	 */
 	public void setViewType(int view_type) {
 		this.view_type = view_type;
+		titleBar.setViewType(view_type);
 	}
 	
 	public Date getDateSelected() {
@@ -400,7 +402,33 @@ public class MainFrame {
 	public Calendar getBeginPeriod() {
 	    Calendar begin = Calendar.getInstance();
 		begin.setTime(getDateSelected());
-		begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		if (VIEW_HALF_YEAR == view_type) {
+		    int year = begin.get(Calendar.YEAR);
+		    if (begin.get(Calendar.MONTH) <= 6) {
+		        if (getFormationSelected() != null) {
+		            if (getFormationSelected().getBeginSecondHalfYear() == null)
+		                begin.setTime(BoTConfig.getBeginSecondHalfYear());
+		            else
+		                begin.setTime(getFormationSelected().getBeginSecondHalfYear().getTime());
+		        } else {
+		            begin.setTime(BoTConfig.getBeginSecondHalfYear());
+		        }
+		    } else {
+		        if (getFormationSelected() != null) {
+		            if (getFormationSelected().getBeginFirstHalfYear() == null)
+		                begin.setTime(BoTConfig.getBeginFirstHalfYear());
+		            else
+		                begin.setTime(getFormationSelected().getBeginFirstHalfYear().getTime());
+		        } else {
+		            begin.setTime(BoTConfig.getBeginFirstHalfYear());
+		        }
+		    }
+		    begin.set(Calendar.YEAR, year);
+		    if (begin.getTimeInMillis() > getDateSelected().getTime())
+		        begin.set(Calendar.YEAR, year-1);
+		} else {
+			begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		}
 		begin.set(Calendar.HOUR_OF_DAY, 0);
 		begin.set(Calendar.MINUTE, 0);
 		begin.set(Calendar.SECOND, 0);
@@ -410,7 +438,33 @@ public class MainFrame {
 	public Calendar getEndPeriod() {
 	    Calendar end = Calendar.getInstance();
 		end.setTime(getDateSelected());
-		end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		if (VIEW_HALF_YEAR == view_type) {
+		    int year = end.get(Calendar.YEAR);
+		    if (end.get(Calendar.MONTH) <= 6) {
+		        if (getFormationSelected() != null) {
+		            if (getFormationSelected().getEndSecondHalfYear() == null)
+		                end.setTime(BoTConfig.getEndSecondHalfYear());
+		            else
+		                end.setTime(getFormationSelected().getEndSecondHalfYear().getTime());
+		        } else {
+		            end.setTime(BoTConfig.getEndSecondHalfYear());
+		        }
+		    } else {
+		        if (getFormationSelected() != null) {
+		            if (getFormationSelected().getEndFirstHalfYear() == null)
+		                end.setTime(BoTConfig.getEndFirstHalfYear());
+		            else
+		                end.setTime(getFormationSelected().getEndFirstHalfYear().getTime());
+		        } else {
+		            end.setTime(BoTConfig.getEndFirstHalfYear());
+		        }
+		    }
+		    end.set(Calendar.YEAR, year);
+		    if (end.getTimeInMillis() < getDateSelected().getTime())
+		        end.set(Calendar.YEAR, year+1);
+		} else {
+		    end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		}
 		end.set(Calendar.HOUR_OF_DAY, 23);
 		end.set(Calendar.MINUTE, 59);
 		end.set(Calendar.SECOND, 59);

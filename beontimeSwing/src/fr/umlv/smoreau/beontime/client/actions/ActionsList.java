@@ -97,7 +97,7 @@ public class ActionsList {
 	    //getAction("ShowTimetableVertical").setEnabled(false);
 	    //getAction("ShowTimetableHorizontal").setEnabled(false);
 	    getAction("ShowTimetableByWeek").setEnabled(false);
-	    getAction("ShowTimetableBySixMonthPeriod").setEnabled(false);
+	    getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
 	    getAction("ModifyFormation").setEnabled(false);
 	    getAction("AddSubject").setEnabled(false);
 	    getAction("ModifySubject").setEnabled(false);

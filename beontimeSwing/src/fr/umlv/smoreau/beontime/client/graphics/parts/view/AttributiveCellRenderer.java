@@ -84,16 +84,20 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
             setToolTipText(null);
         } else {
             StringBuffer prtScreen = new StringBuffer();
+            StringBuffer schedule = new StringBuffer();
             StringBuffer teachers = new StringBuffer();
             StringBuffer rooms = new StringBuffer();
             StringBuffer materials = new StringBuffer();
             Subject subj=c.getSubject();
             if (subj != null) {
-                prtScreen.append(subj.getHeading());
+                prtScreen.append("<b>").append(subj.getHeading()).append("</b>");
                 if (TimetableDao.TYPE_TD.equals(c.getIdCourseType().getNameCourseType()))
                     prtScreen.append(" (TD)");
                 else if (TimetableDao.TYPE_TP.equals(c.getIdCourseType().getNameCourseType()))
                     prtScreen.append(" (TP)");
+                
+                schedule.append(FORMAT_HOUR.format(c.getBeginDate().getTime()));
+                schedule.append(" / ").append(FORMAT_HOUR.format(c.getEndDate().getTime()));
 
                 for (Iterator i = c.getTeachers().iterator(); i.hasNext(); ) {
                     User user = (User) i.next();
@@ -125,6 +129,7 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
             StringBuffer prtScreen1 = new StringBuffer();
             prtScreen1.append("<html>");
             prtScreen1.append(prtScreen);
+            prtScreen1.append("<br>").append(schedule);
             if (teachers.length() > 0)
                 prtScreen1.append("<br>").append(teachers);
             if (rooms.length() > 0)
@@ -136,8 +141,7 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
             prtScreen2.append("<html>");
             prtScreen2.append("Matière: ").append(prtScreen);
             prtScreen2.append("<br>").append("Horaires: ");
-            prtScreen2.append(FORMAT_HOUR.format(c.getBeginDate().getTime()));
-            prtScreen2.append(" / ").append(FORMAT_HOUR.format(c.getEndDate().getTime()));
+            prtScreen2.append(schedule);
             if (teachers.length() > 0)
                 prtScreen2.append("<br>").append("Enseignant(s): ").append(teachers);
             if (rooms.length() > 0)

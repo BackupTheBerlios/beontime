@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
+import fr.umlv.smoreau.beontime.client.BoTConfig;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
@@ -44,39 +45,93 @@ public class ViewTimetable extends Action{
 
 		    String type = window.getVisuEDTJcb();
 		    if (TimeTableViewPanelBar.TYPE_FORMATION.equals(type))
-		        filter.setFormation(new Formation(window.getChoiceEDTJcb()));
+		        filter.setFormation((Formation) window.getChoiceEDTJcb());
 		    else if (TimeTableViewPanelBar.TYPE_ENSEIGNANT.equals(type))
-		        filter.setTeacher(new User(window.getChoiceEDTJcb()));
+		        filter.setTeacher((User) window.getChoiceEDTJcb());
 		    else if (TimeTableViewPanelBar.TYPE_LOCAL.equals(type))
-		        filter.setRoom(new Room(window.getChoiceEDTJcb()));
+		        filter.setRoom((Room) window.getChoiceEDTJcb());
 		    else if (TimeTableViewPanelBar.TYPE_MATERIEL.equals(type))
-		        filter.setMaterial(new Material(window.getChoiceEDTJcb()));
+		        filter.setMaterial((Material) window.getChoiceEDTJcb());
 		    else if (TimeTableViewPanelBar.TYPE_GROUPE.equals(type)) {
-		        filter.setFormation(new Formation(window.getChoiceEDTJcb()));
-		        filter.setGroup(new Group(window.getChoice2EDTJcb()));
+		        filter.setFormation((Formation) window.getChoiceEDTJcb());
+		        filter.setGroup((Group) window.getChoice2EDTJcb());
 		    }
 		    
 		    Calendar begin = Calendar.getInstance();
-			begin.setTime(window.getPeriodViewEDTDate());
-			begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-			begin.set(Calendar.HOUR_OF_DAY, 0);
-			begin.set(Calendar.MINUTE, 0);
-			begin.set(Calendar.SECOND, 0);
+		    Calendar end = Calendar.getInstance();
+
+		    if (window.getModeViewEDT() == MainFrame.VIEW_WEEK) {
+				begin.setTime(window.getPeriodViewEDTDate());
+				begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+				begin.set(Calendar.HOUR_OF_DAY, 0);
+				begin.set(Calendar.MINUTE, 0);
+				begin.set(Calendar.SECOND, 0);
+				
+				end.setTime(window.getPeriodViewEDTDate());
+				end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+				end.set(Calendar.HOUR_OF_DAY, 23);
+				end.set(Calendar.MINUTE, 59);
+				end.set(Calendar.SECOND, 59);
+		    } else {
+		        if (window.getPeriodViewEDTJcb() == 1) {
+			        if (filter.getFormation() != null) {
+			            if (filter.getFormation().getBeginSecondHalfYear() == null)
+			                begin.setTime(BoTConfig.getBeginSecondHalfYear());
+			            else
+			                begin.setTime(filter.getFormation().getBeginSecondHalfYear().getTime());
+			        } else {
+			            begin.setTime(BoTConfig.getBeginSecondHalfYear());
+			        }
+			        
+			        if (filter.getFormation() != null) {
+			            if (filter.getFormation().getEndSecondHalfYear() == null)
+			                end.setTime(BoTConfig.getEndSecondHalfYear());
+			            else
+			                end.setTime(filter.getFormation().getEndSecondHalfYear().getTime());
+			        } else {
+			            end.setTime(BoTConfig.getEndSecondHalfYear());
+			        }
+			        
+			        begin.set(Calendar.YEAR, window.getYear());
+			        end.set(Calendar.YEAR, window.getYear());
+			        if (begin.getTimeInMillis() > end.getTimeInMillis())
+			            begin.set(Calendar.YEAR, begin.get(Calendar.YEAR) - 1);
+		        } else {
+		            if (filter.getFormation() != null) {
+			            if (filter.getFormation().getBeginFirstHalfYear() == null)
+			                begin.setTime(BoTConfig.getBeginFirstHalfYear());
+			            else
+			                begin.setTime(filter.getFormation().getBeginFirstHalfYear().getTime());
+			        } else {
+			            begin.setTime(BoTConfig.getBeginFirstHalfYear());
+			        }
+			        
+			        if (filter.getFormation() != null) {
+			            if (filter.getFormation().getEndFirstHalfYear() == null)
+			                end.setTime(BoTConfig.getEndFirstHalfYear());
+			            else
+			                end.setTime(filter.getFormation().getEndFirstHalfYear().getTime());
+			        } else {
+			            end.setTime(BoTConfig.getEndFirstHalfYear());
+			        }
+			        
+			        begin.set(Calendar.YEAR, window.getYear());
+			        end.set(Calendar.YEAR, window.getYear());
+			        if (begin.getTimeInMillis() > end.getTimeInMillis())
+			            end.set(Calendar.YEAR, end.get(Calendar.YEAR) + 1);
+		        }
+		    }
+
 			filter.setBeginPeriod(begin);
-			
-			Calendar end = Calendar.getInstance();
-			end.setTime(window.getPeriodViewEDTDate());
-			end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-			end.set(Calendar.HOUR_OF_DAY, 23);
-			end.set(Calendar.MINUTE, 59);
-			end.set(Calendar.SECOND, 59);
 			filter.setEndPeriod(end);
 		    
 		    try {
 			    Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+
+			    mainFrame.setViewType(window.getModeViewEDT());
+
 				mainFrame.getModel().fireShowTimetable(timetable);
 			} catch (Exception e) {
-			    e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}

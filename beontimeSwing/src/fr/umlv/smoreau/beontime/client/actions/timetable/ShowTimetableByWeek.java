@@ -20,19 +20,13 @@ public class ShowTimetableByWeek extends Action{
     public ShowTimetableByWeek(MainFrame mainFrame) {
         super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-
-
-    public boolean isEnabled() {
-    	return (mainFrame.getViewType() == MainFrame.VIEW_HALF_YEAR);    	
-    }
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
     	mainFrame.setViewType(MainFrame.VIEW_WEEK);
-    	setEnabled(false);
+    	ActionsList.getAction("ShowTimetableByWeek").setEnabled(false);
     	ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
-    	//TODO fire
     }
 }

@@ -12,10 +12,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -37,6 +37,7 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
  */
 public class TitleBar extends JPanel {
 	private JDateChooser periodChooser;
+	private JLabel semesterChooser;
 	private JButton previousButton;
 	private JButton nextButton;
 	
@@ -48,11 +49,6 @@ public class TitleBar extends JPanel {
 	private MainFrame mainFrame;
 	
 	private boolean noLoadTimetable;
-	
-	/** time in millis for a week*/
-	private static final long aWeek = new GregorianCalendar(2005, 02, 14).getTimeInMillis() - (new GregorianCalendar(2005, 02, 07).getTimeInMillis());
-	/** time in millis for half a year*/
-	private static final long anHalfYear = new GregorianCalendar(2005, 07, 01).getTimeInMillis() - (new GregorianCalendar(2005, 01, 01).getTimeInMillis());
 
 	
 	public TitleBar(BoTModel model, MainFrame mainFrame) {
@@ -69,14 +65,6 @@ public class TitleBar extends JPanel {
 		titleBarPanel.add(periodPanel, BorderLayout.EAST);
     
 		model.addBoTListener(new TitleBarListener(this));
-	}
-	
-	public void setPeriod(Calendar period) {
-		periodChooser.setDate(period.getTime());
-	}
-	
-	public void setPeriod(Date period) {
-		periodChooser.setDate(period);
 	}
 	
 	public void setTitleBarPanel(JPanel panel) {
@@ -97,11 +85,13 @@ public class TitleBar extends JPanel {
 		periodChooser = new JDateChooser();
 		periodChooser.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
-                Calendar date = Calendar.getInstance();
-                date.setTime(periodChooser.getDate());
-                date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                periodChooser.setDate(date.getTime());
-                periodChooser.revalidate();
+                if (mainFrame.getViewType() == MainFrame.VIEW_WEEK) {
+                    Calendar date = Calendar.getInstance();
+                    date.setTime(periodChooser.getDate());
+                    date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                    periodChooser.setDate(date.getTime());
+                    periodChooser.revalidate();
+                }
                 if (noLoadTimetable || mainFrame.getModel().getTimetable() == null)
                     return;
 				TimetableFilter filter = new TimetableFilter(mainFrame.getModel().getTimetable());
@@ -117,8 +107,8 @@ public class TitleBar extends JPanel {
 		});
 		periodChooser.setDateFormatString("dd MMMMM yyyy");
 		periodChooser.setDate(Calendar.getInstance().getTime());
-
 		periodPanel.add(periodChooser, BorderLayout.CENTER);
+
 		previousButton = new JButton(Action.getImage("gauche_small.png"));
 		periodPanel.add(previousButton, BorderLayout.WEST);
 		
@@ -127,24 +117,67 @@ public class TitleBar extends JPanel {
 		
 		previousButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				if (mainFrame.getViewType()==MainFrame.VIEW_WEEK)
-					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
-				else if (mainFrame.getViewType()==MainFrame.VIEW_HALF_YEAR) 
-					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));
+				if (mainFrame.getViewType() == MainFrame.VIEW_WEEK) {
+				    Calendar date = Calendar.getInstance();
+				    date.setTime(periodChooser.getDate());
+				    date.set(Calendar.WEEK_OF_YEAR, date.get(Calendar.WEEK_OF_YEAR) - 1);
+				    periodChooser.setDate(date.getTime());
+				} else {
+				    Calendar date = Calendar.getInstance();
+				    date.setTime(periodChooser.getDate());
+				    date.set(Calendar.MONTH, date.get(Calendar.MONTH) - 6);
+				    periodChooser.setDate(date.getTime());
+				    initSemesterChooser();
+				}
 			}
 		});
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				if (mainFrame.getViewType()==MainFrame.VIEW_WEEK) 
-					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
-				else if (mainFrame.getViewType()==MainFrame.VIEW_HALF_YEAR) 
-					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
+				if (mainFrame.getViewType() == MainFrame.VIEW_WEEK) {
+				    Calendar date = Calendar.getInstance();
+				    date.setTime(periodChooser.getDate());
+				    date.set(Calendar.WEEK_OF_YEAR, date.get(Calendar.WEEK_OF_YEAR) + 1);
+				    periodChooser.setDate(date.getTime());
+				} else {
+				    Calendar date = Calendar.getInstance();
+				    date.setTime(periodChooser.getDate());
+				    date.set(Calendar.MONTH, date.get(Calendar.MONTH) + 6);
+				    periodChooser.setDate(date.getTime());
+				    initSemesterChooser();
+				}
 			}
 		});
-		
 	}
 
+	public void setViewType(int type) {
+	    initSemesterChooser();
+	    if (MainFrame.VIEW_HALF_YEAR == type) {
+		    periodPanel.remove(periodChooser);
+		    periodPanel.add(semesterChooser, BorderLayout.CENTER);
+	    } else {
+	        periodPanel.remove(semesterChooser);
+		    periodPanel.add(periodChooser, BorderLayout.CENTER);
+	    }
+	    periodPanel.revalidate();
+	}
 	
+	private void initSemesterChooser() {
+		StringBuffer semester = new StringBuffer();
+		Calendar date = Calendar.getInstance();
+		date.setTime(periodChooser.getDate());
+		semester.append("<html>");
+		if (date.get(Calendar.MONTH) <= 6)
+		    semester.append("1<sup>er</sup>");
+		else
+		    semester.append("2<sup>ème</sup>");
+		semester.append(" semestre ");
+		semester.append(date.get(Calendar.YEAR));
+		semester.append("</html>");
+		if (semesterChooser == null)
+		    semesterChooser = new JLabel(semester.toString());
+		else
+		    semesterChooser.setText(semester.toString());
+	}
 	
 	public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
         constraints. gridwidth= gridwidth;
@@ -171,7 +204,11 @@ public class TitleBar extends JPanel {
 		    
 		    noLoadTimetable = true;
 
-		    periodChooser.setDate(timetable.getBeginPeriod().getTime());
+		    Calendar date = Calendar.getInstance();
+		    date.setTime(timetable.getBeginPeriod().getTime());
+		    if (mainFrame.getViewType() == MainFrame.VIEW_HALF_YEAR)
+		        date.set(Calendar.MONTH, date.get(Calendar.MONTH) + 3);
+		    periodChooser.setDate(date.getTime());
 
 		    noLoadTimetable = false;
 		}

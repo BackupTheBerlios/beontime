@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JYearChooser;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
@@ -58,6 +59,7 @@ public class ViewTimetableWindow {
 	private JRadioButton hebdomadaire;
 	
 	private JDateChooser periodViewEDTDate;
+	private JYearChooser yearChooser;
 
 	private JPanel periodViewEDTPanel = new JPanel();
 
@@ -68,15 +70,15 @@ public class ViewTimetableWindow {
 	private boolean isOk;
     
 	private String[] formationsName;
-	private Long[] formationsId;
+	private Formation[] formations;
 	private String[] teachersName;
-	private Long[] teachersId;
+	private User[] teachers;
 	private String[] roomsName;
-	private Long[] roomsId;
+	private Room[] rooms;
 	private String[] materialsName;
-	private Long[] materialsId;
+	private Material[] materials;
 	private String[] groupsName;
-	private Long[] groupsId;
+	private Group[] groups;
 	
 
 	public ViewTimetableWindow() {
@@ -88,70 +90,66 @@ public class ViewTimetableWindow {
 	    
 	    MainFrame mainFrame = MainFrame.getInstance();
 		try {
-		    Collection formations = null;
+		    Collection f = null;
 		    if (UserDao.TYPE_SECRETARY.equals(mainFrame.getUserConnected().getUserType()))
-		        formations = mainFrame.getUserConnected().getFormationsInCharge();
+		        f = mainFrame.getUserConnected().getFormationsInCharge();
 		    else
-		        formations = DaoManager.getFormationDao().getFormations();
-			formationsName = new String[formations.size()+1];
-			formationsId = new Long[formations.size()+1];
+		        f = DaoManager.getFormationDao().getFormations();
+			formationsName = new String[f.size()+1];
+			formations = new Formation[f.size()+1];
 			formationsName[0] = "";
 			int j = 1;
-			for (Iterator i = formations.iterator(); i.hasNext(); ++j) {
-				Formation formation = (Formation) i.next();
-				formationsId[j] = formation.getIdFormation();
-				formationsName[j] = formation.getHeading();
+			for (Iterator i = f.iterator(); i.hasNext(); ++j) {
+			    formations[j] = (Formation) i.next();
+				formationsName[j] = formations[j].getHeading();
 			}
 		} catch (Exception e) {
-			formationsId = new Long[0];
+			formations = new Formation[0];
 			formationsName = new String[0];
 		}
 		
 		try {
-		    Collection teachers = DaoManager.getUserDao().getTeachers();
-		    teachersName = new String[teachers.size()+1];
-		    teachersId = new Long[teachers.size()+1];
+		    Collection t = DaoManager.getUserDao().getTeachers();
+		    teachersName = new String[t.size()+1];
+		    teachers = new User[t.size()+1];
 		    teachersName[0] = "";
 			int j = 1;
-			for (Iterator i = teachers.iterator(); i.hasNext(); ++j) {
-				User teacher = (User) i.next();
-				teachersId[j] = teacher.getIdUser();
-				teachersName[j] = teacher.getName() + " " + teacher.getFirstName();
+			for (Iterator i = t.iterator(); i.hasNext(); ++j) {
+			    teachers[j] = (User) i.next();
+				teachersName[j] = teachers[j].getName() + " " + teachers[j].getFirstName();
 			}
 		} catch (Exception e) {
-		    teachersId = new Long[0];
+		    teachers = new User[0];
 		    teachersName = new String[0];
 		}
 		
 		try {
-		    Collection rooms = DaoManager.getElementDao().getRooms();
-		    roomsName = new String[rooms.size()+1];
-		    roomsId = new Long[rooms.size()+1];
+		    Collection r = DaoManager.getElementDao().getRooms();
+		    roomsName = new String[r.size()+1];
+		    rooms = new Room[r.size()+1];
 		    roomsName[0] = "";
 			int j = 1;
-			for (Iterator i = rooms.iterator(); i.hasNext(); ++j) {
-				Room room = (Room) i.next();
-				roomsId[j] = room.getIdRoom();
-				roomsName[j] = room.getName();
+			for (Iterator i = r.iterator(); i.hasNext(); ++j) {
+			    rooms[j] = (Room) i.next();
+				roomsName[j] = rooms[j].getName();
 			}
 		} catch (Exception e) {
-		    roomsId = new Long[0];
+		    rooms = new Room[0];
 		    roomsName = new String[0];
 		}
 		
 		try {
-		    Collection materials = DaoManager.getElementDao().getMaterials();
-		    materialsName = new String[materials.size()+1];
-		    materialsId = new Long[materials.size()+1];
+		    Collection m = DaoManager.getElementDao().getMaterials();
+		    materialsName = new String[m.size()+1];
+		    materials = new Material[m.size()+1];
 		    materialsName[0] = "";
 			int j = 1;
-			for (Iterator i = materials.iterator(); i.hasNext(); ++j) {
-				Material material = (Material) i.next();
-				materialsId[j] = material.getIdMaterial();
-				materialsName[j] = material.getName();
+			for (Iterator i = m.iterator(); i.hasNext(); ++j) {
+			    materials[j] = (Material) i.next();
+				materialsName[j] = materials[j].getName();
 			}
 		} catch (Exception e) {
-		    materialsId = new Long[0];
+		    materials = new Material[0];
 		    materialsName = new String[0];
 		}
 	}
@@ -236,24 +234,23 @@ public class ViewTimetableWindow {
     				    choice2EDTJcb.setEnabled(true);
                     }
 
-                    Long idFormation = formationsId[index];
+                    Long idFormation = formations[index].getIdFormation();
                     try {
                         GroupFilter filter = new GroupFilter();
                         filter.setIdFormation(idFormation);
-            		    Collection groups = DaoManager.getGroupDao().getGroups(filter);
-            		    groupsName = new String[groups.size()+1];
-            		    groupsId = new Long[groups.size()+1];
+            		    Collection g = DaoManager.getGroupDao().getGroups(filter);
+            		    groupsName = new String[g.size()+1];
+            		    groups = new Group[g.size()+1];
             		    groupsName[0] = "";
             		    choice2EDTJcb.addItem("");
             			int j = 1;
-            			for (Iterator i = groups.iterator(); i.hasNext(); ++j) {
-            				Group group = (Group) i.next();
-            				groupsId[j] = group.getIdGroup();
-            				groupsName[j] = group.getHeading();
-            				choice2EDTJcb.addItem(group.getHeading());
+            			for (Iterator i = g.iterator(); i.hasNext(); ++j) {
+            			    groups[j] = (Group) i.next();
+            				groupsName[j] = groups[j].getHeading();
+            				choice2EDTJcb.addItem(groups[j].getHeading());
             			}
             		} catch (Exception ex) {
-            		    groupsId = new Long[0];
+            		    groups = new Group[0];
             		    groupsName = new String[0];
             		}
                 }
@@ -288,6 +285,7 @@ public class ViewTimetableWindow {
 				periodViewEDTPanel.remove(periodViewEDTDate);
 				periodViewEDTPanel.add(periodViewEDTJcb);
 				periodViewEDTLabel.setText("Veuillez choisir le semestre à visualiser");
+				periodViewEDTPanel.add(yearChooser);
 				VTWFrame.pack();
 			}
 		});
@@ -298,6 +296,7 @@ public class ViewTimetableWindow {
 		hebdomadaire.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				periodViewEDTPanel.remove(periodViewEDTJcb);
+				periodViewEDTPanel.remove(yearChooser);
 				periodViewEDTPanel.add(periodViewEDTDate);
 				periodViewEDTLabel.setText("Veuillez choisir la semaine à visualiser");
 				VTWFrame.pack();
@@ -328,8 +327,10 @@ public class ViewTimetableWindow {
 		periodViewEDTDate.setDate(Calendar.getInstance().getTime());
 		
 		periodViewEDTJcb = new JComboBox();
-		periodViewEDTJcb.addItem("1er semestre");
-		periodViewEDTJcb.addItem("2ème semestre");
+		periodViewEDTJcb.addItem("<html>1<sup>er</sup> semestre</html>");
+		periodViewEDTJcb.addItem("<html>2<sup>ème</sup> semestre</html>");
+		
+		yearChooser = new JYearChooser();
 		
 		periodViewEDTPanel.add(periodViewEDTDate);
 		addComponent(VTWLayout,layoutConstraints,periodViewEDTPanel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
@@ -355,50 +356,54 @@ public class ViewTimetableWindow {
 		return visuEDTJcb.getSelectedItem().toString();
 	}
 	
-	public Long getChoiceEDTJcb() {
+	public Object getChoiceEDTJcb() {
 	    String type = getVisuEDTJcb();
 	    int index = choiceEDTJcb.getSelectedIndex();
 
 	    if (TimeTableViewPanelBar.TYPE_FORMATION.equals(type))
-	        return formationsId[index];
+	        return formations[index];
 	    else if (TimeTableViewPanelBar.TYPE_ENSEIGNANT.equals(type))
-	        return teachersId[index];
+	        return teachers[index];
 	    else if (TimeTableViewPanelBar.TYPE_LOCAL.equals(type))
-	        return roomsId[index];
+	        return rooms[index];
 	    else if (TimeTableViewPanelBar.TYPE_MATERIEL.equals(type))
-	        return materialsId[index];
+	        return materials[index];
 	    else if (TimeTableViewPanelBar.TYPE_GROUPE.equals(type))
-	        return formationsId[index];
+	        return formations[index];
 
 		return null;
 	}
 	
-	public Long getChoice2EDTJcb() {
+	public Object getChoice2EDTJcb() {
 	    String type = getVisuEDTJcb();
 	    int index = choice2EDTJcb.getSelectedIndex();
 
 	    if (TimeTableViewPanelBar.TYPE_GROUPE.equals(type))
-	        return groupsId[index];
+	        return groups[index];
 
 		return null;
 	}
 	
-	public String getPeriodViewEDTJcb() {
-		if(semestriel.isSelected())
-			return periodViewEDTJcb.getSelectedItem().toString();
-		return null; 
+	public int getPeriodViewEDTJcb() {
+		if (semestriel.isSelected())
+			return periodViewEDTJcb.getSelectedIndex() + 1;
+		return 0; 
 	}
 	
-	public String getModeViewEDT() {
+	public int getModeViewEDT() {
 		if (semestriel.isSelected())
-			return "semestriel";
-		return "hebdomadaire";
+			return MainFrame.VIEW_HALF_YEAR;
+		return MainFrame.VIEW_WEEK;
 	}
 	
 	 public Date getPeriodViewEDTDate () {
-	 	if(hebdomadaire.isSelected())
+	 	if (hebdomadaire.isSelected())
 	 		return periodViewEDTDate.getDate();
 	 	return null;
+	 }
+	 
+	 public int getYear() {
+	     return yearChooser.getValue();
 	 }
 	 
 	
@@ -438,8 +443,6 @@ public class ViewTimetableWindow {
 	    if (TimeTableViewPanelBar.TYPE_GROUPE.equals(type) &&
 	            choice2EDTJcb.getSelectedIndex() == 0)
 	        return 1;
-	    if (semestriel.isSelected())
-	        return 2;
 		return 0;
 	}
 	
@@ -457,9 +460,6 @@ public class ViewTimetableWindow {
 				return;
 			case 1:
 			    errorMessage = "Vous n'avez pas terminé de sélectionner l'emploi du temps à visualiser";
-			    break;
-			case 2:
-			    errorMessage = "L'affichage semestriel n'est pas encore implémenté !";
 			    break;
 			default:
 				errorMessage = "Erreur inconnue";

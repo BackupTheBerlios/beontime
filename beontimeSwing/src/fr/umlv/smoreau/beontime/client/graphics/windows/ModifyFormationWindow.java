@@ -6,13 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +21,7 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
+import fr.umlv.smoreau.beontime.client.BoTConfig;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.model.user.User;
@@ -31,43 +30,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class ModifyFormationWindow {
-    private static final SimpleDateFormat FORMAT_DATE  = new SimpleDateFormat("dd/MM");
-
-    private static final String CONFIG_BOT = "beontime.properties";
-    private static final String DEFAULT_BEGIN_FIRST_HALF_YEAR = "01/09";
-    private static final String DEFAULT_END_FIRST_HALF_YEAR = "31/12";
-    private static final String DEFAULT_BEGIN_SECOND_HALF_YEAR = "01/01";
-    private static final String DEFAULT_END_SECOND_HALF_YEAR = "30/06";
-
 	private static final String TITRE = "Modifier une formation";
-	
-	private static String beginFirstHalfYear;
-	private static String endFirstHalfYear;
-	private static String beginSecondHalfYear;
-	private static String endSecondHalfYear;
-	
-	static {
-		try {
-	        String configDirectory = System.getProperty("config.directory");
-	        if (configDirectory != null) {
-	            Properties properties = new Properties();
-	            properties.load(new FileInputStream(configDirectory + System.getProperty("file.separator") + CONFIG_BOT));
-	            beginFirstHalfYear = properties.getProperty("begin.first.half.year");
-	            endFirstHalfYear = properties.getProperty("end.first.half.year");
-	            beginSecondHalfYear = properties.getProperty("begin.second.half.year");
-	            endSecondHalfYear = properties.getProperty("end.second.half.year");
-	        } else {
-	            System.err.println("Le paramètre JVM 'config.directory' n'est pas positionné");
-	            System.err.println("Utilisation des dates de semestre par défaut");
-	            beginFirstHalfYear = DEFAULT_BEGIN_FIRST_HALF_YEAR;
-	            endFirstHalfYear = DEFAULT_END_FIRST_HALF_YEAR;
-	            beginSecondHalfYear = DEFAULT_BEGIN_SECOND_HALF_YEAR;
-	            endSecondHalfYear = DEFAULT_END_SECOND_HALF_YEAR;
-	        }
-	    } catch (Exception e) {
-	        throw new RuntimeException("Problème de lecture du fichier de configuration : " + e.getMessage(), e);
-	    }
-	}
 	
 	private JLabel entitleLabel;
 	private JLabel secretaryLabel;
@@ -242,11 +205,13 @@ public class ModifyFormationWindow {
 		
 		
 		startHalfYear1Jc = new JDateChooser();
-		try {
-            startHalfYear1Jc.setDate(FORMAT_DATE.parse(beginFirstHalfYear));
-        } catch (ParseException e) {
-        }
+        startHalfYear1Jc.setDate(BoTConfig.getBeginFirstHalfYear());
 		startHalfYear1Jc.setDateFormatString("dd MMMMM");
+		startHalfYear1Jc.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent arg0) {
+                startHalfYear1Jc.revalidate();
+            }
+		});
 		addComponent(MFWLayout,layoutConstraints,startHalfYear1Jc,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(startHalfYear1Jc);
 			
@@ -255,11 +220,13 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(endHalfYear1Label);
 		
 		endHalfYear1Jc = new JDateChooser();
-		try {
-		    endHalfYear1Jc.setDate(FORMAT_DATE.parse(endFirstHalfYear));
-        } catch (ParseException e) {
-        }
+		endHalfYear1Jc.setDate(BoTConfig.getEndFirstHalfYear());
         endHalfYear1Jc.setDateFormatString("dd MMMMM");
+        endHalfYear1Jc.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent arg0) {
+                endHalfYear1Jc.revalidate();
+            }
+		});
 		addComponent(MFWLayout,layoutConstraints,endHalfYear1Jc,4,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(endHalfYear1Jc);
 		
@@ -273,11 +240,13 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(startHalfYear2Label);
 		
 		startHalfYear2Jc = new JDateChooser();
-		try {
-		    startHalfYear2Jc.setDate(FORMAT_DATE.parse(beginSecondHalfYear));
-        } catch (ParseException e) {
-        }
+		startHalfYear2Jc.setDate(BoTConfig.getBeginSecondHalfYear());
         startHalfYear2Jc.setDateFormatString("dd MMMMM");
+        startHalfYear2Jc.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent arg0) {
+                startHalfYear2Jc.revalidate();
+            }
+		});
 		addComponent(MFWLayout,layoutConstraints,startHalfYear2Jc,2,7,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(startHalfYear2Jc);
 		
@@ -286,11 +255,13 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(endHalfYear2Label);
 		
 		endHalfYear2Jc = new JDateChooser();
-		try {
-		    endHalfYear2Jc.setDate(FORMAT_DATE.parse(endSecondHalfYear));
-        } catch (ParseException e) {
-        }
+		endHalfYear2Jc.setDate(BoTConfig.getEndSecondHalfYear());
         endHalfYear2Jc.setDateFormatString("dd MMMMM");
+        endHalfYear2Jc.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent arg0) {
+                endHalfYear2Jc.revalidate();
+            }
+		});
 		addComponent(MFWLayout,layoutConstraints,endHalfYear2Jc,4,7,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(endHalfYear2Jc);
 		

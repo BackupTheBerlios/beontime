@@ -56,8 +56,6 @@ public class AddUser extends Action {
                 user.setPassword(new String(md.digest()));
                 user = DaoManager.getUserDao().addUser(user);
                 
-                //mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_ADD);
-                
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès\nLogin: "+login+"\nMot de passe: "+password, "Login et mot de passe", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 e.printStackTrace();
