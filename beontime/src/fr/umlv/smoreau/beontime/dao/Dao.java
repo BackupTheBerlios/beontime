@@ -1,5 +1,7 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
@@ -9,9 +11,17 @@ import fr.umlv.smoreau.beontime.filter.Filter;
 /**
  * @author BeOnTime
  */
-public abstract class Dao {
+public abstract class Dao extends UnicastRemoteObject {
 
-    protected Collection get(String databaseName, Filter filter) throws HibernateException {
+    /**
+	 * @throws RemoteException
+	 */
+	protected Dao() throws RemoteException {
+		super();
+		// TODO virer ?
+	}
+
+	protected Collection get(String databaseName, Filter filter) throws HibernateException {
         String f = "";
         if (filter != null) {
             f = filter.getHQLQuery();

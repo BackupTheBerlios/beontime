@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
@@ -14,11 +15,24 @@ import fr.umlv.smoreau.beontime.model.Group;
  * @author BeOnTime
  */
 public class GroupDao extends Dao {
-    private static final GroupDao INSTANCE = new GroupDao();
+	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	/** This class has to be serialisable */
+	private static final long serialVersionUID = 1L;
+
+//    private static final GroupDao INSTANCE = new GroupDao();
+    private static GroupDao INSTANCE;
+    static {
+    	try {
+			INSTANCE = new GroupDao();
+		} catch (RemoteException e) {
+			System.err.println("problème RMI à l'instanciation du Group DAO");
+			//TODO gerer
+		}
+    }
     
     private static final String TABLE = "Group";
     
-    private GroupDao() {
+    private GroupDao() throws RemoteException {
     }
 
     public static GroupDao getInstance() {

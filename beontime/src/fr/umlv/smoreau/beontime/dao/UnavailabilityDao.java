@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
@@ -15,14 +16,27 @@ import fr.umlv.smoreau.beontime.model.Unavailability;
  * @author BeOnTime
  */
 public class UnavailabilityDao extends Dao {
-    private static final UnavailabilityDao INSTANCE = new UnavailabilityDao();
+	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	/** This class has to be serialisable */
+	private static final long serialVersionUID = 1L;
+
+//	   private static final UnavailabilityDao INSTANCE = new UnavailabilityDao();
+	   private static UnavailabilityDao INSTANCE;
+	   static {
+	   	try {
+	   		INSTANCE = new UnavailabilityDao();
+	   	} catch (RemoteException e) {
+			System.err.println("problème RMI à l'instanciation du Unavalability DAO");
+			//TODO gerer
+	   	}
+	   }
     
     private static final String TABLE      = "Unavailability";
     private static final String TABLE_TYPE = "UnavailabilityType";
     
     private String[] DEFAULT_TYPES = { "enseignant", "étudiant", "cours", "matériel", "local", "calendrier" };
     
-    private UnavailabilityDao() {
+    private UnavailabilityDao() throws RemoteException {
         Collection types = getTypesUnavailability();
         if (types != null && types.size() == 0) {
             for (int i = 0; i < DEFAULT_TYPES.length; ++i) {

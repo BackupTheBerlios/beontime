@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
@@ -15,12 +16,23 @@ import fr.umlv.smoreau.beontime.model.element.*;
  * @author BeOnTime
  */
 public class ElementDao extends Dao {
-    private static final ElementDao INSTANCE = new ElementDao();
+	/** This class has to be serialisable */
+	private static final long serialVersionUID = 1L;
+	//    private static final ElementDao INSTANCE = new ElementDao();
+    private static ElementDao INSTANCE; 
+    static {
+    	try {
+			INSTANCE= new ElementDao();
+		} catch (RemoteException e) {
+			System.err.println("problème RMI à l'instanciation du Element DAO");
+			//TODO gerer
+		}
+    }
     
     private static final String TABLE_MATERIAL = "Material";
     private static final String TABLE_ROOM     = "Room";
     
-    private ElementDao() {
+    private ElementDao() throws RemoteException {
     }
 
     public static ElementDao getInstance() {

@@ -1,162 +1,50 @@
 package fr.umlv.smoreau.beontime.dao;
+/* DESS CRI - BeOnTime - timetable project */
+/* Created on 19 febr. 2005 */
 
+import java.rmi.Remote;
 import java.util.Collection;
 
-import javax.naming.NamingException;
-
-import net.sf.hibernate.HibernateException;
-
-import fr.umlv.smoreau.beontime.LdapManager;
-import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.*;
 
 /**
- * @author BeOnTime
+ * RMI interface for the User DAO
+ * @author BeOnTime team
  */
-public class UserDao extends Dao {
-    private static final UserDao INSTANCE = new UserDao();
-    private static final LdapManager ldapManager = LdapManager.getInstance();
-    
-    private static final String TABLE = "User";
+public interface UserDao extends Remote {
+
     public static final String TYPE_TEACHER   = "enseignant";
     public static final String TYPE_STUDENT   = "etudiant";
     public static final String TYPE_SECRETARY = "secretaire";
     public static final String TYPE_ADMIN     = "administrateur";
-    
-    private UserDao() {
-    }
 
-    public static UserDao getInstance() {
-        return INSTANCE;
-    }
+	
+ //   public static UserDao getInstance() throws java.rmi.RemoteException;
 
-
-	private Collection getUsers(UserFilter filter) {
-	    Collection result = null;
-
-        try {
-            TransactionManager.beginTransaction();
-            result = get(TABLE, filter);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des utilisateurs sur la base de données SQL : " + e.getMessage());
-        }
-        
-        try {
-            result.addAll(ldapManager.getUsers(filter));
-        } catch (NamingException e) {
-            System.err.println("Erreur lors de la récupération des utilisateurs sur la base de données LDAP : " + e.getMessage());
-            //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
-            User user = new User(new Long(33), filter.getUserType());
-            user.setFirstName("Toto");
-            user.setName("Nom2toto");
-            user.setEMail("toto@toto.fr");
-            result.add(user);
-            //finTODO
-        }
-
-		return result;
-	}
+//	private Collection getUsers(UserFilter filter);
 	
-	public Collection getAdministrators(UserFilter filter) {
-	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
-	    f.setUserType(TYPE_ADMIN);
-
-		return getUsers(f);
-	}
+	public Collection getAdministrators(UserFilter filter) throws java.rmi.RemoteException;
+	//TODO virer les throws ?
 	
-	public Collection getSecretaries(UserFilter filter) {
-	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
-	    f.setUserType(TYPE_SECRETARY);
-
-		return getUsers(f);
-	}
+	public Collection getSecretaries(UserFilter filter) throws java.rmi.RemoteException;
 	
-	public Collection getStudents(UserFilter filter) {
-	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
-	    f.setUserType(TYPE_STUDENT);
-
-		return getUsers(f);
-	}
+	public Collection getStudents(UserFilter filter) throws java.rmi.RemoteException;
 	
-	public Collection getTeachers(UserFilter filter) {
-	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
-	    f.setUserType(TYPE_TEACHER);
-
-		return getUsers(f);
-	}
+	public Collection getTeachers(UserFilter filter) throws java.rmi.RemoteException;
 	
-	public Collection getAdministrators() {
-	    UserFilter filter = new UserFilter();
-	    filter.setUserType(TYPE_ADMIN);
-		return getUsers(filter);
-	}
+	public Collection getAdministrators() throws java.rmi.RemoteException;
 	
-	public Collection getSecretaries() {
-	    UserFilter filter = new UserFilter();
-	    filter.setUserType(TYPE_SECRETARY);
-		return getUsers(filter);
-	}
+	public Collection getSecretaries() throws java.rmi.RemoteException;
 	
-	public Collection getStudents() {
-	    UserFilter filter = new UserFilter();
-	    filter.setUserType(TYPE_STUDENT);
-		return getUsers(filter);
-	}
+	public Collection getStudents() throws java.rmi.RemoteException;
 	
-	public Collection getTeachers() {
-	    UserFilter filter = new UserFilter();
-	    filter.setUserType(TYPE_TEACHER);
-		return getUsers(filter);
-	}
+	public Collection getTeachers() throws java.rmi.RemoteException;
 	
-	public boolean addUser(User user) {
-        try {
-            TransactionManager.beginTransaction();
-            add(user);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean addUser(User user) throws java.rmi.RemoteException;
 	
-	public boolean modifyUser(User user) {
-        try {
-            TransactionManager.beginTransaction();
-            modify(user);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean modifyUser(User user) throws java.rmi.RemoteException;
 	
-	public boolean removeUser(User user) {
-        try {
-            TransactionManager.beginTransaction();
-            remove(TABLE, new UserFilter(user));
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la suppression d'un utilisateur : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
-
-
-	public boolean testLoginPwd(String login, String password) {
-	    return ldapManager.testLoginPwd(login, password);
-	}
+	public boolean removeUser(User user) throws java.rmi.RemoteException;
+	
 }

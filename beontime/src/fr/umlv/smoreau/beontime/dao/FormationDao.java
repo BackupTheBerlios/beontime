@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,12 +20,25 @@ import fr.umlv.smoreau.beontime.model.Formation;
  * @author BeOnTime
  */
 public class FormationDao extends Dao {
-    private static final FormationDao INSTANCE = new FormationDao();
+	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	/** This class has to be serialisable */
+	private static final long serialVersionUID = 1L;
+	
+ //   private static final FormationDao INSTANCE = new FormationDao();
+    private static FormationDao INSTANCE;
+    static {
+    	try {
+			INSTANCE = new FormationDao();
+		} catch (RemoteException e) {
+			System.err.println("problème RMI à l'instanciation du Formation DAO");
+			//TODO gerer
+		}
+    }
     private static final LdapManager ldapManager = LdapManager.getInstance();
     
     private static final String TABLE = "Formation";
     
-    private FormationDao() {
+    private FormationDao() throws RemoteException {
     }
 
     public static FormationDao getInstance() {

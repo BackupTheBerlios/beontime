@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.dao;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -20,7 +21,20 @@ import fr.umlv.smoreau.beontime.model.timetable.*;
  * @author BeOnTime
  */
 public class TimetableDao extends Dao {
-    private static final TimetableDao INSTANCE = new TimetableDao();
+	//TODO en cas de modif refaire le rmic et rebalancer coté client
+	/** This class has to be serialisable */
+	private static final long serialVersionUID = 1L;
+
+ //   private static final TimetableDao INSTANCE = new TimetableDao();
+    private static TimetableDao INSTANCE;
+    static {
+    	try {
+			INSTANCE = new TimetableDao();
+		} catch (RemoteException e) {
+			System.err.println("problème RMI à l'instanciation du TimeTable DAO");
+			//TODO gerer
+		}
+    }
 
     private static final String TABLE_COURSE      = "Course";
     private static final String TABLE_SUBJECT     = "Subject";
@@ -29,7 +43,7 @@ public class TimetableDao extends Dao {
     
     private String[] DEFAULT_TYPES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
 
-    private TimetableDao() {
+    private TimetableDao() throws RemoteException {
         Collection types = getTypesCourse();
         if (types != null && types.size() == 0) {
             for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
