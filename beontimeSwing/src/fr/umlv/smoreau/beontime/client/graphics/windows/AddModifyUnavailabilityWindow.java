@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -221,6 +223,11 @@ public class AddModifyUnavailabilityWindow {
 		AMUWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	AMUWFrame.dispose();
+            }
+		});
 		addComponent(AMUWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(annuler);
     	
@@ -235,15 +242,14 @@ public class AddModifyUnavailabilityWindow {
     }
     
     private void initMinuteJcb(JComboBox jcb) {
-
-    	for(int i=0;i<10;i++) {
-    		jcb.addItem("0"+i);
-    	}
-    	for(int i=10;i<=60;i++) {
-    		jcb.addItem(""+i);
-    	}
-
-    }
+		
+		String [] tabMin = new String[] {"00","15","30","45"};
+		
+		for (int i=0;i<tabMin.length;i++) {
+			jcb.addItem(tabMin[i]);
+			
+		}
+	}
     
     /* (non-Javadoc)
      * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
