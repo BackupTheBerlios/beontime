@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -85,11 +86,12 @@ public class MainFrame {
 		JSplitPane splitPaneVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		JSplitPane splitPaneVertical2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		
-        
         splitPaneVertical2.setContinuousLayout(true);
         splitPaneVertical.setContinuousLayout(true);
         splitPaneVertical.setOneTouchExpandable(true);
         splitPaneVertical2.setOneTouchExpandable(true);
+        splitPaneHorizontal.setContinuousLayout(true);
+        splitPaneHorizontal.setOneTouchExpandable(true);
         mainFrame = new JFrame();
         Container container=mainFrame.getContentPane();
         Border beveledBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(153, 204, 255), new Color(204, 204, 255));
@@ -101,14 +103,14 @@ public class MainFrame {
         splitPaneHorizontal.setDividerLocation((int)(WIDTH*0.15));
         splitPaneHorizontal.setDividerSize(8);
         
-        splitPaneVertical.setTopComponent(titleBar);
+        splitPaneVertical.setTopComponent(titleBar.getTitleBarPanel());
         splitPaneVertical.setBottomComponent(splitPaneHorizontal);
         splitPaneVertical.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        splitPaneVertical.setDividerLocation((int)(HEIGHT*0.1));
+        splitPaneVertical.setDividerLocation((int)(HEIGHT*0.05));
         splitPaneVertical.setDividerSize(8);
 		
         splitPaneVertical2.setTopComponent(splitPaneVertical);
-        splitPaneVertical2.setBottomComponent(stateBar);
+        splitPaneVertical2.setBottomComponent(stateBar.getStateBarPanel());
         splitPaneVertical2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         splitPaneVertical2.setDividerLocation((int)(HEIGHT*0.7));
         splitPaneVertical2.setDividerSize(8);

@@ -11,7 +11,6 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -117,18 +116,5 @@ public class TitleBar extends JPanel {
  
         gbLayout.setConstraints(comp,constraints);
     }
-	
-	
-	public static void main(String[] args){
-		
-		TitleBar maBar = new TitleBar();
-		
-		JFrame mafenetre = new JFrame();
-		mafenetre.getContentPane().add(maBar.getTitleBarPanel());
-		mafenetre.setTitle("Essai td");
-		mafenetre.pack();
-		mafenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mafenetre.setVisible(true);
-		}
 	
 }

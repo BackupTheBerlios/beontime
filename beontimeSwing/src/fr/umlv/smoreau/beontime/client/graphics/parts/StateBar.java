@@ -6,7 +6,6 @@ package fr.umlv.smoreau.beontime.client.graphics.parts;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,7 +19,7 @@ public class StateBar extends JPanel {
     	remarkPanel.setLayout(new BorderLayout());
 		
 		initremarkPanel();
-		remarkPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		remarkPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		remarkPanel.add(remarkLabel, BorderLayout.CENTER);
 
     }
@@ -43,16 +42,5 @@ public class StateBar extends JPanel {
 	public void setRemark(String rem) {
 		remarkLabel.setText(rem);
 	}
-	public static void main(String[] args){
-		
-		StateBar maBar = new StateBar();
-		
-		JFrame mafenetre = new JFrame();
-		mafenetre.getContentPane().add(maBar.getStateBarPanel());
-		mafenetre.setTitle("Essai td");
-		mafenetre.pack();
-		mafenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mafenetre.setVisible(true);
-		}
 	
 }
