@@ -42,14 +42,14 @@ public class AddCourse extends Action {
         JTable table = mainFrame.getTable();
         int[] columns = table.getSelectedColumns();
         int[] rows    = table.getSelectedRows();
-    	AddModifyCourseWindow window = new AddModifyCourseWindow();
+    	AddModifyCourseWindow window = new AddModifyCourseWindow(AddModifyCourseWindow.TYPE_ADD);
     	if (columns.length>1){
     		window.setStartHour(columns[0]);
     		window.setEndHour(columns[columns.length-1]);
     	}
     	window.setCourseFormation(mainFrame.getFormationSelected());
     	window.setTypeCourse(mainFrame.getCourseTypeSelected());
-    	//TODO ajouter l'enseignant responsable de la matière pour le cours
+    	window.setIdTeacher(mainFrame.getSubjectSelected().getIdTeacher());
     	window.show();
     	
     	if (window.isOk()) {

@@ -1,10 +1,25 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable.course;
 
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
+import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.CourseType;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -24,7 +39,75 @@ public class ModifyCourse extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyCourseWindow window = new AddModifyCourseWindow();
-        window.show();
+        Course course = mainFrame.getCourseSelected();
+        if (course == null)
+            return;
+
+        AddModifyCourseWindow window = new AddModifyCourseWindow(AddModifyCourseWindow.TYPE_MODIFY);
+        window.setCourseFormation(mainFrame.getFormationSelected());
+        window.setBeginDate(course.getBeginDate());
+        window.setEndDate(course.getEndDate());
+        window.setTypeCourse(course.getIdCourseType().getNameCourseType());
+        
+        try {
+            course = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_GROUPS_SUBJECTS, TimetableDao.JOIN_TEACHERS_DIRECTING, TimetableDao.JOIN_ROOMS, TimetableDao.JOIN_MATERIALS});
+            TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) course.getGroupsSubjectsTakingPart().toArray()[0];
+            window.setIdGroup(takePart.getIdGroup());
+            window.setTeachers(course.getTeachersDirecting());
+            window.setRooms(course.getRooms());
+            window.setMaterials(course.getMaterials());
+
+            window.show();
+
+            if (window.isOk()) {
+        	    /*Calendar beginDate = Calendar.getInstance();
+        	    beginDate.setTime(window.getDateCourse());
+        	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
+        	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
+        	    beginDate.set(Calendar.SECOND, 0);
+        	    beginDate.set(Calendar.MILLISECOND, 0);
+        	    course.setBeginDate(beginDate);
+        	    
+        	    Calendar endDate = Calendar.getInstance();
+        	    endDate.setTime(window.getDateCourse());
+        	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+1);
+        	    endDate.set(Calendar.MINUTE, window.getEndMinute());
+        	    endDate.set(Calendar.SECOND, 0);
+        	    endDate.set(Calendar.MILLISECOND, 0);
+        	    course.setEndDate(endDate);
+        	    
+        	    Collection teachers = window.getTeachers();
+        	    for (Iterator i = teachers.iterator(); i.hasNext(); )
+        	        course.addTeacherDirecting(new IsDirectedByCourseTeacher((User) i.next(),course));
+        	    
+        	    Collection rooms = window.getPlaceCourse();
+        	    for (Iterator i = rooms.iterator(); i.hasNext(); )
+        	        course.addRoom((Room) i.next());
+        	    
+        	    Collection materials = window.getCourseEquipment();
+        	    for (Iterator i = materials.iterator(); i.hasNext(); )
+        	        course.addMaterial((Material) i.next());
+        	    
+        	    Collection types = DaoManager.getTimetableDao().getTypesCourse();
+                String tmp = window.getTypeCourse();
+                for (Iterator i = types.iterator(); i.hasNext(); ) {
+                    CourseType type = (CourseType) i.next();
+                    if (tmp.equals(type.getNameCourseType())) {
+                        course.setIdCourseType(type);
+                        break;
+                    }
+                }
+        	    
+	            DaoManager.getTimetableDao().modifyCourse(course);
+	            course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
+                course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
+	            mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_MODIFY);
+
+	            JOptionPane.showMessageDialog(null, "Modification effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
+	            */
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

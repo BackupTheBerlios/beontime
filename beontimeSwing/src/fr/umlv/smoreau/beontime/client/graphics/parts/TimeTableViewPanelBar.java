@@ -174,6 +174,7 @@ public class TimeTableViewPanelBar extends JPanel {
 					    }
 					}
 				} catch (Exception e) {
+				    e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
 			}

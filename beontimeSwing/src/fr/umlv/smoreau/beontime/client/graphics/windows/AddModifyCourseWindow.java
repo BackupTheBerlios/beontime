@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -38,6 +39,9 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public class AddModifyCourseWindow {
 	private static final String TITRE = "Placer un cours";
+	
+	public static final int TYPE_ADD = 0;
+	public static final int TYPE_MODIFY = 1;
 	
 	private JLabel teacherLabel;
 	private JLabel placeCourseLabel;
@@ -99,10 +103,12 @@ public class AddModifyCourseWindow {
 	private Material[] materials;
 	private String[] groupsName;
 	private Group[] groups;
+	private int type;
 	
 	
-	public AddModifyCourseWindow () {
+	public AddModifyCourseWindow(int type) {
 	    this.isOk = false;
+	    this.type = type;
 		AMCWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		AMCWFrame.getContentPane().setLayout(AMCWLayout);
 		
@@ -188,6 +194,29 @@ public class AddModifyCourseWindow {
 		return list;
 	}
 	
+	public void setTeachers(Collection teachers) {
+	    teachers.size();
+	    //TODO Sandrine: remplir et ajouter les JComboBox
+	}
+	
+	public void setRooms(Collection rooms) {
+	    rooms.size();
+	    //TODO Sandrine: remplir et ajouter les JComboBox
+	}
+	
+	public void setMaterials(Collection materials) {
+	    materials.size();
+	    //TODO Sandrine: remplir et ajouter les JComboBox
+	}
+	
+	public void setIdTeacher(Long idTeacher) {
+	    for (int i = 1; i < teachers.length; ++i)
+	        if (teachers[i].getIdUser().equals(idTeacher)) {
+	            teacherCourseJcb.setSelectedIndex(i);
+	            break;
+	        }
+	}
+	
 	
 	public Date getDateCourse() {
 		return dateCourse.getDate();
@@ -249,11 +278,6 @@ public class AddModifyCourseWindow {
 		
 		return TimetableDao.TYPES_COURSES[2];
 	}
-
-	
-	public void setNbWeeksCourse(int nb){	
-		repeatCourseJcb.addItem(""+nb);
-	}
 	
 	public void setCourseFormation(Formation formation) {
 		AMCWFrame.getContentPane().remove(courseFormationLabel);
@@ -264,8 +288,13 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(courseFormationLabel);
 	}
 	
-	public void setCourseGroup(Group group) {
-		courseGroupJcb.addItem(group.getHeading());
+	public void setIdGroup(Long idGroup) {
+	    for (int i = 1; i < groups.length; ++i)
+	        if (groups[i].getIdGroup().equals(idGroup)) {
+	            courseGroupJcb.setSelectedIndex(i);
+	            break;
+	        }
+	    courseGroupJcb.setEnabled(false);
 	}
 	
 	public void setTypeCourse(String typeCourse) {
@@ -404,15 +433,16 @@ public class AddModifyCourseWindow {
 		}
 		
 		
-		
-		repeatCourseLabel = new JLabel("Sur combien de semaines se déroulera le cours ?");
-		addComponent(AMCWLayout,layoutConstraints,repeatCourseLabel,1,6,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
-		AMCWFrame.getContentPane().add(repeatCourseLabel);
-		
-		repeatCourseJcb = new JComboBox();
-		initNumberJcb(repeatCourseJcb, 1, 30);
-		addComponent(AMCWLayout,layoutConstraints,repeatCourseJcb,6,6,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
-		AMCWFrame.getContentPane().add(repeatCourseJcb);
+		if (type == TYPE_ADD) {
+			repeatCourseLabel = new JLabel("Sur combien de semaines se déroulera le cours ?");
+			addComponent(AMCWLayout,layoutConstraints,repeatCourseLabel,1,6,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+			AMCWFrame.getContentPane().add(repeatCourseLabel);
+			
+			repeatCourseJcb = new JComboBox();
+			initNumberJcb(repeatCourseJcb, 1, 30);
+			addComponent(AMCWLayout,layoutConstraints,repeatCourseJcb,6,6,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
+			AMCWFrame.getContentPane().add(repeatCourseJcb);
+		}
 		
 		
 		
@@ -548,10 +578,22 @@ public class AddModifyCourseWindow {
     	startCourseHourJcb.setSelectedIndex((start/4)+8);
     	startCourseMinuteJcb.setSelectedIndex((start%4));
     }
+    
+    public void setBeginDate(Calendar date){
+    	startCourseHourJcb.setSelectedIndex(date.get(Calendar.HOUR_OF_DAY));
+    	startCourseMinuteJcb.setSelectedIndex(date.get(Calendar.MINUTE)/15);
+    	dateCourse.setDate(date.getTime());
+    }
 
     public void setEndHour(int end){
     	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8);
     	endCourseMinuteJcb.setSelectedIndex(((end+1)%4));
+    }
+    
+    public void setEndDate(Calendar date){
+    	endCourseHourJcb.setSelectedIndex(date.get(Calendar.HOUR_OF_DAY));
+    	endCourseMinuteJcb.setSelectedIndex(date.get(Calendar.MINUTE)/15);
+    	dateCourse.setDate(date.getTime());
     }
 
     public int getStartHour(){

@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -193,7 +192,6 @@ public class AddModifySubjectWindow {
                 teachers[j] = (User) i.next();
                 teachersName[j] = teachers[j].getName() + " " + teachers[j].getFirstName();
             }
-            Arrays.sort(teachersName);
             teacherFieldJcb = new JComboBox(teachersName);
         } catch (Exception e) {
             JLabel label = new JLabel("Erreur lors de la récupération des enseignants");
@@ -494,6 +492,7 @@ public class AddModifySubjectWindow {
     public void setIdTeacher(Long idTeacher) {
         for (int i = 1; i < teachers.length; ++i) {
             if (teachers[i].getIdUser().equals(idTeacher)) {
+                System.out.println(teachers[i].getIdUser() + " "+idTeacher);
                 teacherFieldJcb.setSelectedIndex(i);
                 break;
             }
