@@ -34,13 +34,17 @@ public class ManageUnavailabilitiesAdapter implements TreeModel {
 	private final EventListenerList list;
 	private JTree tree;
 
+	private String [] tabTypeUnavailabilities;
+	
 	public ManageUnavailabilitiesAdapter(BoTModel model, JTree t) {
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
 		
+		tabTypeUnavailabilities = new String [] {"Calendrier", "Cours", "Enseignant", "Etudiant", "Local","Materiel"};
+		
 		//TODO pour tester en local
-		ArrayList listUnavailabilities = new ArrayList();
+		
 		
 		Unavailability i1 = new Unavailability();
 		

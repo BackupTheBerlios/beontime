@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.actions.availability.AddUnavailability;
 import fr.umlv.smoreau.beontime.client.actions.availability.ModifyUnavailability;
 import fr.umlv.smoreau.beontime.client.actions.availability.RemoveUnavailability;
@@ -29,9 +28,11 @@ import fr.umlv.smoreau.beontime.client.actions.element.ModifyMaterial;
 import fr.umlv.smoreau.beontime.client.actions.element.ModifyRoom;
 import fr.umlv.smoreau.beontime.client.actions.element.RemoveMaterial;
 import fr.umlv.smoreau.beontime.client.actions.element.RemoveRoom;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.ModifyCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.RemoveCourse;
+import fr.umlv.smoreau.beontime.client.actions.group.AddGroup;
+import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
+import fr.umlv.smoreau.beontime.client.actions.group.ManageIdentitiesToGroups;
+import fr.umlv.smoreau.beontime.client.actions.group.ModifyGroup;
+import fr.umlv.smoreau.beontime.client.actions.group.RemoveGroup;
 import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
 import fr.umlv.smoreau.beontime.client.actions.timetable.subject.ModifySubject;
 import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
@@ -144,12 +145,12 @@ public class ManageElementsWindow {
 		addComponent(layout,layoutConstraints,newButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		manageButtonPanel.add(newButton);
 		
-		modifyButton = new JButton("Modifier");
+		modifyButton = new JButton(getActionButton("modifyButton", type));
 		addComponent(layout,layoutConstraints,modifyButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		modifyButton.setEnabled(false);
 		manageButtonPanel.add(modifyButton);
 		
-		removeButton = new JButton("Supprimer");
+		removeButton = new JButton(getActionButton("removeButton", type));
 		addComponent(layout,layoutConstraints,removeButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		removeButton.setEnabled(false);
 		manageButtonPanel.add(removeButton);
@@ -161,12 +162,12 @@ public class ManageElementsWindow {
 		manageButtonPanel.add(searchUnavailabilitiesButton);
 		
 		
-		manageIdentityButton = new JButton("Gérer les identités");
+		manageIdentityButton = new JButton(getActionButton("manageIdentityButton", type));
 		addComponent(layout,layoutConstraints,manageIdentityButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		manageIdentityButton.setVisible(false);
 		manageButtonPanel.add(manageIdentityButton);
 		
-		generateButton = new JButton("Générer");
+		generateButton = new JButton(getActionButton("generateButton", type));
 		addComponent(layout,layoutConstraints,generateButton,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		generateButton.setVisible(false);
 		manageButtonPanel.add(generateButton);
@@ -211,16 +212,26 @@ public class ManageElementsWindow {
 		else if (type.compareTo("TYPE_GROUPS") ==0) {
 			
 			if(nameButton.compareTo("newButton") == 0) {
-				return new AddCourse(null);
+				return new AddGroup(null);
 			}
 			
 			else if(nameButton.compareTo("modifyButton") == 0) {
-				return  new ModifyCourse(null);
+				return  new ModifyGroup(null);
 			}
 			
 			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveCourse(null);
+				return new RemoveGroup(null);
 			}
+			
+			else if(nameButton.compareTo("manageIdentityButton") == 0) {
+				return new GenerateGroups(null);
+			}
+			
+			else if(nameButton.compareTo("generateButton") == 0) {
+				return new  ManageIdentitiesToGroups(null);
+			}
+			
+			
 			
 		}
 		
@@ -238,9 +249,6 @@ public class ManageElementsWindow {
 				return new RemoveUnavailability(null);
 			}
 			
-			else if(nameButton.compareTo("removeButton") == 0) {
-				return new RemoveUnavailability(null);
-			}
 			
 			else if(nameButton.compareTo("searchUnavailabilitiesButton") == 0) {
 				return new SearchAvailability(null);
@@ -334,7 +342,7 @@ public class ManageElementsWindow {
 		
 		
 		
-		ManageElementsWindow form = new ManageElementsWindow("TYPE_SUBJECTS");
+		ManageElementsWindow form = new ManageElementsWindow("TYPE_GROUPS");
 		form.show();
 		
 	}    

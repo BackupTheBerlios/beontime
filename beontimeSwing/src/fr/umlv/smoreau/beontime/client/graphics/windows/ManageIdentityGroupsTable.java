@@ -6,11 +6,13 @@
  */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -103,11 +105,21 @@ public class ManageIdentityGroupsTable extends JTable {
     		
     		String v = (String) value;
     	    
-    	    if ("oui".equals(v))
-    	        return new CrossDrawing();
+    	
+             
+    	    if ("oui".equals(v)) {
+    	    	
+    	    	/*if(isSelected){
+                 	setBackground(Color.RED); 
+                 	setOpaque(true);
+                 }*/
+    	    	return new CrossDrawing();
     		
+    	    }
+    	    
     		return this;
     	}
+    	
     }
 }
 
