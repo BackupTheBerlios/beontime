@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class Disconnect extends Action {
     private static final String NAME = "Se déconnecter";
-    private static final String ICON = "";
+    private static final String ICON = "decon.png";
     
     public Disconnect(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

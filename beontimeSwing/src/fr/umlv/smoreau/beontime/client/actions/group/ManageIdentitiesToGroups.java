@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageGroupsWindow;
  */
 public class ManageIdentitiesToGroups extends Action {
     private static final String NAME = "Gérer les étudiants du groupe";
-    private static final String ICON = "Remove24.gif";
+    private static final String ICON = "groupe.png";
 
 
     public ManageIdentitiesToGroups(MainFrame mainFrame) {
