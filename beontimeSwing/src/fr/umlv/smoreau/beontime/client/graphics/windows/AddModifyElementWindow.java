@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.ElementDao;
+import fr.umlv.smoreau.beontime.filter.MaterialFilter;
+import fr.umlv.smoreau.beontime.filter.RoomFilter;
 
 /**
  * @author BeOnTime
@@ -198,6 +200,21 @@ public class AddModifyElementWindow {
         String equipmentName = getEquipmentName();
         if (equipmentName == null || "".equals(equipmentName))
             return 1;
+        try {
+	        if (type == ElementDao.TYPE_MATERIAL) {
+	            MaterialFilter filter = new MaterialFilter();
+	            filter.setName(equipmentName);
+	            if (DaoManager.getElementDao().getMaterials(filter).size() > 0)
+	                return 2;
+	        } else if (type == ElementDao.TYPE_ROOM) {
+	            RoomFilter filter = new RoomFilter();
+	            filter.setName(equipmentName);
+	            if (DaoManager.getElementDao().getRooms(filter).size() > 0)
+	                return 3;
+	        }
+        } catch (Exception e) {
+            return 4;
+        }
         return 0;
     }
 
@@ -215,6 +232,15 @@ public class AddModifyElementWindow {
                 return;
             case 1:
                 errorMessage = "Le nom est obligatoire";
+                break;
+            case 2:
+                errorMessage = "Le nom est déjà utilisé par un matériel existant";
+                break;
+            case 3:
+                errorMessage = "Le nom est déjà utilisé par un local existant";
+                break;
+            case 4:
+                errorMessage = "Erreur lors de la vérification du nom ...";
                 break;
             default:
                 errorMessage = "Erreur inconnue";
