@@ -131,6 +131,15 @@ public class ManageRoomsAdapter implements TableModel {
 	}
 	
 	/* (non-Javadoc)
+	 * 
+	 */
+	public Object getObjectAt(int rowIndex) {
+		
+		return listRooms.get(rowIndex);
+				
+	}
+	
+	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
 	 */
 	public void addTableModelListener(TableModelListener l) {

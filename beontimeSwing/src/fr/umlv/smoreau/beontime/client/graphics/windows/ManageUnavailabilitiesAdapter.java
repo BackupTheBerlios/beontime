@@ -18,8 +18,11 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Unavailability;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author sandrine
@@ -34,52 +37,81 @@ public class ManageUnavailabilitiesAdapter implements TreeModel {
 	private final EventListenerList list;
 	private JTree tree;
 
-	private String [] tabTypeUnavailabilities;
+	private ArrayList listTypeUnavailabilities = new ArrayList();
+	
 	
 	public ManageUnavailabilitiesAdapter(BoTModel model, JTree t) {
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
 		
-		tabTypeUnavailabilities = new String [] {"Calendrier", "Cours", "Enseignant", "Etudiant", "Local","Materiel"};
+		listTypeUnavailabilities = new ArrayList();
+		listTypeUnavailabilities.add("Calendrier");
+		listTypeUnavailabilities.add("Cours");
+		listTypeUnavailabilities.add("Enseignant");
+		listTypeUnavailabilities.add("Etudiant");
+		listTypeUnavailabilities.add("Local");
+		listTypeUnavailabilities.add("Materiel");
+		
 		
 		//TODO pour tester en local
-		
-		
 		Unavailability i1 = new Unavailability();
-		
 		i1.setIdUnavailability(new Long(1));
-		i1.setDescription("perdue");
+		i1.setDescription("occupé");
 		
 		Unavailability i2 = new Unavailability();
+		i2.setIdUnavailability(new Long(2));
+		i2.setDescription("occupé");
+		
 		Unavailability i3 = new Unavailability();
+		i3.setIdUnavailability(new Long(3));
+		i3.setDescription("réservé");
+		
 		Unavailability i4 = new Unavailability();
+		i4.setIdUnavailability(new Long(4));
+		i4.setDescription("volé");
+		
 		Unavailability i5 = new Unavailability();
+		i5.setIdUnavailability(new Long(5));
+		i5.setDescription("autre cours");
+		
 		Unavailability i6 = new Unavailability();
-		Unavailability i7 = new Unavailability();
+		i6.setIdUnavailability(new Long(6));
+		i6.setDescription("en maladie");
 		
-		Timetable timetable = new Timetable();
-		Formation formation = new Formation();
-		formation.setHeading("DESS CRI");
-		formation.setIdFormation(new Long(1));
-		timetable.setFormation(formation);
 		
-		Subject subject = new Subject();
-		subject.setHeading("Matière1");
-		subject.setIdSubject(new Long(1));
-		Subject subject2 = new Subject();
-		subject2.setHeading("Matière2");
-		subject2.setIdSubject(new Long(2));
-		Subject subject3 = new Subject();
-		subject3.setHeading("Matière3");
-		subject3.setIdSubject(new Long(3));
-		ArrayList list = new ArrayList();
-		list.add(subject);
-		list.add(subject2);
-		list.add(subject3);
-		timetable.setSubjects(list);
 		
-		model.setTimetable(timetable);
+		//ROOM
+		Room room1 = new Room(new Long(1)); 
+		room1.setName("Nom1");
+		room1.setDescription("Description1");
+		
+		
+		Room room2 = new Room(new Long(2)); 
+		room2.setName("Nom2");
+		room2.setDescription("Description2");
+		
+		//MATERIAL
+		Material material1 = new Material(new Long(1)); 
+		material1.setName("Nom1");
+		material1.setDescription("Vidéoprojecteur");
+		
+		Material material2 = new Material(new Long(2)); 
+		material2.setName("Nom2");
+		material2.setDescription("Rétroprojecteur");
+		
+		//USERS
+		User user1 = new User(new Long(1), "enseignant"); 
+		user1.setName("Nom1");
+		user1.setFirstName("prenom1");
+		user1.setEMail("user1@yahoo.fr");
+		
+		User user2 = new User(new Long(2), "enseignant"); 
+		user2.setName("Nom2");
+		user2.setFirstName("prenom2");
+		user2.setEMail("user2@yahoo.fr");
+		
+		
 		//finTODO
 
 		model.addBoTListener(new TreeListener(this));

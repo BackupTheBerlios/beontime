@@ -30,46 +30,49 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class ManageUsersTable extends JTable {
 	
 	private JPanel panel;
-    private final JTable table;
-    private static MainFrame mainFrame;
-    private User userSelected;
-    
-    public ManageUsersTable(final BoTModel model, final JButton modifyButton, final JButton deleteButton) {
-        super();
-        super.setModel(new ManageUsersAdapter(model));
-        ManageUsersTable.mainFrame = MainFrame.getInstance();
-        
-        panel = new JPanel(new GridLayout(1, 0));
-       
-        
-        table = this;
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
+	private final JTable table;
+	private static MainFrame mainFrame;
+	private User userSelected;
+	
+	public ManageUsersTable(final BoTModel model, final JButton modifyButton, final JButton deleteButton) {
+		super();
+		super.setModel(new ManageUsersAdapter(model));
+		ManageUsersTable.mainFrame = MainFrame.getInstance();
+		userSelected = null;
+		
+		panel = new JPanel(new GridLayout(1, 0));
+		
+		
+		table = this;
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
 			public void valueChanged(ListSelectionEvent e) {
 				modifyButton.setEnabled(true);
 				deleteButton.setEnabled(true);
+				
+				userSelected = (User)((ManageUsersAdapter)table.getModel()).getObjectAt(table.getSelectedRow());
 			}
 			
 		});
-        
-        
-        JScrollPane scrollPane = new JScrollPane(this);
-
+		
+		
+		JScrollPane scrollPane = new JScrollPane(this);
+		
 		super.setMinimumSize(new Dimension(100, 50));
-
+		
 		panel.add(scrollPane);
-    }
-    
-    public JPanel getPanel() {
-        return panel;
-    }
-    
-    /*public User getUserSelected() {
-        return userSelected;
-    }*/
-    
-    
+	}
+	
+	public JPanel getPanel() {
+		return panel;
+	}
+	
+	public User getUserSelected() {
+		return userSelected;
+	}
+	
+	
 }

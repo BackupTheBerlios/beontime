@@ -37,6 +37,7 @@ public class ManageRoomsTable extends JTable {
         super();
         super.setModel(new ManageRoomsAdapter(model));
         ManageRoomsTable.mainFrame = MainFrame.getInstance();
+        roomSelected = null;
         
         panel = new JPanel(new GridLayout(1, 0));
         
@@ -49,6 +50,8 @@ public class ManageRoomsTable extends JTable {
 			public void valueChanged(ListSelectionEvent e) {
 				modifyButton.setEnabled(true);
 				deleteButton.setEnabled(true);
+				
+				roomSelected = (Room)((ManageRoomsAdapter)table.getModel()).getObjectAt(table.getSelectedRow());
 			}
 			
 		});
@@ -65,7 +68,7 @@ public class ManageRoomsTable extends JTable {
         return panel;
     }
     
-    /*public Room getRoomSelected() {
+    public Room getRoomSelected() {
         return roomSelected;
-    }*/
+    }
 }

@@ -131,6 +131,15 @@ public class ManageMaterialsAdapter implements TableModel {
 	}
 	
 	/* (non-Javadoc)
+	 * 
+	 */
+	public Object getObjectAt(int rowIndex) {
+		
+		return listMaterials.get(rowIndex);
+				
+	}
+	
+	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
 	 */
 	public void addTableModelListener(TableModelListener l) {

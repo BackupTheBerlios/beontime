@@ -19,7 +19,7 @@ import javax.swing.event.ListSelectionListener;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.element.Material;
 
 /**
  * @author sandrine
@@ -31,7 +31,7 @@ public class ManageMaterialsTable extends JTable {
 	private JPanel panel;
 	private final JTable table;
 	private static MainFrame mainFrame;
-	private Room MaterialSelected;
+	private Material materialSelected;
 	
 	
 	
@@ -39,6 +39,7 @@ public class ManageMaterialsTable extends JTable {
 		super();
 		super.setModel(new ManageMaterialsAdapter(model));
 		ManageMaterialsTable.mainFrame = MainFrame.getInstance();
+		materialSelected = null;
 		
 		panel = new JPanel(new GridLayout(1, 0));
 		
@@ -47,10 +48,12 @@ public class ManageMaterialsTable extends JTable {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
+			
 			public void valueChanged(ListSelectionEvent e) {
 				modifyButton.setEnabled(true);
 				deleteButton.setEnabled(true);
+				
+				materialSelected = (Material)((ManageMaterialsAdapter)table.getModel()).getObjectAt(table.getSelectedRow());
 			}
 			
 		});
@@ -66,8 +69,8 @@ public class ManageMaterialsTable extends JTable {
 		return panel;
 	}
 	
-	/*public Material getMaterialSelected() {
-	 return materialSelected;
-	 }*/
+	public Material getMaterialSelected() {
+		return materialSelected;
+	}
 }
 

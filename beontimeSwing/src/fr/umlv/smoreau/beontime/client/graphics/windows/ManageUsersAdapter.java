@@ -128,6 +128,7 @@ public class ManageUsersAdapter implements TableModel {
 		throw new IllegalArgumentException("colonne invalide ("+rowIndex+','+columnIndex+')');
 		
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
@@ -137,6 +138,17 @@ public class ManageUsersAdapter implements TableModel {
 
 	}
 
+	
+	/* (non-Javadoc)
+	 * 
+	 */
+	public Object getObjectAt(int rowIndex) {
+		
+		return listUsers.get(rowIndex);
+				
+	}
+	
+	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
 	 */
