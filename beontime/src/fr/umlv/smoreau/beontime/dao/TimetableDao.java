@@ -51,6 +51,8 @@ public interface TimetableDao extends Remote {
 
 
 	public Collection getTypesCourse() throws RemoteException, HibernateException;
-	
+
+	public CourseType getTypeCourse(String name) throws RemoteException;
+
 	public void removeLinkBetweenCourseAndTeacher(IsDirectedByCourseTeacher link) throws RemoteException, HibernateException;
 }

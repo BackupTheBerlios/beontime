@@ -52,14 +52,16 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
     private static final String TABLE_ASSOCIATION = "TakePartGroupSubjectCourse";
     private static final String TABLE_ISDIRECTING = "IsDirectedByCourseTeacher";
 
+    private static Collection courseTypes;
+
 
     private TimetableDaoImpl() throws RemoteException, HibernateException {
-        Collection types = getTypesCourse();
-        if (types != null && types.size() == 0) {
+        courseTypes = getTypesCourse();
+        if (courseTypes != null && courseTypes.size() == 0) {
             for (int i = 0; i < TYPES_COURSES.length; ++i) {
                 CourseType type = new CourseType();
                 type.setNameCourseType(TYPES_COURSES[i]);
-                addTypeCourse(type);
+                courseTypes.add(addTypeCourse(type));
             }
         }
     }
@@ -399,6 +401,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 
 
 	public Collection getTypesCourse() throws RemoteException, HibernateException {
+	    if (courseTypes != null)
+	        return courseTypes;
 	    Session session = null;
         try {
             session = Hibernate.getCurrentSession();
@@ -406,6 +410,15 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         } finally {
             Hibernate.closeSession();
         }
+	}
+	
+	public CourseType getTypeCourse(String name) throws RemoteException {
+	    for (Iterator i = courseTypes.iterator(); i.hasNext(); ) {
+	        CourseType type = (CourseType) i.next();
+	        if (type.getNameCourseType().equals(name))
+	            return type;
+	    }
+	    return null;
 	}
 	
 	private CourseType addTypeCourse(CourseType typeCourse) throws HibernateException {
