@@ -244,15 +244,25 @@ public class ExportTimetable extends Action {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser EEDTFrame = new JFileChooser();
-				String[] tab = {"png", "jpeg", "txt","xml"};
-				BOTFileFilter filter = new BOTFileFilter(tab, "JPEG & PNG Images, TXT, XML");
+				
+				BOTFileFilter filterJPEG = new BOTFileFilter(new String[] {"jpeg", "jpg"}, "JPEG Images");
+				BOTFileFilter filterPNG = new BOTFileFilter("png", "PNG Images");
+				BOTFileFilter filterTXT= new BOTFileFilter("txt", "TEXT FILE ");
+				BOTFileFilter filterXML = new BOTFileFilter("xml", "XML FILE");
+				BOTFileFilter filter = new BOTFileFilter(new String[] {"png", "jpeg", "txt","xml"}, "Images JPEG & PNG Images, Fichiers TXT & XML ");
+				
+				EEDTFrame.addChoosableFileFilter(filterJPEG);
+				EEDTFrame.addChoosableFileFilter(filterPNG);
+				EEDTFrame.addChoosableFileFilter(filterTXT);
+				EEDTFrame.addChoosableFileFilter(filterXML);
 				EEDTFrame.addChoosableFileFilter(filter);
 				
 				int returnVal = EEDTFrame.showSaveDialog(MainFrame.getInstance().getMainFrame());
 				if(returnVal == JFileChooser.APPROVE_OPTION) {
-					/*System.out.println("You chose to save this file: " +
-					 EEDTFrame.getSelectedFile().getName());*/
+					//System.out.println("You chose to save this file: " +
+					// EEDTFrame.getSelectedFile().getName());
 				}
+				
 				
 			}
 		};
