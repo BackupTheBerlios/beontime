@@ -419,12 +419,12 @@ public class AddModifyCourseWindow {
 	
 	public String getTypeCourse() {
 		if (magistral.isSelected())
-			return TimetableDao.TYPES_COURSES[0];
+			return TimetableDao.TYPE_COURSE;
 		
 		else if(td.isSelected())
-			return TimetableDao.TYPES_COURSES[1];
+			return TimetableDao.TYPE_TD;
 		
-		return TimetableDao.TYPES_COURSES[2];
+		return TimetableDao.TYPE_TP;
 	}
 	
 	public void setCourseFormation(Formation formation) {
@@ -454,9 +454,9 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setTypeCourse(String typeCourse) {
-		if (TimetableDao.TYPES_COURSES[1].equals(typeCourse))
+		if (TimetableDao.TYPE_TD.equals(typeCourse))
 			td.setSelected(true);
-		else if (TimetableDao.TYPES_COURSES[2].equals(typeCourse))
+		else if (TimetableDao.TYPE_TP.equals(typeCourse))
 			tp.setSelected(true);
 		else
 		    magistral.setSelected(true);
