@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
+/* DESS CRI - BeOnTime - timetable project */
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JTree;
@@ -10,12 +10,13 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
-import fr.umlv.smoreau.beontime.model.Formation;
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
+import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
- * @author BeOnTime
+ * Manages the adapter on subjects has model
+ * @author BeOnTime team
  */
 public class ManageSubjectsAdapter implements TreeModel {
 
@@ -27,9 +28,10 @@ public class ManageSubjectsAdapter implements TreeModel {
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
+	//	System.out.println("subject adapteur");
 		
 		//TODO pour tester en local
-		Timetable timetable = new Timetable();
+	/*	Timetable timetable = new Timetable();
 		Formation formation = new Formation();
 		formation.setHeading("DESS CRI");
 		formation.setIdFormation(new Long(1));
@@ -54,6 +56,7 @@ public class ManageSubjectsAdapter implements TreeModel {
 		
 		model.setTimetable(timetable);
 		//finTODO
+	 */
 	}
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeModel#getRoot()
@@ -127,5 +130,39 @@ public class ManageSubjectsAdapter implements TreeModel {
 	public void removeTreeModelListener(TreeModelListener l) {
 		list.remove(TreeModelListener.class, l);
 
+	}
+	
+
+	
+	private class EditListener extends DefaultBoTListener {
+		public void refreshAll(BoTEvent e) {
+		    model.setTimetable(e.getTimetable());
+
+		    //TODO améliorer
+		    tree.updateUI();
+		    tree.setVisible(true);
+		}
+	/*	
+		public void closeTimetable(BoTEvent e) {
+		    //TODO Ad: regarde si ça te plait. Moi ce qui m'embête c'est qu'au début c'est blanc et que quand on ferme l'emploi du temps, c'est gris ... :o(
+		    tree.setVisible(false);
+		}
+	*/	
+		public void addSubject(BoTEvent e) {
+		    tree.updateUI();
+		    tree.setVisible(true);
+		}
+		
+		public void modifySubject(BoTEvent e) {
+		    //TODO améliorer
+		    tree.updateUI();
+		    tree.setVisible(true);
+		}
+		
+		public void removeSubject(BoTEvent e) {
+		    //TODO améliorer
+		    tree.updateUI();
+		    tree.setVisible(true);
+		}
 	}
 }

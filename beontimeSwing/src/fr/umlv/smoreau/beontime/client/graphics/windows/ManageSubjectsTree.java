@@ -1,10 +1,5 @@
-/*
- * Created on 28 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
+/* DESS CRI - BeOnTime - timetable project */
 
 import java.awt.Color;
 import java.awt.Component;
@@ -34,12 +29,12 @@ import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
- * @author sandrine
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * Manages the graphical JTree of subject
+ * @author sandrine (BeOnTime team)
  */
 public class ManageSubjectsTree extends JTree {
+	/** This class has to be serializable */
+	private static final long serialVersionUID = 1L;
 	
 	private final JTree tree;
 	private Subject subjectSelected;
@@ -51,6 +46,7 @@ public class ManageSubjectsTree extends JTree {
 	
 	public ManageSubjectsTree(final BoTModel model, final JButton modifyButton, final JButton removeButton) {
 		super();
+		System.out.println("Subject tree");
 		super.setModel(new ManageSubjectsAdapter(model, this));
 		ManageSubjectsTree.mainFrame = MainFrame.getInstance();
 		
@@ -115,6 +111,9 @@ public class ManageSubjectsTree extends JTree {
 	
 	
 	private class TreeRenderer extends DefaultTreeCellRenderer {
+		/** This class has to be serializable */
+		private static final long serialVersionUID = 1L;
+
 		/* (non-Javadoc)
 		 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
 		 */
@@ -153,6 +152,9 @@ public class ManageSubjectsTree extends JTree {
 	}
 	
 	private static class PopupMenu extends JPopupMenu {
+		/** This calss has to be serializable */
+		private static final long serialVersionUID = 1L;
+		
 		private Object selected;
 		
 		public PopupMenu(Object object) {
