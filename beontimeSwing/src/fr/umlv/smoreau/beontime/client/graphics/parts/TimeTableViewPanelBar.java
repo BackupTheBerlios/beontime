@@ -58,15 +58,15 @@ public class TimeTableViewPanelBar extends JPanel {
 		jcbTypeEDT.addItem("Groupe");
 		jcbTypeEDT.addItem("Local");
 		jcbTypeEDT.addItem("Materiel");
-		jcbTypeEDT.addItemListener(new ItemListenerType(this));
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,2,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,5,10));
+		jcbTypeEDT.addItemListener(new ItemListenerType(this,visuEDTPanelLayout,layoutConstraints));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
 		add(jcbTypeEDT);
 		jcbSubjectEDT = new JComboBox();
 		jcbSubjectEDT.addItemListener(new ItemListenerSubject());
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,2,2,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,3,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
 		add(jcbSubjectEDT);
 		jcbGroupEDT = new JComboBox(); 
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,2,3,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,3,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
 	}
 	
 	private static void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
@@ -87,9 +87,14 @@ public class TimeTableViewPanelBar extends JPanel {
 	
 	private class ItemListenerType implements ItemListener {
 	    private JPanel panel;
+	    GridBagLayout visuEDTPanelLayout;
+	    GridBagConstraints layoutConstraints;
 
-	    public ItemListenerType(JPanel panel) {
+	    public ItemListenerType(JPanel panel,GridBagLayout visuEDTPanelLayout, GridBagConstraints layoutConstraints) {
 	        this.panel = panel;
+	        this.visuEDTPanelLayout = visuEDTPanelLayout;
+	        this.layoutConstraints = layoutConstraints;
+
 	    }
 
 		public void itemStateChanged(ItemEvent event) {
@@ -135,6 +140,8 @@ public class TimeTableViewPanelBar extends JPanel {
 							Formation formation = (Formation) i.next();
 							jcbSubjectEDT.addItem(new Item(formation.getHeading(), formation.getIdFormation()));
 						}
+						
+						addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,3,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
 						add(jcbGroupEDT);
 						panel.validate();
 					}
