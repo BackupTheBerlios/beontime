@@ -7,9 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -17,7 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionFormList;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.actions.element.AddMaterial;
 import fr.umlv.smoreau.beontime.client.actions.element.AddRoom;
 import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
@@ -46,7 +50,7 @@ public class ButtonBar {
 	private ArrayList defToolBar;
 	private int deb_index;
 	private int nb_max;
-	private ActionFormList afl=new ActionFormList();
+	private ActionsList afl=new ActionsList();
 	
 	public ButtonBar(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -98,12 +102,25 @@ public class ButtonBar {
 
 
 	public void saveToolBar() {
-		FileOutputStream fos = null;
-		ObjectOutputStream oos=null;
 		try {
-			fos =new FileOutputStream(System.getProperty("user.home")+ "/.BoTtoolBar");
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(defToolBar);
+		    FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/.BoTtoolBar");
+		    OutputStreamWriter osw = new OutputStreamWriter(fos);
+			for (Iterator i = defToolBar.iterator(); i.hasNext(); ) {
+			    Action action = (Action) i.next();
+			    if (action == null)
+			        osw.write("\n");
+			    else {
+			        String name = action.getClass().getName();
+			        Pattern p = Pattern.compile(".*\\.([^.]*)$");
+			        Matcher m = p.matcher(name);
+			        if (m.find()) {
+			            name = name.substring(m.start(1), m.end(1));
+			            osw.write(name + "\n");
+			        }
+			    }
+			}
+			osw.flush();
+			osw.close();
 		} catch (FileNotFoundException e1) {
 			return;
 		} catch (IOException e3) {
@@ -114,9 +131,15 @@ public class ButtonBar {
 	public void loadToolBar() {
 		FileInputStream fis = null;
 		try {
+		    defToolBar = new ArrayList();
 			fis =new FileInputStream(System.getProperty("user.home") + "/.BoTtoolBar");
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			defToolBar = (ArrayList) ois.readObject();
+			LineNumberReader lnr = new LineNumberReader(new InputStreamReader(fis));
+			String line = lnr.readLine();
+			while (line != null) {
+			    Action action = ActionsList.getAction(line, mainFrame);
+			    defToolBar.add(action);
+			    line = lnr.readLine();
+			}
 		} catch (Exception e) {
 			setDefaultToolBar();
 		}
@@ -147,7 +170,6 @@ public class ButtonBar {
 		addButton(new ShowTimetableBySixMonthPeriod(mainFrame));
 		addButton(null);
 		addButton(new ManageButtons(mainFrame));
-
 	}
 
 	public void repaintToolBar() {

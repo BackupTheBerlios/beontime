@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionFormList;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.actions.toolbar.AddButton;
 import fr.umlv.smoreau.beontime.client.actions.toolbar.MoveDownButton;
 import fr.umlv.smoreau.beontime.client.actions.toolbar.MoveUpButton;
@@ -45,12 +45,12 @@ public class ManageButtonWindow {
 		this.listenerDone = listenerDone;
 	}
 
-	public ManageButtonWindow(MainFrame mainFrame,ArrayList buttons) {
+	public ManageButtonWindow(final MainFrame mainFrame,ArrayList buttons) {
 		this.buttons = buttons;
 		/*if (buttons.get(buttons.size()-1).equals("Configurer la toolbar")){
 			buttons.remove(buttons.size()-1);
 		}*/
-		ActionFormList afl=new ActionFormList();
+		ActionsList afl=new ActionsList();
 		this.mainFrame = mainFrame;
 		operationOk = false;
 		lm = new GridBagLayout();
@@ -83,10 +83,11 @@ public class ManageButtonWindow {
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			    int index = list_g.getSelectedIndex();
-			    if (index == ActionFormList.ACTIONS.size())
+			    ArrayList actions = ActionsList.getActions(mainFrame);
+			    if (index == actions.size())
 			        model_d.add(null);
 			    else {
-					Action tmp = (Action) ActionFormList.ACTIONS.get(index);
+					Action tmp = (Action) actions.get(index);
 					if (tmp != null)
 						model_d.add(tmp);
 			    }
@@ -173,14 +174,16 @@ public class ManageButtonWindow {
 
 
 	private class RefListModel implements ListModel {
+	    private ArrayList actions = ActionsList.getActions(mainFrame);
+
 		public int getSize() {
-			return ActionFormList.ACTIONS.size() + 1;
+			return actions.size() + 1;
 		}
 
 		public Object getElementAt(int index) {
-		    if (index == ActionFormList.ACTIONS.size())
+		    if (index == actions.size())
 		        return SEPARATE;
-		    Action action = (Action) ActionFormList.ACTIONS.get(index);
+		    Action action = (Action) actions.get(index);
 			return action.getValue(AbstractAction.NAME);
 		}
 

@@ -22,6 +22,10 @@ public abstract class Action extends AbstractAction {
         super(name, getImage(icon));
         this.mainFrame = mainFrame;
     }
+    
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
 
 	public static Icon getImage(String urli) {
 	    if (urli != null) {
