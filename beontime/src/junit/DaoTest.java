@@ -2,6 +2,7 @@ package junit;
 
 
 import fr.umlv.smoreau.beontime.dao.*;
+import fr.umlv.smoreau.beontime.model.user.Person;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,6 +27,14 @@ public class DaoTest extends TestCase {
         UserFilter filter = new UserFilter();
         filter.setNom("toto");
         assertNotNull(userDao.getAdministrators(filter));
+    }
+    
+    public void testAddRemoveUser() {
+        Person person = new Person();
+        person.setNom("toto");
+        person.setTypePersonne("secretaire");
+        assertTrue(userDao.addUser(person));
+        assertTrue(userDao.removeUser(person));
     }
     
     public void testGetGroups() {
