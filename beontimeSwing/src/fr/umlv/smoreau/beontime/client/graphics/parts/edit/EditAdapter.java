@@ -1,6 +1,5 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.edit;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JTree;
@@ -11,7 +10,6 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
-import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
@@ -29,7 +27,7 @@ public class EditAdapter implements TreeModel {
 		this.tree = t;
 		
 		//TODO pour tester en local
-		Timetable timetable = new Timetable();
+/*		Timetable timetable = new Timetable();
 		Formation formation = new Formation();
 		formation.setHeading("DESS CRI");
 		formation.setIdFormation(new Long(1));
@@ -50,7 +48,7 @@ public class EditAdapter implements TreeModel {
 		list.add(subject3);
 		timetable.setSubjects(list);
 		
-		model.setTimetable(timetable);
+		model.setTimetable(timetable);*/
 		//finTODO
 
 		model.addBoTListener(new EditListener());
@@ -136,6 +134,29 @@ public class EditAdapter implements TreeModel {
 	private class EditListener extends DefaultBoTListener {
 		public void refreshAll(BoTEvent e) {
 		    Timetable timetable = e.getTimetable();
+		    model.setTimetable(timetable);
+		    
+		    //TODO rafraîchir l'arbre
+		    
+		    //tree.fireTreeExpanded(new TreePath(timetable));
+		}
+		
+		public void addSubject(BoTEvent e) {
+		    Subject subject = e.getSubject();
+		    
+		    //TODO ajouter la matière
+		}
+		
+		public void modifySubject(BoTEvent e) {
+		    Subject subject = e.getSubject();
+		    
+		    //TODO modifier la matière
+		}
+		
+		public void removeSubject(BoTEvent e) {
+		    Subject subject = e.getSubject();
+		    
+		    //TODO supprimer la matière
 		}
 	}
 }

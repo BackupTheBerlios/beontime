@@ -76,6 +76,24 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		        //TODO Mohamed: afficher le cours
 		    }
 		}
+		
+		public void addCourse(BoTEvent e) {
+		    Course course = e.getCourse();
+
+		    //TODO Mohamed: ajouter le cours
+		}
+		
+		public void modifyCourse(BoTEvent e) {
+		    Course course = e.getCourse();
+
+		    //TODO Mohamed: modifier le cours
+		}
+		
+		public void removeCourse(BoTEvent e) {
+		    Course course = e.getCourse();
+
+		    //TODO Mohamed: supprimer le cours
+		}
 	}
 }
 

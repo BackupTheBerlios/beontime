@@ -61,10 +61,38 @@ public class BoTModel {
 	}
 	
 	public void fireRefreshCourse(Course course, int type) throws InterruptedException {
-		
+	    BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this, course);
+				if (type == TYPE_ADD)
+				    ((BoTListener) listeners[i + 1]).addCourse(event);
+				else if (type == TYPE_MODIFY)
+				    ((BoTListener) listeners[i + 1]).modifyCourse(event);
+				else if (type == TYPE_REMOVE)
+				    ((BoTListener) listeners[i + 1]).removeCourse(event);
+			}
+		}
 	}
 	
 	public void fireRefreshSubject(Subject subject, int type) throws InterruptedException {
-	
+	    BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this, subject);
+				if (type == TYPE_ADD)
+				    ((BoTListener) listeners[i + 1]).addSubject(event);
+				else if (type == TYPE_MODIFY)
+				    ((BoTListener) listeners[i + 1]).modifySubject(event);
+				else if (type == TYPE_REMOVE)
+				    ((BoTListener) listeners[i + 1]).removeSubject(event);
+			}
+		}
 	}
 }
