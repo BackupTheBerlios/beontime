@@ -1,5 +1,5 @@
 /*
- * Created on 21 févr. 2005
+ * Created on 24 févr. 2005
  *
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
+import fr.umlv.smoreau.beontime.client.graphics.windows.AboutWindow;
 
 /**
  * @author Mohamed
@@ -20,17 +20,17 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class AddCourse extends Action {
+public class ActionAboutForm extends Action {
 	
-
 	public static javax.swing.Action getAction(String name,final MainFrame mainFrame){
-		AbstractAction va=new AbstractAction(name,getImage("images/New24.gif")) {
+		AbstractAction va=new AbstractAction(name,getImage("images/Help24.gif")) {
 		public void actionPerformed(ActionEvent e) {
-			AddModifyCourseWindow amcw=new AddModifyCourseWindow();
-			amcw.show();
+			AboutWindow aw=new AboutWindow();
+			aw.show(null);
 			}
 		};
 		
 		return va;
 	}
+
 }

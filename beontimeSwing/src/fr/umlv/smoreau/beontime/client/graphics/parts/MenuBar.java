@@ -4,6 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import fr.umlv.smoreau.beontime.client.actions.forms.ActionAboutForm;
 import fr.umlv.smoreau.beontime.client.actions.forms.AddCourse;
 import fr.umlv.smoreau.beontime.client.actions.forms.AddMaterial;
 import fr.umlv.smoreau.beontime.client.actions.forms.AddRoom;
@@ -125,7 +126,7 @@ public class MenuBar extends JMenuBar {
 		
 		
 		JMenu a_propos_de = new JMenu("?");
-		a_propos_de.add(new JMenuItem("A propos de BeOnTime"));
+		a_propos_de.add(new JMenuItem(ActionAboutForm.getAction("A propos de BeOnTime",null)));
 		
 
 		add(fichier);
