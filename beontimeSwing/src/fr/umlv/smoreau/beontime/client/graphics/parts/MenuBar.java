@@ -127,7 +127,7 @@ public class MenuBar extends JMenuBar {
 			
 			emploi_du_temps.add(materiel);
 			
-			indisponibilite = new JMenu("Indisponibilite");
+			indisponibilite = new JMenu("Indisponibilité");
 			indisponibilite.add(new JMenuItem(ActionsList.getAction("AddUnavailability")));
 			indisponibilite.add(new JMenuItem(ActionsList.getAction("ManageUnavailabilities")));
 			indisponibilite.add(new JMenuItem(ActionsList.getAction("SearchAvailability")));
