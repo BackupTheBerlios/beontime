@@ -810,36 +810,22 @@ public class AddModifyCourseWindow {
             return 1;
         if (getStartHour() == getEndHour() && getStartMinute() == getEndMinute())
             return 2;
+        if (getStartHour() > getEndHour() || (getStartHour() == getEndHour() && getStartMinute() > getEndMinute()))
+            return 8;
 
         try {
             Calendar beginCourse = getBeginDate();
             Calendar endCourse = getEndDate();
             UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
             UnavailabilityFilter filter = new UnavailabilityFilter();
-            /*Calendar beginPeriod = Calendar.getInstance();
-            beginPeriod.setTime(getDateCourse());
-            beginPeriod.set(Calendar.HOUR_OF_DAY, 0);
-            beginPeriod.set(Calendar.MINUTE, 0);
-            beginPeriod.set(Calendar.SECOND, 0);
-            beginPeriod.set(Calendar.MILLISECOND, 0);
-            Calendar endPeriod = Calendar.getInstance();
-            endPeriod.setTime(getDateCourse());
-            endPeriod.set(Calendar.HOUR_OF_DAY, 23);
-            endPeriod.set(Calendar.MINUTE, 59);
-            endPeriod.set(Calendar.SECOND, 59);
-            endPeriod.set(Calendar.MILLISECOND, 0);*/
             
             int nbWeeks = 1;
             if (repeatCourseJcb != null)
                 nbWeeks = getNbWeeksCourse();
 
             for (int k = 0; k < nbWeeks; ++k) {
-                //beginPeriod.set(Calendar.DAY_OF_YEAR, beginPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
-                //endPeriod.set(Calendar.DAY_OF_YEAR, endPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
                 beginCourse.set(Calendar.DAY_OF_YEAR, beginCourse.get(Calendar.DAY_OF_YEAR) + 7*k);
                 endCourse.set(Calendar.DAY_OF_YEAR, endCourse.get(Calendar.DAY_OF_YEAR) + 7*k);
-                //filter.setBeginPeriod(beginPeriod);
-                //filter.setEndPeriod(endPeriod);
 	            Collection unavailabilities = new ArrayList();
 	
 	            // vérification que le groupe est libre
@@ -903,7 +889,6 @@ public class AddModifyCourseWindow {
 	            }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return 7;
         }
 
@@ -943,6 +928,9 @@ public class AddModifyCourseWindow {
                 break;
             case 7:
                 errorMessage = "Erreur lors de la vérification des indisponibilités";
+                break;
+            case 8:
+                errorMessage = "La date de début ne peut être inférieure à la date de fin";
                 break;
             default:
                 errorMessage = "Erreur inconnue";
