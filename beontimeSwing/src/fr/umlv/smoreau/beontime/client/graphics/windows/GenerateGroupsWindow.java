@@ -7,12 +7,19 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 
 /**
@@ -37,14 +44,17 @@ public class GenerateGroupsWindow {
 	private JButton ok;
 	private JButton annuler;
 	
-	private JFrame GGWFrame;
+	private JPanel nameGroupLabelPanel = new JPanel();
+	private JPanel nameGroupJtfPanel = new JPanel();
+	
+	private JDialog GGWFrame;
 	private GridBagLayout GGWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
 
 	
 	
 	public GenerateGroupsWindow (){
-		GGWFrame = new JFrame(TITRE);
+		GGWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
     	GGWFrame.getContentPane().setLayout(GGWLayout);
         
     	initGenerateGroupsWindow();  
@@ -68,18 +78,74 @@ public class GenerateGroupsWindow {
 		GGWFrame.getContentPane().add(nbGroupsLabel);
 		
 		nbGroupsLabelJcb = new JComboBox();
+		initNumberJcb(nbGroupsLabelJcb, 1, 10);
+		nbGroupsLabelJcb.addItemListener(new ItemListener() {
+			
+    		public void itemStateChanged(ItemEvent e) {
+    			
+    			int nbGroupsChoose = ((JComboBox)e.getSource()).getSelectedIndex()+1;
+    			int nbGroupsVisible = nameGroupLabelPanel.getComponentCount()/2;
+    			
+    			if (nbGroupsChoose > nbGroupsVisible) {
+    				
+    				int nbSup = nbGroupsChoose-nbGroupsVisible;
+    				
+    				for(int i=nbSup-1;i>=0;i--) {
+    					nameGroupLabelPanel.add(new JLabel("Nom du groupe "+(nbGroupsChoose-i)+" :"));
+    					nameGroupLabelPanel.add(Box.createVerticalStrut(9));
+    				
+    					nameGroupJtfPanel.add(new JTextField());
+    					nameGroupJtfPanel.add(Box.createVerticalStrut(5));
+    				
+    				}
+    				GGWFrame.pack();
+    			}
+    			
+    			if (nbGroupsChoose < nbGroupsVisible) {
+    				
+    				int nbInf = nbGroupsVisible - nbGroupsChoose;
+        			int position = nbGroupsVisible*2;
+        			
+    				for(int i=1;i<=nbInf;i++) {
+    				
+    					nameGroupLabelPanel.remove(position-i);
+    					nameGroupLabelPanel.remove(position-(i+1));
+    				
+    					nameGroupJtfPanel.remove(position-i);
+    					nameGroupJtfPanel.remove(position-(i+1));
+    					
+    					position-=1;
+    				}
+    					
+    				GGWFrame.pack();
+    			}
+    			
+    		}
+		});
+
+		
 		addComponent(GGWLayout,layoutConstraints,nbGroupsLabelJcb,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(nbGroupsLabelJcb);
 		
 		
 		
-		nameGroup1Label = new JLabel("Nom du groupes 1 :");
-		addComponent(GGWLayout,layoutConstraints,nameGroup1Label,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,20,10));
-		GGWFrame.getContentPane().add(nameGroup1Label);
+		nameGroup1Label = new JLabel("Nom du groupe 1 :");
+		
+		nameGroupLabelPanel.setLayout(new BoxLayout(nameGroupLabelPanel, BoxLayout.Y_AXIS));
+		nameGroupLabelPanel.add(nameGroup1Label);
+		nameGroupLabelPanel.add(Box.createVerticalStrut(9));
+		
+		addComponent(GGWLayout,layoutConstraints,nameGroupLabelPanel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,20,10));
+		GGWFrame.getContentPane().add(nameGroupLabelPanel);
 		
 		nameGroup1Jtf = new JTextField();
-		addComponent(GGWLayout,layoutConstraints,nameGroup1Jtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,20,10));
-		GGWFrame.getContentPane().add(nameGroup1Jtf);
+		
+		nameGroupJtfPanel.setLayout(new BoxLayout(nameGroupJtfPanel, BoxLayout.Y_AXIS));
+		nameGroupJtfPanel.add(nameGroup1Jtf);
+		nameGroupJtfPanel.add(Box.createVerticalStrut(5));
+		
+		addComponent(GGWLayout,layoutConstraints,nameGroupJtfPanel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,20,10));
+		GGWFrame.getContentPane().add(nameGroupJtfPanel);
 		
 		
 		
@@ -92,13 +158,21 @@ public class GenerateGroupsWindow {
 		GGWFrame.getContentPane().add(annuler);
     	
 	}
+	
+	 private void initNumberJcb(JComboBox jcb, int start, int end) {
+
+    	for(int i=start;i<=end;i++) {
+    		jcb.addItem(""+i);
+    	}
+    }
     	
     /* (non-Javadoc)
      * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
      */
     public void show() {
     	GGWFrame.pack();
-	    GGWFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	GGWFrame.setResizable(false);
+	    GGWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	    GGWFrame.setVisible(true);
     }
 
@@ -116,9 +190,12 @@ public class GenerateGroupsWindow {
     
     
     public static void main(String[] args){
-			
-    GenerateGroupsWindow form = new GenerateGroupsWindow();
-	form.show();
+	
+    	MainFrame frame = MainFrame.getInstance();
+     	frame.open();
+     	
+     	GenerateGroupsWindow form = new GenerateGroupsWindow();
+     	form.show();
 			
     }    
 }
