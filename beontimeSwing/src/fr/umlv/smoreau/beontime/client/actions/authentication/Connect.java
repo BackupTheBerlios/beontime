@@ -58,13 +58,13 @@ public class Connect extends Action {
         } catch (RemoteException e) {
             JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             actionPerformed(null);
-        } catch (NullPointerException e) {
+        }/* catch (NullPointerException e) {
             //TODO supprimer ce catch pour le rendu
             JOptionPane.showMessageDialog(null, "Serveur non démarré, mais je démarre quand même, rien que pour toi ! ;op", "Attention", JOptionPane.WARNING_MESSAGE);
             User user = new User();
             user.setUserType(UserDao.TYPE_SECRETARY);
             mainFrame.setUser(user);
-        }
+        }*/
 
         mainFrame.open();
     }
