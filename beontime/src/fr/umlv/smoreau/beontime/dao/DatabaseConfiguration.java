@@ -1,76 +1,27 @@
 package fr.umlv.smoreau.beontime.dao;
+/* DESS CRI - BeOnTime - timetable project */
+/* Created on 25 febr. 2005 */
 
 
-import fr.umlv.smoreau.beontime.DatabasesProperties;
-import fr.umlv.smoreau.beontime.Hibernate;
-import fr.umlv.smoreau.beontime.LdapManager;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import fr.umlv.smoreau.beontime.model.Database;
 
 /**
- * @author BeOnTime
+ * RMI interface for the Database Configuration
+ * @author BeOnTime team
  */
-public class DatabaseConfiguration {
-    private static final DatabaseConfiguration INSTANCE = new DatabaseConfiguration();
+public interface DatabaseConfiguration extends Remote {
+ //   private static final DatabaseConfiguration INSTANCE = new DatabaseConfiguration();
     
-    private DatabaseConfiguration() {
-    }
+//    public static DatabaseConfiguration getInstance() throws RemoteException;
 
-    public static DatabaseConfiguration getInstance() {
-        return INSTANCE;
-    }
-
-
-	public Database getLDAPDatabase() {
-	    String dnBase = DatabasesProperties.getLdapDNBase();
-	    String host = DatabasesProperties.getLdapHost();
-	    String port = DatabasesProperties.getLdapPort();
-
-		return new Database(dnBase, host, port);
-	}
+	public Database getLDAPDatabase() throws RemoteException;
 	
-	public Database getSQLDatabase() {
-	    String baseName = DatabasesProperties.getSqlDatabaseName();
-	    String host = DatabasesProperties.getSqlHost();
-	    String port = DatabasesProperties.getSqlPort();
-	    String login = DatabasesProperties.getSqlUserName();
-	    String password = DatabasesProperties.getSqlPassword();
-
-		return new Database(baseName, host, port, login, password);
-	}
+	public Database getSQLDatabase() throws RemoteException;
 	
-	public void modifyDatabase(Database database) {
-	    if (database.getHost() != null)
-	        DatabasesProperties.setLdapHost(database.getHost());
-	    if (database.getPort() != null)
-	        DatabasesProperties.setLdapPort(database.getPort());
-
-		if (database.getType() == Database.LDAP) {
-		    if (database.getDNBase() != null)
-		        DatabasesProperties.setLdapDNBase(database.getDNBase());
-		} else if (database.getType() == Database.SQL) {
-		    if (database.getLogin() != null)
-		        DatabasesProperties.setSqlUserName(database.getLogin());
-		    if (database.getPassword() != null)
-		        DatabasesProperties.setSqlPassword(database.getPassword());
-		    if (database.getBaseName() != null)
-		        DatabasesProperties.setSqlDatabaseName(database.getBaseName());
-		}
-
-		DatabasesProperties.save();
-	}
+	public void modifyDatabase(Database database) throws RemoteException;
 	
-	public boolean testDatabase(Database database) {
-		if (database == null)
-			return false;
-
-		if (database.getType() == Database.LDAP) {
-			return LdapManager.testConnection(database.getHost(), database.getPort(),
-					database.getDNBase());			
-		} else if (database.getType() == Database.SQL) {
-			return Hibernate.testConnection(database.getHost(), database.getPort(),
-					database.getBaseName(), database.getLogin(), database.getPassword());
-		}
-
-		return false;
-	}
+	public boolean testDatabase(Database database) throws RemoteException;
 }
