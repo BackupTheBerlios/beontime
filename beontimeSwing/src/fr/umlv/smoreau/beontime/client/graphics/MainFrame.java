@@ -84,7 +84,7 @@ public class MainFrame {
         stateBar = new StateBar();
         timetableviewpanel = new TimeTableViewPanelBar(this);
         edit = new Edit(model, this);
-        view = new View(this);
+        view = new View(this, model);
         
         mainFrame = new JFrame();
 		mainFrame.setSize(WIDTH,HEIGHT);
@@ -182,7 +182,7 @@ public class MainFrame {
     }
 
 	public void open() {
-        menuBar = new MenuBar(this, user.getUserType());
+        menuBar = new MenuBar(this, model, user.getUserType());
 		mainFrame.setJMenuBar(menuBar);
         buttonBar = new ButtonBar(this);
         splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());

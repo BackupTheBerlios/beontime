@@ -8,7 +8,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -44,6 +46,10 @@ public class AddModifyUserWindow {
 	private JTextField localJtf;
 	private JTextField phoneJtf;
 	private JComboBox formationsJcb;
+	private String[] formationsName;
+	private Long[] formationsId;
+	
+	private JPanel formationsPanel;
 	
 	private boolean isOk;
 
@@ -110,36 +116,44 @@ public class AddModifyUserWindow {
 		JLabel formationsLabel = new JLabel("Formations dont elle à la charge :");
 		addComponent(AMUWLayout,layoutConstraints,formationsLabel,1,4,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(formationsLabel);
+		
+		formationsPanel = new JPanel();
+		formationsPanel.setLayout(new BoxLayout(formationsPanel, BoxLayout.Y_AXIS));
+
+    	JPanel formationsPlusPanel = new JPanel();
+		JButton formationPlusButton = new JButton("+");
 
 		try {
             Collection formations = DaoManager.getFormationDao().getNotAllottedFormations();
             formationsJcb = new JComboBox();
-            String[] formationsName = new String[formations.size()+1];
+            formationsName = new String[formations.size()+1];
+            formationsId = new Long[formations.size()+1];
             formationsName[0] = "";
             int j = 1;
-            for (Iterator i = formations.iterator(); i.hasNext(); ++j)
-                formationsName[j] = ((Formation) i.next()).getHeading();
+            for (Iterator i = formations.iterator(); i.hasNext(); ++j) {
+                Formation formation = (Formation) i.next();
+                formationsId[j] = formation.getIdFormation();
+                formationsName[j] = formation.getHeading();
+            }
             formationsJcb = new JComboBox(formationsName);
+            formationsPanel.add(formationsJcb);
+    		formationsPanel.add(Box.createVerticalStrut(5));
+            formationPlusButton.addActionListener(new ButtonPlusListener(formationsPlusPanel, formationsPanel, AMUWFrame, formationsName));
         } catch (Exception e) {
+            e.printStackTrace();
             JLabel label = new JLabel("Erreur lors de la récupération des formations non attribuées");
             label.setForeground(Color.RED);
             addComponent(AMUWLayout,layoutConstraints,label,1,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
             AMUWFrame.getContentPane().add(label);
             formationsJcb = new JComboBox();
+            formationsPanel.add(formationsJcb);
+    		formationsPanel.add(Box.createVerticalStrut(5));
+    		formationsJcb.setEnabled(false);
+            formationPlusButton.setEnabled(false);
         }
-
-		JPanel formationsPanel = new JPanel();
-		formationsPanel.setLayout(new BoxLayout(formationsPanel, BoxLayout.Y_AXIS));
-		formationsPanel.add(formationsJcb);
-		formationsPanel.add(Box.createVerticalStrut(5));
     	
 		addComponent(AMUWLayout,layoutConstraints,formationsPanel,1,6,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(formationsPanel);
-
-		
-    	JButton formationPlusButton = new JButton("+");
-    	JPanel formationsPlusPanel = new JPanel();
-    	formationPlusButton.addActionListener(new ButtonPlusListener(formationsPlusPanel, formationsPanel, AMUWFrame));
     	
     	
     	formationsPlusPanel.setLayout(new BoxLayout(formationsPlusPanel, BoxLayout.Y_AXIS));
@@ -330,14 +344,21 @@ public class AddModifyUserWindow {
         return tmp;
     }
     
-    public String[] getFormations() {
-        String string = null;
-        if (formationsJcb != null) {
-            string = (String) formationsJcb.getSelectedItem();
-	        if (string != null)
-	            string = string.trim();
-        }
-        return new String[] {string};
+    public Set getFormations() {
+		HashSet list = new HashSet();
+		Component[] components = formationsPanel.getComponents();
+		
+		for(int i = 0; i < components.length; ++i) {
+		    if (components[i] instanceof JComboBox) {
+		        int index = ((JComboBox)components[i]).getSelectedIndex();
+		        Formation formation = new Formation();
+		        formation.setHeading(formationsName[index]);
+		        formation.setIdFormation(formationsId[index]);
+		        list.add(formation);
+		    }
+		}
+		
+		return list;
     }
     
     public boolean isOk() {

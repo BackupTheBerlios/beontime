@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 import javax.swing.table.TableColumnModel;
 
 import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 
@@ -18,20 +19,22 @@ public class View {
 	private MultiSpanCellTable table;
 	private DefaultCellAttribute cellAtt;
 	private static MainFrame mainFrame;
+	private BoTModel model;
 	private AttributiveCellTableModel ml;
 	/**
 	 * @return Returns the table.
 	 */
 
 	
-    public View(MainFrame mainframe) {
+    public View(MainFrame mainframe, BoTModel model) {
     	mainFrame=mainframe;
+    	this.model = model;
     	init();
     }
     public void init(){
     	UIManager.put(GroupableTableHeader.uiClassID, "fr.umlv.smoreau.beontime.client.graphics.parts.view.GroupableTableHeaderUI");
     	String[][] data=new String[6][52];
-    	ml = new AttributiveCellTableModel(data,13*4);
+    	ml = new AttributiveCellTableModel(model,data,13*4);
         cellAtt =(DefaultCellAttribute)ml.getCellAttribute();
         table = new MultiSpanCellTable(ml);
         table.setDefaultRenderer(Object.class ,new AttributiveCellRenderer());

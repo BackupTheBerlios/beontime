@@ -7,7 +7,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
+import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
@@ -19,7 +22,7 @@ public class MenuBar extends JMenuBar {
 	private boolean isSecretary;
 	private boolean all;
 
-	public MenuBar(MainFrame mainFrame, String userType) {
+	public MenuBar(MainFrame mainFrame, BoTModel model, String userType) {
 	    this.all = false;
 	    if (UserDao.TYPE_SECRETARY.equals(userType))
 	        this.isSecretary = true;
@@ -28,6 +31,9 @@ public class MenuBar extends JMenuBar {
 	    else
 	        throw new InvalidParameterException();
 		this.mainFrame = mainFrame;
+		
+		model.addBoTListener(new MenuBarListener());
+
 		initJMenuBar();
 	}
 	
@@ -151,6 +157,24 @@ public class MenuBar extends JMenuBar {
 		if (outils != null)
 		    add(outils);
 		add(a_propos_de);
+	}
+	
+	
+	private class MenuBarListener extends DefaultBoTListener {
+		public void refreshAll(BoTEvent e) {
+		    ActionsList.getAction("CloseTimetable").setEnabled(true);
+		    ActionsList.getAction("PrintTimetable").setEnabled(true);
+		    ActionsList.getAction("ExportTimetable").setEnabled(true);
+		    ActionsList.getAction("ShowTimetableVertical").setEnabled(true);
+		    ActionsList.getAction("ShowTimetableHorizontal").setEnabled(true);
+		    ActionsList.getAction("ShowTimetableByWeek").setEnabled(true);
+		    ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
+		    ActionsList.getAction("AddSubject").setEnabled(true);
+		    ActionsList.getAction("ManageSubjects").setEnabled(true);
+		    ActionsList.getAction("AddGroup").setEnabled(true);
+		    ActionsList.getAction("ManageGroups").setEnabled(true);
+		    ActionsList.getAction("GenerateGroups").setEnabled(true);
+		}
 	}
 }
 

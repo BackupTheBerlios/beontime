@@ -16,12 +16,14 @@ public class ButtonPlusListener implements ActionListener {
 	private JPanel ownPanel;
 	private JPanel jcbPanel;
 	private JDialog formFrame;
+	private String[] contents;
 	
-	protected ButtonPlusListener(JPanel ownPanel, JPanel jcbPanel, JDialog formFrame) {
+	protected ButtonPlusListener(JPanel ownPanel, JPanel jcbPanel, JDialog formFrame, String[] contents) {
 		this.ownPanel = ownPanel;
 		this.jcbPanel = jcbPanel;
 		
 		this.formFrame = formFrame;
+		this.contents = contents;
 	}
 	
 	/* (non-Javadoc)
@@ -31,11 +33,11 @@ public class ButtonPlusListener implements ActionListener {
 		String text = ((JButton)e.getSource()).getText();
 		
 		if(text.compareTo("+") == 0) {
-			jcbPanel.add(new JComboBox());
+			jcbPanel.add(new JComboBox(contents));
 			jcbPanel.add(Box.createVerticalStrut(5));
 		
 			JButton plus = new JButton("+");
-			plus.addActionListener(new ButtonPlusListener(ownPanel, jcbPanel, formFrame));
+			plus.addActionListener(new ButtonPlusListener(ownPanel, jcbPanel, formFrame, contents));
 			ownPanel.add(plus);
 			ownPanel.add(Box.createVerticalStrut(5));
 		

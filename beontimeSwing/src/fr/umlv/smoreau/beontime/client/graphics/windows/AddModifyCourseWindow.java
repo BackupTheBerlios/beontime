@@ -225,7 +225,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(teacherPanel);
 		
 		teacherPlus = new JButton("+");
-		teacherPlus.addActionListener(new ButtonPlusListener(teacherPlusPanel, teacherPanel, AMCWFrame));
+		teacherPlus.addActionListener(new ButtonPlusListener(teacherPlusPanel, teacherPanel, AMCWFrame, new String[] {""}));
 		
 		teacherPlusPanel.setLayout(new BoxLayout(teacherPlusPanel, BoxLayout.Y_AXIS));
 		teacherPlusPanel.add(teacherPlus);
@@ -310,7 +310,7 @@ public class AddModifyCourseWindow {
 		
 		
 		placeCoursePlus = new JButton("+");
-		placeCoursePlus.addActionListener(new ButtonPlusListener(placeCoursePlusPanel, placeCoursePanel, AMCWFrame));
+		placeCoursePlus.addActionListener(new ButtonPlusListener(placeCoursePlusPanel, placeCoursePanel, AMCWFrame, new String[] {""}));
 		
 		placeCoursePlusPanel.setLayout(new BoxLayout(placeCoursePlusPanel, BoxLayout.Y_AXIS));
 		placeCoursePlusPanel.add(placeCoursePlus);
@@ -346,7 +346,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(courseEquipmentPanel);
 		
 		courseEquipmentPlus = new JButton("+");
-		courseEquipmentPlus.addActionListener(new ButtonPlusListener(courseEquipmentPlusPanel, courseEquipmentPanel, AMCWFrame));
+		courseEquipmentPlus.addActionListener(new ButtonPlusListener(courseEquipmentPlusPanel, courseEquipmentPanel, AMCWFrame, new String[] {""}));
 		
 		courseEquipmentPlusPanel.setLayout(new BoxLayout(courseEquipmentPlusPanel, BoxLayout.Y_AXIS));
 		courseEquipmentPlusPanel.add(courseEquipmentPlus);

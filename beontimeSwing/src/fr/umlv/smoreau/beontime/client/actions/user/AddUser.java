@@ -45,6 +45,7 @@ public class AddUser extends Action {
             user.setOfficeName(window.getLocal());
             user.setTelephone(window.getPhone());
             user.setUserType(type);
+            user.setFormationsInCharge(window.getFormations());
             
             try {
                 String login = generateLogin(window.getName(), window.getSurname());
@@ -57,6 +58,7 @@ public class AddUser extends Action {
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès\nLogin: "+login+"\nMot de passe: "+password, "Login et mot de passe", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

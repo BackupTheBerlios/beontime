@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts.edit;
 
 import java.util.ArrayList;
@@ -11,6 +8,7 @@ import javax.swing.event.*;
 import javax.swing.tree.*;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -55,7 +53,7 @@ public class EditAdapter implements TreeModel {
 		model.setTimetable(timetable);
 		//finTODO
 
-		model.addBoTListener(new TreeListener(this));
+		model.addBoTListener(new EditListener());
 	}
 
 
@@ -134,12 +132,10 @@ public class EditAdapter implements TreeModel {
 	    list.remove(l.getClass(), l);
 	}
 
-
-	private class TreeListener extends DefaultBoTListener {
-		private TreeModel source;
-
-		public TreeListener(TreeModel source) {
-			this.source = source;
-		}	
+	
+	private class EditListener extends DefaultBoTListener {
+		public void refreshAll(BoTEvent e) {
+		    Timetable timetable = e.getTimetable();
+		}
 	}
 }
