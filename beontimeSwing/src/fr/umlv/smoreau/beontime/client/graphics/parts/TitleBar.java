@@ -51,7 +51,7 @@ public class TitleBar extends JPanel {
 	/** time in millis for a week*/
 	private static final long aWeek = new GregorianCalendar(2005, 02, 14).getTimeInMillis() - (new GregorianCalendar(2005, 02, 07).getTimeInMillis());
 	/** time in millis for half a year*/
-	private static final long anHalfYear = new GregorianCalendar(2005, 06, 01).getTimeInMillis() - (new GregorianCalendar(2005, 01, 01).getTimeInMillis());
+	private static final long anHalfYear = new GregorianCalendar(2005, 07, 01).getTimeInMillis() - (new GregorianCalendar(2005, 01, 01).getTimeInMillis());
 
 	
 	public TitleBar(BoTModel model) {
@@ -131,8 +131,8 @@ public class TitleBar extends JPanel {
 			public void actionPerformed(ActionEvent ae) {
 				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
-				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
-					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));	
+				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_HALF_YEAR) 
+					periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));
 				try {			
 					model.fireShowTimetable(model.getTimetable()); //TODO modifier
 				} catch (InterruptedException e) {
@@ -144,9 +144,9 @@ public class TitleBar extends JPanel {
 		});
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+				if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
-				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_WEEK)
+				else if (MainFrame.getInstance().getViewType()==MainFrame.VIEW_HALF_YEAR) 
 					periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
 				try {			
 					model.fireShowTimetable(model.getTimetable()); //TODO modifier
