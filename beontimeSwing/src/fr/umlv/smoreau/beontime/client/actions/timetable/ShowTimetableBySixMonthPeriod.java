@@ -35,6 +35,10 @@ public class ShowTimetableBySixMonthPeriod extends Action{
         super(name, showIcon ? ICON : null, mainFrame);
     }
     
+    public boolean isEnabled() {
+    	return (mainFrame.getViewType() == MainFrame.VIEW_WEEK);
+    }
+    
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */

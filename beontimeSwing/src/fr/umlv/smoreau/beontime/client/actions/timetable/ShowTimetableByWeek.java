@@ -35,6 +35,10 @@ public class ShowTimetableByWeek extends Action{
         super(name, showIcon ? ICON : null, mainFrame);
     }
 
+    public boolean isEnabled() {
+    	return (mainFrame.getViewType() == MainFrame.VIEW_HALF_YEAR);    	
+    }
+    
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
