@@ -2,8 +2,11 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.util.Collection;
 
+import javax.naming.NamingException;
+
 import net.sf.hibernate.HibernateException;
 
+import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.*;
@@ -13,6 +16,7 @@ import fr.umlv.smoreau.beontime.model.user.*;
  */
 public class UserDao extends Dao {
     private static final UserDao INSTANCE = new UserDao();
+    private static final LdapManager ldapManager = LdapManager.getInstance();
     
     private static final String TABLE = "User";
     public static final String TYPE_TEACHER   = "enseignant";
@@ -36,10 +40,21 @@ public class UserDao extends Dao {
             result = get(TABLE, filter);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des personnes : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération des utilisateurs sur la base de données SQL : " + e.getMessage());
         }
         
-        //TODO ajouter les users de la base LDAP
+        try {
+            result.addAll(ldapManager.getUsers(filter));
+        } catch (NamingException e) {
+            System.err.println("Erreur lors de la récupération des utilisateurs sur la base de données LDAP : " + e.getMessage());
+            //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
+            User user = new User(new Long(33), filter.getUserType());
+            user.setFirstName("Toto");
+            user.setName("Nom2toto");
+            user.setEMail("toto@toto.fr");
+            result.add(user);
+            //finTODO
+        }
 
 		return result;
 	}
@@ -110,7 +125,7 @@ public class UserDao extends Dao {
             add(user);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'une personne : " + e.getMessage());
+            System.err.println("Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
             return false;
         }
         return true;
@@ -122,7 +137,7 @@ public class UserDao extends Dao {
             modify(user);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'une personne : " + e.getMessage());
+            System.err.println("Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
             return false;
         }
         return true;
@@ -134,9 +149,14 @@ public class UserDao extends Dao {
             remove(TABLE, new UserFilter(user));
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la suppression d'une personne : " + e.getMessage());
+            System.err.println("Erreur lors de la suppression d'un utilisateur : " + e.getMessage());
             return false;
         }
         return true;
+	}
+
+
+	public boolean testLoginPwd(String login, String password) {
+	    return ldapManager.testLoginPwd(login, password);
 	}
 }

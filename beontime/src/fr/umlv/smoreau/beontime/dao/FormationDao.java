@@ -1,23 +1,26 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.naming.NamingException;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
 import fr.umlv.smoreau.beontime.Hibernate;
+import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
+
 
 /**
  * @author BeOnTime
  */
 public class FormationDao extends Dao {
     private static final FormationDao INSTANCE = new FormationDao();
+    private static final LdapManager ldapManager = LdapManager.getInstance();
     
     private static final String TABLE = "Formation";
     
@@ -30,15 +33,26 @@ public class FormationDao extends Dao {
 
 
 	public Collection getFormations(FormationFilter filter) {
-	    Collection result = null;
+	    Collection result = new ArrayList();
 
         try {
             Session session = Hibernate.getCurrentSession();
             TransactionManager.beginTransaction();
-            result = get(TABLE, filter);
+            result.addAll(get(TABLE, filter));
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des formations : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération des formations sur la base de données SQL : " + e.getMessage());
+        }
+        
+        try {
+            result.addAll(ldapManager.getFormations());
+        } catch (NamingException e) {
+            System.err.println("Erreur lors de la récupération des formations sur la base de données LDAP : " + e.getMessage());
+            //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
+            Formation formation = new Formation(new Long(66));
+            formation.setHeading("formation de test sans LDAP");
+            result.add(formation);
+            //finTODO
         }
 
 		return result;

@@ -1,5 +1,7 @@
 package junit;
 
+import javax.naming.NamingException;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,19 +18,39 @@ public class LdapManagerTest extends TestCase {
     }
 
     public void testGetFormations() {
-    	assertNotNull(ldapManager.getFormations());
+    	try {
+            ldapManager.getFormations();
+            assertTrue(true);
+        } catch (NamingException e) {
+            assertTrue(false);
+        }
     }
     
     public void testGetTeachers() {
-    	assertNotNull(ldapManager.getTeachers());
+    	try {
+            ldapManager.getTeachers();
+            assertTrue(true);
+        } catch (NamingException e) {
+            assertTrue(false);
+        }
     }
     
     public void testGetAdministrators() {
-    	assertNotNull(ldapManager.getAdministrators());
+    	try {
+            ldapManager.getAdministrators();
+            assertTrue(true);
+        } catch (NamingException e) {
+            assertTrue(false);
+        }
     }
     
     public void testGetStudents() {
-    	assertNotNull(ldapManager.getStudents());
+    	try {
+            ldapManager.getStudents();
+            assertTrue(true);
+        } catch (NamingException e) {
+            assertTrue(false);
+        }
     }
     
     public void testTestLoginPwd() {
