@@ -13,7 +13,8 @@ import fr.umlv.smoreau.beontime.dao.*;
  * @author BeOnTime team
  */
 public class DaoManager {
-	private static String host="localhost";
+//	private static String host="localhost";
+	private static String host="saadouni.dyndns.org";
 	//TODO gerer une ip fixe ? en param ? en properties ?
 	private static /*final*/ DatabaseConfiguration databaseConf;
 	private static /*final*/ ElementDao elementDao;
@@ -24,14 +25,14 @@ public class DaoManager {
 	private static /*final*/ UserDao userDao;
 	static {
 		try {
-			/*	databaseConf = (DatabaseConfiguration) Naming.lookup("rmi://"+host+"/DbConfiguration");
+			databaseConf = (DatabaseConfiguration) Naming.lookup("rmi://"+host+"/DbConfiguration");
 			elementDao = (ElementDao) Naming.lookup("rmi://"+host+"/ElementDao");
 			formationDao = (FormationDao) Naming.lookup("rmi://"+host+"/FormationDao");
 			groupDao = (GroupDao) Naming.lookup("rmi://"+host+"/GroupDao");
 			timetableDao = (TimetableDao) Naming.lookup("rmi://"+host+"/TimeTableDao");
 			unavailabilityDao = (UnavailabilityDao) Naming.lookup("rmi://"+host+"/UnavailabitityDao");
-			*/	userDao = (UserDao) Naming.lookup("rmi://"+host+"/UserDao");
-		
+			userDao = (UserDao) Naming.lookup("rmi://"+host+"/UserDao");
+			
 		} catch (MalformedURLException e) {
 			System.err.println("pb RMI");
 			e.printStackTrace();
