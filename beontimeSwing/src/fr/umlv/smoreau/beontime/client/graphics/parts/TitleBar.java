@@ -84,8 +84,6 @@ public class TitleBar extends JPanel {
 		
 		responsibleLabel = new JLabel("Responsable");
 		intitleLabel = new JLabel("Intitule");
-		intitleLabel.setHorizontalAlignment(JLabel.CENTER);
-		
 		initPeriodPanel();
 		
 	}

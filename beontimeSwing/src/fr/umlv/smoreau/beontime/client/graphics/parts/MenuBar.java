@@ -38,20 +38,20 @@ public class MenuBar extends JMenuBar {
 		
 		
 		JMenu fichier = new JMenu("Fichier");
-		fichier.add(new JMenuItem(ViewTimetable.getAction("Visualiser un emploi du temps")));
+		fichier.add(new JMenuItem(ViewTimetable.getAction("Visualiser un emploi du temps",null)));
 		fichier.add(new JMenuItem("Fermer l'emploi du temps"));
 		fichier.addSeparator();
-		fichier.add(new JMenuItem(PrintTimetable.getAction("Imprimer")));
-		fichier.add(new JMenuItem(ExportTimetable.getAction("Exporter")));
+		fichier.add(new JMenuItem(PrintTimetable.getAction("Imprimer",null)));
+		fichier.add(new JMenuItem(ExportTimetable.getAction("Exporter",null)));
 		fichier.addSeparator();
 		fichier.add(new JMenuItem("Quitter"));
 		
 		
 		
 		JMenu edition = new JMenu("Edition");
-		edition.add(new JMenuItem(CutCourse.getAction("Couper")));
-		edition.add(new JMenuItem(CopyCourse.getAction("Copier")));		
-		edition.add(new JMenuItem(PasteCourse.getAction("Coller")));
+		edition.add(new JMenuItem(CutCourse.getAction("Couper",null)));
+		edition.add(new JMenuItem(CopyCourse.getAction("Copier",null)));		
+		edition.add(new JMenuItem(PasteCourse.getAction("Coller",null)));
 		
 		
 		
@@ -68,7 +68,7 @@ public class MenuBar extends JMenuBar {
 		
 		
 		JMenu utilisateur = new JMenu("Utilisateur");
-		utilisateur.add(new JMenuItem(AddUser.getAction("Créer")));		
+		utilisateur.add(new JMenuItem(AddUser.getAction("Créer",null)));		
 		utilisateur.add(new JMenuItem("Gérer les utilisateurs"));
 		
 		
@@ -76,7 +76,7 @@ public class MenuBar extends JMenuBar {
 		JMenu emploi_du_temps = new JMenu("Emploi du temps");
 		
 		JMenu matiere = new JMenu("Matière");
-		matiere.add(new JMenuItem(AddSubject.getAction("Ajouter")));
+		matiere.add(new JMenuItem(AddSubject.getAction("Ajouter",null)));
 		matiere.add(new JMenuItem("Supprimer"));
 		matiere.add(new JMenuItem("Modifier"));
 		matiere.add(new JMenuItem("Gérer les matières"));
@@ -85,7 +85,7 @@ public class MenuBar extends JMenuBar {
 		
 		
 		JMenu cours = new JMenu("Cours");
-		cours.add(new JMenuItem(AddCourse.getAction("Placer")));
+		cours.add(new JMenuItem(AddCourse.getAction("Placer",null)));
 		cours.add(new JMenuItem("Modifier"));
 		cours.add(new JMenuItem("Supprimer"));
 		
@@ -98,7 +98,7 @@ public class MenuBar extends JMenuBar {
 		groupe.add(new JMenuItem("Supprimer"));
 		groupe.add(new JMenuItem("Gérer les groupes"));
 		groupe.addSeparator();
-		groupe.add(new JMenuItem(GenerateGroups.getAction("Générer des groupes automatiquement")));
+		groupe.add(new JMenuItem(GenerateGroups.getAction("Générer des groupes automatiquement",null)));
 		
 		emploi_du_temps.add(groupe);
 		

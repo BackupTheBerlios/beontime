@@ -14,7 +14,6 @@ import javax.swing.AbstractAction;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.client.graphics.parts.ButtonBar;
 import fr.umlv.smoreau.beontime.client.graphics.windows.ManageButtonWindow;
 
 /**
@@ -28,21 +27,20 @@ public class ActionManageButtonWindow extends Action{
 
 
 	public static javax.swing.Action getAction(String name,final MainFrame mainFrame){
-		final ButtonBar toolBar=mainFrame.getToolBar();
 		AbstractAction va=new AbstractAction(name,getImage("images/New24.gif")) {
 		public void actionPerformed(ActionEvent e) {
-			mainFrame.getToolBar();
-
-			final ManageButtonWindow dialog = new ManageButtonWindow(mainFrame,toolBar.getDefToolBar());
+			final ManageButtonWindow dialog = new ManageButtonWindow(mainFrame,mainFrame.getToolBar().getDefToolBar());
 
 			dialog.setListenerDone(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
 						if (dialog.isOk()){
 							ArrayList buttons = dialog.getButtons();
-							toolBar.changeAll(buttons);
-							toolBar.saveToolBar();
+							mainFrame.getToolBar().changeAll(buttons);
+							mainFrame.getToolBar().getDefToolBar().add("----------");
+							mainFrame.getToolBar().getToolBar().addSeparator();
+							mainFrame.getToolBar().addButton("ActionManageButtonWindow","Configurer la toolbar");
+							mainFrame.getToolBar().saveToolBar();
 							mainFrame.refresh();
-							toolBar.addButton("ActionManageButtonWindow","Configurer la toolbar");
 						}
 					}
 			});

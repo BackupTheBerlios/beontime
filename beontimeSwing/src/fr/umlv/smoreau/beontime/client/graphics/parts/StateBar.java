@@ -30,7 +30,6 @@ public class StateBar extends JPanel {
 	private void initremarkPanel() {
 
 		remarkLabel = new JLabel("Remarque");
-		remarkLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
 	public JPanel getStateBarPanel() {
 		return remarkPanel;

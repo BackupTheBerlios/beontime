@@ -45,7 +45,7 @@ public class ActionFormList {
 		action.put("Supprimer le cours","DeleteCourse");
 		action.put("Afficher l'EDT par semaines","ShowTimetable");
 		action.put("Afficher l'EDT par semestre","ShowTimetable");
-		
+		action.put("Configurer la toolbar","ActionManageButtonWindow");
 	}
 	
 	public String getActionForName(String name){

@@ -50,9 +50,13 @@ public class ManageButtonWindow {
 
 	public ManageButtonWindow(MainFrame mainFrame,ArrayList buttons) {
 		this.buttons = buttons;
+		if (buttons.get(buttons.size()-1).equals("Configurer la toolbar")){
+			buttons.remove(buttons.size()-1);
+		}
 		ActionFormList afl=new ActionFormList();
 		this.ref = afl.getToolTips();
-		ref.add(ref.size(), "----------");
+		ref.remove("Configurer la toolbar");
+		ref.add("----------");
 		this.mainFrame = mainFrame;
 		operationOk = false;
 		lm = new GridBagLayout();
@@ -151,7 +155,7 @@ public class ManageButtonWindow {
 		int x = (int) ((d.getWidth() - frame.getWidth()) / 2);
 		int y = (int) ((d.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.show();
 	}
 
@@ -229,6 +233,7 @@ public class ManageButtonWindow {
 	}
 
 	public ArrayList getButtons() {
+
 		return buttons;
 	}
 }
