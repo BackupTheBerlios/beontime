@@ -22,7 +22,7 @@ public class ViewTimetable extends Action{
 
     }
 	public static javax.swing.Action getAction(){
-		AbstractAction vtta=new AbstractAction("View TimeTable",getImage("resources/.gif")) {
+		AbstractAction vtta=new AbstractAction("View TimeTable",getImage("mages/.gif")) {
 			public void actionPerformed(ActionEvent e) {
 
 			}
