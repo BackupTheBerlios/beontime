@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.timetable.CourseType;
 
 
@@ -200,7 +201,7 @@ public abstract class BaseCourse  implements Serializable {
 		this._teachersDirecting = _teachersDirecting;
 	}
 	
-	public void addTeacherDirecting (Object obj) {
+	public void addTeacherDirecting (IsDirectedByCourseTeacher obj) {
 		if (null == this._teachersDirecting) this._teachersDirecting = new java.util.HashSet();
 		this._teachersDirecting.add(obj);
 	}

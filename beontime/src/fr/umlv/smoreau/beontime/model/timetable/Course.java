@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import fr.umlv.smoreau.beontime.model.base.BaseCourse;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * This is the object class that relates to the Cours table.
@@ -15,6 +16,7 @@ public class Course extends BaseCourse {
 
     private Calendar beginPeriod;
     private Calendar endPeriod;
+    private java.util.Set teachers;
 
 /*[CONSTRUCTOR MARKER BEGIN]*/
 	public Course () {
@@ -93,4 +95,24 @@ public class Course extends BaseCourse {
         } catch (ParseException e) {
         }
     }
+    
+    /**
+	 * Return the value associated with the column: PersonneSet
+	 */
+	public java.util.Set getTeachers() {
+		return this.teachers;
+	}
+
+	/**
+	 * Set the value related to the column: PersonneSet
+	 * @param _teachersDirecting the PersonneSet value
+	 */
+	public void setTeachers(java.util.Set teachers) {
+		this.teachers = teachers;
+	}
+	
+	public void addTeacher(User obj) {
+		if (null == this.teachers) this.teachers = new java.util.HashSet();
+		this.teachers.add(obj);
+	}
 }

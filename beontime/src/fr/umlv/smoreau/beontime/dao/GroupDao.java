@@ -17,6 +17,7 @@ import fr.umlv.smoreau.beontime.model.Group;
  */
 public interface GroupDao extends Remote {
     public static final String JOIN_STUDENTS = "Students";
+    public static final String JOIN_SUBJECTS_COURSES_TAKEPART = "SubjectsCoursesTakePart";
 
 	public Collection getGroups(GroupFilter filter) throws RemoteException, HibernateException;
 	
