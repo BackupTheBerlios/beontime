@@ -54,7 +54,7 @@
 			cascade="none"
 			name="Materials"
 			table="utilise_cours_materiel"
-			lazy="true"
+			lazy="false"
 		>
 			<key column="id_cours" />
 			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Material" column="id_materiel" />
