@@ -11,14 +11,14 @@ import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 /**
  * @author BeOnTime
  */
-public class ButtonBar {
+public class ButtonBar extends JToolBar{
 	
 	private JLabel visuEDTLabel;
 	private JComboBox jcbTypeEDT;
@@ -29,7 +29,6 @@ public class ButtonBar {
 	
 	private JPanel buttonPanel = new JPanel();
 	private JPanel visuEDTPanel = new JPanel();
-	private JPanel buttonBarPanel = new JPanel();
 	
 	public ButtonBar() {
 		
@@ -37,20 +36,13 @@ public class ButtonBar {
 		initButtonPanel();
 		
 		BorderLayout buttonBarPanelLayout = new BorderLayout();
-		buttonBarPanel.setLayout(buttonBarPanelLayout);
+		setLayout(buttonBarPanelLayout);
 		
-		buttonBarPanel.add(buttonPanel, BorderLayout.CENTER);
-		buttonBarPanel.add(visuEDTPanel, BorderLayout.EAST);
+		add(buttonPanel, BorderLayout.CENTER);
+		add(visuEDTPanel, BorderLayout.EAST);
 		
 	}
 	
-	public void setButtonBarPanel(JPanel panel) {
-		buttonBarPanel = panel;
-	}
-	
-	public JPanel getButtonBarPanel() {
-		return buttonBarPanel;
-	}
 	
 	private void initVisuEDTPanel() {
 		
@@ -95,7 +87,7 @@ public class ButtonBar {
         gbLayout.setConstraints(comp,constraints);
     }
 
-	
+	/*
 	public static void main(String[] args){
 		
 		ButtonBar bar = new ButtonBar();
@@ -106,6 +98,6 @@ public class ButtonBar {
 		mafenetre.pack();
 		mafenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mafenetre.setVisible(true);
-	}
+	}*/
 	
 }

@@ -3,7 +3,6 @@
  */
 package fr.umlv.smoreau.beontime.client.graphics.parts;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -12,30 +11,20 @@ import javax.swing.JPanel;
 /**
  * @author BeOnTime
  */
-public class MenuBar {
+public class MenuBar extends JMenuBar {
 	
 	private JMenu [] tabMenu;
 	
-	private JMenuBar bar = new JMenuBar();
-	private JPanel panel = new JPanel();
+
 	
 	
 	public MenuBar(){
 		
 		initJMenuBar();
-		panel.add(bar);
 		
 	}
 	
-	public void setPanel(JPanel panel) {
-		this.panel = panel;
-	}
-	
-	public JPanel getPanel() {
-		return panel;
-	}
-	
-	
+
 	private void initJMenuBar(){
 		
 		
@@ -130,22 +119,22 @@ public class MenuBar {
 		JMenu a_propos_de = new JMenu("?");
 		a_propos_de.add(new JMenuItem("A propos de BeOnTime"));
 		
-		bar = new JMenuBar();
-		bar.add(fichier);
-		bar.add(edition);
-		bar.add(affichage);
-		bar.add(utilisateur);
-		bar.add(emploi_du_temps);
-		bar.add(cours);
-		bar.add(groupe);
-		bar.add(local);
-		bar.add(materiel);
-		bar.add(indisponibilite);
-		bar.add(a_propos_de);
+
+		add(fichier);
+		add(edition);
+		add(affichage);
+		add(utilisateur);
+		add(emploi_du_temps);
+		add(cours);
+		add(groupe);
+		add(local);
+		add(materiel);
+		add(indisponibilite);
+		add(a_propos_de);
 	}
 	
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		
 		MenuBar maBar = new MenuBar();
 		
@@ -155,7 +144,7 @@ public class MenuBar {
 		mafenetre.pack();
 		mafenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mafenetre.setVisible(true);
-		}
+		}*/
 
 }
 
