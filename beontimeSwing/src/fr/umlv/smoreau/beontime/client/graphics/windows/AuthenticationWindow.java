@@ -1,16 +1,17 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -19,23 +20,16 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  * @author BeOnTime
  */
 public class AuthenticationWindow {
-
 	private static final String TITRE = "Connexion";
-
-	private JLabel loginLabel;
-	private JLabel passwordLabel;
 	
 	private JTextField loginJtf;
-	private JTextField passwordJtf;
-	
-	private JButton ok;
-	private JButton annuler;
+	private JPasswordField passwordJtf;
 	
 	private JDialog IWFrame;
-	private GridBagLayout IWLayout = new GridBagLayout();
-	private GridBagConstraints layoutConstraints = new GridBagConstraints();
-
+    private GridBagLayout IWLayout = new GridBagLayout();
 	
+	private boolean isOk;
+
 	
 	public AuthenticationWindow() {
 		IWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
@@ -45,36 +39,45 @@ public class AuthenticationWindow {
 	}
 	
 	private void initIdentificationWindow() {
-    	
-		
-		loginLabel = new JLabel("Login :");
+	    GridBagConstraints layoutConstraints = new GridBagConstraints();
+
+	    JLabel loginLabel = new JLabel("Login :");
 		addComponent(IWLayout,layoutConstraints,loginLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(loginLabel);
 		
 		loginJtf = new JTextField();
 		addComponent(IWLayout,layoutConstraints,loginJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(loginJtf);
-		
-		
-		
-		passwordLabel = new JLabel("Password :");
+
+
+		JLabel passwordLabel = new JLabel("Password :");
 		addComponent(IWLayout,layoutConstraints,passwordLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(passwordLabel);
 		
-		passwordJtf = new JTextField();
+		passwordJtf = new JPasswordField();
 		addComponent(IWLayout,layoutConstraints,passwordJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(passwordJtf);
-		
-		
-		
-		ok = new JButton("OK");
+
+		this.isOk = false;
+
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                isOk = true;
+                IWFrame.dispose();
+            }
+		});
 		addComponent(IWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(ok);
 		
-		annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                IWFrame.dispose();
+            }
+		});
 		addComponent(IWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		IWFrame.getContentPane().add(annuler);
-    	
 	}
 	
     	
@@ -84,9 +87,22 @@ public class AuthenticationWindow {
      */
     public void show() {
     	IWFrame.pack();
+        IWFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	IWFrame.setResizable(false);
-    	IWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    	IWFrame.setLocationRelativeTo(null);
     	IWFrame.setVisible(true);
+    }
+    
+    public boolean isOk() {
+        return isOk;
+    }
+    
+    public String getLogin() {
+        return loginJtf.getText();
+    }
+    
+    public String getPassword() {
+        return new String(passwordJtf.getPassword());
     }
 
     private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
@@ -100,16 +116,4 @@ public class AuthenticationWindow {
  
         gbLayout.setConstraints(comp,constraints);
     }
-    
-    
-    public static void main(String[] args){
-	
-    	MainFrame frame = MainFrame.getInstance();
-     	frame.open();
-     	
-     	AuthenticationWindow form = new AuthenticationWindow();
-     	form.show();
-			
-    }    
-    
 }

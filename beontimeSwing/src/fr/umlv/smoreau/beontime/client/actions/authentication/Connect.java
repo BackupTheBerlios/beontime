@@ -35,5 +35,13 @@ public class Connect extends Action {
     public void actionPerformed(ActionEvent arg0) {
         AuthenticationWindow window = new AuthenticationWindow();
         window.show();
+        
+        if (!window.isOk())
+            System.exit(0);
+        
+        //TODO vérification avec le DAO
+        System.err.println(window.getLogin() + " " + window.getPassword());
+        
+        mainFrame.open();
     }
 }

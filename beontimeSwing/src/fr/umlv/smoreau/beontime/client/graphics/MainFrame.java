@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.net.URL;
 import java.util.Collection;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
@@ -137,6 +139,13 @@ public class MainFrame {
 		mainFrame.setTitle("BeOnTime");
 		mainFrame.setJMenuBar(menuBar);
 		mainFrame.setResizable(true);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setLocationRelativeTo(null);
+		URL url = MainFrame.class.getResource("miniLogoBoT.png");
+		if (url != null) {
+			ImageIcon image = new ImageIcon(url);
+			mainFrame.setIconImage(image.getImage());
+		}
 		try {
 			UIManager.setLookAndFeel(new MetalLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e) {
@@ -161,7 +170,6 @@ public class MainFrame {
 
     
 	public void open() {
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setVisible(true);
 	}
 	
