@@ -469,11 +469,11 @@ public class AddModifyCourseWindow {
     }
     public void setStartHour(int start){
     	startCourseHourJcb.setSelectedIndex((start/4)+8);
-    	startCourseMinuteJcb.setSelectedIndex((start%4)*15);
+    	startCourseMinuteJcb.setSelectedIndex((start%4));
     }
     public void setEndHour(int end){
     	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8);
-    	endCourseMinuteJcb.setSelectedIndex(((end+1)%4)*15);
+    	endCourseMinuteJcb.setSelectedIndex(((end+1)%4));
     }
     public int getStartHour(){
     	
@@ -486,7 +486,7 @@ public class AddModifyCourseWindow {
     	else{
     		ret=0;
     	}
-    	ret=ret+(ind_min/15);
+    	ret=ret+(ind_min);
     	return ret;
     	
     }
@@ -500,7 +500,7 @@ public class AddModifyCourseWindow {
     	else{
     		ret=0;
     	}
-    	ret=ret+(ind_min/15)-1;
+    	ret=ret+(ind_min)-1;
     	return ret;
     }
     

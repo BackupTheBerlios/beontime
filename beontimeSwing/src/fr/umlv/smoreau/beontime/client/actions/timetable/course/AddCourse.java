@@ -71,7 +71,8 @@ public class AddCourse extends Action {
         int [] row=new int[]{day};
         changeColor(false,row,columns,Color.BLUE);
         cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
-        ml.setValueAt(new Course(new Long(4)),row[0],columns[0]);
+        Course course=new Course();
+         ml.setValueAt(course,row[0],columns[0]);
         ml.fireTableDataChanged();
         cellAtt.combine(row,columns);
         table.revalidate();

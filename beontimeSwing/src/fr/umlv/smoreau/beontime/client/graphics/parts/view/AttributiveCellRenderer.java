@@ -72,7 +72,12 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
   		else{
   			String prtScreen="";
   			Subject subj=c.getSubject();
-  			prtScreen=subj.getHeading();  				
+  			if (subj!=null) {
+  				prtScreen=subj.getHeading();  				
+  			}
+  			else{
+  				prtScreen="Abcdef";
+  			}
   			setText(prtScreen);
   		}
     	
