@@ -4,6 +4,7 @@ import javax.swing.event.EventListenerList;
 
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTListener;
+import fr.umlv.smoreau.beontime.dao.ChangeListener;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.Unavailability;
@@ -19,10 +20,6 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class BoTModel {
-	public static final int TYPE_ADD    = 0;
-	public static final int TYPE_MODIFY = 1;
-	public static final int TYPE_REMOVE = 2;
-
 	private final EventListenerList list;
     private Timetable timetable;
     
@@ -91,11 +88,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, course);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addCourse(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyCourse(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeCourse(event);
 			}
 		}
@@ -109,11 +106,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, subject);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addSubject(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifySubject(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeSubject(event);
 			}
 		}
@@ -127,11 +124,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, user);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addUser(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyUser(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeUser(event);
 			}
 		}
@@ -145,11 +142,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, room);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addRoom(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyRoom(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeRoom(event);
 			}
 		}
@@ -163,11 +160,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, material);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addMaterial(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyMaterial(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeMaterial(event);
 			}
 		}
@@ -181,11 +178,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, group);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addGroup(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyGroup(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeGroup(event);
 			}
 		}
@@ -199,11 +196,11 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, unavailability);
-				if (type == TYPE_ADD)
+				if (type == ChangeListener.TYPE_ADD)
 				    ((BoTListener) listeners[i + 1]).addUnavailability(event);
-				else if (type == TYPE_MODIFY)
+				else if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyUnavailability(event);
-				else if (type == TYPE_REMOVE)
+				else if (type == ChangeListener.TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeUnavailability(event);
 			}
 		}
@@ -217,7 +214,7 @@ public class BoTModel {
 			if (listeners[i] == BoTListener.class) {
 				if (event == null)
 					event = new BoTEvent(this, formation);
-				if (type == TYPE_MODIFY)
+				if (type == ChangeListener.TYPE_MODIFY)
 				    ((BoTListener) listeners[i + 1]).modifyFormation(event);
 			}
 		}

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifySubjectWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -57,8 +56,6 @@ public class ModifySubject extends Action {
 
             try {
                 DaoManager.getTimetableDao().modifySubject(subject);
-                
-                mainFrame.getModel().fireRefreshSubject(subject, BoTModel.TYPE_MODIFY);
                 
                 JOptionPane.showMessageDialog(null, "Modification effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

@@ -160,6 +160,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             add(room, session);
+            notifyListeners(room, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -176,6 +177,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             add(material, session);
+            notifyListeners(material, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -192,6 +194,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(room, session);
+            notifyListeners(room, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -207,6 +210,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(material, session);
+            notifyListeners(material, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -222,6 +226,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             remove(TABLE_ROOM, new RoomFilter(room), session);
+            notifyListeners(room, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -237,6 +242,7 @@ public class ElementDaoImpl extends Dao implements ElementDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             remove(TABLE_MATERIAL, new MaterialFilter(material), session);
+            notifyListeners(material, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -270,4 +276,37 @@ public class ElementDaoImpl extends Dao implements ElementDao {
 		
 		return buildings;
 	}
+
+
+    private ArrayList list = new ArrayList();
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException {
+        list.add(listener);
+    }
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException {
+        list.remove(listener);
+    }
+    
+    private void notifyListeners(Room room, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.roomChanged(room, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
+    
+    private void notifyListeners(Material material, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.materialChanged(material, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
 }

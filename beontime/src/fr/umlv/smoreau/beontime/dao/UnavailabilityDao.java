@@ -42,4 +42,9 @@ public interface UnavailabilityDao extends Remote {
 	public Collection getTypesUnavailability() throws RemoteException, HibernateException;
 	
 	public UnavailabilityType getTypeUnavailability(String name) throws RemoteException;
+
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException;
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException;
 }

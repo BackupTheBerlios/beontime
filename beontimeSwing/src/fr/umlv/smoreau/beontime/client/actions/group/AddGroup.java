@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyGroupWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -40,9 +39,6 @@ public class AddGroup extends Action {
             
             try {
                 group = DaoManager.getGroupDao().addGroup(group);
-                
-                mainFrame.getModel().getTimetable().addGroup(group);
-                mainFrame.getModel().fireRefreshGroup(group, BoTModel.TYPE_ADD);
 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

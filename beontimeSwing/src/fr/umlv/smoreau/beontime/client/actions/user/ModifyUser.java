@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUserWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -59,7 +58,7 @@ public class ModifyUser extends Action {
 
                 DaoManager.getUserDao().modifyUser(user);
                 
-                mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_MODIFY);
+                //mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_MODIFY);
                 
                 JOptionPane.showMessageDialog(null, "Modification effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
 	        }

@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.dao;
 /* DESS CRI - BeOnTime - timetable project */
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -100,6 +101,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 	                add(belong, session);
 	            }
             }
+            notifyListeners(group, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -126,6 +128,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 	            for (Iterator i = c.iterator(); i.hasNext(); )
 	                add(i.next(), session);
             }
+            notifyListeners(group, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -148,6 +151,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 	            }
             }
             remove(TABLE, new GroupFilter(group), session);
+            notifyListeners(group, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -156,4 +160,26 @@ public class GroupDaoImpl extends Dao implements GroupDao {
             Hibernate.closeSession();
         }
 	}
+	
+	
+	private ArrayList list = new ArrayList();
+	
+    public void addChangeListener(ChangeListener listener) throws RemoteException {
+        list.add(listener);
+    }
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException {
+        list.remove(listener);
+    }
+    
+    private void notifyListeners(Group group, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.groupChanged(group, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
 }

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyElementWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -39,8 +38,6 @@ public class AddMaterial extends Action {
             
             try {
                 material = DaoManager.getElementDao().addMaterial(material);
-                
-                mainFrame.getModel().fireRefreshMaterial(material, BoTModel.TYPE_ADD);
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

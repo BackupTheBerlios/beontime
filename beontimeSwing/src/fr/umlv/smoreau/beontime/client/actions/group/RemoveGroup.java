@@ -6,7 +6,6 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.GroupDao;
@@ -54,16 +53,10 @@ public class RemoveGroup extends Action {
                         Course course = new Course(((TakePartGroupSubjectCourse) i.next()).getIdCourse());
                         course = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_TEACHERS_DIRECTING, TimetableDao.JOIN_GROUPS_SUBJECTS});
                         DaoManager.getTimetableDao().removeCourse(course);
-                        timetable.removeCourse(course);
-                        mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);
                     }
                 }
 
                 DaoManager.getGroupDao().removeGroup(group);
-                timetable.removeGroup(group);
-                mainFrame.getModel().fireRefreshGroup(group, BoTModel.TYPE_REMOVE);
-                if (mainFrame.getGroupSelected() == null)
-                    mainFrame.getModel().fireCloseTimetable();
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.dao;
 /* DESS CRI - BeOnTime - timetable project */
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -77,6 +78,7 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             add(unavailability, session);
+            notifyListeners(unavailability, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -93,6 +95,7 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(unavailability, session);
+            notifyListeners(unavailability, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -108,6 +111,7 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             remove(TABLE, new UnavailabilityFilter(unavailability), session);
+            notifyListeners(unavailability, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -154,4 +158,26 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
         }
         return typeUnavailability;
 	}
+	
+	
+	private ArrayList list = new ArrayList();
+	
+    public void addChangeListener(ChangeListener listener) throws RemoteException {
+        list.add(listener);
+    }
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException {
+        list.remove(listener);
+    }
+    
+    private void notifyListeners(Unavailability unavailability, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.unavailabilityChanged(unavailability, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
 }

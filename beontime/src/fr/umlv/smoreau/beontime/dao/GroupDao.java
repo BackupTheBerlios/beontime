@@ -30,4 +30,9 @@ public interface GroupDao extends Remote {
 	public void modifyGroup(Group group) throws RemoteException, HibernateException;
 	
 	public void removeGroup(Group group) throws RemoteException, HibernateException;
+
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException;
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException;
 }

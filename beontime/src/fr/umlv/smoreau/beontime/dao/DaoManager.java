@@ -109,4 +109,23 @@ public class DaoManager {
     public static UserDao getUserDao() {
     	return userDao;
     }
+
+
+    public static void addChangeListener(ChangeListener listener) throws RemoteException {
+        userDao.addChangeListener(listener);
+        elementDao.addChangeListener(listener);
+        formationDao.addChangeListener(listener);
+        groupDao.addChangeListener(listener);
+        timetableDao.addChangeListener(listener);
+        unavailabilityDao.addChangeListener(listener);
+    }
+    
+    public static void removeChangeListener(ChangeListener listener) throws RemoteException {
+        userDao.removeChangeListener(listener);
+        elementDao.removeChangeListener(listener);
+        formationDao.removeChangeListener(listener);
+        groupDao.removeChangeListener(listener);
+        timetableDao.removeChangeListener(listener);
+        unavailabilityDao.removeChangeListener(listener);
+    }
 }

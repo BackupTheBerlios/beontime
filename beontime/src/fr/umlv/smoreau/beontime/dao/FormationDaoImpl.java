@@ -141,6 +141,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             add(formation, session);
+            notifyListeners(formation, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -157,6 +158,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(formation, session);
+            notifyListeners(formation, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -165,4 +167,26 @@ public class FormationDaoImpl extends Dao implements FormationDao {
             Hibernate.closeSession();
         }
 	}
+	
+	
+	private ArrayList list = new ArrayList();
+	
+    public void addChangeListener(ChangeListener listener) throws RemoteException {
+        list.add(listener);
+    }
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException {
+        list.remove(listener);
+    }
+    
+    private void notifyListeners(Formation formation, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.formationChanged(formation, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
 }

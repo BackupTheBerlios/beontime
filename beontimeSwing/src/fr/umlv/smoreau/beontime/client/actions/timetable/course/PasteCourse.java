@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.ClipboardManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -105,13 +104,13 @@ public class PasteCourse extends Action {
 
 	            course = DaoManager.getTimetableDao().addCourse(course);
 
-	            if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&
+	            /*if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&
                         course.getEndDate().getTimeInMillis() <= mainFrame.getEndPeriod().getTimeInMillis()) {
 	                course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getBeginDate().get(Calendar.HOUR_OF_DAY));
 	                course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndDate().get(Calendar.HOUR_OF_DAY));
 	                mainFrame.getModel().getTimetable().addCourse(course);
 	                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
-                }
+                }*/
 
 	            JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             }

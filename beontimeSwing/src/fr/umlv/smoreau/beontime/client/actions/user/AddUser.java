@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import net.sf.hibernate.HibernateException;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUserWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -57,10 +56,11 @@ public class AddUser extends Action {
                 user.setPassword(new String(md.digest()));
                 user = DaoManager.getUserDao().addUser(user);
                 
-                mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_ADD);
+                //mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_ADD);
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès\nLogin: "+login+"\nMot de passe: "+password, "Login et mot de passe", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

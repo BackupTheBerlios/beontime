@@ -6,7 +6,10 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -23,6 +26,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import com.toedter.calendar.JDateChooser;
 
+import fr.umlv.smoreau.beontime.client.ChangeMonitor;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.parts.ButtonBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.MenuBar;
@@ -76,6 +80,8 @@ public class MainFrame {
 
 	private Container container;
 	
+	private ChangeMonitor monitor;
+	
 	/* type d'affichage semaine / semestre */
 	private int view_type = 0;
 	public static final int VIEW_WEEK     = 0;
@@ -87,6 +93,15 @@ public class MainFrame {
         initMainFrame();
         ActionsList.initActions(this);
         (new JDateChooser()).setLocale(Locale.FRENCH);
+        try {
+            this.monitor = new ChangeMonitor(this);
+        } catch (RemoteException e) {
+            this.monitor = null;
+        }
+    }
+    
+    public ChangeMonitor getMonitor() {
+        return monitor;
     }
     
     
@@ -150,7 +165,24 @@ public class MainFrame {
 		container.add(splitPaneVertical2); 
 		mainFrame.setTitle("BeOnTime");
 		mainFrame.setResizable(true);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		mainFrame.addWindowListener(new WindowListener() {
+            public void windowOpened(WindowEvent arg0) {
+            }
+            public void windowClosing(WindowEvent arg0) {
+                ActionsList.getAction("Quit").actionPerformed(null);
+            }
+            public void windowClosed(WindowEvent arg0) {
+            }
+            public void windowIconified(WindowEvent arg0) {
+            }
+            public void windowDeiconified(WindowEvent arg0) {
+            }
+            public void windowActivated(WindowEvent arg0) {
+            }
+            public void windowDeactivated(WindowEvent arg0) {
+            }
+		});
 		mainFrame.setLocationRelativeTo(null);
 		URL url = MainFrame.class.getResource("miniLogoBoT.png");
 		if (url != null) {

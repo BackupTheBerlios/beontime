@@ -295,8 +295,10 @@ public class TimeTableViewPanelBar extends JPanel {
 	        if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
                 Group group = e.getGroup();
-                jcbGroupEDT.addItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
-                jcbGroupEDT.revalidate();
+                if (group.getIdFormation().equals(((ComboBoxItem) jcbSubjectEDT.getSelectedItem()).getId())) {
+                    jcbGroupEDT.addItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
+                    jcbGroupEDT.revalidate();
+                }
             }
         }
 
@@ -330,13 +332,15 @@ public class TimeTableViewPanelBar extends JPanel {
             if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
                 Group group = e.getGroup();
-                ComboBoxItem itemSelected = (ComboBoxItem) jcbGroupEDT.getSelectedItem();
-                ComboBoxItem item = new ComboBoxItem(group.getHeading(), group.getIdGroup());
-                jcbGroupEDT.removeItem(item);
-                jcbGroupEDT.addItem(item);
-                if (itemSelected.equals(item))
-                    jcbGroupEDT.setSelectedItem(item);
-                jcbGroupEDT.revalidate();
+                if (group.getIdFormation().equals(((ComboBoxItem) jcbSubjectEDT.getSelectedItem()).getId())) {
+	                ComboBoxItem itemSelected = (ComboBoxItem) jcbGroupEDT.getSelectedItem();
+	                ComboBoxItem item = new ComboBoxItem(group.getHeading(), group.getIdGroup());
+	                jcbGroupEDT.removeItem(item);
+	                jcbGroupEDT.addItem(item);
+	                if (itemSelected.equals(item))
+	                    jcbGroupEDT.setSelectedItem(item);
+	                jcbGroupEDT.revalidate();
+                }
             }
         }
         
@@ -353,8 +357,10 @@ public class TimeTableViewPanelBar extends JPanel {
             if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
                 Group group = e.getGroup();
-                jcbGroupEDT.removeItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
-                jcbGroupEDT.revalidate();
+                if (group.getIdFormation().equals(((ComboBoxItem) jcbSubjectEDT.getSelectedItem()).getId())) {
+	                jcbGroupEDT.removeItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
+	                jcbGroupEDT.revalidate();
+                }
             }
         }
 

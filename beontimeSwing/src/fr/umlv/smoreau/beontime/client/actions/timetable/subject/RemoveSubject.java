@@ -7,7 +7,6 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
@@ -48,14 +47,10 @@ public class RemoveSubject extends Action {
                     for (Iterator i = courses.iterator(); i.hasNext(); ) {
                         Course course = (Course) i.next();
                         DaoManager.getTimetableDao().removeCourse(course);
-                        timetable.removeCourse(course);
-                        mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);
                     }
                 }
    
                 DaoManager.getTimetableDao().removeSubject(subject);
-                timetable.removeSubject(subject);
-                mainFrame.getModel().fireRefreshSubject(subject, BoTModel.TYPE_REMOVE);
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

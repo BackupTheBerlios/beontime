@@ -7,12 +7,11 @@ import javax.swing.JOptionPane;
 import fr.umlv.smoreau.beontime.client.ClipboardManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
@@ -43,12 +42,12 @@ public class CutCourse extends Action {
 
 	        ClipboardManager.putCourse(course);
 	        
-	        Timetable timetable = mainFrame.getModel().getTimetable();
+            // suppression des indisponibilités qui en découlent
+            UnavailabilityFilter filter = new UnavailabilityFilter();
+            filter.setIdCourse(course.getIdCourse());
+            DaoManager.getAvailabilityDao().removeUnavailability(filter);
 	        
 	        DaoManager.getTimetableDao().removeCourse(course);
-            timetable.removeCourse(course);
-            mainFrame.setCourseSelected(null);
-            mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);
 	        
 	        ActionsList.getAction("PasteCourse").setEnabled(true);
 	    } catch (Exception e) {

@@ -33,4 +33,9 @@ public interface FormationDao extends Remote {
 	public Formation addFormation(Formation formation) throws RemoteException, HibernateException;
 	
 	public void modifyFormation(Formation formation) throws RemoteException, HibernateException;
+
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException;
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException;
 }

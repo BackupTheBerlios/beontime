@@ -9,7 +9,6 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -150,11 +149,6 @@ public class ModifyCourse extends Action {
                     unavailability.setIdUnavailabilitySubject(tmp.getIdRoom());
                     unavailabilityDao.addUnavailability(unavailability);
                 }
-
-
-                course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getBeginDate().get(Calendar.HOUR_OF_DAY));
-                course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndDate().get(Calendar.HOUR_OF_DAY));
-	            mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_MODIFY);
 
 	            JOptionPane.showMessageDialog(null, "Modification effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             }

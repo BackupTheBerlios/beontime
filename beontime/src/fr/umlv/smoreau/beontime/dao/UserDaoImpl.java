@@ -5,6 +5,7 @@ package fr.umlv.smoreau.beontime.dao;
 import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -163,6 +164,7 @@ public class UserDaoImpl extends Dao implements UserDao {
                 formation.setIdSecretary(user);
                 add(formation, session);
             }
+            notifyListeners(user, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -179,6 +181,7 @@ public class UserDaoImpl extends Dao implements UserDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(user, session);
+            notifyListeners(user, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -194,6 +197,7 @@ public class UserDaoImpl extends Dao implements UserDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             remove(TABLE, new UserFilter(user), session);
+            notifyListeners(user, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -238,4 +242,26 @@ public class UserDaoImpl extends Dao implements UserDao {
 	    }
 	    return null;
 	}
+
+
+    private ArrayList list = new ArrayList();
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException {
+        list.add(listener);
+    }
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException {
+        list.remove(listener);
+    }
+    
+    private void notifyListeners(User user, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.userChanged(user, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
 }

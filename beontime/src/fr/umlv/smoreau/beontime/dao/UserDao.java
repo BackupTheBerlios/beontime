@@ -59,5 +59,9 @@ public interface UserDao extends Remote {
 	public void removeUser(User user) throws RemoteException, HibernateException;
 	
 	public User testLoginPwd(String login, String password) throws RemoteException, HibernateException;
-	
+
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException;
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException;
 }

@@ -117,8 +117,8 @@ public class Timetable implements Serializable {
         courses.add(course);
     }
     
-    public void removeCourse(Course course) {
-        courses.remove(course);
+    public boolean removeCourse(Course course) {
+        return courses.remove(course);
     }
 
     /**
@@ -138,8 +138,8 @@ public class Timetable implements Serializable {
         subjects.add(subject);
     }
     
-    public void removeSubject(Subject subject) {
-        subjects.remove(subject);
+    public boolean removeSubject(Subject subject) {
+        return subjects.remove(subject);
     }
     
     public Collection getGroups() {
@@ -156,8 +156,8 @@ public class Timetable implements Serializable {
         groups.add(group);
     }
     
-    public void removeGroup(Group group) {
-        groups.remove(group);
+    public boolean removeGroup(Group group) {
+        return groups.remove(group);
     }
 
     /**

@@ -283,6 +283,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	                add(isDirected, session);
 	            }
             }
+            notifyListeners(course, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -299,6 +300,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             add(subject, session);
+            notifyListeners(subject, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -335,6 +337,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
                 	add(isDirected, session);
 	            }
             }
+            notifyListeners(course, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -350,6 +353,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(subject, session);
+            notifyListeners(subject, ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -377,6 +381,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	            }
             }
             remove(TABLE_COURSE, new CourseFilter(course), session);
+            notifyListeners(course, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -392,6 +397,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             remove(TABLE_SUBJECT, new SubjectFilter(subject), session);
+            notifyListeners(subject, ChangeListener.TYPE_REMOVE);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -446,6 +452,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             remove(link, session);
+            notifyListeners(link.getIdCourse(), ChangeListener.TYPE_MODIFY);
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
@@ -454,4 +461,37 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Hibernate.closeSession();
         }
 	}
+
+
+	private ArrayList list = new ArrayList();
+	
+    public void addChangeListener(ChangeListener listener) throws RemoteException {
+        list.add(listener);
+    }
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException {
+        list.remove(listener);
+    }
+    
+    private void notifyListeners(Course course, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.courseChanged(course, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
+    
+    private void notifyListeners(Subject subject, int type) {
+        for (Iterator i = list.iterator(); i.hasNext(); ) {
+            ChangeListener listener = (ChangeListener) i.next();
+            try {
+                listener.subjectChanged(subject, type);
+            } catch(RemoteException re) {
+                list.remove(listener);
+            }
+        }
+    }
 }

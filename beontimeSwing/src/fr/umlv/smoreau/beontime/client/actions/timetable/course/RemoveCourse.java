@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
@@ -47,10 +46,6 @@ public class RemoveCourse extends Action {
                 DaoManager.getAvailabilityDao().removeUnavailability(filter);
 
                 DaoManager.getTimetableDao().removeCourse(course);
-
-                timetable.removeCourse(course);
-                mainFrame.setCourseSelected(null);
-                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

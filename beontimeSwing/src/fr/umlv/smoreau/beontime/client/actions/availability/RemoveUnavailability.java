@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.model.Unavailability;
@@ -35,7 +34,6 @@ public class RemoveUnavailability extends Action {
         if (select == JOptionPane.YES_OPTION) {
             try {
                 DaoManager.getAvailabilityDao().removeUnavailability(unavailability);
-                mainFrame.getModel().fireRefreshUnavailability(unavailability, BoTModel.TYPE_REMOVE);
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {

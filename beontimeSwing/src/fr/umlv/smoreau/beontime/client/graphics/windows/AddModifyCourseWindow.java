@@ -819,8 +819,12 @@ public class AddModifyCourseWindow {
             endPeriod.set(Calendar.MINUTE, 59);
             endPeriod.set(Calendar.SECOND, 59);
             endPeriod.set(Calendar.MILLISECOND, 0);*/
+            
+            int nbWeeks = 1;
+            if (repeatCourseJcb != null)
+                nbWeeks = getNbWeeksCourse();
 
-            for (int k = 0; k < getNbWeeksCourse(); ++k) {
+            for (int k = 0; k < nbWeeks; ++k) {
                 //beginPeriod.set(Calendar.DAY_OF_YEAR, beginPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
                 //endPeriod.set(Calendar.DAY_OF_YEAR, endPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
                 beginCourse.set(Calendar.DAY_OF_YEAR, beginCourse.get(Calendar.DAY_OF_YEAR) + 7*k);
@@ -860,7 +864,7 @@ public class AddModifyCourseWindow {
 	
 	            for (Iterator i = unavailabilities.iterator(); i.hasNext(); ) {
 	                Unavailability unavailability = (Unavailability) i.next();
-	                if (mainFrame.getCourseSelected() != null && unavailability.getIdCourse().equals(mainFrame.getCourseSelected().getIdCourse()))
+	                if (mainFrame.getCourseSelected() != null && unavailability.getIdCourse() != null && unavailability.getIdCourse().equals(mainFrame.getCourseSelected().getIdCourse()))
 	                    continue;
 	                if ((beginCourse.getTimeInMillis() < unavailability.getBeginDate().getTimeInMillis() && endCourse.getTimeInMillis() > unavailability.getBeginDate().getTimeInMillis()) ||
 	                        (beginCourse.getTimeInMillis() < unavailability.getEndDate().getTimeInMillis() && endCourse.getTimeInMillis() > unavailability.getEndDate().getTimeInMillis()) ||
@@ -890,6 +894,7 @@ public class AddModifyCourseWindow {
 	            }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return 7;
         }
 

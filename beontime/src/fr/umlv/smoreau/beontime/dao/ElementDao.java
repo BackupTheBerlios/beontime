@@ -53,4 +53,8 @@ public interface ElementDao extends Remote {
 	
 	public Collection getBuildings() throws RemoteException, HibernateException;
 
+    
+    public void addChangeListener(ChangeListener listener) throws RemoteException;
+
+    public void removeChangeListener(ChangeListener listener) throws RemoteException;
 }

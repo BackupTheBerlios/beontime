@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.ElementDao;
@@ -46,10 +45,6 @@ public class RemoveMaterial extends Action {
                         return;
                 }
                 DaoManager.getElementDao().removeMaterial(material);
-
-                mainFrame.getModel().fireRefreshMaterial(material, BoTModel.TYPE_REMOVE);
-                if (mainFrame.getMaterialSelected() == null)
-                    mainFrame.getModel().fireCloseTimetable();
                 
                 JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
