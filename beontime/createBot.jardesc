@@ -10,12 +10,22 @@
 </manifest>
 <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.base"/>
-<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{FormationFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{MaterialFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{GroupFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{UnavailabilityFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{Filter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.association"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{TimetableFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{RoomFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{FilterUtils.java"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.user"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{UserFilter.java"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{SubjectFilter.java"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.element"/>
 <file path="/beontime/src/.cvsignore"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter{CourseFilter.java"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.timetable"/>
-<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.association"/>
 </selectedElements>
 </jardesc>
