@@ -21,6 +21,7 @@ import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.user.*;
 
 /**
@@ -176,6 +177,11 @@ public class UserDaoImpl extends Dao implements UserDao {
                 Formation formation = (Formation) i.next();
                 formation.setIdSecretary(user);
                 add(formation, session);
+                
+                Group group = new Group();
+                group.setIdFormation(formation.getIdFormation());
+                group.setHeading("Tous");
+                add(group, session);
             }
             notifyListeners(user, ChangeListener.TYPE_ADD);
             TransactionManager.commit();
