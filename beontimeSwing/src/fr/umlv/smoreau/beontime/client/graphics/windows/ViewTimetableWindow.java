@@ -107,7 +107,7 @@ public class ViewTimetableWindow {
 		VTWFrame.getContentPane().add(periodViewEDTJcb);
 		
 		ok = new JButton("OK");
-		addComponent(VTWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(10,10,10,10));
+		addComponent(VTWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(10,10,10,10));
 		VTWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
