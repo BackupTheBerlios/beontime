@@ -19,7 +19,6 @@ public interface UserDao extends Remote {
     public static final String TYPE_SECRETARY = "secretaire";
     public static final String TYPE_ADMIN     = "administrateur";
 
-	
  //   public static UserDao getInstance() throws java.rmi.RemoteException;
 
 //	private Collection getUsers(UserFilter filter);
@@ -46,5 +45,7 @@ public interface UserDao extends Remote {
 	public boolean modifyUser(User user) throws java.rmi.RemoteException;
 	
 	public boolean removeUser(User user) throws java.rmi.RemoteException;
+	
+	public boolean testLoginPwd(String login, String password) throws java.rmi.RemoteException;
 	
 }

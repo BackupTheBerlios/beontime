@@ -31,7 +31,7 @@ public class UserDaoImpl extends Dao implements UserDao {
  //   public static final String TYPE_SECRETARY = "secretaire";
  //   public static final String TYPE_ADMIN     = "administrateur";
 //	private static final UserDao INSTANCE = new UserDao();
-	private static UserDaoImpl INSTANCE;
+	private static UserDao INSTANCE;
 	static {
 		try {
 			INSTANCE = new UserDaoImpl();

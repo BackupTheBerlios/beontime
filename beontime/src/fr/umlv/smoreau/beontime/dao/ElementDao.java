@@ -1,152 +1,45 @@
 package fr.umlv.smoreau.beontime.dao;
+/* DESS CRI - BeOnTime - timetable project */
+/* Created on 19 febr. 2005 */
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
-import fr.umlv.smoreau.beontime.Hibernate;
-import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.MaterialFilter;
 import fr.umlv.smoreau.beontime.filter.RoomFilter;
 import fr.umlv.smoreau.beontime.model.element.*;
 
 /**
- * @author BeOnTime
+ * RMI interface for the Element DAO
+ * @author BeOnTime team
  */
-public class ElementDao extends Dao {
-	/** This class has to be serialisable */
-	private static final long serialVersionUID = 1L;
-	//    private static final ElementDao INSTANCE = new ElementDao();
-    private static ElementDao INSTANCE; 
-    static {
-    	try {
-			INSTANCE= new ElementDao();
-		} catch (RemoteException e) {
-			System.err.println("problème RMI à l'instanciation du Element DAO");
-			//TODO gerer
-		}
-    }
+public interface ElementDao extends Remote {
+
+//	private static final String TABLE_MATERIAL = "Material";
+//    private static final String TABLE_ROOM     = "Room";
     
-    private static final String TABLE_MATERIAL = "Material";
-    private static final String TABLE_ROOM     = "Room";
-    
-    private ElementDao() throws RemoteException {
-    }
-
-    public static ElementDao getInstance() {
-        return INSTANCE;
-    }
+ //   public static ElementDao getInstance() throws RemoteException;
 
 
-	public Collection getRooms(RoomFilter filter) {
-	    Collection result = null;
-
-        try {
-            Session session = Hibernate.getCurrentSession();
-            TransactionManager.beginTransaction();
-            result = get(TABLE_ROOM, filter);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des locaux : " + e.getMessage());
-        }
-
-		return result;
-	}
+	public Collection getRooms(RoomFilter filter) throws RemoteException;
 	
-	public Collection getMaterials(MaterialFilter filter) {
-	    Collection result = null;
-
-        try {
-            Session session = Hibernate.getCurrentSession();
-            TransactionManager.beginTransaction();
-            result = get(TABLE_MATERIAL, filter);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des matériels : " + e.getMessage());
-        }
-
-		return result;
-	}
+	public Collection getMaterials(MaterialFilter filter) throws RemoteException;
 	
-	public Collection getRooms() {
-		return getRooms(null);
-	}
+	public Collection getRooms() throws RemoteException;
 	
-	public Collection getMaterials() {
-		return getMaterials(null);
-	}
+	public Collection getMaterials() throws RemoteException;
 	
-	public boolean addRoom(Room room) {
-        try {
-            TransactionManager.beginTransaction();
-            add(room);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un local : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean addRoom(Room room) throws RemoteException;
 	
-	public boolean addMaterial(Material material) {
-        try {
-            TransactionManager.beginTransaction();
-            add(material);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un matériel : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean addMaterial(Material material) throws RemoteException;
 	
-	public boolean modifyRoom(Room room) {
-        try {
-            TransactionManager.beginTransaction();
-            modify(room);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la modification d'un local : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean modifyRoom(Room room) throws RemoteException;
 	
-	public boolean modifyMaterial(Material material) {
-        try {
-            TransactionManager.beginTransaction();
-            modify(material);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la modification d'un matériel : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean modifyMaterial(Material material) throws RemoteException;
 	
-	public boolean removeRoom(Room room) {
-        try {
-            TransactionManager.beginTransaction();
-            remove(TABLE_ROOM, new RoomFilter(room));
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la suppression d'un local : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean removeRoom(Room room) throws RemoteException;
 	
-	public boolean removeMaterial(Material material) {
-        try {
-            TransactionManager.beginTransaction();
-            remove(TABLE_MATERIAL, new MaterialFilter(material));
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la suppression d'un matériel : " + e.getMessage());
-            return false;
-        }
-        return true;
-	}
+	public boolean removeMaterial(Material material) throws RemoteException;
+	
 }
