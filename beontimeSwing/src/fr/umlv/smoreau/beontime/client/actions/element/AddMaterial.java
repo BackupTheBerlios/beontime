@@ -29,7 +29,7 @@ public class AddMaterial extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_MATERIAL);
+        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_MATERIAL, AddModifyElementWindow.TYPE_ADD);
         window.show();
         
         if (window.isOk()) {
@@ -38,7 +38,7 @@ public class AddMaterial extends Action {
             material.setDescription(window.getDescriptionEquipment());
             
             try {
-                DaoManager.getElementDao().addMaterial(material);
+                material = DaoManager.getElementDao().addMaterial(material);
                 
                 mainFrame.getModel().fireRefreshMaterial(material, BoTModel.TYPE_ADD);
                 

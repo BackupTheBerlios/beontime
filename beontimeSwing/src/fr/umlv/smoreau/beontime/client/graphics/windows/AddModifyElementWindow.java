@@ -30,8 +30,13 @@ import fr.umlv.smoreau.beontime.filter.RoomFilter;
  * @author BeOnTime
  */
 public class AddModifyElementWindow {
-    private static final String TITRE_LOCAL    = "Ajouter un local";
-	private static final String TITRE_MATERIEL = "Ajouter un matériel";
+    private static final String TITRE_ADD      = "Ajouter un ";
+	private static final String TITRE_MODIFY   = "Modifier le ";
+	private static final String TITRE_ROOM     = "local";
+	private static final String TITRE_MATERIAL = "matériel";
+	
+	public static final int TYPE_ADD = 0;
+	public static final int TYPE_MODIFY = 1;
 
 	private JTextField equipmentNameJtf;
 	
@@ -46,17 +51,23 @@ public class AddModifyElementWindow {
 	private GridBagLayout AMEWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
 	
-	private int type;
+	private int elementType;
+	private int operationType;
 	private boolean isOk;
 	
 	
-	public AddModifyElementWindow(int type) {
-	    this.type = type;
+	public AddModifyElementWindow(int elementType, int operationType) {
+	    this.elementType = elementType;
+	    this.operationType = operationType;
 
 	    String titre = new String();
-		switch(type) {
-			case ElementDao.TYPE_MATERIAL: titre = TITRE_MATERIEL; break;
-			case ElementDao.TYPE_ROOM: titre = TITRE_LOCAL;break;
+	    switch(operationType) {
+			case TYPE_ADD: titre += TITRE_ADD; break;
+			case TYPE_MODIFY: titre += TITRE_MODIFY; break;
+		}
+		switch(elementType) {
+			case ElementDao.TYPE_MATERIAL: titre += TITRE_MATERIAL; break;
+			case ElementDao.TYPE_ROOM: titre += TITRE_ROOM; break;
 		}
 		
 		AMEWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);
@@ -66,7 +77,7 @@ public class AddModifyElementWindow {
 	}
 	
 	private void initAddModifyUserWindow() {	
-		switch(type) {
+		switch(elementType) {
 			case ElementDao.TYPE_MATERIAL: initEquipmentParts(); break;
 			case ElementDao.TYPE_ROOM: initLocalParts();break;
 		}
@@ -201,20 +212,22 @@ public class AddModifyElementWindow {
         String equipmentName = getEquipmentName();
         if (equipmentName == null || "".equals(equipmentName))
             return 1;
-        try {
-	        if (type == ElementDao.TYPE_MATERIAL) {
-	            MaterialFilter filter = new MaterialFilter();
-	            filter.setName(equipmentName);
-	            if (DaoManager.getElementDao().getMaterials(filter).size() > 0)
-	                return 2;
-	        } else if (type == ElementDao.TYPE_ROOM) {
-	            RoomFilter filter = new RoomFilter();
-	            filter.setName(equipmentName);
-	            if (DaoManager.getElementDao().getRooms(filter).size() > 0)
-	                return 3;
+        if (operationType == TYPE_ADD) {
+	        try {
+		        if (elementType == ElementDao.TYPE_MATERIAL) {
+		            MaterialFilter filter = new MaterialFilter();
+		            filter.setName(equipmentName);
+		            if (DaoManager.getElementDao().getMaterials(filter).size() > 0)
+		                return 2;
+		        } else if (elementType == ElementDao.TYPE_ROOM) {
+		            RoomFilter filter = new RoomFilter();
+		            filter.setName(equipmentName);
+		            if (DaoManager.getElementDao().getRooms(filter).size() > 0)
+		                return 3;
+		        }
+	        } catch (Exception e) {
+	            return 4;
 	        }
-        } catch (Exception e) {
-            return 4;
         }
         return 0;
     }

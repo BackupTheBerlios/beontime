@@ -36,7 +36,7 @@ public class ModifyGroup extends Action {
                 return;
         }
 
-        AddModifyGroupWindow window = new AddModifyGroupWindow();
+        AddModifyGroupWindow window = new AddModifyGroupWindow(AddModifyGroupWindow.TYPE_MODIFY);
         window.setIntitule(group.getHeading());
         window.show();
         

@@ -37,7 +37,7 @@ public class ModifyMaterial extends Action {
                 return;
         }
 
-        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_MATERIAL);
+        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_MATERIAL, AddModifyElementWindow.TYPE_MODIFY);
         window.setEquipmentName(material.getName());
         window.setDescriptionEquipment(material.getDescription());
         window.show();

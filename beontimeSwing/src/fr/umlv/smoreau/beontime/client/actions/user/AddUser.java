@@ -34,7 +34,7 @@ public class AddUser extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyUserWindow window = new AddModifyUserWindow(type);
+        AddModifyUserWindow window = new AddModifyUserWindow(type, AddModifyUserWindow.TYPE_ADD);
         window.show();
         
         if (window.isOk()) {

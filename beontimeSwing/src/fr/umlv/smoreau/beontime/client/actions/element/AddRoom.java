@@ -30,7 +30,7 @@ public class AddRoom extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_ROOM);
+        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_ROOM, AddModifyElementWindow.TYPE_ADD);
         window.show();
         
         if (window.isOk()) {
@@ -40,7 +40,7 @@ public class AddRoom extends Action {
             room.setBuildingName(window.getBuildingName());
             
             try {
-                DaoManager.getElementDao().addRoom(room);
+                room = DaoManager.getElementDao().addRoom(room);
                 
                 mainFrame.getModel().fireRefreshRoom(room, BoTModel.TYPE_ADD);
                 

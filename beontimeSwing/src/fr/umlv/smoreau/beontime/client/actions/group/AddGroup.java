@@ -29,7 +29,7 @@ public class AddGroup extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyGroupWindow window = new AddModifyGroupWindow();
+        AddModifyGroupWindow window = new AddModifyGroupWindow(AddModifyGroupWindow.TYPE_ADD);
         window.show();
         
         if (window.isOk()) {

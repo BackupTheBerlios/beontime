@@ -38,7 +38,7 @@ public class ModifyUser extends Action {
 	        if (UserDao.TYPE_SECRETARY.equals(user.getUserType()))
 	            user = DaoManager.getUserDao().getUser(user, new String[] {UserDao.JOIN_FORMATIONS_IN_CHARGE});
 	
-	        AddModifyUserWindow window = new AddModifyUserWindow(user.getUserType());
+	        AddModifyUserWindow window = new AddModifyUserWindow(user.getUserType(), AddModifyUserWindow.TYPE_MODIFY);
 	        window.setName(user.getName());
 	        window.setSurname(user.getFirstName());
 	        window.setCourrielMail(user.getEMail());

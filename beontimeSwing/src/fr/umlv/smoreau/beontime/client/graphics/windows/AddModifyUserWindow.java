@@ -36,11 +36,18 @@ import fr.umlv.smoreau.beontime.model.Formation;
  * @author BeOnTime
  */
 public class AddModifyUserWindow {
-	private static final String TITRE_SECRETAIRE = "Ajouter une secrétaire";
-	private static final String TITRE_ENSEIGNANT = "Ajouter un enseignant";
-	private static final String TITRE_ADMINISTRATEUR = "Ajouter un administrateur";
+    private static final String TITRE_ADD_SECRETARY = "Ajouter une secrétaire";
+    private static final String TITRE_MODIFY_SECRETARY = "Modifier la secrétaire";
+    private static final String TITRE_ADD_TEACHER = "Ajouter un enseignant";
+    private static final String TITRE_MODIFY_TEACHER = "Modifier l'enseignant";
+    private static final String TITRE_ADD_ADMIN = "Ajouter un administrateur";
+    private static final String TITRE_MODIFY_ADMIN = "Modifier l'administrateur";
+    
+    public static final int TYPE_ADD = 0;
+	public static final int TYPE_MODIFY = 1;
 	
-	private String type;
+	private String userType;
+	private int operationType;
 	
 	private JTextField nameJtf;
 	private JTextField surnameJtf;
@@ -63,17 +70,30 @@ public class AddModifyUserWindow {
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
 	
 	
-	public AddModifyUserWindow(String type) {
-		this.type = type;
+	public AddModifyUserWindow(String userType, int operationType) {
+		this.userType = userType;
+		this.operationType = operationType;
 		this.isOk = false;
 		
 		String titre = new String();
-		if (type.equals(UserDao.TYPE_SECRETARY))
-			titre = TITRE_SECRETAIRE;
-		else if (type.equals(UserDao.TYPE_TEACHER))
-			titre = TITRE_ENSEIGNANT;
-		else if (type.equals(UserDao.TYPE_ADMIN))
-			titre = TITRE_ADMINISTRATEUR;
+		switch (operationType) {
+			case TYPE_ADD:
+			    if (UserDao.TYPE_SECRETARY.equals(userType))
+					titre = TITRE_ADD_SECRETARY;
+				else if (UserDao.TYPE_TEACHER.equals(userType))
+					titre = TITRE_ADD_TEACHER;
+				else if (UserDao.TYPE_ADMIN.equals(userType))
+					titre = TITRE_ADD_ADMIN;
+				break;
+			case TYPE_MODIFY:
+			    if (UserDao.TYPE_SECRETARY.equals(userType))
+					titre = TITRE_MODIFY_SECRETARY;
+				else if (UserDao.TYPE_TEACHER.equals(userType))
+					titre = TITRE_MODIFY_TEACHER;
+				else if (UserDao.TYPE_ADMIN.equals(userType))
+					titre = TITRE_MODIFY_ADMIN;
+				break;
+		}
 		
 		AMUWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);
 		AMUWFrame.getContentPane().setLayout(AMUWLayout);
@@ -99,11 +119,11 @@ public class AddModifyUserWindow {
 		AMUWFrame.getContentPane().add(surnameJtf);
 		
 		
-		if (type.equals(UserDao.TYPE_SECRETARY))
+		if (UserDao.TYPE_SECRETARY.equals(userType))
 			initSecretaryParts();
-		else if (type.equals(UserDao.TYPE_TEACHER))
+		else if (UserDao.TYPE_TEACHER.equals(userType))
 			initTeacherParts();
-		else if (type.equals(UserDao.TYPE_ADMIN))
+		else if (UserDao.TYPE_ADMIN.equals(userType))
 			initAdminParts();
 	}
 	
@@ -488,15 +508,17 @@ public class AddModifyUserWindow {
 			return 3;
 		}
 		
-		try {
-		    UserFilter filter = new UserFilter();
-		    filter.setName(getName());
-		    filter.setFirstName(getSurname());
-		    if (DaoManager.getUserDao().getUsers(filter).size() > 0)
-                return 4;
-        } catch (Exception e) {
-            return -1;
-        }
+		if (operationType == TYPE_ADD) {
+			try {
+			    UserFilter filter = new UserFilter();
+			    filter.setName(getName());
+			    filter.setFirstName(getSurname());
+			    if (DaoManager.getUserDao().getUsers(filter).size() > 0)
+	                return 4;
+	        } catch (Exception e) {
+	            return -1;
+	        }
+		}
 
 		return 0;
 	}

@@ -37,7 +37,7 @@ public class ModifyRoom extends Action {
                 return;
         }
 
-        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_ROOM);
+        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_ROOM, AddModifyElementWindow.TYPE_MODIFY);
         window.setEquipmentName(room.getName());
         window.setDescriptionEquipment(room.getDescription());
         window.setBuildingName(room.getBuildingName());

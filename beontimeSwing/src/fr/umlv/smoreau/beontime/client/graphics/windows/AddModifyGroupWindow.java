@@ -23,13 +23,18 @@ import fr.umlv.smoreau.beontime.filter.GroupFilter;
  * @author BeOnTime
  */
 public class AddModifyGroupWindow {
-    private static final String TITRE = "Nouveau groupe";
+    private static final String TITRE_ADD = "Nouveau groupe";
+    private static final String TITRE_MODIFY = "Modifier le groupe";
+    
+    public static final int TYPE_ADD = 0;
+	public static final int TYPE_MODIFY = 1;
     
     private JComboBox formationGroupJcb;
     
     private JTextField intituleGroupJtf;
     
     private boolean isOk;
+    private int type;
     
     private JDialog AMGWFrame;
     private GridBagLayout AMGWLayout = new GridBagLayout();
@@ -37,8 +42,15 @@ public class AddModifyGroupWindow {
     
     
     
-    public AddModifyGroupWindow() {
-        AMGWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
+    public AddModifyGroupWindow(int type) {
+        this.type = type;
+
+        String titre = new String();
+        switch(type) {
+        	case TYPE_ADD: titre = TITRE_ADD; break;
+        	case TYPE_MODIFY: titre = TITRE_MODIFY; break;
+        }
+        AMGWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);
         AMGWFrame.getContentPane().setLayout(AMGWLayout);
         
         this.isOk = false;
@@ -128,13 +140,15 @@ public class AddModifyGroupWindow {
         String intitule = getIntitule();
         if (intitule == null || "".equals(intitule))
             return 1;
-        try {
-            GroupFilter filter = new GroupFilter();
-            filter.setHeading(intitule);
-            if (DaoManager.getGroupDao().getGroups(filter).size() > 0)
-                return 2;
-        } catch (Exception e) {
-            return 3;
+        if (type == TYPE_ADD) {
+	        try {
+	            GroupFilter filter = new GroupFilter();
+	            filter.setHeading(intitule);
+	            if (DaoManager.getGroupDao().getGroups(filter).size() > 0)
+	                return 2;
+	        } catch (Exception e) {
+	            return 3;
+	        }
         }
         return 0;
     }
