@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jardesc>
+<jar path="D:/Leçons/DESS CRI/BeOnTime/workspace/beontimeSwing/lib/bot.jar"/>
+<options buildIfNeeded="true" compress="true" descriptionLocation="/beontime/createBot.jardesc" exportErrors="true" exportWarnings="true" overwrite="false" saveDescription="true" useSourceFolders="false"/>
+<manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+<sealing sealJar="false">
+<packagesToSeal/>
+<packagesToUnSeal/>
+</sealing>
+</manifest>
+<selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.base"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.user"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.element"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.timetable"/>
+<file path="/beontime/src/.cvsignore"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.association"/>
+</selectedElements>
+</jardesc>
