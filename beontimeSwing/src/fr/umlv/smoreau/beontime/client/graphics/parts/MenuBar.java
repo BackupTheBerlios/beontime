@@ -67,14 +67,14 @@ public class MenuBar extends JMenuBar {
 			edition.add(new JMenuItem(ActionsList.getAction("PasteCourse")));
 			
 			affichage = new JMenu("Affichage");
-			JMenu presentation = new JMenu("Présentation");		
+			/*JMenu presentation = new JMenu("Présentation");		
 			presentation.add(new JMenuItem(ActionsList.getAction("ShowTimetableVertical")));
 			presentation.add(new JMenuItem(ActionsList.getAction("ShowTimetableHorizontal")));
 			affichage.add(presentation);
-			JMenu vue = new JMenu("Vue");
-			vue.add(new JMenuItem(ActionsList.getAction("ShowTimetableByWeek")));		
-			vue.add(new JMenuItem(ActionsList.getAction("ShowTimetableBySixMonthPeriod")));
-			affichage.add(vue);
+			JMenu vue = new JMenu("Vue");*/
+			affichage.add(new JMenuItem(ActionsList.getAction("ShowTimetableByWeek")));		
+			affichage.add(new JMenuItem(ActionsList.getAction("ShowTimetableBySixMonthPeriod")));
+			//affichage.add(vue);
 		}
 		
 		JMenu utilisateur = new JMenu("Utilisateur");
@@ -132,6 +132,8 @@ public class MenuBar extends JMenuBar {
 			
 			emploi_du_temps.add(materiel);
 			
+			emploi_du_temps.add(new JMenuItem(ActionsList.getAction("ModifyFormation")));
+			
 			indisponibilite = new JMenu("Indisponibilité");
 			indisponibilite.add(new JMenuItem(ActionsList.getAction("AddUnavailability")));
 			indisponibilite.add(new JMenuItem(ActionsList.getAction("ManageUnavailabilities")));
@@ -183,6 +185,8 @@ public class MenuBar extends JMenuBar {
 		    } else if (timetable.getGroup() != null) {
 		        ActionsList.getAction("ModifyGroup").setEnabled(true);
 		        ActionsList.getAction("RemoveGroup").setEnabled(true);
+		    } else if (timetable.getFormation() != null) {
+		        ActionsList.getAction("ModifyFormation").setEnabled(true);
 		    }
 		    if (timetable.getRoom() == null && timetable.getMaterial() == null) {
 			    ActionsList.getAction("AddSubject").setEnabled(true);
@@ -197,8 +201,8 @@ public class MenuBar extends JMenuBar {
 		    ActionsList.getAction("CloseTimetable").setEnabled(false);
 		    ActionsList.getAction("PrintTimetable").setEnabled(false);
 		    ActionsList.getAction("ExportTimetable").setEnabled(false);
-		    ActionsList.getAction("ShowTimetableVertical").setEnabled(false);
-		    ActionsList.getAction("ShowTimetableHorizontal").setEnabled(false);
+		    //ActionsList.getAction("ShowTimetableVertical").setEnabled(false);
+		    //ActionsList.getAction("ShowTimetableHorizontal").setEnabled(false);
 		    ActionsList.getAction("ShowTimetableByWeek").setEnabled(false);
 		    ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(false);
 		    ActionsList.getAction("AddSubject").setEnabled(false);
@@ -212,8 +216,7 @@ public class MenuBar extends JMenuBar {
 	        ActionsList.getAction("RemoveMaterial").setEnabled(false);
 	        ActionsList.getAction("ModifyGroup").setEnabled(false);
 	        ActionsList.getAction("RemoveGroup").setEnabled(false);
+	        ActionsList.getAction("ModifyFormation").setEnabled(false);
 		}
 	}
 }
-
-

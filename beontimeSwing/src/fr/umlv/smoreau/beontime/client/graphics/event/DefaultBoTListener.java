@@ -72,4 +72,7 @@ public class DefaultBoTListener implements BoTListener {
 
     public void removeUnavailability(BoTEvent e) throws InterruptedException {
     }
+    
+    public void modifyFormation(BoTEvent e) throws InterruptedException {       
+    }
 }

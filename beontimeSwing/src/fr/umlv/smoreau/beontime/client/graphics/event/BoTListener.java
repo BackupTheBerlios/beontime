@@ -51,4 +51,6 @@ public interface BoTListener extends EventListener {
 	public void modifyUnavailability(BoTEvent e) throws InterruptedException;
 
 	public void removeUnavailability(BoTEvent e) throws InterruptedException;
+	
+	public void modifyFormation(BoTEvent e) throws InterruptedException;
 }

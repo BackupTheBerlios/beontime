@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.client.graphics.event;
 
 import java.util.EventObject;
 
+import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.element.Material;
@@ -23,6 +24,7 @@ public class BoTEvent extends EventObject {
 	private Material material;
 	private Group group;
 	private Unavailability unavailability;
+	private Formation formation;
 	private boolean initTimetableViewPanel;
 	
 	public BoTEvent(Object source, boolean initTimetableViewPanel) {
@@ -70,6 +72,11 @@ public class BoTEvent extends EventObject {
 		this.unavailability = unavailability;
 	}
 	
+	public BoTEvent(Object source, Formation formation) {
+		super(source);
+		this.formation = formation;
+	}
+	
 	public Timetable getTimetable() {
 	    return timetable;
 	}
@@ -100,6 +107,10 @@ public class BoTEvent extends EventObject {
 	
 	public Unavailability getUnavailability() {
 	    return unavailability;
+	}
+	
+	public Formation getFormation() {
+	    return formation;
 	}
 	
 	public boolean isInitTimetableViewPanel() {

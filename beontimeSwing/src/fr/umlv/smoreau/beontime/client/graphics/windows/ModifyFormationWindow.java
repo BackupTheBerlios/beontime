@@ -1,9 +1,3 @@
-/*
- * Created on 28 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
@@ -12,27 +6,69 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
- * @author sandrine
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ModifyFormationWindow {
+    private static final SimpleDateFormat FORMAT_DATE  = new SimpleDateFormat("dd/MM");
+
+    private static final String CONFIG_BOT = "beontime.properties";
+    private static final String DEFAULT_BEGIN_FIRST_HALF_YEAR = "01/09";
+    private static final String DEFAULT_END_FIRST_HALF_YEAR = "31/12";
+    private static final String DEFAULT_BEGIN_SECOND_HALF_YEAR = "01/01";
+    private static final String DEFAULT_END_SECOND_HALF_YEAR = "30/06";
 
 	private static final String TITRE = "Modifier une formation";
+	
+	private static String beginFirstHalfYear;
+	private static String endFirstHalfYear;
+	private static String beginSecondHalfYear;
+	private static String endSecondHalfYear;
+	
+	static {
+		try {
+	        String configDirectory = System.getProperty("config.directory");
+	        if (configDirectory != null) {
+	            Properties properties = new Properties();
+	            properties.load(new FileInputStream(configDirectory + System.getProperty("file.separator") + CONFIG_BOT));
+	            beginFirstHalfYear = properties.getProperty("begin.first.half.year");
+	            endFirstHalfYear = properties.getProperty("end.first.half.year");
+	            beginSecondHalfYear = properties.getProperty("begin.second.half.year");
+	            endSecondHalfYear = properties.getProperty("end.second.half.year");
+	        } else {
+	            System.err.println("Le paramètre JVM 'config.directory' n'est pas positionné");
+	            System.err.println("Utilisation des dates de semestre par défaut");
+	            beginFirstHalfYear = DEFAULT_BEGIN_FIRST_HALF_YEAR;
+	            endFirstHalfYear = DEFAULT_END_FIRST_HALF_YEAR;
+	            beginSecondHalfYear = DEFAULT_BEGIN_SECOND_HALF_YEAR;
+	            endSecondHalfYear = DEFAULT_END_SECOND_HALF_YEAR;
+	        }
+	    } catch (Exception e) {
+	        throw new RuntimeException("Problème de lecture du fichier de configuration : " + e.getMessage(), e);
+	    }
+	}
 	
 	private JLabel entitleLabel;
 	private JLabel secretaryLabel;
@@ -45,7 +81,7 @@ public class ModifyFormationWindow {
 	private JLabel startHalfYear2Label;
 	private JLabel endHalfYear2Label;
 	
-	private JTextField entitleJtf;
+	private JTextField intituleJtf;
 	
 	private JComboBox teacherJcb;
 	
@@ -75,17 +111,33 @@ public class ModifyFormationWindow {
 	    MFWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		MFWFrame.getContentPane().setLayout(MFWLayout);
 		
+		try {
+            Collection t = DaoManager.getUserDao().getTeachers();
+            if (t.size() == 0)
+                throw new Exception();
+            teachersName = new String[t.size()+1];
+            teachers = new User[t.size()+1];
+            teachersName[0] = "";
+            int j = 1;
+            for (Iterator i = t.iterator(); i.hasNext(); ++j) {
+                teachers[j] = (User) i.next();
+                teachersName[j] = teachers[j].getName() + " " + teachers[j].getFirstName();
+            }
+        } catch (Exception e) {
+            teachersName = null;
+            teachers = null;
+        }
+		
 		initModifyFormationWindow();
 	}
 	
 	
-	public String getEntitleFormation() {
-		
-		return entitleJtf.getText();
+	public String getIntituleFormation() {
+		return intituleJtf.getText();
 	}
-	public void setEntitleFormation(String entitle) {
-		
-		entitleJtf.setText("entitle");
+
+	public void setIntituleFormation(String intitule) {
+	    intituleJtf.setText(intitule);
 	}
 	
 	public String getNameSecretaryLabel() {
@@ -108,17 +160,59 @@ public class ModifyFormationWindow {
 	        }
 	}
 	
+	public Calendar getStartHalfYear1() {
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(startHalfYear1Jc.getDate());
+	    return date;
+	}
+	
+	public void setStartHalfYear1(Calendar date) {
+	    if (date != null)
+	        startHalfYear1Jc.setDate(date.getTime());
+	}
+	
+	public Calendar getEndHalfYear1() {
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(endHalfYear1Jc.getDate());
+	    return date;
+	}
+	
+	public void setEndHalfYear1(Calendar date) {
+	    if (date != null)
+	        endHalfYear1Jc.setDate(date.getTime());
+	}
+	
+	public Calendar getStartHalfYear2() {
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(startHalfYear2Jc.getDate());
+	    return date;
+	}
+	
+	public void setStartHalfYear2(Calendar date) {
+	    if (date != null)
+	        startHalfYear2Jc.setDate(date.getTime());
+	}
+	
+	public Calendar getEndHalfYear2() {
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(endHalfYear2Jc.getDate());
+	    return date;
+	}
+	
+	public void setEndHalfYear2(Calendar date) {
+	    if (date != null)
+	        endHalfYear2Jc.setDate(date.getTime());
+	}
+	
 	private void initModifyFormationWindow() {
-		
-		
 		entitleLabel = new JLabel("Intitulé de la formation :");
 		addComponent(MFWLayout,layoutConstraints,entitleLabel,1,1,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(entitleLabel);
 		
 		
-		entitleJtf = new JTextField();
-		addComponent(MFWLayout,layoutConstraints,entitleJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(30,10,15,10));
-		MFWFrame.getContentPane().add(entitleJtf);
+		intituleJtf = new JTextField();
+		addComponent(MFWLayout,layoutConstraints,intituleJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(30,10,15,10));
+		MFWFrame.getContentPane().add(intituleJtf);
 		
 		
 		secretaryLabel = new JLabel("Secrétaire en charge de la formation :");
@@ -134,7 +228,7 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(teacherLabel);
 		
 		
-		teacherJcb = new JComboBox();
+		teacherJcb = new JComboBox(teachersName);
 		addComponent(MFWLayout,layoutConstraints,teacherJcb,4,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
 		MFWFrame.getContentPane().add(teacherJcb);
 		
@@ -149,6 +243,11 @@ public class ModifyFormationWindow {
 		
 		
 		startHalfYear1Jc = new JDateChooser();
+		try {
+            startHalfYear1Jc.setDate(FORMAT_DATE.parse(beginFirstHalfYear));
+        } catch (ParseException e) {
+        }
+		startHalfYear1Jc.setLocale(Locale.FRENCH);
 		addComponent(MFWLayout,layoutConstraints,startHalfYear1Jc,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(startHalfYear1Jc);
 			
@@ -157,6 +256,10 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(endHalfYear1Label);
 		
 		endHalfYear1Jc = new JDateChooser();
+		try {
+		    endHalfYear1Jc.setDate(FORMAT_DATE.parse(endFirstHalfYear));
+        } catch (ParseException e) {
+        }
 		addComponent(MFWLayout,layoutConstraints,endHalfYear1Jc,4,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(endHalfYear1Jc);
 		
@@ -170,6 +273,10 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(startHalfYear2Label);
 		
 		startHalfYear2Jc = new JDateChooser();
+		try {
+		    startHalfYear2Jc.setDate(FORMAT_DATE.parse(beginSecondHalfYear));
+        } catch (ParseException e) {
+        }
 		addComponent(MFWLayout,layoutConstraints,startHalfYear2Jc,2,7,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(startHalfYear2Jc);
 		
@@ -178,6 +285,10 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(endHalfYear2Label);
 		
 		endHalfYear2Jc = new JDateChooser();
+		try {
+		    endHalfYear2Jc.setDate(FORMAT_DATE.parse(endSecondHalfYear));
+        } catch (ParseException e) {
+        }
 		addComponent(MFWLayout,layoutConstraints,endHalfYear2Jc,4,7,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(endHalfYear2Jc);
 		
@@ -222,18 +333,28 @@ public class ModifyFormationWindow {
 	
     
     public boolean isOk() {
-     
     	return isOk;
-    }	
-	
+    }
+
+    private int checking() {
+        return 0;
+    }
+
     private class ActionOk implements ActionListener {
         /* (non-Javadoc)
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent arg0) {
-           
+            String errorMessage = null;
+            switch (checking()) {
+            case 0:
+                isOk = true;
+                MFWFrame.dispose();
+                return;
+            default:
+                errorMessage = "Erreur inconnue";
+            }
+            JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-   
  }

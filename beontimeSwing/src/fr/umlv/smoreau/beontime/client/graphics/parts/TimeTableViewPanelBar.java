@@ -302,6 +302,15 @@ public class TimeTableViewPanelBar extends JPanel {
                 jcbGroupEDT.revalidate();
             }
         }
+        
+        public void modifyFormation(BoTEvent e) throws InterruptedException {
+            Formation formation = e.getFormation();
+            ComboBoxItem item = new ComboBoxItem(formation.getHeading(), formation.getIdFormation());
+            jcbSubjectEDT.removeItem(item);
+            jcbSubjectEDT.addItem(item);
+            jcbSubjectEDT.setSelectedItem(item);
+            jcbSubjectEDT.revalidate();
+        }
 
         public void removeGroup(BoTEvent e) throws InterruptedException {
             if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
