@@ -10,11 +10,12 @@
 </manifest>
 <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.base"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.filter"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.user"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.element"/>
-<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.timetable"/>
 <file path="/beontime/src/.cvsignore"/>
+<javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.timetable"/>
 <javaElement handleIdentifier="=beontime/src&lt;fr.umlv.smoreau.beontime.model.association"/>
 </selectedElements>
 </jardesc>
