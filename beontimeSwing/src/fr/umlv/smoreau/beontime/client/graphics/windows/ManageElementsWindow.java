@@ -61,13 +61,14 @@ public class ManageElementsWindow {
 	private JPanel manageButtonPanel = new JPanel();
 	private JPanel validateButtonPanel = new JPanel();
 	
-	private BoTModel model = new BoTModel();
+	private BoTModel model;
 	
 	private JDialog MEWFrame;
 	JFrame frame;
 	
 	
 	public ManageElementsWindow(int type) {
+		this.model = MainFrame.getInstance().getModel();
 		this.type = type;
 		
 		String titre = new String();
@@ -89,8 +90,6 @@ public class ManageElementsWindow {
 	}
 	
 	private void initManageElementsWindow(int type) {
-		model = new BoTModel();
-		
 		initManageButtonPanel(type);
 		MEWFrame.getContentPane().add(manageButtonPanel, BorderLayout.EAST);
 		
