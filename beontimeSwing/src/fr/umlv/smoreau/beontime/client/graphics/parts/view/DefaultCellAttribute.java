@@ -1,26 +1,9 @@
-/*
- * (swing1.1beta3)
- * 
- */
-
-
-
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.*;
 
+public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCell ,CellFont {
 
-/**
- * @version 1.0 11/22/98
- */
 
-public class DefaultCellAttribute 
-//    implements CellAttribute ,CellSpan  {
-      implements CellAttribute ,CellSpan ,ColoredCell ,CellFont {
-
-  //
-  // !!!! CAUTION !!!!!
-  // these values must be synchronized to Table data
-  //
   protected int rowSize;
   protected int columnSize;
   protected int[][][] span;                   // CellSpan
@@ -45,10 +28,6 @@ public class DefaultCellAttribute
     }
   }
 
-
-  //
-  // CellSpan
-  //
   public int[] getSpan(int row, int column) {
     if (isOutOfBounds(row, column)) {
       int[] ret_code = {1,1};
@@ -88,7 +67,6 @@ public class DefaultCellAttribute
       for (int j=0,jj=0;j<columnSpan;j++,jj--) {
 	span[startRow +i][startColumn +j][CellSpan.COLUMN] = jj;
 	span[startRow +i][startColumn +j][CellSpan.ROW]    = ii;
-	//System.out.println("r " +ii +"  c " +jj);
       }
     }
     span[startRow][startColumn][CellSpan.COLUMN] = columnSpan;
@@ -108,10 +86,6 @@ public class DefaultCellAttribute
     }
   }
 
-
-  //
-  // ColoredCell
-  //
   public Color getForeground(int row, int column) {
     if (isOutOfBounds(row, column)) return null;
     return foreground[row][column];
@@ -138,12 +112,7 @@ public class DefaultCellAttribute
     if (isOutOfBounds(rows, columns)) return;
     setValues(background, color, rows, columns);
   }
-  //
 
-
-  //
-  // CellFont
-  //
   public Font getFont(int row, int column) {
     if (isOutOfBounds(row, column)) return null;
     return font[row][column];
@@ -156,12 +125,7 @@ public class DefaultCellAttribute
     if (isOutOfBounds(rows, columns)) return;
     setValues(this.font, font, rows, columns);
   }
-  //
 
-
-  //
-  // CellAttribute
-  //
   public void addColumn() {
     int[][][] oldSpan = span;
     int numRows    = oldSpan.length;
@@ -214,18 +178,6 @@ public class DefaultCellAttribute
     font = new Font[rowSize][columnSize];
     initValue();
   }
-
-  /*
-  public void changeAttribute(int row, int column, Object command) {
-  }
-
-  public void changeAttribute(int[] rows, int[] columns, Object command) {
-  }
-  */
-
-
-
-
   protected boolean isOutOfBounds(int row, int column) {
     if ((row    < 0)||(rowSize    <= row)
       ||(column < 0)||(columnSize <= column)) {

@@ -1,10 +1,3 @@
-/*
- * (swing1.1beta3)
- * 
- */
-
-
-
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Color;
 import java.awt.Component;
@@ -15,11 +8,6 @@ import java.awt.Rectangle;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicTableUI;
 import javax.swing.table.TableCellRenderer;
-
-
-/**
- * @version 1.0 11/26/98
- */
 
 public class MultiSpanCellTableUI extends BasicTableUI {
 
@@ -39,9 +27,7 @@ public class MultiSpanCellTableUI extends BasicTableUI {
 
     for (int index = firstIndex; index <= lastIndex; index++) {
       if (rowRect.intersects(clipBounds)) {
-        //System.out.println();                  // debug
-        //System.out.print("" + index +": ");    // row
-	paintRow(g, index);
+      	paintRow(g, index);
       }
       rowRect.y += rowRect.height;
     }
@@ -62,11 +48,9 @@ public class MultiSpanCellTableUI extends BasicTableUI {
       if (cellAtt.isVisible(row,column)) {
 	cellRow    = row;
 	cellColumn = column;
-	  //  System.out.print("   "+column+" ");  // debug
       } else {
 	cellRow    = row + cellAtt.getSpan(row,column)[CellSpan.ROW];
 	cellColumn = column + cellAtt.getSpan(row,column)[CellSpan.COLUMN];
-	  //  System.out.print("  ("+column+")");  // debug
       }
       if (cellRect.intersects(rect)) {
 	drawn = true;

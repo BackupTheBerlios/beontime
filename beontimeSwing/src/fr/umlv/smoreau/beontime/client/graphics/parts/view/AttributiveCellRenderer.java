@@ -1,19 +1,9 @@
-/*
- * (swing1.1beta3)
- */
-
-
- 
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.border.*;
 
-
-/**
- * @version 1.0 11/22/98
- */
 public class AttributiveCellRenderer extends JLabel implements TableCellRenderer {
   protected static Border noFocusBorder; 
  

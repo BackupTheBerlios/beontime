@@ -1,10 +1,3 @@
-/*
- * (swing1.1beta3)
- * 
- */
-
-
-
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -16,11 +9,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-
-
-/**
- * @version 1.0 11/26/98
- */
 
 public class MultiSpanCellTable extends JTable {
 
@@ -89,7 +77,6 @@ public class MultiSpanCellTable extends JTable {
     int row = point.y / (rowHeight + rowMargin);
     if ((row <0)||(getRowCount() <= row)) return retValue;
     int column = getColumnModel().getColumnIndexAtX((int)((95*point.getX())/100));
-    //int column=super.columnAtPoint(point);
     CellSpan cellAtt = (CellSpan)((AttributiveCellTableModel)getModel()).getCellAttribute();
 
     if (cellAtt.isVisible(row,column)) {

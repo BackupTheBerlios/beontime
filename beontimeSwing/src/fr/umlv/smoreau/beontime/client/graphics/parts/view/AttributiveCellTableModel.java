@@ -1,28 +1,14 @@
-/*
- * (swing1.1beta3)
- * 
- */
-
-
-
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Dimension;
 
 import javax.swing.table.AbstractTableModel;
-
-
-/**
- * @version 1.0 11/22/98
- */
 
 public class AttributiveCellTableModel extends AbstractTableModel {
 	int colNb=0;
 	private DefaultCellAttribute cellAtt;
 	private String[][] data;
 	private String[] plage=new String[]{"00","15","30","45"};
-	/**
-	 * 
-	 */
+
 	public AttributiveCellTableModel(int numRows, int numColumns) {
 		colNb = numColumns;
 		data =new String[numRows][numColumns];

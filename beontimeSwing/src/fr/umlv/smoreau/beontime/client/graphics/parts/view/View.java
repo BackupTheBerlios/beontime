@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 
 import javax.swing.JMenuItem;
