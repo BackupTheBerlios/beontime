@@ -101,6 +101,8 @@ public class ActionsList {
 	    getAction("RemoveGroup").setEnabled(false);
 	    getAction("ManageGroups").setEnabled(false);
 	    getAction("GenerateGroups").setEnabled(false);
+	    getAction("ModifyUser").setEnabled(false);
+	    getAction("RemoveUser").setEnabled(false);
 	}
 	
 	public static ArrayList getActions() {
