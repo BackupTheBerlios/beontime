@@ -16,6 +16,8 @@ import fr.umlv.smoreau.beontime.model.Group;
  * @author BeOnTime team
  */
 public interface GroupDao extends Remote {
+    public static final String DEFAULT_GROUP_NAME = "Tous";
+
     public static final String JOIN_STUDENTS = "Students";
     public static final String JOIN_SUBJECTS_COURSES_TAKEPART = "SubjectsCoursesTakePart";
 

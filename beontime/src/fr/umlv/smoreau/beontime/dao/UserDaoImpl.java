@@ -180,7 +180,7 @@ public class UserDaoImpl extends Dao implements UserDao {
                 
                 Group group = new Group();
                 group.setIdFormation(formation.getIdFormation());
-                group.setHeading("Tous");
+                group.setHeading(GroupDao.DEFAULT_GROUP_NAME);
                 add(group, session);
             }
             notifyListeners(user, ChangeListener.TYPE_ADD);
