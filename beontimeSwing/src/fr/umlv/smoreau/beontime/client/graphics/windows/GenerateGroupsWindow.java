@@ -53,7 +53,7 @@ public class GenerateGroupsWindow {
 
 	
 	
-	public GenerateGroupsWindow (){
+	public GenerateGroupsWindow() {
 		GGWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
     	GGWFrame.getContentPane().setLayout(GGWLayout);
         

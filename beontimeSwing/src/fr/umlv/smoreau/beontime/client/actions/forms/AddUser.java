@@ -25,7 +25,7 @@ public class AddUser extends Action {
 	public static javax.swing.Action getAction(String name,final MainFrame mainFrame){
 		AbstractAction va=new AbstractAction(name,getImage("images/New24.gif")) {
 		public void actionPerformed(ActionEvent e) {
-			AddModifyUserWindow amuw=new AddModifyUserWindow();
+			AddModifyUserWindow amuw=new AddModifyUserWindow(1);
 			amuw.show();
 			}
 		};
