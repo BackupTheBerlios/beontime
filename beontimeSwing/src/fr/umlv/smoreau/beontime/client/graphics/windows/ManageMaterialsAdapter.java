@@ -1,11 +1,14 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
@@ -15,7 +18,7 @@ import fr.umlv.smoreau.beontime.model.element.Material;
 /**
  * @author BeOnTime
  */
-public class ManageMaterialsAdapter extends AbstractTableModel/*implements TableModel */{
+public class ManageMaterialsAdapter extends AbstractTableModel {
 	private final EventListenerList list;
 	private ArrayList materials;
 	private final static String[] columnNames = {"Nom","Description"};
@@ -26,40 +29,7 @@ public class ManageMaterialsAdapter extends AbstractTableModel/*implements Table
 		this.list = new EventListenerList();
 		this.materials = new ArrayList(materials);
 		
-		
-		
-		
-		//TODO pour tester en local
-		/*Material material1 = new Material(new Long(1)); 
-		 material1.setName("Nom1");
-		 material1.setDescription("Vidéo projecteur");
-		 
-		 Material material2 = new Material(new Long(2)); 
-		 material2.setName("Nom2");
-		 material2.setDescription("Description2");
-		 
-		 Material material3 = new Material(new Long(3)); 
-		 material3.setName("Nom3");
-		 material3.setDescription("Description3");
-		 
-		 Material material4 = new Material(new Long(4)); 
-		 material4.setName("Nom4");
-		 material4.setDescription("Description4");
-		 
-		 Material material5 = new Material(new Long(5)); 
-		 material5.setName("Nom5");
-		 material5.setDescription("Description5");
-		 //finTODO
-		  
-		  
-		  listMaterials = new ArrayList();
-		  listMaterials.add(material1);
-		  listMaterials.add(material2);
-		  listMaterials.add(material3);
-		  listMaterials.add(material4);
-		  listMaterials.add(material5);*/
-		
-		model.addBoTListener(new ManageMaterialsListener());
+		model.addBoTListener(new ManageMaterialsListener(this));
 	}
 	
 	/* (non-Javadoc)
@@ -120,7 +90,18 @@ public class ManageMaterialsAdapter extends AbstractTableModel/*implements Table
 	}
 	
 	public Object getObjectAt(int rowIndex) {
+	    if (rowIndex < 0 || rowIndex >= getRowCount())
+	        return null;
 		return (Material)materials.get(rowIndex);		
+	}
+	
+	public int indexOf(Object obj) {
+	    Material material = (Material) obj;
+	    for (int i = 0; i < materials.size(); ++i) {
+	        if (material.equals(materials.get(i)))
+	            return i;
+	    }
+	    return -1;
 	}
 	
 	/* (non-Javadoc)
@@ -136,62 +117,69 @@ public class ManageMaterialsAdapter extends AbstractTableModel/*implements Table
 	public void removeTableModelListener(TableModelListener l) {
 		list.remove(TableModelListener.class, l);
 	}
-	
-	
-	
+
+
 	private class  ManageMaterialsListener extends DefaultBoTListener {
+	    private TableModel source;
+
+		public ManageMaterialsListener(TableModel source) {
+			this.source = source;
+		}
+
 		public void addMaterial(BoTEvent e) throws InterruptedException {
-			Material material = (Material) e.getMaterial();
-			//TODO Ajoute la ligne du nouveau matériel
-			
-			System.out.println("on est entré");
-			System.out.println("nom materiel :"+material.getName());
-			materials.add(material);
-			
-			//setValueAt(material.getName(), 0, 1);
-			//setValueAt(material.getDescription(), 0, 2);
-			//fireTableDataChanged();
-			fireTableRowsInserted(materials.size()-1,materials.size()-1);
-			
-			//fireTableRowsInserted(materials.size(), materials.size());
+		    Material material = (Material) e.getMaterial();
+	        materials.add(material);
+	        final int row = indexOf(material);
+	        
+	        final Object[] listeners = list.getListenerList();
+
+	        for (int i = listeners.length-2; i >= 0; i -= 2) {
+				if (listeners[i] == TableModelListener.class) {
+					final int index = i;
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							((TableModelListener)listeners[index+1]).tableChanged(new TableModelEvent(source,row,row,TableModelEvent.ALL_COLUMNS,TableModelEvent.INSERT));
+						}
+					});
+				}
+			}
 		}
 		
 		public void modifyMaterial(BoTEvent e) throws InterruptedException {
-			Material material = (Material) e.getMaterial();
-			//TODO Modifie la ligne du matériel modifié
-			for(int i=0;i<materials.size();i++){
-				if(((Material)getObjectAt(i))!=null){
-					Material materialRead=(Material)getObjectAt(i);
-					if (materialRead.equals(material)){
-						System.out.println("************on est entré************");
-						fireTableDataChanged();
-						//fireTableRowsUpdated(i,i);
-						return;
-					}
-					
+		    Material material = (Material) e.getMaterial();
+            final int row = indexOf(material);
+
+            final Object[] listeners = list.getListenerList();
+
+			for (int i = listeners.length-2; i >= 0; i -= 2) {
+				if (listeners[i] == TableModelListener.class) {
+					final int index = i;
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							((TableModelListener)listeners[index+1]).tableChanged(new TableModelEvent(source,row,row,1,TableModelEvent.UPDATE));
+						}
+					});
 				}
-				
 			}
 		}
 		
 		public void removeMaterial(BoTEvent e) throws InterruptedException {
-			Material material = (Material) e.getMaterial();
-			//TODO Supprime la ligne du matériel supprimé
-			for(int i=0;i<materials.size();i++){
-				if(((Material)getObjectAt(i))!=null){
-					Material materialRead=(Material)getObjectAt(i);
-					if (materialRead.equals(material)){
-						materials.remove(material);
-						fireTableDataChanged();
-						//fireTableRowsDeleted(i,i);
-						return;
-					}
-					
+		    Material material = (Material) e.getMaterial();
+            final int row = indexOf(material);
+            materials.remove(material);
+
+            final Object[] listeners = list.getListenerList();
+
+			for (int i = listeners.length-2; i >= 0; i -= 2) {
+				if (listeners[i] == TableModelListener.class) {
+					final int index = i;
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							((TableModelListener)listeners[index+1]).tableChanged(new TableModelEvent(source,row,row,TableModelEvent.ALL_COLUMNS,TableModelEvent.DELETE));
+						}
+					});
 				}
-				
 			}
 		}
-		
-		
 	}
 }

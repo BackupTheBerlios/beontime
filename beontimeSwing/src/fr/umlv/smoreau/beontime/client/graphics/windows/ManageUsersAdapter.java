@@ -1,9 +1,11 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -26,7 +28,7 @@ public class ManageUsersAdapter implements TableModel {
 		this.list = new EventListenerList();
 		this.users = new ArrayList(users);
 		
-		model.addBoTListener(new ManageUsersListener());
+		model.addBoTListener(new ManageUsersListener(this));
 	}
 	
 	/* (non-Javadoc)
@@ -68,17 +70,15 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-	   
-		if (rowIndex < users.size()) {
-	    switch(columnIndex) {
-	    	case 0: return ((User)users.get(rowIndex)).getName();
-	    	case 1: return ((User)users.get(rowIndex)).getFirstName();
-	    	case 2: return ((User)users.get(rowIndex)).getEMail();
-	    	}
-		}
-    
-    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
-		
+	    if (rowIndex < users.size()) {
+	        switch(columnIndex) {
+		        case 0: return ((User)users.get(rowIndex)).getName();
+		        case 1: return ((User)users.get(rowIndex)).getFirstName();
+		        case 2: return ((User)users.get(rowIndex)).getEMail();
+	        }
+	    }
+	    
+	    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
 	}
 	
 
@@ -90,7 +90,18 @@ public class ManageUsersAdapter implements TableModel {
 
 
 	public Object getObjectAt(int rowIndex) {
+	    if (rowIndex < 0 || rowIndex >= getRowCount())
+	        return null;
 		return (User)users.get(rowIndex);
+	}
+	
+	public int indexOf(Object obj) {
+	    User user = (User) obj;
+	    for (int i = 0; i < users.size(); ++i) {
+	        if (user.equals(users.get(i)))
+	            return i;
+	    }
+	    return -1;
 	}
 	
 	
@@ -110,19 +121,66 @@ public class ManageUsersAdapter implements TableModel {
 
 
 	private class ManageUsersListener extends DefaultBoTListener {
+	    private TableModel source;
+
+		public ManageUsersListener(TableModel source) {
+			this.source = source;
+		}
+
 	    public void addUser(BoTEvent e) throws InterruptedException {
 	        User user = (User) e.getUser();
-	        //TODO Ajoute la ligne du nouvel utilisateur
+	        users.add(user);
+	        final int row = indexOf(user);
+	        
+	        final Object[] listeners = list.getListenerList();
+
+	        for (int i = listeners.length-2; i >= 0; i -= 2) {
+				if (listeners[i] == TableModelListener.class) {
+					final int index = i;
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							((TableModelListener)listeners[index+1]).tableChanged(new TableModelEvent(source,row,row,TableModelEvent.ALL_COLUMNS,TableModelEvent.INSERT));
+						}
+					});
+				}
+			}
 	    }
 
 	    public void modifyUser(BoTEvent e) throws InterruptedException {
 	        User user = (User) e.getUser();
-	        //TODO Modifie la ligne de l'utilisateur modifié
+	        final int row = indexOf(user);
+
+            final Object[] listeners = list.getListenerList();
+
+			for (int i = listeners.length-2; i >= 0; i -= 2) {
+				if (listeners[i] == TableModelListener.class) {
+					final int index = i;
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							((TableModelListener)listeners[index+1]).tableChanged(new TableModelEvent(source,row,row,2,TableModelEvent.UPDATE));
+						}
+					});
+				}
+			}
 	    }
 	    
 	    public void removeUser(BoTEvent e) throws InterruptedException {
 	        User user = (User) e.getUser();
-	        //TODO Supprime la ligne de l'utilisateur supprimé
+	        final int row = indexOf(user);
+            users.remove(user);
+
+            final Object[] listeners = list.getListenerList();
+
+			for (int i = listeners.length-2; i >= 0; i -= 2) {
+				if (listeners[i] == TableModelListener.class) {
+					final int index = i;
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							((TableModelListener)listeners[index+1]).tableChanged(new TableModelEvent(source,row,row,TableModelEvent.ALL_COLUMNS,TableModelEvent.DELETE));
+						}
+					});
+				}
+			}
 	    }
 	}
 }
