@@ -114,7 +114,8 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		}
 		
 		public void closeTimetable(BoTEvent e) {
-		    //TODO Mohamed: fermer l'emploi du temps => retirer tous les cours ...
+		    //TODO Mohamed: problème de rafraichissement ...
+		    initDataTab();
 		}
 
 		public void addCourse(BoTEvent e) {
