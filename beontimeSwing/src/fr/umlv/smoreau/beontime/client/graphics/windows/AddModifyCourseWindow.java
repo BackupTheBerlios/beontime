@@ -13,7 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import com.toedter.calendar.JDateChooser;
 
 import fr.umlv.smoreau.beontime.client.actions.forms.ButtonPlusListener;
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 /**
  * @author BeOnTime
@@ -77,14 +78,14 @@ public class AddModifyCourseWindow {
 	private JPanel courseEquipmentPanel = new JPanel();
 	private JPanel courseEquipmentPlusPanel = new JPanel();
 	
-	private JFrame AMCWFrame;
+	private JDialog AMCWFrame;
 	private GridBagLayout AMCWLayout = new GridBagLayout();
     private GridBagConstraints layoutConstraints = new GridBagConstraints();
     
     
     public AddModifyCourseWindow () {
     	
-    	AMCWFrame = new JFrame(TITRE);
+    	AMCWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
     	AMCWFrame.getContentPane().setLayout(AMCWLayout);
         
     	initAddModifyCourseWindow();  
@@ -317,7 +318,8 @@ public class AddModifyCourseWindow {
      */
     public void show() {
     	AMCWFrame.pack();
-	    AMCWFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	AMCWFrame.setResizable(false);
+	    AMCWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	    AMCWFrame.setVisible(true);
     }
 
@@ -340,7 +342,10 @@ public class AddModifyCourseWindow {
      	    
 
      public static void main(String[] args){
-     			
+     	
+     	MainFrame frame = MainFrame.getInstance();
+     	frame.open();
+     	
      	AddModifyCourseWindow form = new AddModifyCourseWindow();
      	form.show();
      			

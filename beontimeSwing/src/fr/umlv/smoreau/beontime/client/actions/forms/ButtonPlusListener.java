@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 /**
@@ -17,9 +17,9 @@ public class ButtonPlusListener implements ActionListener {
 	private JPanel ownPanel;
 	private JPanel jcbPanel;
 	
-	private JFrame formFrame;
+	private JDialog formFrame;
 	
-	public ButtonPlusListener(JPanel ownPanel, JPanel jcbPanel, JFrame formFrame) {
+	public ButtonPlusListener(JPanel ownPanel, JPanel jcbPanel, JDialog formFrame) {
 		this.ownPanel = ownPanel;
 		this.jcbPanel = jcbPanel;
 		
