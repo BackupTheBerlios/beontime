@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.edit;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JTree;
@@ -10,24 +11,26 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
  */
-public class EditAdapter implements TreeModel {
+public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 	private BoTModel model;
 	private final EventListenerList list;
 	private JTree tree;
-
+	
 	public EditAdapter(BoTModel model, JTree t) {
+		super (new DefaultMutableTreeNode());
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
 		
-		//TODO pour tester en local
-		/*Timetable timetable = new Timetable();
+		//TO DO pour tester en local
+	/*	Timetable timetable = new Timetable();
 		Formation formation = new Formation();
 		formation.setHeading("DESS CRI");
 		formation.setIdFormation(new Long(1));
@@ -48,7 +51,7 @@ public class EditAdapter implements TreeModel {
 		list.add(subject3);
 		timetable.setSubjects(list);
 		
-		model.setTimetable(timetable);*/
+		model.setTimetable(timetable); */
 		//finTODO
 
 		model.addBoTListener(new EditListener());
@@ -137,26 +140,64 @@ public class EditAdapter implements TreeModel {
 		    model.setTimetable(timetable);
 		    
 		    //TODO rafraîchir l'arbre
+		/*    if (timetable.getFormation() == null)
+		    	System.err.println("pas de formation");
+		    else
+		    	Formation formation = timetable.getFormation();
+		    	*/
+		/*	formation.setHeading("DESS CRI");
+			formation.setIdFormation(new Long(1));
+			timetable.setFormation(formation);
+			
+			Subject subject = new Subject();
+			subject.setHeading("Matière1");
+			subject.setIdSubject(new Long(1));
+			Subject subject2 = new Subject();
+			subject2.setHeading("Matière2");
+			subject2.setIdSubject(new Long(2));
+			Subject subject3 = new Subject();
+			subject3.setHeading("Matière3");
+			subject3.setIdSubject(new Long(3));
+			ArrayList list = new ArrayList();
+			list.add(subject);
+			list.add(subject2);
+			list.add(subject3);
+			timetable.setSubjects(list);
+			*/
+			
+	//		model.setTimetable(timetable);
 		    
-		    //tree.fireTreeExpanded(new TreePath(timetable));
+		  //  tree.fireTreeExpanded(new TreePath(timetable));
+		   // tree.getModel().addTreeModelListener(this);
+//		   tree.getModel().
+		  //  tree.;
+		//    ((DefaultTreeModel) tree.getModel()).nodeStructureChanged(new DefaultMutableTreeNode(tree.getModel().getRoot()));
+		//    ((DefaultTreeModel) tree.getModel()).reload();
+		//    tree.treeDidChange();
+		    tree.updateUI();
 		}
 		
 		public void addSubject(BoTEvent e) {
 		    Subject subject = e.getSubject();
 		    
-		    //TODO ajouter la matière
+		    //TODO ajouter la matière ++
+		    
+		//    ((DefaultTreeModel) tree.getModel()).nodeStructureChanged(new DefaultMutableTreeNode(tree.getModel().getRoot()));
+		    refreshAll(e);
 		}
 		
 		public void modifySubject(BoTEvent e) {
 		    Subject subject = e.getSubject();
 		    
 		    //TODO modifier la matière
+		    refreshAll(e);
 		}
 		
 		public void removeSubject(BoTEvent e) {
 		    Subject subject = e.getSubject();
 		    
 		    //TODO supprimer la matière
+		    refreshAll(e);
 		}
 	}
 }
