@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -67,6 +68,33 @@ public class SearchAvailabilityWindow {
 		initSearchAvailabilityWindow();  
 		
 	}
+	
+	public String getSelectedElement() {
+		
+		if (localJrb.isSelected()) 
+			return "local";
+		else 
+			return "materiel";
+	}
+	
+	public Date getDateAvailability() {
+		return dateAvailability.getDate();
+	}
+	
+	public String getDateAvailabilityString() {
+		return dateAvailability.getDateFormatString();
+	}
+	
+	public String getStartAvailabilityHour() {
+		//je ne sais pas encore sous quelle forme on aura besoin de le reccupérer
+		return null;
+	}
+	
+	public String getEndAvailabilityHour() {
+        //je ne sais pas encore sous quelle forme on aura besoin de le reccupérer
+		return null;
+	}
+	
 	
 	
 	private void initSearchAvailabilityWindow() {
