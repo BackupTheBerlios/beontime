@@ -30,7 +30,7 @@ import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
- * @author BeOnTime
+ * @author NBeOnTime
  */
 public class AddModifySubjectWindow {
 	private static final String TITRE_AJOUTER = "Ajouter une matière";
@@ -404,7 +404,7 @@ public class AddModifySubjectWindow {
     	panel.add(typeCourseLabel);
     	
     
-    	addComponent(layout,layoutConstraints,nbGroupsLabel,6,1,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(7,10,7,10));
+    	addComponent(layout,layoutConstraints,nbGroupsLabel,6,1,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,7,10));
     	panel.add(nbGroupsLabel);
     	
     	
