@@ -33,6 +33,9 @@ public abstract class Dao {
         String f = filter.getHQLQuery();
         if (f.length() != 0)
             f = " where " + f;
+        System.out.println("-> "+f);
+        f = " where id_groupe=90";
+        System.out.println("-> "+f);
         Hibernate.getCurrentSession().delete("from " + databaseName + f);
     }
 

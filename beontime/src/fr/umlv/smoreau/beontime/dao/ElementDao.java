@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.dao;
 
 import java.util.Collection;

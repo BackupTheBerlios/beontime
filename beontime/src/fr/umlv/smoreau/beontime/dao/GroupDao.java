@@ -75,6 +75,7 @@ public class GroupDao extends Dao {
             remove(TABLE, new GroupFilter(group));
             TransactionManager.commit();
         } catch (HibernateException e) {
+            e.printStackTrace();
             System.err.println("Erreur lors de la suppression d'un groupe : " + e.getMessage());
             return false;
         }

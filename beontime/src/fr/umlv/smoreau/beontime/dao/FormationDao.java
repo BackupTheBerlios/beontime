@@ -31,7 +31,8 @@ public class FormationDao {
 		return getFormations(null);
 	}
 	
-	public void modifyFormation(Formation formation) {
+	public boolean modifyFormation(Formation formation) {
 		//TODO à implémenter
+	    return true;
 	}
 }
