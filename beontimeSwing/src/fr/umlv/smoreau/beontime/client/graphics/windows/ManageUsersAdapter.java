@@ -24,7 +24,7 @@ public class ManageUsersAdapter implements TableModel {
 	
 	public ManageUsersAdapter(BoTModel model, Collection users) {
 		this.list = new EventListenerList();
-		users = new ArrayList(users);
+		this.users = new ArrayList(users);
 		
 		model.addBoTListener(new ManageUsersListener());
 	}
