@@ -6,6 +6,8 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.dao.*;
 
 
@@ -94,5 +96,14 @@ public class DaoManager {
     	// juste pour les tests
     	UserDao ud = getUserDao(); 
     	System.out.println(ud.toString());
+    	try {
+            ud.getSecretaries();
+        } catch (RemoteException e) {
+            // TODO Bloc catch auto-généré
+            e.printStackTrace();
+        } catch (HibernateException e) {
+            // TODO Bloc catch auto-généré
+            e.printStackTrace();
+        }
     }
 }

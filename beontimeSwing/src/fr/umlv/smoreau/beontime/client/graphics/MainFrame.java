@@ -81,7 +81,7 @@ public class MainFrame {
         model = new BoTModel();
         titleBar = new TitleBar();
         stateBar = new StateBar();
-        timetableviewpanel = new TimeTableViewPanelBar();
+        timetableviewpanel = new TimeTableViewPanelBar(this);
         edit = new Edit(model, this);
         view = new View(this);
         
@@ -253,6 +253,10 @@ public class MainFrame {
 
 	public JFrame getMainFrame() {
 		return mainFrame;
+	}
+	
+	public BoTModel getModel() {
+	    return model;
 	}
 
 	public void refresh() {
