@@ -104,7 +104,7 @@ public class UnavailabilityDao extends Dao {
             result = get(TABLE_TYPE, null);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des indisponibilités : " + e.getMessage());
+            System.err.println("Erreur lors de la récupération des types d'indisponibilité : " + e.getMessage());
         }
 
 		return result;
@@ -116,7 +116,7 @@ public class UnavailabilityDao extends Dao {
             add(typeUnavailability);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'une indisponibilité : " + e.getMessage());
+            System.err.println("Erreur lors de l'ajout du type d'indisponibilité : " + e.getMessage());
             return false;
         }
         return true;

@@ -1,8 +1,6 @@
 package fr.umlv.smoreau.beontime.model.timetable;
 
 import fr.umlv.smoreau.beontime.model.base.BaseSubject;
-import fr.umlv.smoreau.beontime.model.Formation;
-import fr.umlv.smoreau.beontime.model.user.Person;
 
 /**
  * This is the object class that relates to the Matiere table.
@@ -27,8 +25,8 @@ public class Subject extends BaseSubject {
 	 */
 	public Subject (
 		java.lang.Long _idMatiere,
-		Person _idEnseignant,
-		Formation _idFormation) {
+		java.lang.Long _idEnseignant,
+		java.lang.Long _idFormation) {
 
 		super (
 			_idMatiere,

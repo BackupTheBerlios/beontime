@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.timetable.Subject" table="Matiere">
+	<class name="fr.umlv.smoreau.beontime.model.timetable.Subject" table="matiere">
 		<id
 			column="ID_matiere"
 			name="IdMatiere"
@@ -61,21 +61,17 @@
 			not-null="false"
 			type="integer"
 		 />
-
-		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.user.Person"
+		<property
+			column="id_enseignant"
 			name="IdTeacher"
-			not-null="true"
-		>
-			<column name="ID_enseignant" />
-		</many-to-one>
-		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.Formation"
+			type="java.lang.Long"
+		 />
+		<property
+			column="id_formation"
 			name="IdFormation"
-			not-null="true"
-		>
-			<column name="ID_formation" />
-		</many-to-one>
+			type="java.lang.Long"
+		 />
+
 		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
 			<key column="ID_matiere" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />

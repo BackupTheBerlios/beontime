@@ -33,11 +33,12 @@ public abstract class BaseFormation  implements Serializable {
 
 	// fields
 	private java.lang.String _intitule;
+	private java.lang.Long _idEnseignant;
 
 
 	// many to one
 	private Person _idSecretaire;
-	private Person _idEnseignant;
+
 
 	// collections
 	private java.util.Set _groupeSet;
@@ -63,7 +64,7 @@ public abstract class BaseFormation  implements Serializable {
 	public BaseFormation (
 		java.lang.Long _idFormation,
 		Person _idSecretaire,
-		Person _idEnseignant) {
+		java.lang.Long _idEnseignant) {
 
 		this.setIdFormation(_idFormation);
 		this.setIdSecretaire(_idSecretaire);
@@ -134,7 +135,7 @@ public abstract class BaseFormation  implements Serializable {
      *  column=ID_enseignant
 	 * not-null=true
 	 */
-	public Person getIdTeacher () {
+	public java.lang.Long getIdTeacher () {
 		return this._idEnseignant;
 	}
 
@@ -142,7 +143,7 @@ public abstract class BaseFormation  implements Serializable {
 	 * Set the value related to the column: ID_enseignant
 	 * @param _idEnseignant the ID_enseignant value
 	 */
-	public void setIdTeacher (Person _idEnseignant) {
+	public void setIdTeacher (java.lang.Long _idEnseignant) {
 		this._idEnseignant = _idEnseignant;
 	}
 

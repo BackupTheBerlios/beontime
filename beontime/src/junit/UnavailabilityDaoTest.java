@@ -23,7 +23,7 @@ public class UnavailabilityDaoTest extends TestCase {
         assertNotNull(unavailabilityDao.getUnavailabilities());
     }
     
-    public void testGetTypeUnavailabilities() {
+    public void testGetTypesUnavailability() {
         assertNotNull(unavailabilityDao.getTypesUnavailability());
     }
     

@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.Formation" table="Formation">
+	<class name="fr.umlv.smoreau.beontime.model.Formation" table="formation">
 		<id
 			column="ID_formation"
 			name="IdFormation"
@@ -34,13 +34,13 @@
 		>
 			<column name="ID_secretaire" />
 		</many-to-one>
-		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.user.Person"
+		<property
+			column="id_enseignant"
 			name="IdTeacher"
+			type="java.lang.Long"
 			not-null="true"
-		>
-			<column name="ID_enseignant" />
-		</many-to-one>
+		 />
+
 		<set inverse="true" name="GroupeSet">
 			<key column="ID_formation" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Group" />

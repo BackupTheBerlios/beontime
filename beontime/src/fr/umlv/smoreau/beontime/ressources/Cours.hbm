@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.timetable.Course" table="Cours">
+	<class name="fr.umlv.smoreau.beontime.model.timetable.Course" table="cours">
 		<id
 			column="ID_cours"
 			name="IdCours"

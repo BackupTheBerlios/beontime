@@ -27,7 +27,7 @@ public class Formation extends BaseFormation {
 	public Formation (
 		java.lang.Long _idFormation,
 		Person _idSecretaire,
-		Person _idEnseignant) {
+		java.lang.Long _idEnseignant) {
 
 		super (
 			_idFormation,

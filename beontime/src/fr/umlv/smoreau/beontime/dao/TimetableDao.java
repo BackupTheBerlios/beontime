@@ -18,10 +18,21 @@ import fr.umlv.smoreau.beontime.model.timetable.*;
 public class TimetableDao extends Dao {
     private static final TimetableDao INSTANCE = new TimetableDao();
 
-    private static final String TABLE_COURSE  = "Course";
-    private static final String TABLE_SUBJECT = "Subject";
+    private static final String TABLE_COURSE       = "Course";
+    private static final String TABLE_SUBJECT      = "Subject";
+    private static final String TABLE_TYPE_COURSE  = "TypeCourse";
+    
+    private String[] DEFAULT_TYPES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
 
     private TimetableDao() {
+        Collection types = getTypesCourse();
+        if (types != null && types.size() == 0) {
+            for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
+                TypeCourse type = new TypeCourse();
+                type.setNomTypeCours(DEFAULT_TYPES[i]);
+                addTypeCourse(type);
+            }
+        }
     }
 
     public static TimetableDao getInstance() {
@@ -63,7 +74,7 @@ public class TimetableDao extends Dao {
 		//TODO à implémenter
 		return null;
 	}
-	
+
 	public Collection getCourses() {
 		return getCourses(null);
 	}
@@ -72,63 +83,103 @@ public class TimetableDao extends Dao {
 		return getSubjects(null);
 	}
 	
-	public void addCourse(Course course) {
+	public boolean addCourse(Course course) {
         try {
             TransactionManager.beginTransaction();
             add(course);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'un cours : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void addSubject(Subject subject) {
+	public boolean addSubject(Subject subject) {
         try {
             TransactionManager.beginTransaction();
             add(subject);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'une matière : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void modifyCourse(Course course) {
+	public boolean modifyCourse(Course course) {
         try {
             TransactionManager.beginTransaction();
             modify(course);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la modification d'un cours : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void modifySubject(Subject subject) {
+	public boolean modifySubject(Subject subject) {
         try {
             TransactionManager.beginTransaction();
             modify(subject);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la modification d'une matière : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void removeCourse(Course course) {
+	public boolean removeCourse(Course course) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE_COURSE, new CourseFilter(course));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'un cours : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void removeSubject(Subject subject) {
+	public boolean removeSubject(Subject subject) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE_SUBJECT, new SubjectFilter(subject));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'une matière : " + e.getMessage());
+            return false;
         }
+        return true;
+	}
+
+
+	public Collection getTypesCourse() {
+	    Collection result = null;
+
+        try {
+            Session session = Hibernate.getCurrentSession();
+            TransactionManager.beginTransaction();
+            result = get(TABLE_TYPE_COURSE, null);
+            TransactionManager.commit();
+        } catch (HibernateException e) {
+            System.err.println("Erreur lors de la récupération des types de cours : " + e.getMessage());
+        }
+
+		return result;
+	}
+	
+	private boolean addTypeCourse(TypeCourse typeCourse) {
+        try {
+            TransactionManager.beginTransaction();
+            add(typeCourse);
+            TransactionManager.commit();
+        } catch (HibernateException e) {
+            System.err.println("Erreur lors de l'ajout du type de cours : " + e.getMessage());
+            return false;
+        }
+        return true;
 	}
 }
