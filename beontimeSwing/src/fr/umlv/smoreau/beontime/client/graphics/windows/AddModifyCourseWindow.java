@@ -428,20 +428,6 @@ public class AddModifyCourseWindow {
 		}
 		
 	}
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
-	 */
-	public void show() {
-		AMCWFrame.pack();
-		AMCWFrame.setResizable(false);
-		AMCWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		AMCWFrame.setVisible(true);
-	}
-	
-	
 	private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
 		
 		constraints. gridx= gridx;
@@ -468,5 +454,52 @@ public class AddModifyCourseWindow {
 		form.show();
 		
 	}
-	
+
+    public void show() {
+    	AMCWFrame.pack();
+    	AMCWFrame.setResizable(false);
+	    AMCWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	    AMCWFrame.setVisible(true);
+    }
+    public void setStartHour(int start){
+    	startCourseHourJcb.setSelectedIndex((start/4)+8);
+    	Double d_start=new Double(start);
+    	Double d=new Double(Math.IEEEremainder(d_start.doubleValue(),4.0));
+    	startCourseMinuteJcb.setSelectedIndex(d.intValue()*15);
+    }
+    public void setEndHour(int end){
+    	endCourseHourJcb.setSelectedIndex((end/4)+8);
+    	Double e_start=new Double(end);
+    	Double e=new Double(Math.IEEEremainder(e_start.doubleValue(),4.0));
+    	endCourseMinuteJcb.setSelectedIndex((e.intValue()+1)*15);
+    }
+    public int getStartHour(){
+    	
+    	int ind_hour=startCourseHourJcb.getSelectedIndex();
+    	int ind_min=startCourseMinuteJcb.getSelectedIndex();
+    	int ret;
+    	if (ind_hour>7){
+    		ret=(ind_hour-8)*4;
+    	}
+    	else{
+    		ret=0;
+    	}
+    	ret=ret+(ind_min/15);
+    	return ret;
+    	
+    }
+    public int getEndHour(){
+    	int ind_hour=endCourseHourJcb.getSelectedIndex();
+    	int ind_min=endCourseMinuteJcb.getSelectedIndex();
+    	int ret;
+    	if (ind_hour>7){
+    		ret=(ind_hour-8)*4;
+    	}
+    	else{
+    		ret=0;
+    	}
+    	ret=ret+(ind_min/15)-1;
+    	return ret;
+    }
+
 }

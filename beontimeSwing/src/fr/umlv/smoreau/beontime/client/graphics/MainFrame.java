@@ -25,7 +25,6 @@ import fr.umlv.smoreau.beontime.client.graphics.parts.StateBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
-import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.MultiSpanCellTable;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.View;
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -173,7 +172,7 @@ public class MainFrame {
 		return view;
     }
 
-    public AttributiveCellTableModel getTableModel(){
+    public fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel getTableModel(){
 		return view.getTableModel();
     }
 
