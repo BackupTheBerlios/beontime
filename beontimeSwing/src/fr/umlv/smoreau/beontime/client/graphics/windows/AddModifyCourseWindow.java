@@ -111,7 +111,7 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(dureeCourseDeLabel);
     	
     	startCourseHourJcb = new JComboBox();
-    	initCourseHourJcb(startCourseHourJcb);
+    	initNumberJcb(startCourseHourJcb, 0, 23);
     	addComponent(AMCWLayout,layoutConstraints,startCourseHourJcb,2,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(startCourseHourJcb);
     	
@@ -124,7 +124,7 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(dureeCourseALabel);
     	
     	endCourseHourJcb = new JComboBox();
-    	initCourseHourJcb(endCourseHourJcb);
+    	initNumberJcb(endCourseHourJcb, 0, 23);
     	addComponent(AMCWLayout,layoutConstraints,endCourseHourJcb,5,3,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(endCourseHourJcb);
     	
@@ -135,7 +135,7 @@ public class AddModifyCourseWindow {
     	
     	
     	startCourseMinuteJcb = new JComboBox();
-    	initCourseMinuteJcb(startCourseMinuteJcb);
+    	initMinuteJcb(startCourseMinuteJcb);
     	addComponent(AMCWLayout,layoutConstraints,startCourseMinuteJcb,2,4,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(startCourseMinuteJcb);
     	
@@ -144,7 +144,7 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(startCourseMinuteLabel);
     	
     	endCourseMinuteJcb = new JComboBox();
-    	initCourseMinuteJcb(endCourseMinuteJcb);
+    	initMinuteJcb(endCourseMinuteJcb);
     	addComponent(AMCWLayout,layoutConstraints,endCourseMinuteJcb,5,4,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(endCourseMinuteJcb);
     	
@@ -174,7 +174,7 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(repeatCourseLabel);
     	
     	repeatCourseJcb = new JComboBox();
-    	initRepeatCourseJcb(repeatCourseJcb);
+    	initNumberJcb(repeatCourseJcb, 1, 30);
     	addComponent(AMCWLayout,layoutConstraints,repeatCourseJcb,6,6,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(repeatCourseJcb);
    
@@ -245,14 +245,14 @@ public class AddModifyCourseWindow {
     }
 
 
-    private void initCourseHourJcb(JComboBox jcb) {
+    private void initNumberJcb(JComboBox jcb, int start, int end) {
 
-    	for(int i=0;i<24;i++) {
+    	for(int i=start;i<=end;i++) {
     		jcb.addItem(""+i);
     	}
     }
     
-    private void initCourseMinuteJcb(JComboBox jcb) {
+    private void initMinuteJcb(JComboBox jcb) {
 
     	for(int i=0;i<10;i++) {
     		jcb.addItem("0"+i);
@@ -262,12 +262,7 @@ public class AddModifyCourseWindow {
     	}
 
     }
-    private void initRepeatCourseJcb(JComboBox jcb) {
-
-    	for(int i=1;i<=30;i++) {
-    		jcb.addItem(""+i);
-    	}
-    }
+   
 	
 	
     /* (non-Javadoc)
