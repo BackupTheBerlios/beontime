@@ -3,6 +3,8 @@ package fr.umlv.smoreau.beontime.client.actions.timetable;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.KeyStroke;
+
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -15,10 +17,11 @@ public class ShowTimetableByWeek extends Action{
 	private static final String NAME = "Afficher l'emploi du temps par semaine";
     private static final String ICON = "affiche_semestre.png";
     private static final String SMALL_ICON = "affiche_semestre_small.png";
+    private static final String KEY_STROKE = "F8";
 
 
     public ShowTimetableByWeek(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
     
     /* (non-Javadoc)

@@ -7,6 +7,7 @@ import java.security.SecureRandom;
 import java.util.Collection;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import net.sf.hibernate.HibernateException;
 
@@ -21,8 +22,8 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class AddUser extends Action {
-    protected AddUser(String name, String smallIcon, String icon, MainFrame mainFrame, String type) {
-        super(name, smallIcon, icon, mainFrame);
+    protected AddUser(String name, String smallIcon, String icon, KeyStroke keyStroke, MainFrame mainFrame, String type) {
+        super(name, smallIcon, icon, keyStroke, mainFrame);
         this.type = type;
     }
 

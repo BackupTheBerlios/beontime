@@ -3,6 +3,7 @@ package fr.umlv.smoreau.beontime.client.actions.timetable.course;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -19,10 +20,11 @@ public class RemoveCourse extends Action {
     private static final String NAME = "Supprimer le cours";
     private static final String ICON = "supprimer_cours.png";
     private static final String SMALL_ICON = "supprimer_cours_small.png";
+    private static final String KEY_STROKE = "DELETE";
 
 
     public RemoveCourse(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
 
     

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.Calendar;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import fr.umlv.smoreau.beontime.client.BoTConfig;
 import fr.umlv.smoreau.beontime.client.actions.Action;
@@ -26,10 +27,11 @@ public class ViewTimetable extends Action{
     private static final String NAME = "Visualiser un emploi du temps";
     private static final String ICON = "visualiser_emploi.png";
     private static final String SMALL_ICON = "visualiser_emploi_small.png";
+    private static final String KEY_STROKE = "ctrl O";
 
 
     public ViewTimetable(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
 
     

@@ -3,6 +3,7 @@ package fr.umlv.smoreau.beontime.client.actions.timetable.course;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import fr.umlv.smoreau.beontime.client.ClipboardManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
@@ -20,10 +21,11 @@ public class CutCourse extends Action {
     private static final String NAME = "Couper le cours";
     private static final String ICON = "couper.png";
     private static final String SMALL_ICON = "couper_small.png";
+    private static final String KEY_STROKE = "ctrl X";
 
 
     public CutCourse(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
 
     

@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -29,10 +30,11 @@ public class AddCourse extends Action {
     private static final String NAME = "Placer un cours";
 	private static final String ICON = "ajouter_cours.png";
 	private static final String SMALL_ICON = "ajouter_cours_small.png";
+	private static final String KEY_STROKE = "ctrl K";
 
 
     public AddCourse(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
 
     

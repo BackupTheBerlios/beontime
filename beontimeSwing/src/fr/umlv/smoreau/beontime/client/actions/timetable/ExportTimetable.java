@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 
@@ -48,10 +49,11 @@ public class ExportTimetable extends Action {
 	private static final String NAME = "Exporter l'emploi du temps";
 	private static final String ICON = "exporter.png";
 	private static final String SMALL_ICON = "exporter_small.png";
+	private static final String KEY_STROKE = "ctrl E";
 	
 	
 	public ExportTimetable(MainFrame mainFrame) {
-		super(NAME, SMALL_ICON, ICON, mainFrame);
+		super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
 	}
 	
 	

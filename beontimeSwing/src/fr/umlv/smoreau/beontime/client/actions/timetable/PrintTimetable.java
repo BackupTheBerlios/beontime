@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 
 
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -20,10 +21,11 @@ public class PrintTimetable extends Action {
     private static final String NAME = "Imprimer l'emploi du temps";
     private static final String ICON = "imprimer.png";
     private static final String SMALL_ICON = "imprimer_small.png";
+    private static final String KEY_STROKE = "ctrl P";
 
 
     public PrintTimetable(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
 
     

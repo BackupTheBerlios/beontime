@@ -3,6 +3,7 @@ package fr.umlv.smoreau.beontime.client.actions.element;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -18,10 +19,11 @@ public class AddRoom extends Action {
     private static final String NAME = "Ajouter un local";
     private static final String ICON = "ajouter_local.png";
     private static final String SMALL_ICON = "ajouter_local_small.png";
+    private static final String KEY_STROKE = "ctrl L";
 
 
     public AddRoom(MainFrame mainFrame) {
-        super(NAME, SMALL_ICON, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, KeyStroke.getKeyStroke(KEY_STROKE), mainFrame);
     }
 
     
