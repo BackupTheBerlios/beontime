@@ -21,7 +21,7 @@ public class ViewTimetable extends Action{
         // TODO Raccord de méthode auto-généré
 
     }
-	public static javax.swing.Action getViewTimetableAction(){
+	public static javax.swing.Action getAction(){
 		AbstractAction vtta=new AbstractAction("View TimeTable",getImage("resources/.gif")) {
 			public void actionPerformed(ActionEvent e) {
 
