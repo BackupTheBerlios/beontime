@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import com.toedter.calendar.JDateChooser;
@@ -35,9 +36,14 @@ public class AddModifyUnavailabilityWindow {
 	private JLabel subjectUnavailabilityLabel;
 	private JLabel descriptionLabel;
 	
-	private JLabel theLabel;
-	private JLabel hourLabel;
-	private JLabel minuteLabel;
+	private JLabel startUnavailabilitTheLabel;
+	private JLabel startUnavailabilitHourLabel;
+	private JLabel startUnavailabilitMinuteLabel;
+	private JLabel endUnavailabilitTheLabel;
+	private JLabel endUnavailabilitHourLabel;
+	private JLabel endUnavailabilitMinuteLabel;
+	
+	
 	private JLabel weeksLabel;
 	
 	private JDateChooser startUnavailabilitDate;
@@ -64,7 +70,7 @@ public class AddModifyUnavailabilityWindow {
     
     public AddModifyUnavailabilityWindow() {
     	
-    	AMUWFrame = new JFrame();
+    	AMUWFrame = new JFrame(TITRE);
     	AMUWFrame.getContentPane().setLayout(AMUWLayout);
         
     	initAddModifyUnavailabilityWindow();  
@@ -76,87 +82,107 @@ public class AddModifyUnavailabilityWindow {
     	
     	
     	startUnavailabilityLabel = new JLabel("Début d'indisponibilité :");
-    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilityLabel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,0,10));
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilityLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
     	AMUWFrame.getContentPane().add(startUnavailabilityLabel);
     	
     	startUnavailabilitHourJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitHourJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+    	initUnavailabilitHourJcb(startUnavailabilitHourJcb);
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitHourJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
     	AMUWFrame.getContentPane().add(startUnavailabilitHourJcb);
     	
-    	hourLabel = new JLabel("heure");
-    	addComponent(AMUWLayout,layoutConstraints,hourLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
-    	AMUWFrame.getContentPane().add(hourLabel);
+    	startUnavailabilitHourLabel = new JLabel("heure");
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitHourLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,0,10));
+    	AMUWFrame.getContentPane().add(startUnavailabilitHourLabel);
     	
-    	theLabel = new JLabel("le");
-    	addComponent(AMUWLayout,layoutConstraints,theLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
-    	AMUWFrame.getContentPane().add(theLabel);
+    	startUnavailabilitTheLabel = new JLabel("le");
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitTheLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	AMUWFrame.getContentPane().add(startUnavailabilitTheLabel);
+    	
+    	startUnavailabilitDate = new JDateChooser();
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitDate,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	AMUWFrame.getContentPane().add(startUnavailabilitDate);
     	
     	startUnavailabilitMinuteJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitMinuteJcb,GridBagConstraints.RELATIVE,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,10,10));
+    	initUnavailabilityMinuteJcb(startUnavailabilitMinuteJcb);
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitMinuteJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,10,10));
     	AMUWFrame.getContentPane().add(startUnavailabilitMinuteJcb);
     	
-    	minuteLabel = new JLabel("min");
-    	addComponent(AMUWLayout,layoutConstraints,minuteLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
-    	AMUWFrame.getContentPane().add(minuteLabel);
+    	startUnavailabilitMinuteLabel = new JLabel("min");
+    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilitMinuteLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+    	AMUWFrame.getContentPane().add(startUnavailabilitMinuteLabel);
     	
     	
     	
     	
     	endUnavailabilityLabel = new JLabel("Fin d'indisponibilité :");
-    	addComponent(AMUWLayout,layoutConstraints,startUnavailabilityLabel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,0,10));
-    	AMUWFrame.getContentPane().add(startUnavailabilityLabel);
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilityLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	AMUWFrame.getContentPane().add(endUnavailabilityLabel);
     	
     	endUnavailabilitHourJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitHourJcb,GridBagConstraints.RELATIVE,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+    	initUnavailabilitHourJcb(endUnavailabilitHourJcb);
+    	endUnavailabilitHourJcb.setSelectedIndex(23); 
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitHourJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
     	AMUWFrame.getContentPane().add(endUnavailabilitHourJcb);
     	
-    	addComponent(AMUWLayout,layoutConstraints,hourLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
-    	AMUWFrame.getContentPane().add(hourLabel);
+    	endUnavailabilitHourLabel = new JLabel("heure");
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitHourLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,0,10));
+    	AMUWFrame.getContentPane().add(endUnavailabilitHourLabel);
     	
-    	addComponent(AMUWLayout,layoutConstraints,theLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
-    	AMUWFrame.getContentPane().add(theLabel);
+    	endUnavailabilitTheLabel = new JLabel("le");
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitTheLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	AMUWFrame.getContentPane().add(endUnavailabilitTheLabel);
+    	
+    	endUnavailabilitDate = new JDateChooser();
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitDate,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	AMUWFrame.getContentPane().add(endUnavailabilitDate);
     	
     	endUnavailabilitMinuteJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitMinuteJcb,GridBagConstraints.RELATIVE,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,10,10));
+    	initUnavailabilityMinuteJcb(endUnavailabilitMinuteJcb);
+    	endUnavailabilitMinuteJcb.setSelectedIndex(45); 
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitMinuteJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,20,10));
     	AMUWFrame.getContentPane().add(endUnavailabilitMinuteJcb);
     	
-    	addComponent(AMUWLayout,layoutConstraints,minuteLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
-    	AMUWFrame.getContentPane().add(minuteLabel);
+    	endUnavailabilitMinuteLabel = new JLabel("min");
+    	addComponent(AMUWLayout,layoutConstraints,endUnavailabilitMinuteLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,20,10));
+    	AMUWFrame.getContentPane().add(endUnavailabilitMinuteLabel);
     	
     	
     	
     	
     	repeatUnavailabilityLabel = new JLabel("Répéter cette indisponibilité sur");
-    	addComponent(AMUWLayout,layoutConstraints,repeatUnavailabilityLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+    	addComponent(AMUWLayout,layoutConstraints,repeatUnavailabilityLabel,3,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,20,10));
     	AMUWFrame.getContentPane().add(repeatUnavailabilityLabel);
     	
     	repeatUnavailabilityJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,repeatUnavailabilityJcb,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+    	addComponent(AMUWLayout,layoutConstraints,repeatUnavailabilityJcb,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
     	AMUWFrame.getContentPane().add(repeatUnavailabilityJcb);
     	
     	weeksLabel = new JLabel("semaines");
-    	addComponent(AMUWLayout,layoutConstraints,weeksLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+    	addComponent(AMUWLayout,layoutConstraints,weeksLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,20,10));
     	AMUWFrame.getContentPane().add(weeksLabel);
     	
     	
     	
     	typeUnavailabilityLabel = new JLabel("Type d'indisponibilité :");
-    	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+    	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
     	AMUWFrame.getContentPane().add(typeUnavailabilityLabel);
     	
     	typeUnavailabilityJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityJcb,GridBagConstraints.RELATIVE,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+    	typeUnavailabilityJcb.addItem("Enseignant");
+    	typeUnavailabilityJcb.addItem("Etudiant");
+    	typeUnavailabilityJcb.addItem("Cours");
+    	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
     	AMUWFrame.getContentPane().add(typeUnavailabilityJcb);
     	
     	
     	
     	subjectUnavailabilityLabel = new JLabel("<type> indisponible :");
-    	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
-    	AMUWFrame.getContentPane().add(typeUnavailabilityLabel);
+    	addComponent(AMUWLayout,layoutConstraints,subjectUnavailabilityLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+    	AMUWFrame.getContentPane().add(subjectUnavailabilityLabel);
     	
-    	typeUnavailabilityJcb = new JComboBox();
-    	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityJcb,GridBagConstraints.RELATIVE,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
-    	AMUWFrame.getContentPane().add(typeUnavailabilityJcb);
+    	SubjectUnavailabilityJcb = new JComboBox();
+    	addComponent(AMUWLayout,layoutConstraints,SubjectUnavailabilityJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+    	AMUWFrame.getContentPane().add(SubjectUnavailabilityJcb);
     	
     	
 
@@ -166,13 +192,41 @@ public class AddModifyUnavailabilityWindow {
     	
     	
     	descriptionTextArea = new JTextArea();
-    	addComponent(AMUWLayout,layoutConstraints,descriptionTextArea,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
-    	AMUWFrame.getContentPane().add(descriptionTextArea);
+    	descriptionTextArea.setLineWrap(true);
+    	descriptionTextArea.setRows(4);
+    	JScrollPane pane= new JScrollPane(descriptionTextArea);
+    	addComponent(AMUWLayout,layoutConstraints,pane,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,20,10));
+    	AMUWFrame.getContentPane().add(pane);
     	
+    	
+    	ok = new JButton("OK");
+		addComponent(AMUWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(ok);
+		
+		annuler = new JButton("Annuler");
+		addComponent(AMUWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		AMUWFrame.getContentPane().add(annuler);
     	
     }
 
 
+    private void initUnavailabilitHourJcb(JComboBox jcb) {
+
+    	for(int i=0;i<24;i++) {
+    		jcb.addItem(""+i);
+    	}
+    }
+    
+    private void initUnavailabilityMinuteJcb(JComboBox jcb) {
+
+    	for(int i=0;i<10;i++) {
+    		jcb.addItem("0"+i);
+    	}
+    	for(int i=10;i<=60;i++) {
+    		jcb.addItem(""+i);
+    	}
+
+    }
     
     /* (non-Javadoc)
      * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
