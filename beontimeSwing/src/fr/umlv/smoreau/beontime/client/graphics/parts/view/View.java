@@ -42,7 +42,8 @@ public class View {
     	mainFrame=mainframe;
     	this.model = model;
     	init();
-    	final PopupMenu popupMenu = new PopupMenu(null);
+    	final PopupMenu popupMenuAdd = new PopupMenu(null);
+    	final PopupMenu popupMenuModify = new PopupMenu(new Course());
 		table.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				Point p = new Point(e.getX(), e.getY());
@@ -56,9 +57,12 @@ public class View {
 
 				// Popup Menus
 				if (e.getButton() == MouseEvent.BUTTON3 && model.getTimetable() != null) {
-					table.changeSelection(row, column, false, false);
-					if (object != null)
-						popupMenu.show(e.getComponent(), e.getX(), e.getY());
+					if (object != null) {
+					    table.changeSelection(row, column, false, false);
+						popupMenuModify.show(e.getComponent(), e.getX(), e.getY());
+					} else {
+					    popupMenuAdd.show(e.getComponent(), e.getX(), e.getY());
+					}
 				}
 			}
 			public void mousePressed(MouseEvent e) {
@@ -164,15 +168,21 @@ public class View {
     public JScrollPane getJScrollPane() {
 		return jScrollPane;
 	}
+
 	private static class PopupMenu extends JPopupMenu {
-	    private Object selected;
-	    
 	    public PopupMenu(Object object) {
 	        super();
-            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("ModifyCourse"));
-			add(menuItem);
-			menuItem = new JMenuItem(ActionsList.getAction("RemoveCourse"));
-			add(menuItem);
+	        if (object == null) {
+	            add(new JMenuItem(ActionsList.getAction("PasteCourse")));
+	            addSeparator();
+	            add(new JMenuItem(ActionsList.getAction("AddCourse")));
+	        } else {
+	            add(new JMenuItem(ActionsList.getAction("CutCourse")));
+	            add(new JMenuItem(ActionsList.getAction("CopyCourse")));
+	            addSeparator();
+	            add(new JMenuItem(ActionsList.getAction("ModifyCourse")));
+	            add(new JMenuItem(ActionsList.getAction("RemoveCourse")));
+	        }
 	    }
 	}
 
