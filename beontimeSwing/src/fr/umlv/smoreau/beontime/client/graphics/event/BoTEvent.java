@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.event;
 
 import java.util.EventObject;
@@ -30,5 +27,17 @@ public class BoTEvent extends EventObject {
 	public BoTEvent(Object source, Subject subject) {
 		super(source);
 		this.subject = subject;
+	}
+	
+	public Timetable getTimetable() {
+	    return timetable;
+	}
+	
+	public Course getCourse() {
+	    return course;
+	}
+	
+	public Subject getSubject() {
+	    return subject;
 	}
 }

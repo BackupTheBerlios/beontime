@@ -23,6 +23,10 @@ import javax.swing.JPanel;
 import com.toedter.calendar.JDateChooser;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
+import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 
 /**
@@ -43,8 +47,7 @@ public class TitleBar extends JPanel {
 	 
 	
 	
-	public TitleBar() {
-		
+	public TitleBar(BoTModel model) {
 		titleBarPanel.setLayout(new BorderLayout());
 		
 		initTitleBarPanel();
@@ -54,6 +57,7 @@ public class TitleBar extends JPanel {
 		titleBarPanel.add(intitleLabel, BorderLayout.CENTER);
 		titleBarPanel.add(periodPanel, BorderLayout.EAST);
     
+		model.addBoTListener(new TitleBarListener(this));
 	}
 	
 	
@@ -93,8 +97,8 @@ public class TitleBar extends JPanel {
 	
 	private void initTitleBarPanel() {
 		
-		responsibleLabel = new JLabel("Responsable");
-		intitleLabel = new JLabel("Intitule");
+		responsibleLabel = new JLabel("");
+		intitleLabel = new JLabel("");
 		initPeriodPanel();
 		
 	}
@@ -168,4 +172,19 @@ public class TitleBar extends JPanel {
         gbLayout.setConstraints(comp,constraints);
     }
 	
+	
+	private class TitleBarListener extends DefaultBoTListener {
+	    private JPanel panel;
+
+	    public TitleBarListener(JPanel panel) {
+	        this.panel = panel;
+	    }
+
+		public void refreshAll(BoTEvent e) {
+		    Timetable timetable = e.getTimetable();
+		    intitleLabel.setText(timetable.getFormation().getHeading());
+		    responsibleLabel.setText(timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
+		    panel.validate();
+		}
+	}
 }

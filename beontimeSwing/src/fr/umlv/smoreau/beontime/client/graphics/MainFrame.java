@@ -79,7 +79,7 @@ public class MainFrame {
      */
     public void initMainFrame() {
         model = new BoTModel();
-        titleBar = new TitleBar();
+        titleBar = new TitleBar(model);
         stateBar = new StateBar();
         timetableviewpanel = new TimeTableViewPanelBar(this);
         edit = new Edit(model, this);

@@ -32,6 +32,7 @@ public class TimeTableViewPanelBar extends JPanel {
 	private JLabel visuEDTLabel;
 	private JComboBox jcbTypeEDT;
 	private JComboBox jcbSubjectEDT;
+	private JComboBox jcbGroupEDT;
 	
 	private static final String TYPE_VIDE = "";
 	private static final String TYPE_FORMATION = "Formation";
@@ -57,36 +58,15 @@ public class TimeTableViewPanelBar extends JPanel {
 		jcbTypeEDT.addItem("Groupe");
 		jcbTypeEDT.addItem("Local");
 		jcbTypeEDT.addItem("Materiel");
-		jcbTypeEDT.addItemListener(new ItemListener(){
-			
-			public void itemStateChanged(ItemEvent e) {
-				System.out.println(""+getComponentCount());
-				if (((String)((JComboBox)e.getSource()).getSelectedItem()).compareTo("Groupe") == 0) {
-					
-					
-					JComboBox jcbBox = new JComboBox(); 
-					
-					addComponent(visuEDTPanelLayout,layoutConstraints,jcbBox,1,4,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
-					add(jcbBox);
-					MainFrame.getInstance().getMainFrame().validate();
-				}
-				
-				else {
-					JPanel p = new JPanel();
-					if(getComponentCount() > 3) {
-						remove(3);
-						MainFrame.getInstance().getMainFrame().validate();
-					}
-				}
-			}
-			
-		});
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,2,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,5,10));
+		jcbTypeEDT.addItemListener(new ItemListenerType(this));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,2,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,5,10));
 		add(jcbTypeEDT);
 		jcbSubjectEDT = new JComboBox();
 		jcbSubjectEDT.addItemListener(new ItemListenerSubject());
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,1,3,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,2,2,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
 		add(jcbSubjectEDT);
+		jcbGroupEDT = new JComboBox(); 
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,2,3,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
 	}
 	
 	private static void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
@@ -106,10 +86,20 @@ public class TimeTableViewPanelBar extends JPanel {
 	}
 	
 	private class ItemListenerType implements ItemListener {
+	    private JPanel panel;
+
+	    public ItemListenerType(JPanel panel) {
+	        this.panel = panel;
+	    }
+
 		public void itemStateChanged(ItemEvent event) {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				jcbSubjectEDT.removeAllItems();
 				try {
+				    if (panel.getComponentCount() > 3) {
+						remove(3);
+						panel.validate();
+				    }
 					if (TYPE_FORMATION.equals(event.getItem())) {
 						Collection formations = DaoManager.getFormationDao().getFormations();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
@@ -145,6 +135,8 @@ public class TimeTableViewPanelBar extends JPanel {
 							Formation formation = (Formation) i.next();
 							jcbSubjectEDT.addItem(new Item(formation.getHeading(), formation.getIdFormation()));
 						}
+						add(jcbGroupEDT);
+						panel.validate();
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
