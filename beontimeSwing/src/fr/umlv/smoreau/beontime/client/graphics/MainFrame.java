@@ -101,8 +101,10 @@ public class MainFrame {
         Border beveledBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(153, 204, 255), new Color(204, 204, 255));
 		titleBar.setBorder(beveledBorder);
 		
+
         splitPaneHorizontal.setLeftComponent(edit.getPane());
-        splitPaneHorizontal.setRightComponent(view);
+        splitPaneHorizontal.setRightComponent(view.getJScrollPane());
+
         splitPaneHorizontal.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         splitPaneHorizontal.setDividerLocation((int)(WIDTH*0.15));
         splitPaneHorizontal.setDividerSize(6);
