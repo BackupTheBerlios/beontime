@@ -1,31 +1,45 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client;
+/* DESS CRI - BeOnTime - timetable project */
 
 
 /**
- * @author BeOnTime
+ * @author BeOnTime team
  */
 public class DaoManager {
+	private static String host="localhost";
+	//TODO gerer une ip fixe ? en param ? en properties ?
 /*	private static final AvailabilityDao availabilityDao;
 	private static final DatabaseDao databaseDao;
 	private static final ElementDao elementDao;
 	private static final FormationDao formationDao;
 	private static final GroupDao groupDao;
 	private static final TimetableDao timetableDao;
-	private static final UserDao userDao;
-	
-	static {
+//	private static final UserDao userDao;
+	private static UserDao userDao;
+		static {
 		availabilityDao = null;
 		databaseDao = null;
 		elementDao = null;
 		formationDao = null;
 		groupDao = null;
 		timetableDao = null;
-		userDao = null;
+		//userDao = null;
+		try {
+			userDao = (UserDao) Naming.lookup("rmi://"+host+"/UserDao");
+		} catch (MalformedURLException e) {
+			System.err.println("pb RMI");
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			System.err.println("pb RMI");
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			System.err.println("pb RMI");
+			e.printStackTrace();
+		} 
 	}
+
 */
+	
 	
     /**
      * @return Renvoie availabilityDao.
@@ -69,4 +83,11 @@ public class DaoManager {
 /*    public static UserDao getUserDao() {
         return userDao;
     }*/
+
+    /** un main juste pour tester un client RMI */
+    public static void main (String[] args) {
+    	// juste pour les tests
+ //   	UserDao ud = getUserDao(); // ça plante
+    	//TODO - importer le stub et l'interface dans un paquetage visible
+    }
 }

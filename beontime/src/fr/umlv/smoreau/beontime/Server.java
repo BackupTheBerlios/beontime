@@ -1,7 +1,5 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime;
+/* DESS CRI - BeOnTime - timetable project */
 
 
 import java.net.InetAddress;
@@ -11,7 +9,8 @@ import fr.umlv.smoreau.beontime.dao.UserDaoImpl;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
- * @author BeOnTime
+ * The main class to run the server
+ * @author BeOnTime team 
  */
 public class Server {
 	
