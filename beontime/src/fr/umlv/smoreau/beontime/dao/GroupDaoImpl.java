@@ -146,7 +146,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
             Set p = group.getStudents();
             if (p != null) {
 	            for (Iterator i = p.iterator(); i.hasNext(); ) {
-	                BelongStudentGroup belong = new BelongStudentGroup(((User)i.next()).getIdUser(), group);
+	                BelongStudentGroup belong = (BelongStudentGroup) i.next();
 	                remove(TABLE_BELONG, new _BelongStudentGroupFilter(belong), session);
 	            }
             }

@@ -586,7 +586,7 @@ public class AddModifySubjectWindow {
     }
     
     public void setNbMagGroups(Integer value) {
-        if (value.intValue() > 0)
+        if (value.intValue() > 0 && nbGroupsMag != null)
             nbGroupsMag.setSelectedItem(value.toString());
     }
     
@@ -597,7 +597,7 @@ public class AddModifySubjectWindow {
     }
     
     public void setNbTdGroups(Integer value) {
-        if (value.intValue() > 0)
+        if (value.intValue() > 0 && nbGroupsTd != null)
             nbGroupsTd.setSelectedItem(value.toString());
     }
     
@@ -608,7 +608,7 @@ public class AddModifySubjectWindow {
     }
     
     public void setNbTpGroups(Integer value) {
-        if (value.intValue() > 0)
+        if (value.intValue() > 0 && nbGroupsTp != null)
             nbGroupsTp.setSelectedItem(value.toString());
     }
     

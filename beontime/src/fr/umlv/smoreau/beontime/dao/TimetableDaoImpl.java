@@ -4,6 +4,7 @@ package fr.umlv.smoreau.beontime.dao;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -235,6 +236,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
                     IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) j.next();
                     tmp.addTeacher(userDao.getUser(new User(isDirected.getIdTeacher()), null));
                 }
+                if (tmp.getTeachers() == null)
+                    tmp.setTeachers(new HashSet());
             }
 
             return timetable;

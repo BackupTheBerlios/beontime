@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
+import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
@@ -46,6 +48,13 @@ public class RemoveSubject extends Action {
                         return;
                     for (Iterator i = courses.iterator(); i.hasNext(); ) {
                         Course course = (Course) i.next();
+                        course = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_GROUPS_SUBJECTS, TimetableDao.JOIN_TEACHERS_DIRECTING});
+
+                        // suppression des indisponibilités qui en découlent
+                        UnavailabilityFilter filter = new UnavailabilityFilter();
+                        filter.setIdCourse(course.getIdCourse());
+                        DaoManager.getAvailabilityDao().removeUnavailability(filter);
+                        
                         DaoManager.getTimetableDao().removeCourse(course);
                     }
                 }
