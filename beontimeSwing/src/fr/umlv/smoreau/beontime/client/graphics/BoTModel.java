@@ -4,6 +4,8 @@ import javax.swing.event.EventListenerList;
 
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTListener;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
@@ -111,6 +113,42 @@ public class BoTModel {
 				    ((BoTListener) listeners[i + 1]).modifyUser(event);
 				else if (type == TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeUser(event);
+			}
+		}
+	}
+	
+	public void fireRefreshRoom(Room room, int type) throws InterruptedException {
+	    BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this, room);
+				if (type == TYPE_ADD)
+				    ((BoTListener) listeners[i + 1]).addRoom(event);
+				else if (type == TYPE_MODIFY)
+				    ((BoTListener) listeners[i + 1]).modifyRoom(event);
+				else if (type == TYPE_REMOVE)
+				    ((BoTListener) listeners[i + 1]).removeRoom(event);
+			}
+		}
+	}
+	
+	public void fireRefreshMaterial(Material material, int type) throws InterruptedException {
+	    BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this, material);
+				if (type == TYPE_ADD)
+				    ((BoTListener) listeners[i + 1]).addMaterial(event);
+				else if (type == TYPE_MODIFY)
+				    ((BoTListener) listeners[i + 1]).modifyMaterial(event);
+				else if (type == TYPE_REMOVE)
+				    ((BoTListener) listeners[i + 1]).removeMaterial(event);
 			}
 		}
 	}

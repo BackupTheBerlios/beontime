@@ -2,6 +2,8 @@ package fr.umlv.smoreau.beontime.client.graphics.event;
 
 import java.util.EventObject;
 
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
@@ -15,6 +17,8 @@ public class BoTEvent extends EventObject {
 	private Course course;
 	private Subject subject;
 	private User user;
+	private Room room;
+	private Material material;
 
 	public BoTEvent(Object source, Timetable timetable) {
 		super(source);
@@ -36,6 +40,16 @@ public class BoTEvent extends EventObject {
 		this.user = user;
 	}
 	
+	public BoTEvent(Object source, Room room) {
+		super(source);
+		this.room = room;
+	}
+	
+	public BoTEvent(Object source, Material material) {
+		super(source);
+		this.material = material;
+	}
+	
 	public Timetable getTimetable() {
 	    return timetable;
 	}
@@ -50,5 +64,13 @@ public class BoTEvent extends EventObject {
 	
 	public User getUser() {
 	    return user;
+	}
+	
+	public Room getRoom() {
+	    return room;
+	}
+	
+	public Material getMaterial() {
+	    return material;
 	}
 }

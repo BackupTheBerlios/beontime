@@ -49,6 +49,8 @@ public class MainFrame {
 	private BoTModel model;
 	private User userConnected;
 	private User userSelected;
+	private Room roomSelected;
+	private Material materialSelected;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
@@ -253,24 +255,32 @@ public class MainFrame {
 	}
 	
 	public void setUserSelected(User user) {
-	    if (user != null) {
-			ActionsList.getAction("ModifyUser").setEnabled(true);
-			ActionsList.getAction("RemoveUser").setEnabled(true);
-	    } else {
-	        ActionsList.getAction("ModifyUser").setEnabled(false);
-			ActionsList.getAction("RemoveUser").setEnabled(false);
-	    }
+		ActionsList.getAction("ModifyUser").setEnabled(user != null);
+		ActionsList.getAction("RemoveUser").setEnabled(user != null);
+
 	    this.userSelected = user;
 	}
 	
 	public Material getMaterialSelected() {
-		//TODO à implémenter
-		return null;
+		return materialSelected;
+	}
+	
+	public void setMaterialSelected(Material material) {
+		ActionsList.getAction("ModifyMaterial").setEnabled(material != null);
+		ActionsList.getAction("RemoveMaterial").setEnabled(material != null);
+
+	    this.materialSelected = material;
 	}
 		
 	public Room getRoomSelected() {
-		//TODO à implémenter
-		return null;
+		return roomSelected;
+	}
+	
+	public void setRoomSelected(Room room) {
+		ActionsList.getAction("ModifyRoom").setEnabled(room != null);
+		ActionsList.getAction("RemoveRoom").setEnabled(room != null);
+
+	    this.roomSelected = room;
 	}
 
 	public ButtonBar getToolBar() {

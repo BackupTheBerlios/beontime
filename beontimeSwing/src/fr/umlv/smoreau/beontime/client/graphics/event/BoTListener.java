@@ -25,4 +25,16 @@ public interface BoTListener extends EventListener {
 	public void modifyUser(BoTEvent e) throws InterruptedException;
 	
 	public void removeUser(BoTEvent e) throws InterruptedException;
+	
+	public void addRoom(BoTEvent e) throws InterruptedException;
+	
+	public void modifyRoom(BoTEvent e) throws InterruptedException;
+	
+	public void removeRoom(BoTEvent e) throws InterruptedException;
+	
+	public void addMaterial(BoTEvent e) throws InterruptedException;
+	
+	public void modifyMaterial(BoTEvent e) throws InterruptedException;
+	
+	public void removeMaterial(BoTEvent e) throws InterruptedException;
 }
