@@ -171,7 +171,7 @@ public class SearchAvailabilityWindow {
 		
 		endAvailabilityMinuteJcb = new JComboBox();
 		initMinuteJcb(endAvailabilityMinuteJcb);
-		endAvailabilityMinuteJcb.setSelectedIndex(45); 
+		endAvailabilityMinuteJcb.setSelectedIndex(3); 
 		addComponent(SAWLayout,layoutConstraints,endAvailabilityMinuteJcb,5,4,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		SAWFrame.getContentPane().add(endAvailabilityMinuteJcb);
 		

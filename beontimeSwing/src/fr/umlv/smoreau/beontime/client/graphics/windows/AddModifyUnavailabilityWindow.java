@@ -145,7 +145,7 @@ public class AddModifyUnavailabilityWindow {
     	
     	endUnavailabilityMinuteJcb = new JComboBox();
     	initMinuteJcb(endUnavailabilityMinuteJcb);
-    	endUnavailabilityMinuteJcb.setSelectedIndex(45); 
+    	endUnavailabilityMinuteJcb.setSelectedIndex(3); 
     	addComponent(AMUWLayout,layoutConstraints,endUnavailabilityMinuteJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,20,10));
     	AMUWFrame.getContentPane().add(endUnavailabilityMinuteJcb);
     	
