@@ -56,7 +56,7 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI
 			Rectangle cellRect = header.getHeaderRect(cMin);
 			
 			Set done = new HashSet();
-			for (int column = cMin; column <= cMax; column++)
+			for (int column = cMin; column != -1 && column <= cMax; column++)
 			{
 				TableColumn aColumn = cm.getColumn(column);
 				columnWidth = aColumn.getWidth();
