@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 
@@ -152,14 +154,22 @@ public class AddModifyUserWindow {
 		JLabel officeLabel = new JLabel("Bureau :");
 		addComponent(AMUWLayout,layoutConstraints,officeLabel,1,4,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(officeLabel);
+
 		
-		
-		
-		JLabel buildingLabel = new JLabel("Batiment :");
+		try {
+            Collection buildings = DaoManager.getElementDao().getBuildings();
+            buildingJcb = new JComboBox(buildings.toArray(new String[buildings.size()]));
+        } catch (Exception e) {
+            JLabel label = new JLabel("Erreur lors de la récupération des batiments");
+            addComponent(AMUWLayout,layoutConstraints,label,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+            AMUWFrame.getContentPane().add(label);
+            buildingJcb = new JComboBox();
+        }
+
+        JLabel buildingLabel = new JLabel("Batiment :");
 		addComponent(AMUWLayout,layoutConstraints,buildingLabel,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingLabel);
-		
-		buildingJcb = new JComboBox();
+
 		buildingJcb.setEditable(true);
 		addComponent(AMUWLayout,layoutConstraints,buildingJcb,3,5,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingJcb);

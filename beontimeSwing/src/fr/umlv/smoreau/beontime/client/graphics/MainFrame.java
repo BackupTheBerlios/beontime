@@ -61,7 +61,8 @@ public class MainFrame {
 	private final static int WIDTH = 1024;
 	private final static int HEIGHT = 700;
 
-	private TimeTableViewPanelBar timetableviewpanel;	
+	private TimeTableViewPanelBar timetableviewpanel;
+	private JSplitPane splitPaneHorizontal2;
 	
     /** Creates a new instance of FenetreConjugaison */
     private MainFrame() {
@@ -78,7 +79,6 @@ public class MainFrame {
      */
     public void initMainFrame() {
         model = new BoTModel();
-        buttonBar = new ButtonBar(this);
         titleBar = new TitleBar();
         stateBar = new StateBar();
         timetableviewpanel = new TimeTableViewPanelBar();
@@ -90,7 +90,7 @@ public class MainFrame {
         
         //splitPaneVertical = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JPanel(),new JPanel());
         JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        JSplitPane splitPaneHorizontal2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPaneHorizontal2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		JSplitPane splitPaneVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		final JSplitPane splitPaneVertical2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		
@@ -130,7 +130,7 @@ public class MainFrame {
         splitPaneVertical2.setEnabled(false);
         
 		container.setLayout(new BorderLayout()); 
-		splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
+		//splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
 		splitPaneHorizontal2.setRightComponent(timetableviewpanel);
 		splitPaneHorizontal2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		splitPaneHorizontal2.setDividerLocation((int)(WIDTH*0.68));
@@ -184,6 +184,8 @@ public class MainFrame {
 	public void open() {
         menuBar = new MenuBar(this, user.getUserType());
 		mainFrame.setJMenuBar(menuBar);
+        buttonBar = new ButtonBar(this);
+        splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
 		mainFrame.setVisible(true);
 	}
 	
@@ -255,6 +257,5 @@ public class MainFrame {
 
 	public void refresh() {
 	    mainFrame.setVisible(true);
-	    //mainFrame.setMenuBar(menuBar);
 	}
 }

@@ -14,6 +14,7 @@ import fr.umlv.smoreau.beontime.client.actions.timetable.subject.*;
 import fr.umlv.smoreau.beontime.client.actions.toolbar.ManageButtons;
 import fr.umlv.smoreau.beontime.client.actions.user.*;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
  * @author BeOnTime
@@ -33,7 +34,7 @@ public class ActionsList {
 		ACTIONS.put("PasteCourse", new PasteCourse(null));
 		ACTIONS.put("ShowTimetableByWeek", new ShowTimetableByWeek(null));
 		ACTIONS.put("ShowTimetableBySixMonthPeriod", new ShowTimetableBySixMonthPeriod(null));
-		ACTIONS.put("AddUser", new AddUser(null));
+		ACTIONS.put("AddUser", new AddUser("Créer un enseignant", null, UserDao.TYPE_TEACHER));
 		ACTIONS.put("ManageUsers", new ManageUsers(null));
 		ACTIONS.put("AddSubject", new AddSubject(null));
 		ACTIONS.put("ModifySubject", new ModifySubject(null));

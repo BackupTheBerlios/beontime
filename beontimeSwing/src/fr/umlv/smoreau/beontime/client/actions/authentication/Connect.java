@@ -47,7 +47,9 @@ public class Connect extends Action {
         
         try {
             User user = DaoManager.getUserDao().testLoginPwd(window.getLogin(), window.getPassword());
-            if (user == null) {
+            if (user == null ||
+                    (!UserDao.TYPE_SECRETARY.equals(user.getUserType()) &&
+                     !UserDao.TYPE_ADMIN.equals(user.getUserType()))) {
                 JOptionPane.showMessageDialog(null, "Authentification incorrecte", "Erreur", JOptionPane.ERROR_MESSAGE);
                 actionPerformed(null);
             } else {
@@ -63,7 +65,7 @@ public class Connect extends Action {
             user.setUserType(UserDao.TYPE_SECRETARY);
             mainFrame.setUser(user);
         }
-        
+
         mainFrame.open();
     }
 }

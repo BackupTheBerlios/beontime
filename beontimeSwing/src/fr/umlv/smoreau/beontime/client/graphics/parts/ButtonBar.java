@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.OutputStreamWriter;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -39,6 +40,7 @@ import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
 import fr.umlv.smoreau.beontime.client.actions.toolbar.ManageButtons;
 import fr.umlv.smoreau.beontime.client.actions.user.AddUser;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
  * @author BeOnTime
@@ -51,8 +53,17 @@ public class ButtonBar {
 	private int deb_index;
 	private int nb_max;
 	private ActionsList afl=new ActionsList();
+	private boolean isSecretary;
+	private boolean all;
 	
 	public ButtonBar(MainFrame mainFrame) {
+	    this.all = false;
+	    if (UserDao.TYPE_SECRETARY.equals(mainFrame.getUser().getUserType()))
+	        this.isSecretary = true;
+	    else if (UserDao.TYPE_ADMIN.equals(mainFrame.getUser().getUserType()))
+	        this.isSecretary = false;
+	    else
+	        throw new InvalidParameterException();
 		this.mainFrame = mainFrame;
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
@@ -61,6 +72,10 @@ public class ButtonBar {
 		nb_max = 255;
 		loadToolBar();
 		changeAll(defToolBar);	
+	}
+	
+	public void setViewAll(boolean all) {
+	    this.all = all;
 	}
 
 	public void addButton(Action action) {
@@ -103,7 +118,7 @@ public class ButtonBar {
 
 	public void saveToolBar() {
 		try {
-		    FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/.BoTtoolBar");
+		    FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/.BoTtoolBar"+mainFrame.getUser().getIdUser());
 		    OutputStreamWriter osw = new OutputStreamWriter(fos);
 			for (Iterator i = defToolBar.iterator(); i.hasNext(); ) {
 			    Action action = (Action) i.next();
@@ -132,7 +147,7 @@ public class ButtonBar {
 		FileInputStream fis = null;
 		try {
 		    defToolBar = new ArrayList();
-			fis =new FileInputStream(System.getProperty("user.home") + "/.BoTtoolBar");
+			fis =new FileInputStream(System.getProperty("user.home") + "/.BoTtoolBar"+mainFrame.getUser().getIdUser());
 			LineNumberReader lnr = new LineNumberReader(new InputStreamReader(fis));
 			String line = lnr.readLine();
 			while (line != null) {
@@ -146,28 +161,32 @@ public class ButtonBar {
 	}
 
 	public void setDefaultToolBar() {
-		defToolBar = new ArrayList();
-		addButton(new ViewTimetable(mainFrame));
-		addButton(new PrintTimetable(mainFrame));
-		addButton(new ExportTimetable(mainFrame));
-		addButton(null);
-		toolBar.addSeparator();
-		addButton(new CutCourse(mainFrame));
-		addButton(new CopyCourse(mainFrame));
-		addButton(new PasteCourse(mainFrame));
-		addButton(null);
-		toolBar.addSeparator();
-		addButton(new AddUser(mainFrame));
-		addButton(new AddSubject(mainFrame));
-		addButton(new AddRoom(mainFrame));
-		addButton(new AddMaterial(mainFrame));
-		addButton(new GenerateGroups(mainFrame));
-		addButton(null);
-		addButton(new AddCourse(mainFrame));
-		addButton(new RemoveCourse(mainFrame));
-		addButton(null);
-		addButton(new ShowTimetableByWeek(mainFrame));
-		addButton(new ShowTimetableBySixMonthPeriod(mainFrame));
+	    if (isSecretary || all) {
+			defToolBar = new ArrayList();
+			addButton(new ViewTimetable(mainFrame));
+			addButton(new PrintTimetable(mainFrame));
+			addButton(new ExportTimetable(mainFrame));
+			addButton(null);
+			addButton(new CutCourse(mainFrame));
+			addButton(new CopyCourse(mainFrame));
+			addButton(new PasteCourse(mainFrame));
+			addButton(null);
+			addButton(new AddUser("Créer un enseignant", mainFrame, UserDao.TYPE_TEACHER));
+	    }
+		if (!isSecretary)
+		    addButton(new AddUser("Créer une secrétaire", mainFrame, UserDao.TYPE_SECRETARY));
+		if (isSecretary || all) {
+			addButton(new AddSubject(mainFrame));
+			addButton(new AddRoom(mainFrame));
+			addButton(new AddMaterial(mainFrame));
+			addButton(new GenerateGroups(mainFrame));
+			addButton(null);
+			addButton(new AddCourse(mainFrame));
+			addButton(new RemoveCourse(mainFrame));
+			addButton(null);
+			addButton(new ShowTimetableByWeek(mainFrame));
+			addButton(new ShowTimetableBySixMonthPeriod(mainFrame));
+		}
 		addButton(null);
 		addButton(new ManageButtons(mainFrame));
 	}

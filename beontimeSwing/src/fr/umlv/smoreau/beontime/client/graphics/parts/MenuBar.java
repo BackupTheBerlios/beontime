@@ -101,7 +101,10 @@ public class MenuBar extends JMenuBar {
 		}
 		
 		JMenu utilisateur = new JMenu("Utilisateur");
-		utilisateur.add(new JMenuItem(new AddUser("Créer", mainFrame)));		
+		if (isSecretary || all)
+		    utilisateur.add(new JMenuItem(new AddUser("Créer un enseignant", mainFrame, UserDao.TYPE_TEACHER)));
+		if (!isSecretary)
+		    utilisateur.add(new JMenuItem(new AddUser("Créer une secrétaire", mainFrame, UserDao.TYPE_SECRETARY)));
 		utilisateur.add(new JMenuItem(new ManageUsers(mainFrame)));
 		
 		JMenu emploi_du_temps = null;

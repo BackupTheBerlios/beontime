@@ -13,8 +13,8 @@ import fr.umlv.smoreau.beontime.dao.*;
  * @author BeOnTime team
  */
 public class DaoManager {
-//	private static String host="localhost";
-	private static String host="saadouni.dyndns.org";
+	private static String host="localhost";
+//	private static String host="saadouni.dyndns.org";
 	//TODO gerer une ip fixe ? en param ? en properties ?
 	private static /*final*/ DatabaseConfiguration databaseConf;
 	private static /*final*/ ElementDao elementDao;

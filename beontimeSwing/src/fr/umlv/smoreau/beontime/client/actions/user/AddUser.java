@@ -26,28 +26,33 @@ public class AddUser extends Action {
     private static final String ICON = "New24.gif";
 
 
-    public AddUser(MainFrame mainFrame) {
+    public AddUser(MainFrame mainFrame, String type) {
         super(NAME, ICON, mainFrame);
+        this.type = type;
     }
     
-    public AddUser(boolean showIcon, MainFrame mainFrame) {
+    public AddUser(boolean showIcon, MainFrame mainFrame, String type) {
         super(NAME, showIcon ? ICON : null, mainFrame);
+        this.type = type;
     }
     
-    public AddUser(String name, MainFrame mainFrame) {
+    public AddUser(String name, MainFrame mainFrame, String type) {
         super(name, ICON, mainFrame);
+        this.type = type;
     }
     
-    public AddUser(String name, boolean showIcon, MainFrame mainFrame) {
+    public AddUser(String name, boolean showIcon, MainFrame mainFrame, String type) {
         super(name, showIcon ? ICON : null, mainFrame);
+        this.type = type;
     }
 
+    private String type;
 
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyUserWindow window = new AddModifyUserWindow(UserDao.TYPE_TEACHER);
+        AddModifyUserWindow window = new AddModifyUserWindow(type);
         window.show();
         
         if (window.isOk()) {
