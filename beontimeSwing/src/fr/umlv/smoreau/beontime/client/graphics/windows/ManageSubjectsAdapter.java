@@ -6,7 +6,8 @@ import java.util.Collection;
 import javax.swing.JTree;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelListener;
-import javax.swing.tree.TreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
@@ -18,17 +19,18 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
  * Manages the adapter on subjects has model
  * @author BeOnTime team
  */
-public class ManageSubjectsAdapter implements TreeModel {
+public class ManageSubjectsAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 
 	private BoTModel model;
 	private final EventListenerList list;
 	private JTree tree;
 
 	public ManageSubjectsAdapter(BoTModel model, JTree t) {
+		super (new DefaultMutableTreeNode());
 		this.model = model;
 		this.list = new EventListenerList();
 		this.tree = t;
-	//	System.out.println("subject adapteur");
+		//System.out.println("subject adapteur");
 		
 		//TODO pour tester en local
 	/*	Timetable timetable = new Timetable();
@@ -57,6 +59,13 @@ public class ManageSubjectsAdapter implements TreeModel {
 		model.setTimetable(timetable);
 		//finTODO
 	 */
+
+	 //   model.setTimetable(e.getTimetable());
+
+	    //TODO améliorer
+	    tree.updateUI();
+	    tree.setVisible(true);
+		model.addBoTListener(new ManageSubjectListener());
 	}
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeModel#getRoot()
@@ -134,7 +143,7 @@ public class ManageSubjectsAdapter implements TreeModel {
 	
 
 	
-	private class EditListener extends DefaultBoTListener {
+	private class ManageSubjectListener extends DefaultBoTListener {
 		public void refreshAll(BoTEvent e) {
 		    model.setTimetable(e.getTimetable());
 
