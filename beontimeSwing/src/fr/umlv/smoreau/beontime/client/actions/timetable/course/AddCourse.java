@@ -90,20 +90,12 @@ public class AddCourse extends Action {
                 course.setIdCourseType(DaoManager.getTimetableDao().getTypeCourse(window.getTypeCourse()));
 
                 for (int i = 0; i < window.getNbWeeksCourse(); ++i) {
-            	    Calendar beginDate = Calendar.getInstance();
-            	    beginDate.setTime(window.getDateCourse());
+            	    Calendar beginDate = window.getBeginDate();
             	    beginDate.set(Calendar.DAY_OF_YEAR, beginDate.get(Calendar.DAY_OF_YEAR) + 7*i);
-            	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour() + (beginDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
-            	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
-            	    beginDate.set(Calendar.SECOND, 0);
-            	    beginDate.set(Calendar.MILLISECOND, 0);
-            	    Calendar endDate = Calendar.getInstance();
-            	    endDate.setTime(window.getDateCourse());
+            	    beginDate.set(Calendar.HOUR_OF_DAY, beginDate.get(Calendar.HOUR_OF_DAY) + (beginDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
+            	    Calendar endDate = window.getEndDate();
             	    endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7*i);
-            	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour() + (beginDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
-            	    endDate.set(Calendar.MINUTE, window.getEndMinute());
-            	    endDate.set(Calendar.SECOND, 0);
-            	    endDate.set(Calendar.MILLISECOND, 0);
+            	    endDate.set(Calendar.HOUR_OF_DAY, endDate.get(Calendar.HOUR_OF_DAY) + (endDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
 
                     course.setBeginDate(beginDate);
                     course.setEndDate(endDate);
@@ -155,8 +147,8 @@ public class AddCourse extends Action {
 
                     if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&
                             course.getEndDate().getTimeInMillis() <= mainFrame.getEndPeriod().getTimeInMillis()) {
-	                    course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getStartHour());
-	                    course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndHour());
+	                    course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getBeginDate().get(Calendar.HOUR_OF_DAY));
+	                    course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndDate().get(Calendar.HOUR_OF_DAY));
 		                mainFrame.getModel().getTimetable().addCourse(course);
 		                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
                     }

@@ -28,9 +28,12 @@ import com.toedter.calendar.JDateChooser;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
+import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
@@ -308,9 +311,6 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setMaterials(Collection materials) {
-	   
-	    //TODO Sandrine: remplir et ajouter les JComboBox
-	
 	    courseEquipmentPanel.removeAll();
 	    courseEquipmentJcb = new JComboBox(materialsName);
 	    courseEquipmentPanel.add(courseEquipmentJcb);
@@ -366,7 +366,7 @@ public class AddModifyCourseWindow {
 	}
 	
 	
-	public Date getDateCourse() {
+	private Date getDateCourse() {
 		return dateCourse.getDate();
 	}
 	
@@ -514,7 +514,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(dureeCourseDeLabel);
 		
 		startCourseHourJcb = new JComboBox();
-		initNumberJcb(startCourseHourJcb, 0, 23);
+		initNumberJcb(startCourseHourJcb, 8, 19);
 		addComponent(AMCWLayout,layoutConstraints,startCourseHourJcb,2,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(startCourseHourJcb);
 		
@@ -527,7 +527,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(dureeCourseALabel);
 		
 		endCourseHourJcb = new JComboBox();
-		initNumberJcb(endCourseHourJcb, 0, 23);
+		initNumberJcb(endCourseHourJcb, 8, 19);
 		addComponent(AMCWLayout,layoutConstraints,endCourseHourJcb,5,3,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(endCourseHourJcb);
 		
@@ -740,6 +740,16 @@ public class AddModifyCourseWindow {
     	startCourseMinuteJcb.setSelectedIndex(date.get(Calendar.MINUTE)/15);
     	dateCourse.setDate(date.getTime());
     }
+    
+    public Calendar getBeginDate() {
+        Calendar beginDate = Calendar.getInstance();
+	    beginDate.setTime(getDateCourse());
+	    beginDate.set(Calendar.HOUR_OF_DAY, getStartHour());
+	    beginDate.set(Calendar.MINUTE, getStartMinute());
+	    beginDate.set(Calendar.SECOND, 0);
+	    beginDate.set(Calendar.MILLISECOND, 0);
+	    return beginDate;
+    }
 
     public void setEndHour(int end){
     	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8);
@@ -751,20 +761,30 @@ public class AddModifyCourseWindow {
     	endCourseMinuteJcb.setSelectedIndex(date.get(Calendar.MINUTE)/15);
     	dateCourse.setDate(date.getTime());
     }
+    
+    public Calendar getEndDate() {
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(getDateCourse());
+        endDate.set(Calendar.HOUR_OF_DAY, getEndHour());
+	    endDate.set(Calendar.MINUTE, getEndMinute());
+	    endDate.set(Calendar.SECOND, 0);
+	    endDate.set(Calendar.MILLISECOND, 0);
+	    return endDate;
+    }
 
-    public int getStartHour(){
+    private int getStartHour(){
     	return Integer.parseInt((String) startCourseHourJcb.getSelectedItem());
     }
     
-    public int getStartMinute(){
+    private int getStartMinute(){
     	return Integer.parseInt((String) startCourseMinuteJcb.getSelectedItem());
     }
 
-    public int getEndHour(){
+    private int getEndHour(){
         return Integer.parseInt((String) endCourseHourJcb.getSelectedItem());
     }
     
-    public int getEndMinute(){
+    private int getEndMinute(){
         return Integer.parseInt((String) endCourseMinuteJcb.getSelectedItem());
     }
     
@@ -777,9 +797,82 @@ public class AddModifyCourseWindow {
             return 1;
         if (getStartHour() == getEndHour() && getStartMinute() == getEndMinute())
             return 2;
+
+        try {
+            Calendar beginCourse = getBeginDate();
+            Calendar endCourse = getEndDate();
+            UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
+            UnavailabilityFilter filter = new UnavailabilityFilter();
+            Calendar beginPeriod = Calendar.getInstance();
+            beginPeriod.setTime(getDateCourse());
+            beginPeriod.set(Calendar.HOUR_OF_DAY, 0);
+            beginPeriod.set(Calendar.MINUTE, 0);
+            beginPeriod.set(Calendar.SECOND, 0);
+            beginPeriod.set(Calendar.MILLISECOND, 0);
+            filter.setBeginPeriod(beginPeriod);
+            Calendar endPeriod = Calendar.getInstance();
+            endPeriod.setTime(getDateCourse());
+            endPeriod.set(Calendar.HOUR_OF_DAY, 23);
+            endPeriod.set(Calendar.MINUTE, 59);
+            endPeriod.set(Calendar.SECOND, 59);
+            endPeriod.set(Calendar.MILLISECOND, 0);
+            filter.setEndPeriod(endPeriod);
+            
+            Collection unavailabilities = new ArrayList();
+
+            // vérification que le groupe est libre
+            filter.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_GROUP));
+            filter.setIdUnavailabilitySubject(getCourseGroup().getIdGroup());
+            unavailabilities.addAll(unavailabilityDao.getUnavailabilities(filter));
+            
+            // vérification que les enseignants sont libres
+            filter.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_TEACHER));
+            for (Iterator i = getTeachers().iterator(); i.hasNext(); ) {
+                User teacher = (User) i.next();
+                filter.setIdUnavailabilitySubject(teacher.getIdUser());
+                unavailabilities.addAll(unavailabilityDao.getUnavailabilities(filter));
+            }
+            
+            // vérification que les locaux sont libres
+            filter.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_ROOM));
+            for (Iterator i = getPlaceCourse().iterator(); i.hasNext(); ) {
+                Room room = (Room) i.next();
+                filter.setIdUnavailabilitySubject(room.getIdRoom());
+                unavailabilities.addAll(unavailabilityDao.getUnavailabilities(filter));
+            }
+            
+            for (Iterator i = unavailabilities.iterator(); i.hasNext(); ) {
+                Unavailability unavailability = (Unavailability) i.next();
+                if (mainFrame.getCourseSelected() != null && unavailability.getIdCourse().equals(mainFrame.getCourseSelected().getIdCourse()))
+                    continue;
+                if ((beginCourse.getTimeInMillis() < unavailability.getBeginDate().getTimeInMillis() && endCourse.getTimeInMillis() > unavailability.getBeginDate().getTimeInMillis()) ||
+                        (beginCourse.getTimeInMillis() < unavailability.getEndDate().getTimeInMillis() && endCourse.getTimeInMillis() > unavailability.getEndDate().getTimeInMillis()) ||
+                        (beginCourse.getTimeInMillis() >= unavailability.getBeginDate().getTimeInMillis() && endCourse.getTimeInMillis() <= unavailability.getEndDate().getTimeInMillis()) ||
+                        (beginCourse.getTimeInMillis() <= unavailability.getBeginDate().getTimeInMillis() && endCourse.getTimeInMillis() >= unavailability.getEndDate().getTimeInMillis())) {
+                    if (UnavailabilityDao.TYPE_GROUP.equals(unavailability.getIdUnavailabilityType().getNameUnavailabilityType()))
+                        return 3;
+                    if (UnavailabilityDao.TYPE_TEACHER.equals(unavailability.getIdUnavailabilityType().getNameUnavailabilityType())) {
+                        for (int j = 1; j < teachers.length; ++j)
+                            if (teachers[j].getIdUser().equals(unavailability.getIdUnavailabilitySubject()))
+                                errorSubject = teachersName[j];
+                        return 4;
+                    }
+                    if (UnavailabilityDao.TYPE_ROOM.equals(unavailability.getIdUnavailabilityType().getNameUnavailabilityType())) {
+                        for (int j = 1; j < rooms.length; ++j)
+                            if (rooms[j].getIdRoom().equals(unavailability.getIdUnavailabilitySubject()))
+                                errorSubject = roomsName[j];
+                        return 5;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return 6;
+        }
+
         return 0;
     }
 
+    private String errorSubject;
 
     private class ActionOk implements ActionListener {
         /* (non-Javadoc)
@@ -797,6 +890,18 @@ public class AddModifyCourseWindow {
                 break;
             case 2:
                 errorMessage = "Le cours ne peut pas avoir une durée nulle";
+                break;
+            case 3:
+                errorMessage = "Le groupe est indisponible pour cette période";
+                break;
+            case 4:
+                errorMessage = "L'enseignant '" + errorSubject + "' est indisponible pour cette période";
+                break;
+            case 5:
+                errorMessage = "Le local '" + errorSubject + "' est indisponible pour cette période";
+                break;
+            case 6:
+                errorMessage = "Erreur lors de la vérification des indisponibilités";
                 break;
             default:
                 errorMessage = "Erreur inconnue";
