@@ -20,7 +20,7 @@
 			type="string"
 		 />
 
-		<set inverse="true" name="Courses">
+		<set inverse="true" name="Courses" lazy="true">
 			<key column="id_type_cours" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" />
 		</set>

@@ -18,7 +18,7 @@
 			type="string"
 		 />
 
-		<set inverse="true" name="Unavailabilities">
+		<set inverse="true" name="Unavailabilities" lazy="true">
 			<key column="id_type_indisponibilite" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Unavailability" />
 		</set>
