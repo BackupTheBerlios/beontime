@@ -29,15 +29,14 @@
 			<key column="ID_groupe" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
-		<joined-subclass name="fr.umlv.smoreau.beontime.model.association.AppartientEtudiantGroupe" table="appartient_etudiant_groupe">
-			<key column="ID_groupe_app" />
-			<property
-				column="id_etudiant"
-				length="8"
-				name="IdEtudiant"
-				not-null="true"
-				type="java.lang.Long"
-			 />
-		</joined-subclass>
+		
+		<set
+			cascade="none"
+			name="StudentSet"
+			table="appartient_etudiant_groupe"
+		>
+			<key column="ID_groupe" />
+			<many-to-many class="fr.umlv.smoreau.beontime.model.user.Person" column="ID_etudiant" />
+		</set>
 	</class>
 </hibernate-mapping>

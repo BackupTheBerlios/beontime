@@ -36,5 +36,6 @@
 		<mapping resource="fr/umlv/smoreau/beontime/ressources/ParticipeGroupeMatiereCours.hbm" />
 		<mapping resource="fr/umlv/smoreau/beontime/ressources/TypeIndisponibilite.hbm" />
 		<mapping resource="fr/umlv/smoreau/beontime/ressources/Materiel.hbm" />
+		<mapping resource="fr/umlv/smoreau/beontime/ressources/AppartientEtudiantGroupe.hbm" />
 	</session-factory>
 </hibernate-configuration>

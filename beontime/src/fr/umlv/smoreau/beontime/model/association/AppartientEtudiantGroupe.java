@@ -1,6 +1,8 @@
 package fr.umlv.smoreau.beontime.model.association;
 
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe;
+import fr.umlv.smoreau.beontime.model.user.Person;
 
 /**
  * This is the object class that relates to the appartient_etudiant_groupe table.
@@ -16,8 +18,13 @@ public class AppartientEtudiantGroupe extends BaseAppartientEtudiantGroupe {
 	/**
 	 * Constructor for primary key
 	 */
-	public AppartientEtudiantGroupe (java.lang.Long _idGroupe) {
-		super(_idGroupe);
+	public AppartientEtudiantGroupe (
+		Person _idEtudiant,
+		Group _idGroupe) {
+
+		super (
+			_idEtudiant,
+			_idGroupe);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

@@ -58,16 +58,7 @@
 			table="est_dirige_par_cours_enseignant"
 		>
 			<key column="ID_cours" />
-			<!--composite-element class="fr.umlv.smoreau.beontime.model.user.Person">
-				<many-to-one
-					class="fr.umlv.smoreau.beontime.model.user.Person"
-					name="IdPersonne"
-					column="ID_enseignant"
-					not-null="true"
-				/>
-			</composite-element-->
 			<many-to-many class="fr.umlv.smoreau.beontime.model.user.Person" column="ID_enseignant" />
-			<!--one-to-many class="fr.umlv.smoreau.beontime.model.user.Person" column="id_enseignant" /-->
 		</set>
 		<set
 			cascade="all"

@@ -33,6 +33,7 @@ public abstract class BaseGroup  implements Serializable {
 
 	// collections
 	private java.util.Set _participeGroupeMatiereCoursSet;
+	private java.util.Set _studentSet;
 
 
 	// constructors
@@ -122,6 +123,26 @@ public abstract class BaseGroup  implements Serializable {
 	public void addToParticipeGroupeMatiereCoursSet (Object obj) {
 		if (null == this._participeGroupeMatiereCoursSet) this._participeGroupeMatiereCoursSet = new java.util.HashSet();
 		this._participeGroupeMatiereCoursSet.add(obj);
+	}
+	
+	/**
+	 * Return the value associated with the column: StudentSet
+	 */
+	public java.util.Set getStudentSet () {
+		return this._studentSet;
+	}
+
+	/**
+	 * Set the value related to the column: StudentSet
+	 * @param _studentSet the StudentSet value
+	 */
+	public void setStudentSet (java.util.Set _studentSet) {
+		this._studentSet = _studentSet;
+	}
+	
+	public void addToStudentSet (Object obj) {
+		if (null == this._studentSet) this._studentSet = new java.util.HashSet();
+		this._studentSet.add(obj);
 	}
 
 
