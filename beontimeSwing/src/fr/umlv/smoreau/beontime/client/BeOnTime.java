@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -11,9 +8,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class BeOnTime {
 
     public static void main(String[] args) {
-    	
-    	MainFrame mainFrame= new MainFrame();
+    	MainFrame mainFrame = MainFrame.getInstance();
     	mainFrame.open();
-    	
     }
 }

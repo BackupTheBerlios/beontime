@@ -37,8 +37,8 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class MainFrame {
-	
 	private static final String TITRE = "BeOnTime";
+	private static final MainFrame INSTANCE = new MainFrame();
 	
 	private BoTModel model;
 
@@ -59,16 +59,13 @@ public class MainFrame {
 	private TimeTableViewPanelBar timetableviewpanel;	
 	
     /** Creates a new instance of FenetreConjugaison */
-    public MainFrame() {
-	
+    private MainFrame() {
         initMainFrame();
-       
     }
     
     
     public static MainFrame getInstance() {
-    	if (null == instance) instance = new MainFrame();
-		return instance;
+		return INSTANCE;
 	}
 
     /**
@@ -221,15 +218,9 @@ public class MainFrame {
 		return buttonBar;
 	}
 
-	public static void main(String[] args){
-		MainFrame mf=new MainFrame();
-		mf.open();
-	}
-
 	public JFrame getMainFrame() {
 		return mainFrame;
 	}
-
 
 	public void refresh() {
 	    mainFrame.setVisible(true);
