@@ -3,7 +3,7 @@ package fr.umlv.smoreau.beontime.model;
 import fr.umlv.smoreau.beontime.model.base.BaseGroup;
 
 /**
- * This is the object class that relates to the Groupe table.
+ * This is the object class that relates to the groupe table.
  * Any customizations belong here.
  */
 public class Group extends BaseGroup {
@@ -18,18 +18,6 @@ public class Group extends BaseGroup {
 	 */
 	public Group (java.lang.Long _idGroupe) {
 		super(_idGroupe);
-	}
-
-	/**
-	 * Constructor for required fields
-	 */
-	public Group (
-		java.lang.Long _idGroupe,
-		java.lang.Long _idFormation) {
-
-		super (
-			_idGroupe,
-			_idFormation);
 	}
 
 /*[CONSTRUCTOR MARKER END]*/

@@ -8,12 +8,12 @@ import java.io.Serializable;
  * For more information or documentation, visit The Hibernate Synchronizer page
  * at http://www.binamics.com/hibernatesync or contact Joe Hudson at joe@binamics.com.
  *
- * This is an object that contains data related to the Appartient_Etudiant_Groupe table.
+ * This is an object that contains data related to the appartient_etudiant_groupe table.
  * Do not modify this class because it will be overwritten if the configuration file
  * related to this class is modified.
  *
  * @hibernate.class
- *  table="Appartient_Etudiant_Groupe"
+ *  table="appartient_etudiant_groupe"
  */
 public abstract class BaseAppartientEtudiantGroupe  extends fr.umlv.smoreau.beontime.model.Group  implements Serializable {
 
@@ -42,25 +42,13 @@ public abstract class BaseAppartientEtudiantGroupe  extends fr.umlv.smoreau.beon
 		super(_idGroupe);
 	}
 
-	/**
-	 * Constructor for required fields
-	 */
-	public BaseAppartientEtudiantGroupe (
-		java.lang.Long _idGroupe,
-		java.lang.Long _idFormation) {
-
-		super (
-			_idGroupe,
-			_idFormation);
-	}
-
 
 
 	/**
 	 * Return the unique identifier of this class
      * @hibernate.id
      *  generator-class="vm"
-     *  column="ID_groupe"
+     *  column="id_groupe"
      */
 	public java.lang.Long getIdGroupe () {
 		return _idGroupe;
@@ -77,15 +65,15 @@ public abstract class BaseAppartientEtudiantGroupe  extends fr.umlv.smoreau.beon
 
 
 	/**
-	 * Return the value associated with the column: ID_etudiant
+	 * Return the value associated with the column: id_etudiant
 	 */
 	public java.lang.Long getIdEtudiant () {
 		return _idEtudiant;
 	}
 
 	/**
-	 * Set the value related to the column: ID_etudiant
-	 * @param _idEtudiant the ID_etudiant value
+	 * Set the value related to the column: id_etudiant
+	 * @param _idEtudiant the id_etudiant value
 	 */
 	public void setIdEtudiant (java.lang.Long _idEtudiant) {
 		this._idEtudiant = _idEtudiant;

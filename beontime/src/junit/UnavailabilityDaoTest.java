@@ -20,16 +20,16 @@ public class UnavailabilityDaoTest extends TestCase {
         assertNotNull(unavailabilityDao.getUnavailabilities());
     }
     
-    /*public void testAddRemoveGroup() {
+    public void testAddRemoveGroup() {
         Unavailability unavailability = new Unavailability();
-        group.setIdFormation(new Long(1));
+        /*group.setIdFormation(new Long(1));
         group.setIntitule("groupe pour essayer");
         assertTrue(groupDao.addGroup(group));
         group.setIntitule("groupe pour ressayer");
         assertTrue(groupDao.modifyGroup(group));
-        assertTrue(groupDao.removeGroup(group));
-    }*/
-    
+        assertTrue(groupDao.removeGroup(group));*/
+    }
+
     public static Test suite() {
         return new TestSuite(UnavailabilityDaoTest.class);
     }

@@ -8,12 +8,12 @@ import java.io.Serializable;
  * For more information or documentation, visit The Hibernate Synchronizer page
  * at http://www.binamics.com/hibernatesync or contact Joe Hudson at joe@binamics.com.
  *
- * This is an object that contains data related to the Groupe table.
+ * This is an object that contains data related to the groupe table.
  * Do not modify this class because it will be overwritten if the configuration file
  * related to this class is modified.
  *
  * @hibernate.class
- *  table="Groupe"
+ *  table="groupe"
  */
 public abstract class BaseGroup  implements Serializable {
 
@@ -28,10 +28,8 @@ public abstract class BaseGroup  implements Serializable {
 	private java.lang.Long _idGroupe;
 
 	// fields
-	private java.lang.String _intitule;
-
-	// many to one
 	private java.lang.Long _idFormation;
+	private java.lang.String _intitule;
 
 	// collections
 	private java.util.Set _participeGroupeMatiereCoursSet;
@@ -50,18 +48,6 @@ public abstract class BaseGroup  implements Serializable {
 		initialize();
 	}
 
-	/**
-	 * Constructor for required fields
-	 */
-	public BaseGroup (
-		java.lang.Long _idGroupe,
-		java.lang.Long _idFormation) {
-
-		this.setIdGroupe(_idGroupe);
-		this.setIdFormation(_idFormation);
-		initialize();
-	}
-
 	protected void initialize () {}
 
 
@@ -70,7 +56,7 @@ public abstract class BaseGroup  implements Serializable {
 	 * Return the unique identifier of this class
      * @hibernate.id
      *  generator-class="vm"
-     *  column="ID_groupe"
+     *  column="id_groupe"
      */
 	public java.lang.Long getIdGroupe () {
 		return _idGroupe;
@@ -87,6 +73,22 @@ public abstract class BaseGroup  implements Serializable {
 
 
 	/**
+	 * Return the value associated with the column: id_formation
+	 */
+	public java.lang.Long getIdFormation () {
+		return _idFormation;
+	}
+
+	/**
+	 * Set the value related to the column: id_formation
+	 * @param _idFormation the id_formation value
+	 */
+	public void setIdFormation (java.lang.Long _idFormation) {
+		this._idFormation = _idFormation;
+	}
+
+
+	/**
 	 * Return the value associated with the column: Intitule
 	 */
 	public java.lang.String getIntitule () {
@@ -99,24 +101,6 @@ public abstract class BaseGroup  implements Serializable {
 	 */
 	public void setIntitule (java.lang.String _intitule) {
 		this._intitule = _intitule;
-	}
-
-
-	/**
-     * @hibernate.property
-     *  column=ID_formation
-	 * not-null=true
-	 */
-	public java.lang.Long getIdFormation () {
-		return this._idFormation;
-	}
-
-	/**
-	 * Set the value related to the column: ID_formation
-	 * @param _idFormation the ID_formation value
-	 */
-	public void setIdFormation (java.lang.Long _idFormation) {
-		this._idFormation = _idFormation;
 	}
 
 
