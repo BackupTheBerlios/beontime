@@ -103,6 +103,8 @@ public class ManageElementsWindow {
 	
 	
 	private void initPanel(int type) {
+	    JLabel label = null;
+
 		if (type == TYPE_SUBJECTS)
 			panel = new ManageSubjectsTree(model, modifyButton, removeButton).getPanel();
 		else if (type == TYPE_GROUPS)
@@ -116,13 +118,7 @@ public class ManageElementsWindow {
                 panel = new ManageUsersTable(model, users).getPanel();
             } catch (Exception e) {
             	panel.setLayout(new BorderLayout());
-            	
-            	JLabel label = new JLabel("Erreur lors de la récupération des utilisateurs");
-            	Font font = new Font("Arial", Font.BOLD, 15);
-            	label.setFont(font);
-            	label.setForeground(Color.RED);
-            	label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-            	panel.add(label, BorderLayout.CENTER);
+            	label = new JLabel("Erreur lors de la récupération des utilisateurs");
             }
 		} else if (type == TYPE_USERS_BY_SECRETARY) {
 		    try {
@@ -130,18 +126,33 @@ public class ManageElementsWindow {
                 panel = new ManageUsersTable(model, users).getPanel();
             } catch (Exception e) {
             	panel.setLayout(new BorderLayout());
-            	
-            	JLabel label = new JLabel("Erreur lors de la récupération des utilisateurs");
-            	Font font = new Font("Arial", Font.BOLD, 15);
-            	label.setFont(font);
-            	label.setForeground(Color.RED);
-            	label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-            	panel.add(label, BorderLayout.CENTER);
+            	label = new JLabel("Erreur lors de la récupération des utilisateurs");
             }
-		} else if (type == TYPE_ROOMS)
-			panel = new ManageRoomsTable(model, modifyButton, removeButton).getPanel();
-		else if (type == TYPE_MATERIALS)
-			panel = new ManageMaterialsTable(model, modifyButton, removeButton).getPanel();
+		} else if (type == TYPE_ROOMS) {
+		    try {
+                Collection rooms = DaoManager.getElementDao().getRooms();
+                panel = new ManageRoomsTable(model, rooms).getPanel();
+            } catch (Exception e) {
+            	panel.setLayout(new BorderLayout());
+            	label = new JLabel("Erreur lors de la récupération des locaux");
+            }
+		} else if (type == TYPE_MATERIALS) {
+		    try {
+                Collection materials = DaoManager.getElementDao().getMaterials();
+                panel = new ManageMaterialsTable(model, materials).getPanel();
+            } catch (Exception e) {
+            	panel.setLayout(new BorderLayout());
+            	label = new JLabel("Erreur lors de la récupération des matériels");
+            }
+		}
+		
+		if (label != null) {
+		    Font font = new Font("Arial", Font.BOLD, 15);
+        	label.setFont(font);
+        	label.setForeground(Color.RED);
+        	label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        	panel.add(label, BorderLayout.CENTER);
+		}
 	}
 	
 	private void initManageButtonPanel(int type) {
@@ -327,6 +338,10 @@ public class ManageElementsWindow {
         public void actionPerformed(ActionEvent arg0) {
             if (TYPE_USERS_BY_ADMIN == type || TYPE_USERS_BY_SECRETARY == type)
                 MainFrame.getInstance().setUserSelected(null);
+            if (TYPE_ROOMS == type)
+                MainFrame.getInstance().setRoomSelected(null);
+            if (TYPE_MATERIALS == type)
+                MainFrame.getInstance().setMaterialSelected(null);
 			MEWFrame.dispose();
         }
     }

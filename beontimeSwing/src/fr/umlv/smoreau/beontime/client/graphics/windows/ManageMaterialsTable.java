@@ -1,15 +1,9 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Collection;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,24 +16,17 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.element.Material;
 
 /**
- * @author sandrine
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ManageMaterialsTable extends JTable {
 	private JPanel panel;
 	private final JTable table;
 	private static MainFrame mainFrame;
-	private Material materialSelected;
 	
-	
-	
-	public ManageMaterialsTable(final BoTModel model, final JButton modifyButton, final JButton deleteButton) {
+	public ManageMaterialsTable(final BoTModel model, Collection materials) {
 		super();
-		super.setModel(new ManageMaterialsAdapter(model));
+		super.setModel(new ManageMaterialsAdapter(model, materials));
 		ManageMaterialsTable.mainFrame = MainFrame.getInstance();
-		materialSelected = null;
 		
 		panel = new JPanel(new GridLayout(1, 0));
 		
@@ -48,14 +35,9 @@ public class ManageMaterialsTable extends JTable {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
 			public void valueChanged(ListSelectionEvent e) {
-				modifyButton.setEnabled(true);
-				deleteButton.setEnabled(true);
-				
-				materialSelected = (Material)((ManageMaterialsAdapter)table.getModel()).getObjectAt(table.getSelectedRow());
+			    mainFrame.setMaterialSelected((Material)((ManageMaterialsAdapter)table.getModel()).getObjectAt(table.getSelectedRow()));
 			}
-			
 		});
 		
 		JScrollPane scrollPane = new JScrollPane(this);
@@ -67,10 +49,6 @@ public class ManageMaterialsTable extends JTable {
 	
 	public JPanel getPanel() {
 		return panel;
-	}
-	
-	public Material getMaterialSelected() {
-		return materialSelected;
 	}
 }
 

@@ -1,15 +1,9 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Collection;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,37 +17,27 @@ import fr.umlv.smoreau.beontime.model.element.Room;
 
 /**
  * @author BeOnTime
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class ManageRoomsTable extends JTable {
 	private JPanel panel;
     private final JTable table;
     private static MainFrame mainFrame;
-    private Room roomSelected;
     
-    public ManageRoomsTable(final BoTModel model, final JButton modifyButton, final JButton deleteButton) {
+    public ManageRoomsTable(final BoTModel model, Collection rooms) {
         super();
-        super.setModel(new ManageRoomsAdapter(model));
+        super.setModel(new ManageRoomsAdapter(model, rooms));
         ManageRoomsTable.mainFrame = MainFrame.getInstance();
-        roomSelected = null;
         
         panel = new JPanel(new GridLayout(1, 0));
-        
-        
+
+
         table = this;
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
 			public void valueChanged(ListSelectionEvent e) {
-				modifyButton.setEnabled(true);
-				deleteButton.setEnabled(true);
-				
-				roomSelected = (Room)((ManageRoomsAdapter)table.getModel()).getObjectAt(table.getSelectedRow());
-			}
-			
+				mainFrame.setRoomSelected((Room)((ManageRoomsAdapter)table.getModel()).getObjectAt(table.getSelectedRow()));
+			}	
 		});
         
         
@@ -66,9 +50,5 @@ public class ManageRoomsTable extends JTable {
     
     public JPanel getPanel() {
         return panel;
-    }
-    
-    public Room getRoomSelected() {
-        return roomSelected;
     }
 }

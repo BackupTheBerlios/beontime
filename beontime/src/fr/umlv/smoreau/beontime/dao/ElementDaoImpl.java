@@ -55,6 +55,18 @@ public class ElementDaoImpl extends Dao implements ElementDao {
         }
 	}
 	
+	public Room getRoom(Room room, String[] join) throws RemoteException, HibernateException {
+	    Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            room = (Room) get(TABLE_ROOM, new RoomFilter(room), session).toArray()[0];
+            join(room, join);
+        } finally {
+            Hibernate.closeSession();
+        }
+        return room;
+	}
+	
 	public Collection getMaterials(MaterialFilter filter) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
@@ -63,6 +75,18 @@ public class ElementDaoImpl extends Dao implements ElementDao {
         } finally {
             Hibernate.closeSession();
         }
+	}
+	
+	public Material getMaterial(Material material, String[] join) throws RemoteException, HibernateException {
+	    Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            material = (Material) get(TABLE_MATERIAL, new MaterialFilter(material), session).toArray()[0];
+            join(material, join);
+        } finally {
+            Hibernate.closeSession();
+        }
+        return material;
 	}
 	
 	public Collection getRooms() throws RemoteException, HibernateException {

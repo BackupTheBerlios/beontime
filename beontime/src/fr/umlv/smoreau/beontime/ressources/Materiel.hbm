@@ -26,9 +26,10 @@
 			type="string"
 		 />
 		<set
-			cascade="all"
+			cascade="none"
 			name="Courses"
 			table="utilise_cours_materiel"
+			lazy="true"
 		>
 			<key column="id_materiel" />
 			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="id_cours" />

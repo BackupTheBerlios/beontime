@@ -1,41 +1,31 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.element.Material;
 
 /**
- * @author sandrine
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ManageMaterialsAdapter implements TableModel {
-	
 	private final EventListenerList list;
-	private BoTModel model;
-	private ArrayList listMaterials;
+	private Material[] materials;
 	private final static String[] columnNames = {"Nom","Description"};
 	
 	
-	public ManageMaterialsAdapter(BoTModel model) {
-		this.model = model;
+	public ManageMaterialsAdapter(BoTModel model, Collection materials) {
 		this.list = new EventListenerList();
+		this.materials = (Material[]) materials.toArray(new Material[materials.size()]);
 		
 		//TODO pour tester en local
-		Material material1 = new Material(new Long(1)); 
+		/*Material material1 = new Material(new Long(1)); 
 		material1.setName("Nom1");
 		material1.setDescription("Vidéo projecteur");
 		
@@ -62,17 +52,16 @@ public class ManageMaterialsAdapter implements TableModel {
 		listMaterials.add(material2);
 		listMaterials.add(material3);
 		listMaterials.add(material4);
-		listMaterials.add(material5);
+		listMaterials.add(material5);*/
 		
-		model.addBoTListener(new ManageMaterialsListener(this));
+		model.addBoTListener(new ManageMaterialsListener());
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
 	public int getRowCount() {
-		
-		return listMaterials.size();
+		return materials.length;
 	}
 	
 	/* (non-Javadoc)
@@ -93,7 +82,6 @@ public class ManageMaterialsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getColumnClass(int)
 	 */
 	public Class getColumnClass(int columnIndex) {
-		// TODO Auto-generated method stub
 		return Object.class;
 	}
 	
@@ -101,7 +89,6 @@ public class ManageMaterialsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#isCellEditable(int, int)
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -109,34 +96,24 @@ public class ManageMaterialsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		Material material  = (Material)listMaterials.get(rowIndex);
-		
-		switch(columnIndex) {
-		
-		case 0: return material.getName();
-		case 1: return material.getDescription();
-		}
-		
-		throw new IllegalArgumentException("colonne invalide ("+rowIndex+','+columnIndex+')');
-		
+	    if (rowIndex < materials.length) {
+		    switch(columnIndex) {
+		    	case 0: return materials[rowIndex].getName();
+		    	case 1: return materials[rowIndex].getDescription();
+		    }
+	    }
+	    
+	    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	/* (non-Javadoc)
-	 * 
-	 */
+
 	public Object getObjectAt(int rowIndex) {
-		
-		return listMaterials.get(rowIndex);
-				
+		return materials[rowIndex];		
 	}
 	
 	/* (non-Javadoc)
@@ -144,22 +121,29 @@ public class ManageMaterialsAdapter implements TableModel {
 	 */
 	public void addTableModelListener(TableModelListener l) {
 		list.add(TableModelListener.class, l);
-		
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#removeTableModelListener(javax.swing.event.TableModelListener)
 	 */
 	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
 		list.remove(TableModelListener.class, l);
 	}
 	
 	private class  ManageMaterialsListener extends DefaultBoTListener {
-		private TableModel source;
-		
-		public  ManageMaterialsListener(TableModel source) {
-			this.source = source;
-		}	
+	    public void addMaterial(BoTEvent e) throws InterruptedException {
+	        Material material = (Material) e.getMaterial();
+	        //TODO Ajoute la ligne du nouveau matériel
+        }
+
+        public void modifyMaterial(BoTEvent e) throws InterruptedException {
+            Material material = (Material) e.getMaterial();
+	        //TODO Modifie la ligne du matériel modifié
+        }
+
+        public void removeMaterial(BoTEvent e) throws InterruptedException {
+            Material material = (Material) e.getMaterial();
+	        //TODO Supprime la ligne du matériel supprimé
+        }
 	}
 }

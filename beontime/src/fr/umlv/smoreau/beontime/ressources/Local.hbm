@@ -34,9 +34,10 @@
 		 />
 
 		<set
-			cascade="all"
+			cascade="none"
 			name="Courses"
 			table="a_lieu_cours_local"
+			lazy="true"
 		>
 			<key column="id_local" />
 			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="id_cours" />

@@ -166,8 +166,16 @@ public class AddModifyElementWindow {
         return equipmentNameJtf.getText().trim();
     }
     
+    public void setEquipmentName(String name) {
+        equipmentNameJtf.setText(name);
+    }
+    
     public String getDescriptionEquipment() {
         return descriptionEquipmentJta.getText().trim();
+    }
+    
+    public void setDescriptionEquipment(String description) {
+        descriptionEquipmentJta.setText(description);
     }
     
     public String getBuildingName() {
@@ -175,6 +183,10 @@ public class AddModifyElementWindow {
         if (string != null)
             string = string.trim();
         return string;
+    }
+    
+    public void setBuildingName(String buildingName) {
+        buildingNameJcB.setSelectedItem(buildingName);
     }
 
     public boolean isOk() {

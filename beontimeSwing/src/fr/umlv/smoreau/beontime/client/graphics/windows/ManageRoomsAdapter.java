@@ -1,78 +1,37 @@
-/*
- * Created on 1 mars 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.model.element.Room;
 
 /**
  * @author BeOnTime
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class ManageRoomsAdapter implements TableModel {
-
 	private final EventListenerList list;
-	private BoTModel model;
-	private ArrayList listRooms;
+	private Room[] rooms;
 	private final static String[] columnNames = {"Nom","Description"};
 	
 	
-	public ManageRoomsAdapter(BoTModel model) {
-		this.model = model;
+	public ManageRoomsAdapter(BoTModel model, Collection rooms) {
 		this.list = new EventListenerList();
+		this.rooms = (Room[]) rooms.toArray(new Room[rooms.size()]);
 		
-		//TODO pour tester en local
-		Room room1 = new Room(new Long(1)); 
-		room1.setName("Nom1");
-		room1.setDescription("Description1");
-		
-		Room room2 = new Room(new Long(2)); 
-		room2.setName("Nom2");
-		room2.setDescription("Description2");
-		
-		Room room3 = new Room(new Long(3)); 
-		room3.setName("Nom3");
-		room3.setDescription("Description3");
-		
-		Room room4 = new Room(new Long(4)); 
-		room4.setName("Nom4");
-		room4.setDescription("Description4");
-		
-		Room room5 = new Room(new Long(5)); 
-		room5.setName("Nom5");
-		room5.setDescription("Description5");
-		//finTODO
-		
-		
-		listRooms = new ArrayList();
-		listRooms.add(room1);
-		listRooms.add(room2);
-		listRooms.add(room3);
-		listRooms.add(room4);
-		listRooms.add(room5);
-		
-		model.addBoTListener(new ManageRoomsListener(this));
+		model.addBoTListener(new ManageRoomsListener());
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
 	public int getRowCount() {
-		
-		return listRooms.size();
+		return rooms.length;
 	}
 	
 	/* (non-Javadoc)
@@ -93,7 +52,6 @@ public class ManageRoomsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getColumnClass(int)
 	 */
 	public Class getColumnClass(int columnIndex) {
-		// TODO Auto-generated method stub
 		return Object.class;
 	}
 	
@@ -101,7 +59,6 @@ public class ManageRoomsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#isCellEditable(int, int)
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -109,34 +66,24 @@ public class ManageRoomsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		Room room  = (Room)listRooms.get(rowIndex);
-		
-		switch(columnIndex) {
-		
-		case 0: return room.getName();
-		case 1: return room.getDescription();
-		}
-		
-		throw new IllegalArgumentException("colonne invalide ("+rowIndex+','+columnIndex+')');
-		
+	    if (rowIndex < rooms.length) {
+		    switch(columnIndex) {
+		    	case 0: return rooms[rowIndex].getName();
+		    	case 1: return rooms[rowIndex].getDescription();
+		    }
+	    }
+	    
+	    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	/* (non-Javadoc)
-	 * 
-	 */
+
 	public Object getObjectAt(int rowIndex) {
-		
-		return listRooms.get(rowIndex);
-				
+		return rooms[rowIndex];	
 	}
 	
 	/* (non-Javadoc)
@@ -155,10 +102,19 @@ public class ManageRoomsAdapter implements TableModel {
 	}
 	
 	private class ManageRoomsListener extends DefaultBoTListener {
-		private TableModel source;
-		
-		public ManageRoomsListener(TableModel source) {
-			this.source = source;
-		}	
+	    public void addRoom(BoTEvent e) throws InterruptedException {
+	        Room room = (Room) e.getRoom();
+	        //TODO Ajoute la ligne du nouveau local
+        }
+
+        public void modifyRoom(BoTEvent e) throws InterruptedException {
+            Room room = (Room) e.getRoom();
+	        //TODO Modifie la ligne du local modifié
+        }
+
+        public void removeRoom(BoTEvent e) throws InterruptedException {
+            Room room = (Room) e.getRoom();
+	        //TODO Supprime la ligne du local supprimé
+        }
 	}
 }

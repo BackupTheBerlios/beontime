@@ -54,4 +54,19 @@ public abstract class Dao extends UnicastRemoteObject {
         session.delete("from " + databaseName + f);
     }
 
+    protected void join(Object object, String[] join) {
+        if (join == null)
+            return;
+
+        Class clazz = object.getClass();
+        for (int i = 0; i < join.length; ++i) {
+            try {
+                Object obj = clazz.getMethod("get"+join[i], (java.lang.Class[]) null).invoke(object, (java.lang.Object[]) null);
+                Class cl = obj.getClass();
+                cl.getMethod("size", (java.lang.Class[]) null).invoke(obj, (java.lang.Object[]) null);
+            } catch (Exception e) {
+                // ne rien faire ...
+            }
+        }
+    }
 }

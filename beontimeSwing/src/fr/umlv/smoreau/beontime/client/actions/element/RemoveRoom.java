@@ -2,8 +2,14 @@ package fr.umlv.smoreau.beontime.client.actions.element;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.ElementDao;
+import fr.umlv.smoreau.beontime.model.element.Room;
 
 /**
  * @author BeOnTime
@@ -33,5 +39,27 @@ public class RemoveRoom extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
+        Room room = mainFrame.getRoomSelected();
+        if (room == null)
+            return;
+        
+        int select = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer le local '"+room.getName()+"'", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (select == JOptionPane.YES_OPTION) {
+            try {
+                room = DaoManager.getElementDao().getRoom(room, new String[] {ElementDao.JOIN_COURSES});
+                if (room.getCourses().size() > 0) {
+                    select = JOptionPane.showConfirmDialog(null, "Des cours ont lieu dans ce local.\nSuite à cette suppression, ces cours n'auront peut-être plus de local défini.\nContinuer ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                    if (select == JOptionPane.NO_OPTION)
+                        return;
+                }
+                DaoManager.getElementDao().removeRoom(room);
+
+                mainFrame.getModel().fireRefreshRoom(room, BoTModel.TYPE_REMOVE);
+                
+                JOptionPane.showMessageDialog(null, "Suppression effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
