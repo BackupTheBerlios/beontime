@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
@@ -28,6 +29,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public class AttributiveCellRenderer extends JLabel implements TableCellRenderer {
     private SimpleDateFormat FORMAT_HOUR = new SimpleDateFormat("HH'h'mm");
+    private SimpleDateFormat FORMAT_DAY = new SimpleDateFormat("dd/MM/yy");
     
     protected static Border noFocusBorder; 
     
@@ -112,7 +114,9 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
                     prtScreen.append(" (TP)");
                 
                 schedule.append(FORMAT_HOUR.format(c.getBeginDate().getTime()));
-                schedule.append(" / ").append(FORMAT_HOUR.format(c.getEndDate().getTime()));
+                schedule.append("/").append(FORMAT_HOUR.format(c.getEndDate().getTime()));
+                if (MainFrame.getInstance().getViewType() == MainFrame.VIEW_HALF_YEAR)
+                    schedule.append(" le ").append(FORMAT_DAY.format(c.getBeginDate().getTime()));
 
                 for (Iterator i = c.getTeachers().iterator(); i.hasNext(); ) {
                     User user = (User) i.next();

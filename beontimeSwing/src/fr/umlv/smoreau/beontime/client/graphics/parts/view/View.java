@@ -23,6 +23,7 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 
+
 public class View {
 	private JScrollPane jScrollPane;
 	private MultiSpanCellTable table;
@@ -44,18 +45,20 @@ public class View {
     	final PopupMenu popupMenu = new PopupMenu(null);
 		table.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
+				Point p = new Point(e.getX(), e.getY());
+				int row = table.rowAtPoint(p);
+				int column = table.columnAtPoint(p);
+				Object object = (Object) table.getValueAt(row, column);
+				if (object instanceof Course)
+				    mainFrame.setCourseSelected((Course) object);
+				else
+				    mainFrame.setCourseSelected(null);
+
 				// Popup Menus
 				if (e.getButton() == MouseEvent.BUTTON3 && model.getTimetable() != null) {
-					int row = table.rowAtPoint(new Point(e.getX(),e.getY()));
-					int column=table.columnAtPoint(new Point(e.getX(),e.getY()));
-					table.changeSelection(row,column,false,false);
-					Course c=(Course)table.getModel().getValueAt(row,column);
-					
-					if (c != null) {
-						mainFrame.setCourseSelected(c);
+					table.changeSelection(row, column, false, false);
+					if (object != null)
 						popupMenu.show(e.getComponent(), e.getX(), e.getY());
-						
-					}
 				}
 			}
 			public void mousePressed(MouseEvent e) {
@@ -75,29 +78,6 @@ public class View {
         cellAtt =(DefaultCellAttribute)ml.getCellAttribute();
         table = new MultiSpanCellTable(ml);
         table.setDefaultRenderer(Object.class ,new AttributiveCellRenderer());
-        table.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-				int x=e.getX();
-				int y=e.getY();
-				Point p=new Point(x,y);
-				int row=table.rowAtPoint(p);
-				int column=table.columnAtPoint(p);
-				Course course = (Course) table.getValueAt(row,column);
-				mainFrame.setCourseSelected(course);
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-		});
 		header = new GroupableTableHeader(table.getColumnModel());
 		initHeader(8,20);
 		table.setTableHeader(header);
