@@ -34,11 +34,11 @@
 			not-null="false"
 		 />
 
-		<set inverse="true" name="Groups">
+		<set inverse="true" name="Groups" lazy="true">
 			<key column="id_formation" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Group" />
 		</set>
-		<set inverse="true" name="Subjects">
+		<set inverse="true" name="Subjects" lazy="true">
 			<key column="id_formation" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Subject" />
 		</set>

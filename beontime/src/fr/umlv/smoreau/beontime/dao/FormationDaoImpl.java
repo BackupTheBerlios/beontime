@@ -112,18 +112,6 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 		return getFormations(null);
 	}
 	
-	public Collection getFormationsInCharge(User user) throws RemoteException, HibernateException {
-	    Session session = null;
-        try {
-            FormationFilter filter = new FormationFilter();
-            filter.setIdSecretary(user);
-            session = Hibernate.getCurrentSession();
-            return get(TABLE, filter, session);
-        } finally {
-            Hibernate.closeSession();
-        }
-	}
-	
 	public Collection getFormationsResponsible(User user) throws RemoteException, HibernateException {
 	    Session session = null;
         try {

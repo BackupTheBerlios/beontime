@@ -58,7 +58,7 @@
 		</set>
 
 		<set
-			cascade="all"
+			cascade="none"
 			name="Materials"
 			table="utilise_cours_materiel"
 		>
@@ -66,7 +66,7 @@
 			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Material" column="id_materiel" />
 		</set>
 		<set
-			cascade="all"
+			cascade="none"
 			name="Rooms"
 			table="a_lieu_cours_local"
 		>

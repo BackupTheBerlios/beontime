@@ -23,8 +23,6 @@ public interface FormationDao extends Remote {
 	
 	public Collection getFormations() throws RemoteException, HibernateException;
 	
-	public Collection getFormationsInCharge(User user) throws RemoteException, HibernateException;
-	
 	public Collection getFormationsResponsible(User user) throws RemoteException, HibernateException;
 	
 	public Formation addFormation(Formation formation) throws RemoteException, HibernateException;

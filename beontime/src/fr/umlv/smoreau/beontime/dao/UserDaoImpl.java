@@ -74,6 +74,17 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return result;
 	}
 	
+	public User getUser(User user, String[] join) throws RemoteException, HibernateException {
+        try {
+            Session session = Hibernate.getCurrentSession();
+            user = (User) get(TABLE, new UserFilter(user), session).toArray()[0];
+            join(user, join);
+        } finally {
+            Hibernate.closeSession();
+        }
+        return user;
+	}
+	
 	public Collection getUsers(UserFilter filter) throws RemoteException, HibernateException {
 	    return getUsers(filter, true);
 	}
@@ -193,38 +204,37 @@ public class UserDaoImpl extends Dao implements UserDao {
 	}
 
 
-	public User testLoginPwd(String login, String password) throws RemoteException {
+	public User testLoginPwd(String login, String password) throws RemoteException, HibernateException {
+	    UserFilter filter = new UserFilter();
+        filter.setLogin(login);
+
 	    boolean test = ldapManager.testLoginPwd(login, password);
 	    if (!test) {
             try {
-                UserFilter filter = new UserFilter();
-    	        filter.setLogin(login);
-
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 md.update(password.getBytes());
                 filter.setPassword(new String(md.digest()));
-                
-                Collection c = getUsers(filter, false);
-                if (c.size() == 1)
-                    return (User) c.toArray()[0];
+
+                Session session = Hibernate.getCurrentSession();
+                Collection c = get(TABLE, filter, session);
+                if (c.size() == 1) {
+                    User user = (User) c.toArray()[0];
+                    if (TYPE_SECRETARY.equals(user.getUserType()))
+                        user.getFormationsInCharge().size();
+                    return user;
+                }
             } catch (NoSuchAlgorithmException e) {
                 // impossible avec le paramètre 'MD5'
-            } catch (RemoteException e) {
-                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données SQL");
-            } catch (HibernateException e) {
-                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données SQL");
+            } finally {
+                Hibernate.closeSession();
             }
 	    } else {
 	        try {
-		        UserFilter filter = new UserFilter();
-		        filter.setLogin(login);
-		        Collection c = getUsers(filter);
+	            Collection c = ldapManager.getUsers(filter);
 		        return (User) c.toArray()[0];
-	        } catch (RemoteException e) {
-                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données LDAP");
-            } catch (HibernateException e) {
-                System.err.println("Erreur lors de la vérification du login et mot de passe sur la base de données LDAP");
-            }
+	        } catch (NamingException e) {
+	            // ne peut pas passer dans ce catch car la méthode testLoginPwd a fonctionné
+	        }
 	    }
 	    return null;
 	}

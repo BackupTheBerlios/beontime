@@ -21,15 +21,20 @@ public interface UserDao extends Remote {
     public static final String TYPE_SECRETARY = "secretaire";
     public static final String TYPE_ADMIN     = "administrateur";
 
+    public static final String JOIN_FORMATIONS_RESPONSIBLE = "FormationsResponsible";
+    public static final String JOIN_FORMATIONS_IN_CHARGE   = "FormationsInCharge";
+    public static final String JOIN_SUBJECTS_RESPONSIBLE   = "SubjectsResponsible";
+    public static final String JOIN_COURSES_DIRECTED       = "CoursesDirected";
 
     public Collection getUsers(UserFilter filter) throws RemoteException, HibernateException;
     
     public Collection getUsers(boolean ldap) throws RemoteException, HibernateException;
     
     public Collection getUsers() throws RemoteException, HibernateException;
+    
+    public User getUser(User user, String[] join) throws RemoteException, HibernateException;
 	
 	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException;
-	//TODO virer les throws ?
 	
 	public Collection getSecretaries(UserFilter filter) throws RemoteException, HibernateException;
 	
@@ -53,6 +58,6 @@ public interface UserDao extends Remote {
 	
 	public void removeUser(User user) throws RemoteException, HibernateException;
 	
-	public User testLoginPwd(String login, String password) throws RemoteException;
+	public User testLoginPwd(String login, String password) throws RemoteException, HibernateException;
 	
 }

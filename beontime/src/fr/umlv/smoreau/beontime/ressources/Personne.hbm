@@ -80,7 +80,7 @@
 			<key column="id_enseignant" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
-		<set inverse="true" name="FormationsInCharge" lazy="false">
+		<set inverse="true" name="FormationsInCharge" lazy="true">
 			<key column="id_secretaire" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
