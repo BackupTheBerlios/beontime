@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  */
 public class ButtonBar {
 	
-	private JLabel lbVisuEDTPanel;
+	private JLabel visuEDTLabel;
 	private JComboBox jcbTypeEDT;
 	private JComboBox jcbSubjectEDT;
 	
@@ -59,9 +59,9 @@ public class ButtonBar {
 
 	    visuEDTPanel.setLayout(visuEDTPanelLayout);
 		
-		lbVisuEDTPanel = new JLabel("Visualiser un emploi du temps");
-		addComponent(visuEDTPanelLayout,layoutConstraints,lbVisuEDTPanel,1,GridBagConstraints.REMAINDER,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
-		visuEDTPanel.add(lbVisuEDTPanel);
+		visuEDTLabel = new JLabel("Visualiser un emploi du temps");
+		addComponent(visuEDTPanelLayout,layoutConstraints,visuEDTLabel,1,GridBagConstraints.REMAINDER,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
+		visuEDTPanel.add(visuEDTLabel);
 		
 		
 		jcbTypeEDT = new JComboBox();
@@ -70,11 +70,11 @@ public class ButtonBar {
 		jcbTypeEDT.addItem("Groupe");
 		jcbTypeEDT.addItem("Local");
 		jcbTypeEDT.addItem("Materiel");
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(6,6,3,6));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,5,10));
 		visuEDTPanel.add(jcbTypeEDT);
 		
 		jcbSubjectEDT = new JComboBox();
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(3,6,6,6));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,10,10));
 		visuEDTPanel.add(jcbSubjectEDT);
 
 	}
