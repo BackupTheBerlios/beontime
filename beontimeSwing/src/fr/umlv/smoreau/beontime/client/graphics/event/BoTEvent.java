@@ -19,6 +19,10 @@ public class BoTEvent extends EventObject {
 	private User user;
 	private Room room;
 	private Material material;
+	
+	public BoTEvent(Object source) {
+		super(source);
+	}
 
 	public BoTEvent(Object source, Timetable timetable) {
 		super(source);

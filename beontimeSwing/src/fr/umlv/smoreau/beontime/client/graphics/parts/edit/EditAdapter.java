@@ -93,7 +93,6 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 	 * @see javax.swing.tree.TreeModel#getIndexOfChild(java.lang.Object, java.lang.Object)
 	 */
 	public int getIndexOfChild(Object arg0, Object arg1) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -133,6 +132,11 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		    tree.updateUI();
 		    tree.setVisible(true);
 	//	    System.out.println("refeshall");
+		}
+		
+		public void closeTimetable(BoTEvent e) {
+		    //TODO Ad: regarde si ça te plait. Moi ce qui m'embête c'est qu'au début c'est blanc et que quand on ferme l'emploi du temps, c'est gris ... :o(
+		    tree.setVisible(false);
 		}
 		
 		public void addSubject(BoTEvent e) {

@@ -63,6 +63,19 @@ public class BoTModel {
 		}
 	}
 	
+	public void fireCloseTimetable() throws InterruptedException {
+		BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this);
+				((BoTListener) listeners[i + 1]).closeTimetable(event);
+			}
+		}
+	}
+	
 	public void fireRefreshCourse(Course course, int type) throws InterruptedException {
 	    BoTEvent event = null;
 

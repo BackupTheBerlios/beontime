@@ -196,5 +196,11 @@ public class TitleBar extends JPanel {
 		    //TODO : changer la date ?
 		    panel.validate();
 		}
+		
+		public void closeTimetable(BoTEvent e) {
+		    intitleLabel.setText("");
+		    responsibleLabel.setText("");
+		    panel.validate();
+		}
 	}
 }

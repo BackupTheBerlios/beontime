@@ -176,6 +176,21 @@ public class MenuBar extends JMenuBar {
 		    ActionsList.getAction("ManageGroups").setEnabled(true);
 		    ActionsList.getAction("GenerateGroups").setEnabled(true);
 		}
+		
+		public void closeTimetable(BoTEvent e) {
+		    ActionsList.getAction("CloseTimetable").setEnabled(false);
+		    ActionsList.getAction("PrintTimetable").setEnabled(false);
+		    ActionsList.getAction("ExportTimetable").setEnabled(false);
+		    ActionsList.getAction("ShowTimetableVertical").setEnabled(false);
+		    ActionsList.getAction("ShowTimetableHorizontal").setEnabled(false);
+		    ActionsList.getAction("ShowTimetableByWeek").setEnabled(false);
+		    ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(false);
+		    ActionsList.getAction("AddSubject").setEnabled(false);
+		    ActionsList.getAction("ManageSubjects").setEnabled(false);
+		    ActionsList.getAction("AddGroup").setEnabled(false);
+		    ActionsList.getAction("ManageGroups").setEnabled(false);
+		    ActionsList.getAction("GenerateGroups").setEnabled(false);
+		}
 	}
 }
 

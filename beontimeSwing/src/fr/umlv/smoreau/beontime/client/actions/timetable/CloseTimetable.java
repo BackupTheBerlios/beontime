@@ -2,7 +2,10 @@ package fr.umlv.smoreau.beontime.client.actions.timetable;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 /**
@@ -33,5 +36,12 @@ public class CloseTimetable extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
+        BoTModel model = mainFrame.getModel();
+        model.setTimetable(null);
+        try {
+            model.fireCloseTimetable();
+        } catch (InterruptedException e) {
+            JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

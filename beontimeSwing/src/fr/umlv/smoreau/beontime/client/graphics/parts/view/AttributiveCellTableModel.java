@@ -112,6 +112,11 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    }
 		    fireTableDataChanged();
 		}
+		
+		public void closeTimetable(BoTEvent e) {
+		    //TODO Mohamed: fermer l'emploi du temps => retirer tous les cours ...
+		}
+
 		public void addCourse(BoTEvent e) {
 		    Course course = e.getCourse();
 	        Calendar beginDate=course.getBeginDate();
