@@ -3,6 +3,8 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
@@ -12,6 +14,7 @@ import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.MaterialFilter;
 import fr.umlv.smoreau.beontime.filter.RoomFilter;
 import fr.umlv.smoreau.beontime.model.element.*;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * RMI implementation of the Element DAO
@@ -158,5 +161,30 @@ public class ElementDaoImpl extends Dao implements ElementDao {
         } finally {
             Hibernate.closeSession();
         }
+	}
+	
+	public Collection getBuildings() throws RemoteException, HibernateException {
+		HashSet buildings = new HashSet();
+
+		// ajout des batiments se trouvant dans la table 'local'
+		Collection rooms = getRooms();
+		for (Iterator i = rooms.iterator(); i.hasNext(); ) {
+			Room room = (Room) i.next();
+			String building = room.getBuildingName();
+			if (building != null)
+				buildings.add(building);
+		}
+		
+		// ajout des batiments se trouvant dans la table 'personne'
+		UserDao userDao = UserDaoImpl.getInstance();
+		Collection users = userDao.getUsers(false);
+		for (Iterator i = users.iterator(); i.hasNext(); ) {
+			User user = (User) i.next();
+			String building = user.getBuildingNameForOffice();
+			if (building != null)
+				buildings.add(building);
+		}
+		
+		return buildings;
 	}
 }

@@ -74,6 +74,16 @@ public class ElementDaoTest extends TestCase {
         } 
     }
     
+    public void testGetBuildings() {
+    	try {
+			assertNotNull(elementDao.getBuildings());
+		} catch (RemoteException e) {
+			assertTrue(false);
+		} catch (HibernateException e) {
+			assertTrue(false);
+		}
+    }
+    
     public static Test suite() {
         return new TestSuite(ElementDaoTest.class);
     }

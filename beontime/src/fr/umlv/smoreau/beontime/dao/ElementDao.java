@@ -17,6 +17,8 @@ import fr.umlv.smoreau.beontime.model.element.*;
  * @author BeOnTime team
  */
 public interface ElementDao extends Remote {
+	public static final int TYPE_ROOM     = 0;
+    public static final int TYPE_MATERIAL = 1;
 
 	public Collection getRooms(RoomFilter filter) throws RemoteException, HibernateException;
 	
@@ -37,5 +39,7 @@ public interface ElementDao extends Remote {
 	public void removeRoom(Room room) throws RemoteException, HibernateException;
 	
 	public void removeMaterial(Material material) throws RemoteException, HibernateException;
+	
+	public Collection getBuildings() throws RemoteException, HibernateException;
 
 }

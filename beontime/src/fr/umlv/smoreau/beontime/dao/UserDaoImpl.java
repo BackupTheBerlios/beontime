@@ -75,6 +75,14 @@ public class UserDaoImpl extends Dao implements UserDao {
 	    return getUsers(filter, true);
 	}
 	
+	public Collection getUsers() throws RemoteException, HibernateException {
+	    return getUsers(null, true);
+	}
+	
+	public Collection getUsers(boolean ldap) throws RemoteException, HibernateException {
+	    return getUsers(null, ldap);
+	}
+	
 	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)

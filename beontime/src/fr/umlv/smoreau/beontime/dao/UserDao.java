@@ -23,6 +23,10 @@ public interface UserDao extends Remote {
 
 
     public Collection getUsers(UserFilter filter) throws RemoteException, HibernateException;
+    
+    public Collection getUsers(boolean ldap) throws RemoteException, HibernateException;
+    
+    public Collection getUsers() throws RemoteException, HibernateException;
 	
 	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException;
 	//TODO virer les throws ?

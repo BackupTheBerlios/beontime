@@ -108,7 +108,7 @@ public class LdapManager {
 			
 			Attributes attrs = sr.getAttributes();
 			Attribute tmp = attrs.get("gidNumber");
-			if (filter.getUserType().equals(UserDao.TYPE_STUDENT) &&
+			if (filter != null && filter.getUserType().equals(UserDao.TYPE_STUDENT) &&
 					(((String)tmp.get()).equals("150") || ((String)tmp.get()).equals("801")))
 				continue;
 			tmp = attrs.get("sn");
@@ -123,7 +123,8 @@ public class LdapManager {
 			tmp = attrs.get("uidNumber");
 			if (tmp != null)
 				person.setIdUser(new Long((String) tmp.get()));
-			person.setUserType(filter.getUserType());
+			if (filter != null)
+				person.setUserType(filter.getUserType());
 
 			result.add(person);
 		}
