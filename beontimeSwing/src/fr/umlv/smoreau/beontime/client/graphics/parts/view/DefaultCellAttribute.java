@@ -139,13 +139,21 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
 
   public void addRow() {
     int[][][] oldSpan = span;
-    int numRows    = oldSpan.length;
+    Color[][] oldForeground=foreground;
+    Color[][] oldBackground=background;
+    Font[][]  oldFont=font;
+    int numRows    = oldSpan.length+1;
     int numColumns = oldSpan[0].length;
-    span = new int[numRows + 1][numColumns][2];
-    System.arraycopy(oldSpan,0,span,0,numRows);
-    for (int i=0;i<numColumns;i++) {
-      span[numRows][i][CellSpan.COLUMN] = 1;
-      span[numRows][i][CellSpan.ROW]    = 1;
+    setSize(new Dimension(numColumns, numRows));
+    //System.arraycopy(oldSpan,0,span,0,numRows);
+    for(int i=0;i<numRows-1;i++){
+    	for(int j=0;j<numColumns;j++){
+    		span[i][j][CellSpan.COLUMN]=oldSpan[i][j][CellSpan.COLUMN];
+    		span[i][j][CellSpan.ROW]=oldSpan[i][j][CellSpan.ROW];
+    		foreground[i][j]=oldForeground[i][j];
+    		background[i][j]=oldBackground[i][j];
+    		font[i][j]=oldFont[i][j];
+    	}
     }
   }
 

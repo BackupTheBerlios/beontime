@@ -80,7 +80,10 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
   			}
   			setText(prtScreen);
   		}
-    	
+  		this.setHorizontalAlignment(JLabel.CENTER);
+  		this.setHorizontalTextPosition(JLabel.CENTER);
+  		this.setVerticalAlignment(JLabel.CENTER);
+  		this.setVerticalTextPosition(JLabel.CENTER);
   }
 }
 

@@ -27,6 +27,9 @@ public class View {
 	private static MainFrame mainFrame;
 	private BoTModel model;
 	private AttributiveCellTableModel ml;
+	private GroupableTableHeader header;
+	private int hour_begin;
+	private int hour_end;
 	/**
 	 * @return Returns the table.
 	 */
@@ -40,7 +43,7 @@ public class View {
     public void init(){
     	UIManager.put(GroupableTableHeader.uiClassID, "fr.umlv.smoreau.beontime.client.graphics.parts.view.GroupableTableHeaderUI");
     	Course[][] data=new Course[6][52];
-    	ml = new AttributiveCellTableModel(model,data,13*4);
+    	ml = new AttributiveCellTableModel(model,data,13*4,this);
         cellAtt =(DefaultCellAttribute)ml.getCellAttribute();
         table = new MultiSpanCellTable(ml);
         table.setDefaultRenderer(Object.class ,new AttributiveCellRenderer());
@@ -79,11 +82,31 @@ public class View {
 			public void mouseExited(MouseEvent e) {
 			}
 		});
-		GroupableTableHeader header = new GroupableTableHeader(table.getColumnModel());
+		header = new GroupableTableHeader(table.getColumnModel());
+		initHeader(8,20);
+		table.setTableHeader(header);
+		jScrollPane=new JScrollPane(table);
+		//header.setSize(table.getWidth(),50);
+		
+		
+    }
+	/**
+	 * @param i
+	 * @param j
+	 */
+	private void initHeader(int deb, int fin) {
+		hour_begin=deb;
+		hour_end=fin;
 		TableColumnModel columns = table.getColumnModel();
-		String [] hours=new String[]{"8H","9H","10H","11H","12H","13H","14H","15H","16H","17H","18H","19H","20H"};
-		ColumnGroup hoursGroup;
+		String [] hours=new String[fin-deb+1];
 		int j=0;
+		for (int i=deb;i<=fin;i++){
+			Integer ind=new Integer(i);
+			hours[j]=ind.toString()+"H";
+			j++;
+		}
+		ColumnGroup hoursGroup;
+		j=0;
 		for(int i=0;i<hours.length;i++){
 			
 			hoursGroup= new ColumnGroup(hours[i]);
@@ -96,12 +119,8 @@ public class View {
 			
 		}
 		header.setResizingAllowed(false);
-		table.setTableHeader(header);
-		jScrollPane=new JScrollPane(table);
-		//header.setSize(table.getWidth(),50);
 		
-		
-    }
+	}
 	/**
 	 * @return Returns the jPanel.
 	 */
@@ -143,5 +162,11 @@ public class View {
 		}
 		Course course=(Course)ml.getValueAt(row,column);
 		return course;
+	}
+	public int getHour_begin() {
+		return hour_begin;
+	}
+	public int getHour_end() {
+		return hour_end;
 	}
 }

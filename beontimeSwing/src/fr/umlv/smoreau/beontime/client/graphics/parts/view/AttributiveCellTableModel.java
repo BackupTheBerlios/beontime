@@ -21,20 +21,23 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	private Course[][] data;
 	private String[] plage=new String[]{"00","15","30","45"};
 	private int rowNb=0;
+	private View view;
 
-	public AttributiveCellTableModel(BoTModel model, int numRows, int numColumns) {
+	public AttributiveCellTableModel(BoTModel model, int numRows, int numColumns,View v) {
 		colNb = numColumns;
 		rowNb=numRows;
+		view=v;
 		data =new Course[numRows][numColumns];
 	    cellAtt = new DefaultCellAttribute(numRows,numColumns);
 	    
 	    model.addBoTListener(new ViewListener());
 	}
 	
-	public AttributiveCellTableModel(BoTModel model, Course[][] data, int nbcolumn) {
+	public AttributiveCellTableModel(BoTModel model, Course[][] data, int nbcolumn,View v) {
 	  	colNb=nbcolumn;
 	  	rowNb=data.length;
 	  	this.data=data;
+	  	view=v;
 	  	cellAtt = new DefaultCellAttribute(data.length,nbcolumn);
 	  	init();
 	  	model.addBoTListener(new ViewListener());
@@ -71,7 +74,32 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	public DefaultCellAttribute getCellAttribute() {
 	    return cellAtt;
 	}
-
+	public void addDataRow(){
+		
+		Course[][] data2=new Course[rowNb+1][colNb];
+		for(int i=0;i<rowNb;i++){
+			for(int j=0;j<colNb;j++){
+				data2[i][j]=data[i][j];
+			}
+		}
+	    for (int i=0;i<colNb;i++) {
+	        data2[rowNb-1][i]=null;
+	      }
+		data=data2;
+	}
+	public void addDataColumn(){
+		
+		Course[][] data2=new Course[rowNb][colNb+1];
+		for(int i=0;i<rowNb;i++){
+			for(int j=0;j<colNb;j++){
+				data2[i][j]=data[i][j];
+			}
+		}
+	    for (int i=0;i<rowNb;i++) {
+	        data2[i][colNb-1]=null;
+	      }
+		data=data2;
+	}
 
 	public void setCellAttribute(CellAttribute newCellAtt) {
 	    int numColumns = getColumnCount();
@@ -98,21 +126,36 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		        Calendar endDate=course.getEndDate();
 		        
 		        int day=beginDate.get(Calendar.DAY_OF_WEEK)-2;
-		        if(day>=0){
-			        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
-			        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));
-			        if (endColumn>startColumn){
-				        int[] columns=new int[(endColumn-startColumn)+1];
-				        for(int j=0;j<=(endColumn-startColumn);j++){
-				        	columns[j]=startColumn+j;
-				        	}
-				        int [] row=new int[]{day};
-				        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
-				        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
-				        setValueAt(course,row[0],columns[0]);
-				        cellAtt.combine(row,columns);
-			        }
+	        	if ((cellAtt.rowSize<7) && (day<0)){
+	        		day=cellAtt.rowSize;
+	        		cellAtt.addRow();
+	        		addDataRow();
+	        	}
+	        	if(day<0){
+	        		day=6;
+	        	}
+	        	int hour_deb=beginDate.get(Calendar.HOUR_OF_DAY);
+	        	int hour_end=endDate.get(Calendar.HOUR_OF_DAY);
+	        	int begin=view.getHour_begin();
+	        	int end=view.getHour_end();
+	        	if((hour_deb<begin)||(hour_end>end)){
+	        		
+	        	}
+		        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
+		        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));
+		        if (endColumn>startColumn){
+			        int[] columns=new int[(endColumn-startColumn)+1];
+			        for(int j=0;j<=(endColumn-startColumn);j++){
+			        	columns[j]=startColumn+j;
+			        	}
+			        int [] row=new int[]{day};
+			        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
+			        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
+			        setValueAt(course,row[0],columns[0]);
+			        cellAtt.combine(row,columns);
+
 		        }
+
 		    }
 		    fireTableDataChanged();
 		}
@@ -127,19 +170,29 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        Calendar beginDate=course.getBeginDate();
 	        Calendar endDate=course.getEndDate();
 	        int day=beginDate.get(Calendar.DAY_OF_WEEK)-2;
+        	if ((cellAtt.rowSize<7) && (day<0)){
+        		day=cellAtt.rowSize;
+        		cellAtt.addRow();
+        		addDataRow();
+        	}
+        	if(day<0){
+        		day=cellAtt.rowSize-1;
+        	}
 	        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
 	        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));
-	        if (endColumn<startColumn) return;
-	        int[] columns=new int[(endColumn-startColumn)+1];
-	        for(int j=0;j<=(endColumn-startColumn);j++){
-	        	columns[j]=startColumn+j;
+	        if (endColumn>startColumn){
+		        int[] columns=new int[(endColumn-startColumn)+1];
+		        for(int j=0;j<=(endColumn-startColumn);j++){
+		        	columns[j]=startColumn+j;
+		        	}
+		        int [] row=new int[]{day};
+		        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
+		        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
+		        setValueAt(course,row[0],columns[0]);
+		        cellAtt.combine(row,columns);
+		        fireTableDataChanged();
+
 	        }
-	        int [] row=new int[]{day};
-	        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
-	        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
-	        setValueAt(course,row[0],columns[0]);
-	        cellAtt.combine(row,columns);
-	        fireTableDataChanged();
 		}
 		
 		public void modifyCourse(BoTEvent e) {
