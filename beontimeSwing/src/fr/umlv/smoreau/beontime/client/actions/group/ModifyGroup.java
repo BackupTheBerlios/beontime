@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyGroupWindow;
  */
 public class ModifyGroup extends Action {
     private static final String NAME = "Modifier le groupe";
-    private static final String ICON = "Edit24.gif";
+    private static final String ICON = "modifier_groupe.png";
 
 
     public ModifyGroup(MainFrame mainFrame) {

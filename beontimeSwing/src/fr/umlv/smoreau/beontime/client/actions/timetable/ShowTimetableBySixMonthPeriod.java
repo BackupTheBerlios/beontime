@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class ShowTimetableBySixMonthPeriod extends Action{
     private static final String NAME = "Afficher l'emploi du temps par semestre";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "affiche_trimestre.png";
 
 
     public ShowTimetableBySixMonthPeriod(MainFrame mainFrame) {

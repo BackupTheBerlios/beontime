@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class MoveDownButton extends Action {
     private static final String NAME = "Descendre le bouton";
-    private static final String ICON = "Down24.gif";
+    private static final String ICON = "bas.png";
 
 
     public MoveDownButton(MainFrame mainFrame) {

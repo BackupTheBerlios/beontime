@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class RemoveButton extends Action {
     private static final String NAME = "Supprimer un bouton de la barre d'outils";
-    private static final String ICON = "Back24.gif";
+    private static final String ICON = "moins_icone.png";
 
 
     public RemoveButton(MainFrame mainFrame) {

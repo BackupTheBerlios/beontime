@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class AddButton extends Action {
     private static final String NAME = "Ajouter un bouton à la barre d'outils";
-    private static final String ICON = "Forward24.gif";
+    private static final String ICON = "plus_icone.png";
 
 
     public AddButton(MainFrame mainFrame) {

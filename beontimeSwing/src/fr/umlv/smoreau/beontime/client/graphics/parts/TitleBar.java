@@ -120,10 +120,10 @@ public class TitleBar extends JPanel {
 		periodChooser = new JDateChooser();
 		//TODO fire ?
 		periodPanel.add(periodChooser, BorderLayout.CENTER);
-		previousButton = new JButton(Action.getImage("Back24.gif"));
+		previousButton = new JButton(Action.getImage("gauche.png"));
 		periodPanel.add(previousButton, BorderLayout.WEST);
 		
-		nextButton = new JButton(Action.getImage("Forward24.gif"));
+		nextButton = new JButton(Action.getImage("droite.png"));
 		periodPanel.add(nextButton, BorderLayout.EAST);
 		
 		previousButton.addActionListener(new ActionListener() {

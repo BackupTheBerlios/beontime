@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.GenerateGroupsWindow;
  */
 public class GenerateGroups extends Action {
     private static final String NAME = "Générer des groupes automatiquement";
-    private static final String ICON = "Print24.gif";
+    private static final String ICON = "groupe_auto.png";
 
 
     public GenerateGroups(MainFrame mainFrame) {

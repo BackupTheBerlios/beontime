@@ -14,7 +14,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageButtonWindow;
  */
 public class ManageButtons extends Action {
     private static final String NAME = "Configurer la barre d'outils";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "gerer_icone.png";
 
 
     public ManageButtons(MainFrame mainFrame) {

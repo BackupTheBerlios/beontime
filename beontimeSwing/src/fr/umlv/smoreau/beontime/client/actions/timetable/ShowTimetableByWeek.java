@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class ShowTimetableByWeek extends Action{
     private static final String NAME = "Afficher l'emploi du temps par semaine";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "affiche_semestre.png";
 
 
     public ShowTimetableByWeek(MainFrame mainFrame) {

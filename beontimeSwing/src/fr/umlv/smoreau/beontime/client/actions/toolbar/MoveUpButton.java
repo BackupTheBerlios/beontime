@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class MoveUpButton extends Action {
     private static final String NAME = "Monter le bouton";
-    private static final String ICON = "Up24.gif";
+    private static final String ICON = "haut.png";
 
 
     public MoveUpButton(MainFrame mainFrame) {
