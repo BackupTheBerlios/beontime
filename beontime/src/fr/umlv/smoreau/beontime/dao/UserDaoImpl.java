@@ -88,62 +88,56 @@ public class UserDaoImpl extends Dao implements UserDao {
 	
 	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
 	    f.setUserType(TYPE_ADMIN);
-
-		return getUsers(f);
+		return getUsers(f, true);
 	}
 	
 	public Collection getSecretaries(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
 	    f.setUserType(TYPE_SECRETARY);
-
-		return getUsers(f);
+		return getUsers(f, false);
 	}
 	
 	public Collection getStudents(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
 	    f.setUserType(TYPE_STUDENT);
-
-		return getUsers(f);
+		return getUsers(f, true);
 	}
 	
 	public Collection getTeachers(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
-	    if (f == null)
-	        f = new UserFilter();
 	    f.setUserType(TYPE_TEACHER);
-
-		return getUsers(f);
+		return getUsers(f, true);
 	}
 	
 	public Collection getAdministrators() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_ADMIN);
-		return getUsers(filter);
+		return getUsers(filter, true);
 	}
 	
 	public Collection getSecretaries() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_SECRETARY);
-		return getUsers(filter);
+		return getUsers(filter, false);
 	}
 	
 	public Collection getStudents() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_STUDENT);
-		return getUsers(filter);
+		return getUsers(filter, true);
 	}
 	
 	public Collection getTeachers() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_TEACHER);
-		return getUsers(filter);
+		return getUsers(filter, true);
+	}
+	
+	public Collection getTeachers(boolean ldap) throws RemoteException, HibernateException {
+	    UserFilter filter = new UserFilter();
+	    filter.setUserType(TYPE_TEACHER);
+		return getUsers(filter, ldap);
 	}
 	
 	public User addUser(User user) throws RemoteException, HibernateException {

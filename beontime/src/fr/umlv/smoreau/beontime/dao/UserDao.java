@@ -44,6 +44,8 @@ public interface UserDao extends Remote {
 	public Collection getStudents() throws RemoteException, HibernateException;
 	
 	public Collection getTeachers() throws RemoteException, HibernateException;
+
+	public Collection getTeachers(boolean ldap) throws RemoteException, HibernateException;
 	
 	public User addUser(User user) throws RemoteException, HibernateException;
 	
