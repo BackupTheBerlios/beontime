@@ -7,13 +7,21 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
+import com.toedter.calendar.JDateChooser;
+
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 
 
@@ -22,7 +30,7 @@ import javax.swing.JRadioButton;
  */
 public class ViewTimetableWindow {
 
-	private static final String TITRE = "Visualiser un empli du temps";
+	private static final String TITRE = "Visualiser un emploi du temps";
 	
 	private JLabel visuEDTLabel;
 	private JLabel choiceEDTLabel;
@@ -36,10 +44,15 @@ public class ViewTimetableWindow {
 	private JRadioButton semestriel;
 	private JRadioButton hebdomadaire;
 	
+	private JDateChooser periodViewEDTDate;
+	
 	private JButton ok;
 	private JButton annuler;
 	
-	private JFrame VTWFrame;
+	
+	private JPanel periodViewEDTPanel = new JPanel();
+	
+	private JDialog VTWFrame;
 	private GridBagLayout VTWLayout = new GridBagLayout();
     private GridBagConstraints layoutConstraints = new GridBagConstraints();
 	
@@ -47,7 +60,7 @@ public class ViewTimetableWindow {
     
 	public ViewTimetableWindow() {
 		
-		VTWFrame = new JFrame(TITRE);
+		VTWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		VTWFrame.getContentPane().setLayout(VTWLayout);
 	    
 	    initViewTimetableWindow();  
@@ -88,10 +101,29 @@ public class ViewTimetableWindow {
 
 		
 		semestriel = new JRadioButton("semestriel",true);
+		semestriel.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				periodViewEDTPanel.remove(periodViewEDTDate);
+				periodViewEDTPanel.add(periodViewEDTJcb);
+				VTWFrame.pack();
+				
+			}
+			
+		});
 		addComponent(VTWLayout,layoutConstraints,semestriel,1,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,10,10));
 		VTWFrame.getContentPane().add(semestriel);		
 		
 		hebdomadaire = new JRadioButton("hebdomadaire");
+		hebdomadaire.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				periodViewEDTPanel.remove(periodViewEDTJcb);
+				periodViewEDTPanel.add(periodViewEDTDate);
+				VTWFrame.pack();
+			}
+			
+		});
 		addComponent(VTWLayout,layoutConstraints,hebdomadaire,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,10,10));
 		VTWFrame.getContentPane().add(hebdomadaire);
 		
@@ -99,14 +131,19 @@ public class ViewTimetableWindow {
 		buttonGroup.add(semestriel);
 		buttonGroup.add(hebdomadaire);
 		
-		
 		periodViewEDTLabel = new JLabel("Veuillez choisir le semestre à visualiser");
 		addComponent(VTWLayout,layoutConstraints,periodViewEDTLabel,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,20,10));
 		VTWFrame.getContentPane().add(periodViewEDTLabel);
 		
+		periodViewEDTDate = new JDateChooser();
+		
 		periodViewEDTJcb = new JComboBox();
-		addComponent(VTWLayout,layoutConstraints,periodViewEDTJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
-		VTWFrame.getContentPane().add(periodViewEDTJcb);
+		periodViewEDTJcb.addItem("1er semestre");
+		periodViewEDTJcb.addItem("2ème semestre");
+		
+		periodViewEDTPanel.add(periodViewEDTJcb);
+		addComponent(VTWLayout,layoutConstraints,periodViewEDTPanel,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
+		VTWFrame.getContentPane().add(periodViewEDTPanel);
 		
 		
 		ok = new JButton("OK");
@@ -126,7 +163,8 @@ public class ViewTimetableWindow {
     public void show() {
        
     	VTWFrame.pack();
-    	VTWFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	VTWFrame.setResizable(false);
+    	VTWFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	VTWFrame.setVisible(true);
     }
     
@@ -147,6 +185,9 @@ public class ViewTimetableWindow {
 
 	public static void main(String[] args){
 		
+		MainFrame frame = MainFrame.getInstance();
+     	frame.open();
+     	
 		ViewTimetableWindow form = new ViewTimetableWindow();
 		form.show();
 		
