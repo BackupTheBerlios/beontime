@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
@@ -9,13 +6,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,23 +24,19 @@ import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.DaoManager;
+import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
+import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
+import fr.umlv.smoreau.beontime.model.Unavailability;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
+
 
 /**
  * @author BeOnTime
  */
 public class SearchAvailabilityWindow {
-	
 	private static final String TITRE = "Rechercher une disponibilité";
-	
-	private JLabel chearchAvailabilityLabel;	
-	private JLabel dateAvailabilityTheLabel;
-	private JLabel startAvailabilityHourLabel;
-	private JLabel startAvailabilityMinuteLabel;
-	private JLabel endAvailabilityHourLabel;
-	private JLabel endAvailabilityMinuteLabel;
-	private JLabel dureeAvailabilityDeLabel;
-	private JLabel dureeAvailabilityALabel;
-	private JLabel result;
 	
 	private JDateChooser dateAvailability;
 	
@@ -53,56 +50,40 @@ public class SearchAvailabilityWindow {
 	
 	private JTextArea resultTextArea;
 	
-	private JButton chearchButton;
-	private JButton ok;
-	private JButton annuler;
-	
 	private JDialog SAWFrame;
 	private GridBagLayout SAWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
 	
 	
 	public SearchAvailabilityWindow () {
-		
 		SAWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		SAWFrame.getContentPane().setLayout(SAWLayout);
 		
 		initSearchAvailabilityWindow();  
-		
 	}
 	
-	public String getSelectedElement() {
-		
-		if (localJrb.isSelected()) 
-			return "local";
-		else 
-			return "materiel";
+	private Calendar getBeginDate() {
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(dateAvailability.getDate());
+	    date.set(Calendar.HOUR_OF_DAY, (new Integer((String) startAvailabilityHourJcb.getSelectedItem())).intValue());
+	    date.set(Calendar.MINUTE, (new Integer((String) startAvailabilityMinuteJcb.getSelectedItem())).intValue());
+	    date.set(Calendar.SECOND, 0);
+	    date.set(Calendar.MILLISECOND, 0);
+	    return date;
 	}
 	
-	public Date getDateAvailability() {
-		return dateAvailability.getDate();
+	private Calendar getEndDate() {
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(dateAvailability.getDate());
+	    date.set(Calendar.HOUR_OF_DAY, (new Integer((String) endAvailabilityHourJcb.getSelectedItem())).intValue());
+	    date.set(Calendar.MINUTE, (new Integer((String) endAvailabilityMinuteJcb.getSelectedItem())).intValue());
+	    date.set(Calendar.SECOND, 0);
+	    date.set(Calendar.MILLISECOND, 0);
+	    return date;
 	}
-	
-	public String getDateAvailabilityString() {
-		return dateAvailability.getDateFormatString();
-	}
-	
-	public String getStartAvailabilityHour() {
-		//je ne sais pas encore sous quelle forme on aura besoin de le reccupérer
-		return null;
-	}
-	
-	public String getEndAvailabilityHour() {
-        //je ne sais pas encore sous quelle forme on aura besoin de le reccupérer
-		return null;
-	}
-	
-	
 	
 	private void initSearchAvailabilityWindow() {
-		
-		
-		chearchAvailabilityLabel = new JLabel("Rechercher la disponibilité d'un ");
+	    JLabel chearchAvailabilityLabel = new JLabel("Rechercher la disponibilité d'un ");
 		addComponent(SAWLayout,layoutConstraints,chearchAvailabilityLabel,1,1,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		SAWFrame.getContentPane().add(chearchAvailabilityLabel);
 		
@@ -120,7 +101,7 @@ public class SearchAvailabilityWindow {
 		
 		
 		
-		dateAvailabilityTheLabel = new JLabel("le");
+		JLabel dateAvailabilityTheLabel = new JLabel("le");
 		addComponent(SAWLayout,layoutConstraints,dateAvailabilityTheLabel,1,2,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(dateAvailabilityTheLabel);
 		
@@ -131,7 +112,7 @@ public class SearchAvailabilityWindow {
 		
 		
 		
-		dureeAvailabilityDeLabel = new JLabel("de");
+		JLabel dureeAvailabilityDeLabel = new JLabel("de");
 		addComponent(SAWLayout,layoutConstraints,dureeAvailabilityDeLabel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(dureeAvailabilityDeLabel);
 		
@@ -140,11 +121,11 @@ public class SearchAvailabilityWindow {
 		addComponent(SAWLayout,layoutConstraints,startAvailabilityHourJcb,2,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		SAWFrame.getContentPane().add(startAvailabilityHourJcb);
 		
-		startAvailabilityHourLabel = new JLabel("heure");
+		JLabel startAvailabilityHourLabel = new JLabel("heure");
 		addComponent(SAWLayout,layoutConstraints,startAvailabilityHourLabel,3,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(startAvailabilityHourLabel);
 		
-		dureeAvailabilityALabel = new JLabel("à");
+		JLabel dureeAvailabilityALabel = new JLabel("à");
 		addComponent(SAWLayout,layoutConstraints,dureeAvailabilityALabel,4,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(dureeAvailabilityALabel);
 		
@@ -154,7 +135,7 @@ public class SearchAvailabilityWindow {
 		addComponent(SAWLayout,layoutConstraints,endAvailabilityHourJcb,5,3,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		SAWFrame.getContentPane().add(endAvailabilityHourJcb);
 		
-		endAvailabilityHourLabel = new JLabel("heure");
+		JLabel endAvailabilityHourLabel = new JLabel("heure");
 		addComponent(SAWLayout,layoutConstraints,endAvailabilityHourLabel,6,3,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(endAvailabilityHourLabel);
 		
@@ -165,7 +146,7 @@ public class SearchAvailabilityWindow {
 		addComponent(SAWLayout,layoutConstraints,startAvailabilityMinuteJcb,2,4,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		SAWFrame.getContentPane().add(startAvailabilityMinuteJcb);
 		
-		startAvailabilityMinuteLabel = new JLabel("min");
+		JLabel startAvailabilityMinuteLabel = new JLabel("min");
 		addComponent(SAWLayout,layoutConstraints,startAvailabilityMinuteLabel,3,4,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(startAvailabilityMinuteLabel);
 		
@@ -175,19 +156,20 @@ public class SearchAvailabilityWindow {
 		addComponent(SAWLayout,layoutConstraints,endAvailabilityMinuteJcb,5,4,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		SAWFrame.getContentPane().add(endAvailabilityMinuteJcb);
 		
-		endAvailabilityMinuteLabel = new JLabel("min");
+		JLabel endAvailabilityMinuteLabel = new JLabel("min");
 		addComponent(SAWLayout,layoutConstraints,endAvailabilityMinuteLabel,6,4,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		SAWFrame.getContentPane().add(endAvailabilityMinuteLabel);
 		
 		
 		
-		chearchButton = new JButton("Rechercher");
-		addComponent(SAWLayout,layoutConstraints,chearchButton,6,5,2,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
-		SAWFrame.getContentPane().add(chearchButton);
+		JButton searchButton = new JButton("Rechercher");
+		searchButton.addActionListener(new ActionSearch());
+		addComponent(SAWLayout,layoutConstraints,searchButton,6,5,2,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+		SAWFrame.getContentPane().add(searchButton);
 		
 		
 		
-		result = new JLabel("Résultat :");
+		JLabel result = new JLabel("Résultat :");
 		addComponent(SAWLayout,layoutConstraints,result,1,6,2,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,0,10));
 		SAWFrame.getContentPane().add(result);
 		
@@ -195,13 +177,14 @@ public class SearchAvailabilityWindow {
 		resultTextArea = new JTextArea();
 		resultTextArea.setLineWrap(true);
 		resultTextArea.setRows(4);
+		resultTextArea.setEditable(false);
 		JScrollPane pane= new JScrollPane(resultTextArea);
 		addComponent(SAWLayout,layoutConstraints,pane,1,7,7,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,20,10));
 		SAWFrame.getContentPane().add(pane);
 		
 		
 		
-		annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annuler");
 		annuler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             	SAWFrame.dispose();
@@ -213,19 +196,16 @@ public class SearchAvailabilityWindow {
 	
 	
 	private void initNumberJcb(JComboBox jcb, int start, int end) {
-		
 		for(int i=start;i<=end;i++) {
 			jcb.addItem(""+i);
 		}
 	}
 	
 	private void initMinuteJcb(JComboBox jcb) {
-		
 		String [] tabMin = new String[] {"00","15","30","45"};
 		
 		for (int i=0;i<tabMin.length;i++) {
 			jcb.addItem(tabMin[i]);
-			
 		}
 	}
 	
@@ -237,11 +217,11 @@ public class SearchAvailabilityWindow {
 		SAWFrame.pack();
 		SAWFrame.setResizable(false);
 		SAWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		SAWFrame.setLocationRelativeTo(null);
 		SAWFrame.setVisible(true);
 	}
 	
 	private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
-		
 		constraints. gridx= gridx;
 		constraints. gridy = gridy;
 		constraints. gridwidth= gridwidth;
@@ -253,17 +233,67 @@ public class SearchAvailabilityWindow {
 		constraints.insets = insets;
 		
 		gbLayout.setConstraints(comp,constraints);
-		
 	}
 	
 	
-	public static void main(String[] args){
-		
-		MainFrame frame = MainFrame.getInstance();
-		frame.open();
-		
-		SearchAvailabilityWindow form = new SearchAvailabilityWindow();
-		form.show();
-		
-	}
+    private class ActionSearch implements ActionListener {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent arg0) {
+            UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
+            
+            try {
+                boolean isRoom = localJrb.isSelected();
+                ArrayList elements = null;
+
+	            UnavailabilityFilter filter = new UnavailabilityFilter();
+	            if (isRoom) {
+	    			filter.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_ROOM));
+	    			elements = (ArrayList) DaoManager.getElementDao().getRooms();
+	            } else {
+	                filter.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_MATERIAL));
+	                elements = (ArrayList) DaoManager.getElementDao().getMaterials();
+	            }
+	            
+	            Collection unavailabilities = unavailabilityDao.getUnavailabilities(filter);
+	            Calendar beginDate = getBeginDate();
+	            Calendar endDate = getEndDate();
+	            
+	            for (Iterator i = unavailabilities.iterator(); i.hasNext(); ) {
+	                Unavailability unavailability = (Unavailability) i.next();
+	                
+	                if ((beginDate.getTimeInMillis() < unavailability.getBeginDate().getTimeInMillis() && endDate.getTimeInMillis() > unavailability.getBeginDate().getTimeInMillis()) ||
+	                        (beginDate.getTimeInMillis() < unavailability.getEndDate().getTimeInMillis() && endDate.getTimeInMillis() > unavailability.getEndDate().getTimeInMillis()) ||
+	                        (beginDate.getTimeInMillis() >= unavailability.getBeginDate().getTimeInMillis() && endDate.getTimeInMillis() <= unavailability.getEndDate().getTimeInMillis()) ||
+	                        (beginDate.getTimeInMillis() <= unavailability.getBeginDate().getTimeInMillis() && endDate.getTimeInMillis() >= unavailability.getEndDate().getTimeInMillis())) {
+	                    Object del = null;
+	                    if (isRoom)
+	                        del = new Room(unavailability.getIdUnavailabilitySubject());
+	                    else
+	                        del = new Material(unavailability.getIdUnavailabilitySubject());
+	                    elements.remove(del);
+	                }
+	            }
+	            
+	            StringBuffer result = new StringBuffer();
+	            for (Iterator i = elements.iterator(); i.hasNext(); ) {
+	                if (result.length() != 0)
+                        result.append('\n');
+	                if (isRoom) {
+	                    Room room = (Room) i.next();
+	                    result.append(room.getName());
+	                } else {
+	                    Material material = (Material) i.next();
+	                    result.append(material.getName());
+	                }
+	            }
+	            
+	            resultTextArea.setText(result.toString());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+                SAWFrame.dispose();
+            }
+        }
+    }
 }
