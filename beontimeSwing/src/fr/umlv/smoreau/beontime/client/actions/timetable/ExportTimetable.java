@@ -534,58 +534,7 @@ public class ExportTimetable extends Action {
 					ExportTimetable.exportTXT(file);		
 					return;
 				}
-				
-				/*
-				
-				JPanel panel = new JPanel();
-				panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-				
-				JLabel subjectHeader = new JLabel(createSubjectHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
-				subjectHeader.setFont(new Font("Arial", Font.BOLD, 16));
-				subjectHeader.setHorizontalTextPosition(JLabel.CENTER);
-				
-				panel.add(subjectHeader);
-				panel.add(Box.createVerticalStrut(5));
-				
-				JLabel responsibleHeader = null;
-				
-				if (MainFrame.getInstance().getModel().getTimetable().getFormation() != null) {
-					responsibleHeader = new JLabel( createResponsableHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
-					responsibleHeader.setFont(new Font("Arial", Font.BOLD, 16));
-					responsibleHeader.setHorizontalTextPosition(JLabel.CENTER);
-					
-					panel.add(responsibleHeader);
-					panel.add(Box.createVerticalStrut(10));
-				}
-				
-				JLabel dateheader = new JLabel( createDateHeader(MainFrame.getInstance().getModel().getTimetable()), JLabel.CENTER);
-				dateheader.setFont(new Font("Arial", Font.BOLD, 16));
-				dateheader.setHorizontalTextPosition(JLabel.CENTER);
-				
-				panel.add(dateheader,BorderLayout.CENTER);
-				panel.setBackground(Color.WHITE);
-				panel.setBorder(BorderFactory.createEmptyBorder(10,0,20,0));
-				
-				
-				
-				JFrame frame = new JFrame();
-				JScrollPane pane = MainFrame.getInstance().getView().getJScrollPane();
-				
-				
-				frame.getContentPane().add(panel, BorderLayout.NORTH);
-				frame.getContentPane().add(pane, BorderLayout.CENTER);
-				
-				
-				int nbDay = MainFrame.getInstance().getView() .getTable().getModel().getRowCount();
-				
-				if((nbDay ==6) && (responsibleHeader == null))
-					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 537+107);
-				else if((nbDay ==6) && (responsibleHeader != null))
-					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 537+136);
-				else if ((nbDay == 7) && (responsibleHeader == null))
-					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 615+107);
-				else if ((nbDay == 7) && (responsibleHeader != null))
-					frame.setSize(new Double(pane.getSize().getWidth()).intValue(), 615+136);*/
+		
 				
 				JFrame frame = organizeTask();
 				frame.setVisible(true);
