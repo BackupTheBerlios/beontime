@@ -20,7 +20,6 @@ import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.timetable.CourseType;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
@@ -109,17 +108,9 @@ public class PasteCourse extends Action {
         	    Collection materials = window.getCourseEquipment();
         	    for (Iterator i = materials.iterator(); i.hasNext(); )
         	        course.addMaterial((Material) i.next());
-        	    
-        	    Collection types = DaoManager.getTimetableDao().getTypesCourse();
-                String tmp = window.getTypeCourse();
-                for (Iterator i = types.iterator(); i.hasNext(); ) {
-                    CourseType type = (CourseType) i.next();
-                    if (tmp.equals(type.getNameCourseType())) {
-                        course.setIdCourseType(type);
-                        break;
-                    }
-                }
-        	    
+
+                course.setIdCourseType(DaoManager.getTimetableDao().getTypeCourse(window.getTypeCourse()));
+
 	            course = DaoManager.getTimetableDao().addCourse(course);
 
 	            if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&

@@ -9,6 +9,7 @@ import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
@@ -39,8 +40,14 @@ public class RemoveCourse extends Action {
             Timetable timetable = mainFrame.getModel().getTimetable();
             try {
                 course = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_GROUPS_SUBJECTS, TimetableDao.JOIN_TEACHERS_DIRECTING});
-                
+
+                // suppression des indisponibilités qui en découlent
+                UnavailabilityFilter filter = new UnavailabilityFilter();
+                filter.setIdCourse(course.getIdCourse());
+                DaoManager.getAvailabilityDao().removeUnavailability(filter);
+
                 DaoManager.getTimetableDao().removeCourse(course);
+
                 timetable.removeCourse(course);
                 mainFrame.setCourseSelected(null);
                 mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_REMOVE);

@@ -14,12 +14,13 @@ import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
+import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
+import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.timetable.CourseType;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
@@ -86,16 +87,8 @@ public class AddCourse extends Action {
     	        course.addMaterial((Material) i.next());
 
     	    try {
-                Collection types = DaoManager.getTimetableDao().getTypesCourse();
-                String tmp = window.getTypeCourse();
-                for (Iterator i = types.iterator(); i.hasNext(); ) {
-                    CourseType type = (CourseType) i.next();
-                    if (tmp.equals(type.getNameCourseType())) {
-                        course.setIdCourseType(type);
-                        break;
-                    }
-                }
-                
+                course.setIdCourseType(DaoManager.getTimetableDao().getTypeCourse(window.getTypeCourse()));
+
                 for (int i = 0; i < window.getNbWeeksCourse(); ++i) {
             	    Calendar beginDate = Calendar.getInstance();
             	    beginDate.setTime(window.getDateCourse());
@@ -116,7 +109,50 @@ public class AddCourse extends Action {
                     course.setEndDate(endDate);
 	                
                     course = DaoManager.getTimetableDao().addCourse(course);
-                    
+
+
+                    // ajoute les indisponibilités qui en découlent
+                    UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
+
+                    Unavailability unavailability = new Unavailability();
+                    unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_COURSE));
+                    unavailability.setIdUnavailabilitySubject(course.getIdCourse());
+                    unavailability.setBeginDate(course.getBeginDate());
+                    unavailability.setEndDate(course.getEndDate());
+                    unavailability.setIdCourse(course.getIdCourse());
+                    unavailability.setDescription(UnavailabilityDao.AUTO_DESCRIPTION);
+                    unavailabilityDao.addUnavailability(unavailability);
+
+                    for (Iterator j = course.getGroupsSubjectsTakingPart().iterator(); j.hasNext(); ) {
+                        TakePartGroupSubjectCourse tmp = (TakePartGroupSubjectCourse) j.next();
+                        unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_GROUP));
+                        unavailability.setIdUnavailabilitySubject(tmp.getIdGroup());
+                        unavailabilityDao.addUnavailability(unavailability);
+                    }
+
+                    for (Iterator j = course.getTeachersDirecting().iterator(); j.hasNext(); ) {
+                        IsDirectedByCourseTeacher tmp = (IsDirectedByCourseTeacher) j.next();
+                        unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_TEACHER));
+                        unavailability.setIdUnavailabilitySubject(tmp.getIdTeacher());
+                        unavailabilityDao.addUnavailability(unavailability);
+                    }
+
+                    for (Iterator j = course.getMaterials().iterator(); j.hasNext(); ) {
+                        Material tmp = (Material) j.next();
+                        unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_MATERIAL));
+                        unavailability.setIdUnavailabilitySubject(tmp.getIdMaterial());
+                        unavailabilityDao.addUnavailability(unavailability);
+                    }
+
+                    for (Iterator j = course.getRooms().iterator(); j.hasNext(); ) {
+                        Room tmp = (Room) j.next();
+                        unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_ROOM));
+                        unavailability.setIdUnavailabilitySubject(tmp.getIdRoom());
+                        unavailabilityDao.addUnavailability(unavailability);
+                    }
+
+
+
                     if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&
                             course.getEndDate().getTimeInMillis() <= mainFrame.getEndPeriod().getTimeInMillis()) {
 	                    course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getStartHour());
