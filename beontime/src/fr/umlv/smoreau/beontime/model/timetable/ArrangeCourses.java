@@ -131,22 +131,30 @@ public class ArrangeCourses implements Serializable {
 	        while (i.hasNext()) {
 	            Course c2 = (Course) i.next();
 	            
-	            if (c1.getEndDate().getTimeInMillis() > c2.getBeginDate().getTimeInMillis()) {
-	                if (cs.getCourses().size() == 0)
-	                    cs.addCourse(c1);
-	                cs.addCourse(c2);
-	            } else {
-	                if (cs.getCourses().size() != 0) {
+	            if (cs.getCourses().size() != 0) {
+	                if ((cs.getEndDate().get(Calendar.HOUR_OF_DAY) * 60 + cs.getEndDate().get(Calendar.MINUTE)) >
+	                        (c2.getBeginDate().get(Calendar.HOUR_OF_DAY) * 60 + c2.getBeginDate().get(Calendar.MINUTE))) {
+	                    cs.addCourse(c2);
+	                } else {
 	                    tmp.add(cs);
 	                    cs = new Courses();
+	                    c1 = c2;
 	                }
-	                tmp.add(c1);
+	            } else {
+		            if ((c1.getEndDate().get(Calendar.HOUR_OF_DAY) * 60 + c1.getEndDate().get(Calendar.MINUTE)) >
+		                    (c2.getBeginDate().get(Calendar.HOUR_OF_DAY) * 60 + c2.getBeginDate().get(Calendar.MINUTE))) {
+		                cs.addCourse(c1);
+		                cs.addCourse(c2);
+		                c1 = null;
+		            } else {
+		                tmp.add(c1);
+		                c1 = c2;
+		            }
 	            }
-	            c1 = c2;
 	        }
 	        if (cs.getCourses().size() != 0)
                 tmp.add(cs);
-	        else
+	        else if (c1 != null)
 	            tmp.add(c1);
         }
         return tmp;
@@ -212,8 +220,11 @@ public class ArrangeCourses implements Serializable {
         public int compare(Object o1, Object o2) {
             Course course1 = (Course) o1;
             Course course2 = (Course) o2;
+            
+            Integer begin1 = new Integer(course1.getBeginDate().get(Calendar.HOUR_OF_DAY) * 60 + course1.getBeginDate().get(Calendar.MINUTE));
+            Integer begin2 = new Integer(course2.getBeginDate().get(Calendar.HOUR_OF_DAY) * 60 + course2.getBeginDate().get(Calendar.MINUTE));
 
-            return course1.getBeginDate().compareTo(course2.getBeginDate());
+            return begin1.compareTo(begin2);
         }
     }
 }

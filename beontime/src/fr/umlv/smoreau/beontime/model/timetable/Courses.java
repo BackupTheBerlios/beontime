@@ -34,9 +34,11 @@ public class Courses {
         if (courses.size() == 1) {
             beginDate.setTime(course.getBeginDate().getTime());
             endDate.setTime(course.getEndDate().getTime());
-        } else if (course.getBeginDate().getTimeInMillis() < beginDate.getTimeInMillis()) {
+        } else if (course.getBeginDate().get(Calendar.HOUR_OF_DAY) * 60 + course.getBeginDate().get(Calendar.MINUTE) < 
+                beginDate.get(Calendar.HOUR_OF_DAY) * 60 + beginDate.get(Calendar.MINUTE)) {
             beginDate.setTime(course.getBeginDate().getTime());
-        } else if (course.getEndDate().getTimeInMillis() > endDate.getTimeInMillis()) {
+        } else if (course.getEndDate().get(Calendar.HOUR_OF_DAY) * 60 + course.getEndDate().get(Calendar.MINUTE) > 
+                endDate.get(Calendar.HOUR_OF_DAY) * 60 + endDate.get(Calendar.MINUTE)) {
             endDate.setTime(course.getEndDate().getTime());
         }
         if (course.getSubject() != null) {
