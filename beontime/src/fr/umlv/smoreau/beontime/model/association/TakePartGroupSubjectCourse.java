@@ -1,9 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
-import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.base.BaseTakePartGroupSubjectCourse;
-import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
 
 /**
  * This is the object class that relates to the Participe_Groupe_Matiere_Cours table.
@@ -20,9 +17,9 @@ public class TakePartGroupSubjectCourse extends BaseTakePartGroupSubjectCourse {
 	 * Constructor for primary key
 	 */
 	public TakePartGroupSubjectCourse (
-	        Subject _idSubject,
-			Group _idGroup,
-			Course _idCourse) {
+	        java.lang.Long _idSubject,
+	        java.lang.Long _idGroup,
+	        java.lang.Long _idCourse) {
 		super(_idSubject, _idGroup, _idCourse);
 	}
 

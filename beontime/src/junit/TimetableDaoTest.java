@@ -96,17 +96,17 @@ public class TimetableDaoTest extends TestCase {
         
         	// modification du cours, relation avec la matière et le groupe
 	        TakePartGroupSubjectCourse participe = new TakePartGroupSubjectCourse();
-	        participe.setIdCourse(course);
+	        participe.setIdCourse(course.getIdCourse());
 	        Group group = new Group();
 	        group.setIdFormation(new Long(1));
 	        group.setHeading("groupe pour essayer");
             groupDao.addGroup(group);
-	        participe.setIdGroup(group);
+	        participe.setIdGroup(group.getIdGroup());
 	        Subject subject = new Subject();
 	        subject.setIdFormation(new Long(2));
 	        subject.setIdTeacher(new Long(5));
             timetableDao.addSubject(subject);
-	        participe.setIdSubject(subject);
+	        participe.setIdSubject(subject.getIdSubject());
 	        course.addGroupSubjectTakingPart(participe);
             timetableDao.modifyCourse(course);
 
@@ -143,7 +143,7 @@ public class TimetableDaoTest extends TestCase {
     
     public void testGetTimetable() {
         try {
-	        Timetable timetable = new Timetable(new Formation(new Long(3)));
+	        Timetable timetable = new Timetable(new Formation(new Long(1)));
 	        TimetableFilter filter = new TimetableFilter(timetable);
 	        assertNotNull(timetableDao.getTimetable(filter));
         } catch (RemoteException e2) {

@@ -12,9 +12,9 @@ public class _TakePartGroupSubjectCourseFilter extends TakePartGroupSubjectCours
     
     static {
         corres = new HashMap();
-        corres.put("IdGroup.IdGroup", "id_groupe");
-        corres.put("IdCourse.IdCourse", "id_cours");
-        corres.put("IdSubject.IdSubject", "id_matiere");
+        corres.put("IdGroup", "id_groupe");
+        corres.put("IdCourse", "id_cours");
+        corres.put("IdSubject", "id_matiere");
     }
 
 

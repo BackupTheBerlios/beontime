@@ -35,4 +35,14 @@ public class Course extends BaseCourse {
 	}
 
 /*[CONSTRUCTOR MARKER END]*/
+	
+	private Subject _subject;
+	
+	public Subject getSubject() {
+	    return _subject;
+	}
+	
+	public void setSubject(Subject subject) {
+	    this._subject = subject;
+	}
 }

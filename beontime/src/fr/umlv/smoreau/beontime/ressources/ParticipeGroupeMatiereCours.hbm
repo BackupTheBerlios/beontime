@@ -6,7 +6,7 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" table="participe_groupe_matiere_cours">
 		<composite-id>
-			<key-many-to-one
+			<!--key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.timetable.Subject"
 				column="id_matiere"
 				name="IdSubject"
@@ -20,6 +20,21 @@
 				class="fr.umlv.smoreau.beontime.model.timetable.Course"
 				column="id_cours"
 				name="IdCourse"
+			 /-->
+			 <key-property
+				column="id_matiere"
+				name="IdSubject"
+				type="java.lang.Long"
+			 />
+			<key-property
+				column="id_groupe"
+				name="IdGroup"
+				type="java.lang.Long"
+			 />
+			<key-property
+				column="id_cours"
+				name="IdCourse"
+				type="java.lang.Long"
 			 />
 		</composite-id>
 	</class>

@@ -2,10 +2,7 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
-import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
 
 
 /**
@@ -30,9 +27,9 @@ public abstract class BaseTakePartGroupSubjectCourse implements Serializable {
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private Subject _idSubject;
-	private Group _idGroup;
-	private Course _idCourse;
+	private java.lang.Long _idSubject;
+	private java.lang.Long _idGroup;
+	private java.lang.Long _idCourse;
 
 	// constructors
 	public BaseTakePartGroupSubjectCourse () {
@@ -43,11 +40,11 @@ public abstract class BaseTakePartGroupSubjectCourse implements Serializable {
 	 * Constructor for primary key
 	 */
 	public BaseTakePartGroupSubjectCourse (
-		Subject _idSubject,
-		Group _idGroup,
-		Course _idCourse) {
-
-		this.setIdSubject(_idSubject);
+	        java.lang.Long _idSubject,
+	        java.lang.Long _idGroup,
+	        java.lang.Long _idCourse) {
+	    
+	    this.setIdSubject(_idSubject);
 		this.setIdGroup(_idGroup);
 		this.setIdCourse(_idCourse);
 		initialize();
@@ -56,29 +53,29 @@ public abstract class BaseTakePartGroupSubjectCourse implements Serializable {
 	protected void initialize () {}
 
 
-	public Subject getIdSubject () {
+	public java.lang.Long getIdSubject () {
 		return _idSubject;
 	}
 
-	public void setIdSubject (Subject _idSubject) {
+	public void setIdSubject (java.lang.Long _idSubject) {
 		hashCode = Integer.MIN_VALUE;
 		this._idSubject = _idSubject;
 	}
 
-	public Group getIdGroup () {
+	public java.lang.Long getIdGroup () {
 		return _idGroup;
 	}
 
-	public void setIdGroup (Group _idGroup) {
+	public void setIdGroup (java.lang.Long _idGroup) {
 		hashCode = Integer.MIN_VALUE;
 		this._idGroup = _idGroup;
 	}
 
-	public Course getIdCourse () {
+	public java.lang.Long getIdCourse () {
 		return _idCourse;
 	}
 
-	public void setIdCourse (Course _idCourse) {
+	public void setIdCourse (java.lang.Long _idCourse) {
 		hashCode = Integer.MIN_VALUE;
 		this._idCourse = _idCourse;
 	}

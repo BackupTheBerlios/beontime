@@ -111,6 +111,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Timetable timetable = new Timetable();
             FormationDao formationDao = FormationDaoImpl.getInstance();
             Collection c = formationDao.getFormations(new FormationFilter(filter.getFormation()));
+            if (c == null || c.size() == 0)
+                return null;
             timetable.setFormation((Formation) c.toArray()[0]);
 
             Subject subject = new Subject();
@@ -125,6 +127,19 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             Course course = new Course();
             course.setIdFormation(filter.getFormation().getIdFormation());
             timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
+
+            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
+                Course tmp = (Course) i.next();
+                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
+                f.setIdCourse(tmp.getIdCourse());
+                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
+                if (co != null && co.size() > 0) {
+	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
+	                SubjectFilter s = new SubjectFilter(new Subject(takePart.getIdSubject()));
+	                co = get(TABLE_SUBJECT, s, Hibernate.getCurrentSession());
+	                tmp.setSubject((Subject) co.toArray()[0]);
+                }
+            }
             
             UserFilter userFilter = new UserFilter();
             userFilter.setIdUser(timetable.getFormation().getIdTeacher());
@@ -132,8 +147,6 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             UserDao userDao = UserDaoImpl.getInstance();
             c = userDao.getUsers(userFilter);
             timetable.setPersonInCharge((User) c.toArray()[0]);
-            
-            //TODO manque la relation ternaire ...
 
             return timetable;
         } finally {
