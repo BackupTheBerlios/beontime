@@ -76,7 +76,7 @@ public class ModifyCourse extends Action {
             if (window.isOk()) {
         	    Calendar beginDate = Calendar.getInstance();
         	    beginDate.setTime(window.getDateCourse());
-        	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
+        	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour() + (beginDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
         	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
         	    beginDate.set(Calendar.SECOND, 0);
         	    beginDate.set(Calendar.MILLISECOND, 0);
@@ -84,7 +84,7 @@ public class ModifyCourse extends Action {
         	    
         	    Calendar endDate = Calendar.getInstance();
         	    endDate.setTime(window.getDateCourse());
-        	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+1);
+        	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour() + (beginDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
         	    endDate.set(Calendar.MINUTE, window.getEndMinute());
         	    endDate.set(Calendar.SECOND, 0);
         	    endDate.set(Calendar.MILLISECOND, 0);
