@@ -33,7 +33,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public class AddModifySubjectWindow {
 	private static final String TITRE_AJOUTER = "Ajouter une matière";
-	private static final String TITRE_MODIFIER = "Ajouter une matière";
+	private static final String TITRE_MODIFIER = "Modifier la matière";
 	
 	public static final int TYPE_ADD = 0;
 	public static final int TYPE_MODIFY = 1;
