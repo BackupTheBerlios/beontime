@@ -19,7 +19,10 @@ public class View {
     }
     public void init(){
     	UIManager.put(GroupableTableHeader.uiClassID, "fr.umlv.smoreau.beontime.client.graphics.parts.view.GroupableTableHeaderUI");
-    	JTable table = new JTable(6,52);
+    	JTable table;
+    	Object[][] obj=new Object[6][52];
+    	String [] subHead=new String[]{"00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45"};
+    	table=new JTable(obj,subHead);
 		GroupableTableHeader header = new GroupableTableHeader(table.getColumnModel());
 		TableColumnModel columns = table.getColumnModel();
 		String [] hours=new String[]{"8H","9H","10H","11H","12H","13H","14H","15H","16H","17H","18H","19H","20H"};
