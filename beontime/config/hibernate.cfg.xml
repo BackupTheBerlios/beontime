@@ -6,14 +6,15 @@
 <hibernate-configuration>
 	<session-factory>
 		<!-- local connection properties -->
-		<property name="hibernate.connection.url">
-			jdbc:postgresql://saadouni.dyndns.org:5432/BoT_db2
-		</property>
 		<property name="hibernate.connection.driver_class">
 			org.postgresql.Driver
 		</property>
+		<!-- paramètres inscris dans le fichier databases.properties -->
+		<!--property name="hibernate.connection.url">
+			jdbc:postgresql://saadouni.dyndns.org:5432/BoT_db2
+		</property>
 		<property name="hibernate.connection.username">bot</property>
-		<property name="hibernate.connection.password">bot</property>
+		<property name="hibernate.connection.password">bot</property-->
 		<!-- property name="hibernate.connection.pool_size"></property -->
 		<!-- dialect for PostgreSQL -->
 		<property name="dialect">

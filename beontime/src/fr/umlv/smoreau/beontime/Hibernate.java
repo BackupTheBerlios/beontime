@@ -11,13 +11,23 @@ import net.sf.hibernate.cfg.Configuration;
  * @author BeOnTime
  */
 public class Hibernate {
-    private static final File CONFIG_HIBERNATE = new File("config/hibernate.cfg.xml");
+    private static final String CONFIG_HIBERNATE = "config/hibernate.cfg.xml";
+
     private static SessionFactory sessionFactory;
     private static final ThreadLocal session = new ThreadLocal();
 
     static {
         try {
-            sessionFactory = new Configuration().configure(CONFIG_HIBERNATE).buildSessionFactory();
+            Configuration cfg = new Configuration().configure(new File(CONFIG_HIBERNATE));
+            StringBuffer url = new StringBuffer("jdbc:postgresql://");
+            url.append(DatabasesProperties.getSqlHost()).append(":");
+            url.append(DatabasesProperties.getSqlPort()).append("/");
+            url.append(DatabasesProperties.getSqlDatabaseName());
+            cfg.setProperty("hibernate.connection.url",url.toString());
+            cfg.setProperty("hibernate.connection.username",DatabasesProperties.getSqlUserName());
+            cfg.setProperty("hibernate.connection.password",DatabasesProperties.getSqlPassword());
+
+            sessionFactory = cfg.buildSessionFactory();
         } catch (HibernateException e) {
             throw new RuntimeException("Problème de configuration Hibernate : " + e.getMessage(), e);
         }

@@ -25,16 +25,13 @@ import fr.umlv.smoreau.beontime.dao.UserFilter;
  * @author BeOnTime
  */
 public class LdapManager {
-    private static String CONTEXT = "com.sun.jndi.ldap.LdapCtxFactory";
-    private static String HOST = "ldap://ldapetud.univ-mlv.fr:389";
-    private static String BASE_ETUDIANT = "ou=Etudiant,dc=univ-mlv,dc=fr";
-    private static String BASE_USERS    = "ou=Users,ou=Etudiant,dc=univ-mlv,dc=fr";
-    private static String BASE_GROUPS   = "ou=Groups,ou=Etudiant,dc=univ-mlv,dc=fr";
-
     private static NamingEnumeration search(String base, Attributes matchAttrs) throws NamingException {
         Hashtable env = new Hashtable();
-        env.put(Context.INITIAL_CONTEXT_FACTORY, CONTEXT);
-        env.put(Context.PROVIDER_URL, HOST);
+        env.put(Context.INITIAL_CONTEXT_FACTORY, DatabasesProperties.getLdapContext());
+        StringBuffer url = new StringBuffer("ldap://");
+        url.append(DatabasesProperties.getLdapHost()).append(":");
+        url.append(DatabasesProperties.getLdapPort());
+        env.put(Context.PROVIDER_URL, url.toString());
         env.put("java.naming.ldap.version", "3");
        
         DirContext ctx = new InitialDirContext(env);
@@ -67,7 +64,7 @@ public class LdapManager {
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
 			matchAttrs.put(new BasicAttribute("gidNumber","801"));
-			NamingEnumeration items = search(BASE_USERS,matchAttrs);
+			NamingEnumeration items = search(DatabasesProperties.getLdapBase("users"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();
@@ -112,7 +109,7 @@ public class LdapManager {
 	public static Collection getFormations(FormationFilter filter) {
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
-			NamingEnumeration items = search(BASE_GROUPS,matchAttrs);
+			NamingEnumeration items = search(DatabasesProperties.getLdapBase("groups"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();
