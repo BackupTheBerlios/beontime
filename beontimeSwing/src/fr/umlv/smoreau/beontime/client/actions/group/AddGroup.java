@@ -16,7 +16,7 @@ import fr.umlv.smoreau.beontime.model.Group;
 public class AddGroup extends Action {
     private static final String NAME = "Créer un groupe d'étudiants";
     private static final String ICON = "creer_groupe.png";
-    private static final String SMALL_ICON = "creer_groupee_small.png";
+    private static final String SMALL_ICON = "creer_groupe_small.png";
 
 
     public AddGroup(MainFrame mainFrame) {
