@@ -20,8 +20,8 @@ public class FilterUtils {
                 
                 if (methodName.indexOf(".") != -1)
                     methodName = (methodName.split("\\."))[0];
-                Method method = classOut.getMethod("get"+methodName, null);
-                classIn.getMethod("set"+methodName, new Class[] {method.getReturnType()}).invoke(in,new Object[] {method.invoke(out,null)});
+                Method method = classOut.getMethod("get"+methodName, (java.lang.Class[]) null);
+                classIn.getMethod("set"+methodName, new Class[] {method.getReturnType()}).invoke(in,new Object[] {method.invoke(out,(java.lang.Object[]) null)});
             }
         }
     }
@@ -41,7 +41,7 @@ public class FilterUtils {
 	        Object obj = object;
 	        for (int j = 0; j < split.length; ++j) {
 	            Class clazz = obj.getClass();
-	            obj = clazz.getMethod("get"+split[j], null).invoke(obj, null);
+	            obj = clazz.getMethod("get"+split[j], (java.lang.Class[]) null).invoke(obj, (java.lang.Object[]) null);
 	        }
 
 	        if (obj != null) {
