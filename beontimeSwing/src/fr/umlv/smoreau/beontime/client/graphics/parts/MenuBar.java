@@ -168,8 +168,8 @@ public class MenuBar extends JMenuBar {
 		    ActionsList.getAction("ExportTimetable").setEnabled(true);
 		    ActionsList.getAction("ShowTimetableVertical").setEnabled(true);
 		    ActionsList.getAction("ShowTimetableHorizontal").setEnabled(true);
-		    ActionsList.getAction("ShowTimetableByWeek").setEnabled(true);
-		    ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
+		    //ActionsList.getAction("ShowTimetableByWeek").setEnabled(true);
+		    //ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
 		    ActionsList.getAction("AddSubject").setEnabled(true);
 		    ActionsList.getAction("ManageSubjects").setEnabled(true);
 		    ActionsList.getAction("AddGroup").setEnabled(true);
