@@ -1,10 +1,14 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts;
 
+import java.security.InvalidParameterException;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import fr.umlv.smoreau.beontime.client.actions.About;
+import fr.umlv.smoreau.beontime.client.actions.ViewAllFunctionalities;
+import fr.umlv.smoreau.beontime.client.actions.authentication.ModifyDBParameters;
 import fr.umlv.smoreau.beontime.client.actions.authentication.Quit;
 import fr.umlv.smoreau.beontime.client.actions.availability.AddUnavailability;
 import fr.umlv.smoreau.beontime.client.actions.availability.ManageUnavailabilities;
@@ -35,6 +39,7 @@ import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
 import fr.umlv.smoreau.beontime.client.actions.user.AddUser;
 import fr.umlv.smoreau.beontime.client.actions.user.ManageUsers;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
  * @author BeOnTime
@@ -42,112 +47,135 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class MenuBar extends JMenuBar {
 	private JMenu [] tabMenu;
 	private MainFrame mainFrame;
+	private boolean isSecretary;
+	private boolean all;
 
-	public MenuBar(MainFrame mainFrame) {
+	public MenuBar(MainFrame mainFrame, String userType) {
+	    this.all = false;
+	    if (UserDao.TYPE_SECRETARY.equals(userType))
+	        this.isSecretary = true;
+	    else if (UserDao.TYPE_ADMIN.equals(userType))
+	        this.isSecretary = false;
+	    else
+	        throw new InvalidParameterException();
 		this.mainFrame = mainFrame;
 		initJMenuBar();
-		
 	}
 	
+	public void setViewAll(boolean all) {
+	    this.all = all;
+	    initJMenuBar();
+	}
 
 	private void initJMenuBar() {
+	    removeAll();
+
 		JMenu fichier = new JMenu("Fichier");
-		fichier.add(new JMenuItem(new ViewTimetable(mainFrame)));
-		fichier.add(new JMenuItem(new CloseTimetable(mainFrame)));
-		fichier.addSeparator();
-		fichier.add(new JMenuItem(new PrintTimetable("Imprimer",null)));
-		fichier.add(new JMenuItem(new ExportTimetable("Exporter", mainFrame)));
-		fichier.addSeparator();
+		if (isSecretary || all) {
+			fichier.add(new JMenuItem(new ViewTimetable(mainFrame)));
+			fichier.add(new JMenuItem(new CloseTimetable(mainFrame)));
+			fichier.addSeparator();
+			fichier.add(new JMenuItem(new PrintTimetable("Imprimer",null)));
+			fichier.add(new JMenuItem(new ExportTimetable("Exporter", mainFrame)));
+			fichier.addSeparator();
+		}
 		fichier.add(new JMenuItem(new Quit(mainFrame)));
-		
-		
-		
-		JMenu edition = new JMenu("Edition");
-		edition.add(new JMenuItem(new CutCourse("Couper", mainFrame)));
-		edition.add(new JMenuItem(new CopyCourse("Copier", mainFrame)));		
-		edition.add(new JMenuItem(new PasteCourse("Coller", mainFrame)));
-		
-		
-		
-		JMenu affichage = new JMenu("Affichage");
-		JMenu presentation = new JMenu("Présentation");		
-		presentation.add(new JMenuItem("Verticale"));
-		presentation.add(new JMenuItem("Horizontale"));
-		affichage.add(presentation);
-		JMenu vue = new JMenu("Vue");
-		vue.add(new JMenuItem("Semaine"));		
-		vue.add(new JMenuItem("Semestre"));
-		affichage.add(vue);
-		
-		
+
+		JMenu edition = null;
+		JMenu affichage = null;
+		if (isSecretary || all) {
+			edition = new JMenu("Edition");
+			edition.add(new JMenuItem(new CutCourse("Couper", mainFrame)));
+			edition.add(new JMenuItem(new CopyCourse("Copier", mainFrame)));		
+			edition.add(new JMenuItem(new PasteCourse("Coller", mainFrame)));
+			
+			affichage = new JMenu("Affichage");
+			JMenu presentation = new JMenu("Présentation");		
+			presentation.add(new JMenuItem("Verticale"));
+			presentation.add(new JMenuItem("Horizontale"));
+			affichage.add(presentation);
+			JMenu vue = new JMenu("Vue");
+			vue.add(new JMenuItem("Semaine"));		
+			vue.add(new JMenuItem("Semestre"));
+			affichage.add(vue);
+		}
 		
 		JMenu utilisateur = new JMenu("Utilisateur");
 		utilisateur.add(new JMenuItem(new AddUser("Créer", mainFrame)));		
 		utilisateur.add(new JMenuItem(new ManageUsers(mainFrame)));
 		
+		JMenu emploi_du_temps = null;
+		JMenu indisponibilite = null;
+		if (isSecretary || all) {
+			emploi_du_temps = new JMenu("Emploi du temps");
+			
+			JMenu matiere = new JMenu("Matière");
+			matiere.add(new JMenuItem(new AddSubject("Ajouter", mainFrame)));
+			matiere.add(new JMenuItem(new ModifySubject("Modifier", mainFrame)));
+			matiere.add(new JMenuItem(new RemoveSubject("Supprimer", mainFrame)));
+			matiere.add(new JMenuItem(new ManageSubjects(mainFrame)));
+			
+			emploi_du_temps.add(matiere);
+			
+			JMenu cours = new JMenu("Cours");
+			cours.add(new JMenuItem(new AddCourse("Placer", mainFrame)));
+			cours.add(new JMenuItem(new ModifyCourse("Modifier", mainFrame)));
+			cours.add(new JMenuItem(new RemoveCourse("Supprimer", mainFrame)));
+			
+			emploi_du_temps.add(cours);
+			
+			JMenu groupe = new JMenu("Groupe");
+			groupe.add(new JMenuItem(new AddGroup("Créer", mainFrame)));
+			groupe.add(new JMenuItem(new ModifyGroup("Modifier", mainFrame)));
+			groupe.add(new JMenuItem(new RemoveGroup("Supprimer", mainFrame)));
+			groupe.add(new JMenuItem(new ManageGroups(mainFrame)));
+			groupe.addSeparator();
+			groupe.add(new JMenuItem(new GenerateGroups(mainFrame)));
+			
+			emploi_du_temps.add(groupe);
+			
+			JMenu local = new JMenu("Local"); 
+			local.add(new JMenuItem(new AddRoom("Créer", mainFrame)));
+			local.add(new JMenuItem(new ManageRooms(mainFrame)));
+			
+			emploi_du_temps.add(local);
+			
+			JMenu materiel = new JMenu("Matériel"); 
+			materiel.add(new JMenuItem(new AddMaterial("Créer", mainFrame)));
+			materiel.add(new JMenuItem(new ManageMaterials(mainFrame)));
+			
+			emploi_du_temps.add(materiel);
+			
+			indisponibilite = new JMenu("Indisponibilite");
+			indisponibilite.add(new JMenuItem(new AddUnavailability("Ajouter", mainFrame)));
+			indisponibilite.add(new JMenuItem(new ManageUnavailabilities(mainFrame)));
+			indisponibilite.add(new JMenuItem(new SearchAvailability(mainFrame)));
+		}
 		
-		
-		JMenu emploi_du_temps = new JMenu("Emploi du temps");
-		
-		JMenu matiere = new JMenu("Matière");
-		matiere.add(new JMenuItem(new AddSubject("Ajouter", mainFrame)));
-		matiere.add(new JMenuItem(new ModifySubject("Modifier", mainFrame)));
-		matiere.add(new JMenuItem(new RemoveSubject("Supprimer", mainFrame)));
-		matiere.add(new JMenuItem(new ManageSubjects(mainFrame)));
-		
-		emploi_du_temps.add(matiere);
-		
-		
-		JMenu cours = new JMenu("Cours");
-		cours.add(new JMenuItem(new AddCourse("Placer", mainFrame)));
-		cours.add(new JMenuItem(new ModifyCourse("Modifier", mainFrame)));
-		cours.add(new JMenuItem(new RemoveCourse("Supprimer", mainFrame)));
-		
-		emploi_du_temps.add(cours);
-		
-		
-		JMenu groupe = new JMenu("Groupe");
-		groupe.add(new JMenuItem(new AddGroup("Créer", mainFrame)));
-		groupe.add(new JMenuItem(new ModifyGroup("Modifier", mainFrame)));
-		groupe.add(new JMenuItem(new RemoveGroup("Supprimer", mainFrame)));
-		groupe.add(new JMenuItem(new ManageGroups(mainFrame)));
-		groupe.addSeparator();
-		groupe.add(new JMenuItem(new GenerateGroups(mainFrame)));
-		
-		emploi_du_temps.add(groupe);
-
-		
-		JMenu local = new JMenu("Local"); 
-		local.add(new JMenuItem(new AddRoom("Créer", mainFrame)));
-		local.add(new JMenuItem(new ManageRooms(mainFrame)));
-		
-		emploi_du_temps.add(local);
-		
-		
-		JMenu materiel = new JMenu("Matériel"); 
-		materiel.add(new JMenuItem(new AddMaterial("Créer", mainFrame)));
-		materiel.add(new JMenuItem(new ManageMaterials(mainFrame)));
-		
-		emploi_du_temps.add(materiel);
-		
-		
-		
-		JMenu indisponibilite = new JMenu("Indisponibilite");
-		indisponibilite.add(new JMenuItem(new AddUnavailability("Ajouter", mainFrame)));
-		indisponibilite.add(new JMenuItem(new ManageUnavailabilities(mainFrame)));
-		indisponibilite.add(new JMenuItem(new SearchAvailability(mainFrame)));
-		
+		JMenu outils = null;
+		if (!isSecretary) {
+			outils = new JMenu("Outils");
+			outils.add(new JMenuItem(new ModifyDBParameters(mainFrame)));
+			if (!all)
+			    outils.add(new JMenuItem(new ViewAllFunctionalities(mainFrame)));
+		}
 		
 		JMenu a_propos_de = new JMenu("?");
 		a_propos_de.add(new JMenuItem(new About(mainFrame)));
 		
 
 		add(fichier);
-		add(edition);
-		add(affichage);
+		if (edition != null)
+		    add(edition);
+		if (affichage != null)
+		    add(affichage);
 		add(utilisateur);
-		add(emploi_du_temps);
-		add(indisponibilite);
+		if (emploi_du_temps != null)
+		    add(emploi_du_temps);
+		if (indisponibilite != null)
+		    add(indisponibilite);
+		if (outils != null)
+		    add(outils);
 		add(a_propos_de);
 	}
 }

@@ -12,7 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
@@ -26,7 +25,6 @@ import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
-import fr.umlv.smoreau.beontime.client.graphics.parts.view.CellSpan;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.MultiSpanCellTable;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.View;
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -47,6 +45,7 @@ public class MainFrame {
 	private static final MainFrame INSTANCE = new MainFrame();
 	
 	private BoTModel model;
+	private User user;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
@@ -79,7 +78,6 @@ public class MainFrame {
      */
     public void initMainFrame() {
         model = new BoTModel();
-        menuBar = new MenuBar(this);
         buttonBar = new ButtonBar(this);
         titleBar = new TitleBar();
         stateBar = new StateBar();
@@ -141,7 +139,6 @@ public class MainFrame {
 		container.add(splitPaneHorizontal2, BorderLayout.NORTH);
 		container.add(splitPaneVertical2); 
 		mainFrame.setTitle("BeOnTime");
-		mainFrame.setJMenuBar(menuBar);
 		mainFrame.setResizable(true);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setLocationRelativeTo(null);
@@ -168,21 +165,25 @@ public class MainFrame {
 			public void componentShown(ComponentEvent e) {
 			}
 		});
-
+	
     }
+
     public View getView(){
 		return view;
-    	
     }
+
     public AttributiveCellTableModel getTableModel(){
 		return view.getTableModel();
-    	
     }
+
     public MultiSpanCellTable getTable(){
 		return view.getTable();
     	
     }
+
 	public void open() {
+        menuBar = new MenuBar(this, user.getUserType());
+		mainFrame.setJMenuBar(menuBar);
 		mainFrame.setVisible(true);
 	}
 	
@@ -222,9 +223,12 @@ public class MainFrame {
 		return null;
 	}
 	
-	public User getUserSelected() {
-		//TODO à implémenter
-		return null;
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+	    this.user = user;
 	}
 	
 	public Material getMaterialSelected() {
@@ -240,6 +244,10 @@ public class MainFrame {
 	public ButtonBar getToolBar() {
 		return buttonBar;
 	}
+	
+	public MenuBar getMenuBar() {
+	    return menuBar;
+	}
 
 	public JFrame getMainFrame() {
 		return mainFrame;
@@ -247,5 +255,6 @@ public class MainFrame {
 
 	public void refresh() {
 	    mainFrame.setVisible(true);
+	    //mainFrame.setMenuBar(menuBar);
 	}
 }

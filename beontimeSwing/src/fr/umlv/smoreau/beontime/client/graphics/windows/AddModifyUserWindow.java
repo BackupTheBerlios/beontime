@@ -1,12 +1,11 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,10 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 
 
 
@@ -25,44 +26,43 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  * @author BeOnTime
  */
 public class AddModifyUserWindow {
-
+	private static final String TITRE_SECRETAIRE = "Ajouter une secrétaire";
+	private static final String TITRE_ENSEIGNANT = "Ajouter un enseignant";
 	
-	private static String TITRE = "Ajouter une secrétaire ou un enseignant";
-
-	private JLabel nameLabel;
-	private JLabel surnameLabel;
-	private JLabel courrielMailLabel;
+	private String type;
 
 	private JTextField nameJtf;
 	private JTextField surnameJtf;
 	private JTextField courrielMailJtf;
+	private JComboBox buildingJcb;
+	private JTextField localJtf;
+	private JTextField phoneJtf;
 	
-	private JButton ok;
-	private JButton annuler;
-	
+	private boolean isOk;
+
 	private JDialog AMUWFrame;
 	private GridBagLayout AMUWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
 
 	
-	public AddModifyUserWindow(int type) {
+	public AddModifyUserWindow(String type) {
+	    this.type = type;
+	    this.isOk = false;
+	    
+	    String titre = new String();
+	    if (type.equals(UserDao.TYPE_SECRETARY))
+	        titre = TITRE_SECRETAIRE;
+	    else if (type.equals(UserDao.TYPE_TEACHER))
+	        titre = TITRE_ENSEIGNANT;
 		
-		
-		switch(type) {
-		case 1: TITRE = "Ajouter une secrétaire"; break;
-		case 2: TITRE = "Ajouter un enseignant";break;
-		}
-		
-		AMUWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
+		AMUWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);
 		AMUWFrame.getContentPane().setLayout(AMUWLayout);
         
-		initAddModifyUserWindow(type);  
+		initAddModifyUserWindow();  
 	}
 	
-	private void initAddModifyUserWindow(int type) {
-    	
-		
-		nameLabel = new JLabel("Nom :");
+	private void initAddModifyUserWindow() {
+		JLabel nameLabel = new JLabel("Nom :");
 		addComponent(AMUWLayout,layoutConstraints,nameLabel,1,1,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(nameLabel);
 		
@@ -70,9 +70,7 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,nameJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(nameJtf);
 		
-		
-		
-		surnameLabel = new JLabel("Prénom :");
+		JLabel surnameLabel = new JLabel("Prénom :");
 		addComponent(AMUWLayout,layoutConstraints,surnameLabel,1,2,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(surnameLabel);
 		
@@ -81,35 +79,28 @@ public class AddModifyUserWindow {
 		AMUWFrame.getContentPane().add(surnameJtf);
 		
 		
-		switch(type) {
-		case 1: initSecretaryParts(); break;
-		case 2: initTeacherParts();break;
-		}
-		
-		
+		if (type.equals(UserDao.TYPE_SECRETARY))
+		    initSecretaryParts();
+		else if (type.equals(UserDao.TYPE_TEACHER))
+			initTeacherParts();		
 	}
-	
-	
-	
+
+
 	private void initSecretaryParts() {
-		
-		
-		courrielMailLabel = new JLabel("Courriel :");
+	    JLabel courrielMailLabel = new JLabel("Courriel :");
 		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailLabel);
 		
 		courrielMailJtf = new JTextField();
 		addComponent(AMUWLayout,layoutConstraints,courrielMailJtf,3,3,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailJtf);
-		
-		
-		
+
+
 		JLabel formationsLabel = new JLabel("Formations dont elle à la charge :");
 		addComponent(AMUWLayout,layoutConstraints,formationsLabel,1,4,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(formationsLabel);
-		
 
-		
+
 		JComboBox formationsJcb = new JComboBox();
 		JPanel formationsPanel = new JPanel();
 		formationsPanel.setLayout(new BoxLayout(formationsPanel, BoxLayout.Y_AXIS));
@@ -118,7 +109,7 @@ public class AddModifyUserWindow {
     	
 		addComponent(AMUWLayout,layoutConstraints,formationsPanel,1,5,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(formationsPanel);
-    	
+
 		
     	JButton formationPlusButton = new JButton("+");
     	JPanel formationsPlusPanel = new JPanel();
@@ -131,33 +122,31 @@ public class AddModifyUserWindow {
     	
     	addComponent(AMUWLayout,layoutConstraints,formationsPlusPanel,4,5,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,15,10));
     	AMUWFrame.getContentPane().add(formationsPlusPanel);
-		
-		
-		
-		ok = new JButton("OK");
+
+
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionOk());
 		addComponent(AMUWLayout,layoutConstraints,ok,3,6,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(ok);
 		
-		annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                AMUWFrame.dispose();
+            }
+		});
 		addComponent(AMUWLayout,layoutConstraints,annuler,4,6,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(annuler);
-		
-		
-		
-		
 	}
 	
 	private void initTeacherParts() {
-	
-		
-		courrielMailLabel = new JLabel("E-mail :");
+	    JLabel courrielMailLabel = new JLabel("E-mail :");
 		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailLabel);
 		
 		courrielMailJtf = new JTextField();
 		addComponent(AMUWLayout,layoutConstraints,courrielMailJtf,3,3,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailJtf);
-		
 		
 		
 		JLabel officeLabel = new JLabel("Bureau :");
@@ -170,17 +159,18 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,buildingLabel,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingLabel);
 		
-		JComboBox buildingJcb = new JComboBox();
+		buildingJcb = new JComboBox();
+		buildingJcb.setEditable(true);
 		addComponent(AMUWLayout,layoutConstraints,buildingJcb,3,5,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingJcb);
     	
-		
+
 		
 		JLabel localLabel = new JLabel("Local :");
 		addComponent(AMUWLayout,layoutConstraints,localLabel,2,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(localLabel);
 		
-		JTextField localJtf = new JTextField();
+		localJtf = new JTextField();
 		addComponent(AMUWLayout,layoutConstraints,localJtf,3,6,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(localJtf);
 		
@@ -190,24 +180,24 @@ public class AddModifyUserWindow {
 		addComponent(AMUWLayout,layoutConstraints,phoneLabel,1,7,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(phoneLabel);
 		
-		JTextField phoneJtf = new JTextField();
+		phoneJtf = new JTextField();
 		addComponent(AMUWLayout,layoutConstraints,phoneJtf,3,7,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(phoneJtf);
+
 		
-		
-    	
-		
-		
-		
-		ok = new JButton("OK");
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionOk());
 		addComponent(AMUWLayout,layoutConstraints,ok,3,8,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(ok);
 		
-		annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                AMUWFrame.dispose();
+            }
+		});
 		addComponent(AMUWLayout,layoutConstraints,annuler,4,8,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(annuler);
-		
-		
 	}
 	
     /* (non-Javadoc)
@@ -217,34 +207,103 @@ public class AddModifyUserWindow {
     	AMUWFrame.pack();
     	AMUWFrame.setResizable(false);
     	AMUWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    	AMUWFrame.setLocationRelativeTo(null);
     	AMUWFrame.setVisible(true);
     }
     
     private static void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
-	     
-	constraints. gridx= gridx;
-	constraints. gridy = gridy;
-	constraints. gridwidth= gridwidth;
-	constraints. gridheight = gridheight;
-	constraints.weightx = weightx;
-	constraints.weighty = weighty;
-	constraints.anchor = anchor;
-	constraints.fill = fill;
-	constraints.insets = insets;
-	 
-	gbLayout.setConstraints(comp,constraints);
-	
-   }
+        constraints. gridx= gridx;
+        constraints. gridy = gridy;
+        constraints. gridwidth= gridwidth;
+        constraints. gridheight = gridheight;
+        constraints.weightx = weightx;
+        constraints.weighty = weighty;
+        constraints.anchor = anchor;
+        constraints.fill = fill;
+        constraints.insets = insets;
+        
+        gbLayout.setConstraints(comp,constraints);
+    }
     
-    public static void main(String[] args){
-    	
-        	MainFrame frame = MainFrame.getInstance();
-         	frame.open();
-         	
-         	AddModifyUserWindow form = new AddModifyUserWindow(1);
-         	form.show();
-    			
-        } 
+    public String getName() {
+        return nameJtf.getText().trim();
+    }
     
+    public String getSurname() {
+        return surnameJtf.getText().trim();
+    }
+    
+    public String getCourrielMail() {
+        String tmp = courrielMailJtf.getText().trim();
+        if ("".equals(tmp))
+            return null;
+        return tmp;
+    }
+    
+    public String getBuilding() {
+        String string = (String) buildingJcb.getSelectedItem();
+        if (string != null)
+            string = string.trim();
+        return string;
+    }
+    
+    public String getLocal() {
+        String tmp = localJtf.getText().trim();
+        if ("".equals(tmp))
+            return null;
+        return tmp;
+    }
+    
+    public String getPhone() {
+        String tmp = phoneJtf.getText().trim();
+        if ("".equals(tmp))
+            return null;
+        return tmp;
+    }
+    
+    public boolean isOk() {
+        return isOk;
+    }
+    
+    private int checking() {
+        String name = getName();
+        if (name == null || "".equals(name))
+            return 1;
+        String surname = getSurname();
+        if (surname == null || "".equals(surname))
+            return 2;
+        String email = getCourrielMail();
+        if (email != null && !"".equals(email) && !email.matches(".*@.*\\..*")) {
+            return 3;
+        }
+        return 0;
+    }
 
+
+    private class ActionOk implements ActionListener {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent arg0) {
+            String errorMessage = null;
+            switch (checking()) {
+            case 0:
+                isOk = true;
+                AMUWFrame.dispose();
+                return;
+            case 1:
+                errorMessage = "Le nom est obligatoire";
+                break;
+            case 2:
+                errorMessage = "Le prénom est obligatoire";
+                break;
+            case 3:
+                errorMessage = "L'adresse email est invalide";
+                break;
+            default:
+                errorMessage = "Il y a une erreur ...";
+            }
+            JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

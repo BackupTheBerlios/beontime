@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUserWindow;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
  * @author BeOnTime
@@ -35,7 +36,7 @@ public class ModifyUser extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyUserWindow window = new AddModifyUserWindow(1);
+        AddModifyUserWindow window = new AddModifyUserWindow(UserDao.TYPE_TEACHER);
         window.show();
     }
 }
