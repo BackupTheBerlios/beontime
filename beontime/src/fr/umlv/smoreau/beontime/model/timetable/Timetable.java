@@ -8,6 +8,8 @@ import java.util.Iterator;
 
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
@@ -17,6 +19,8 @@ public class Timetable implements Serializable {
     private Formation formation;
     private User teacher;
     private Group group;
+    private Room room;
+    private Material material;
     private Collection groups;
     private Collection subjects;
     private Collection courses;
@@ -39,6 +43,14 @@ public class Timetable implements Serializable {
     public Timetable(User teacher) {
         this.teacher = teacher;
     }
+    
+    public Timetable(Room room) {
+        this.room = room;
+    }
+    
+    public Timetable(Material material) {
+        this.material = material;
+    }
 
     /**
      * @return Renvoie formation.
@@ -60,6 +72,22 @@ public class Timetable implements Serializable {
     
     public void setTeacher(User teacher) {
         this.teacher = teacher;
+    }
+    
+    public Room getRoom() {
+        return room;
+    }
+    
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+    
+    public Material getMaterial() {
+        return material;
+    }
+    
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     /**

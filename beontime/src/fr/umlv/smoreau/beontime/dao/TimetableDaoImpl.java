@@ -96,17 +96,25 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         try {
             Timetable timetable = new Timetable();
             
+            // toutes les matières
+            Collection allSubjects = get(TABLE_SUBJECT, new SubjectFilter(), Hibernate.getCurrentSession());
+
             if (filter.getFormation() != null) {
+                // caractéristiques de la formation
 	            FormationDao formationDao = FormationDaoImpl.getInstance();
 	            Collection c = formationDao.getFormations(new FormationFilter(filter.getFormation()));
 	            if (c == null || c.size() == 0)
 	                return null;
 	            timetable.setFormation((Formation) c.toArray()[0]);
-	
-	            Subject subject = new Subject();
-	            subject.setIdFormation(filter.getFormation().getIdFormation());
-	            timetable.setSubjects(get(TABLE_SUBJECT, new SubjectFilter(subject), Hibernate.getCurrentSession()));
-	            
+
+	            // matières de la formation
+	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
+	                Subject subject = (Subject) i.next();
+	                if (subject.getIdFormation().equals(timetable.getFormation().getIdFormation()))
+	                    timetable.addSubject(subject);
+	            }
+
+	            // groupes de la formation
 	            Group group = new Group();
 	            group.setIdFormation(filter.getFormation().getIdFormation());
 	            GroupDao groupDao = GroupDaoImpl.getInstance();
@@ -115,27 +123,14 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	            //TODO à voir plus précisemment
 	            timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
 	            
+	            // cours de la formation
 	            Course course = new Course();
 	            course.setIdFormation(filter.getFormation().getIdFormation());
 	            course.setBeginPeriod(filter.getBeginPeriod());
 	            course.setEndPeriod(filter.getEndPeriod());
 	            timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
-	
-	            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
-	                Course tmp = (Course) i.next();
-	                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
-	                f.setIdCourse(tmp.getIdCourse());
-	                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
-	                if (co != null && co.size() > 0) {
-		                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
-		                for (Iterator j = timetable.getSubjects().iterator(); j.hasNext(); ) {
-		                    Subject s = (Subject) j.next();
-		                    if (s.getIdSubject().equals(takePart.getIdSubject()))
-		                        tmp.setSubject(s);
-		                }
-	                }
-	            }
 	            
+	            // responsable de la formation
 	            UserFilter userFilter = new UserFilter();
 	            userFilter.setIdUser(timetable.getFormation().getIdTeacher());
 	            userFilter.setUserType(UserDao.TYPE_TEACHER);
@@ -145,16 +140,18 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             }
             
             else if (filter.getTeacher() != null) {
+                // caractéristiques de l'enseignant
                 UserDao userDao = UserDaoImpl.getInstance();
                 timetable.setTeacher(userDao.getUser(filter.getTeacher(), null));
 
-	            Collection allSubjects = get(TABLE_SUBJECT, new SubjectFilter(), Hibernate.getCurrentSession());
+                // matières de l'enseignant
 	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
 	                Subject subject = (Subject) i.next();
 	                if (subject.getIdTeacher().equals(timetable.getTeacher().getIdUser()))
 	                    timetable.addSubject(subject);
 	            }
 	            
+	            // cours de l'enseignant
 	            _IsDirectedByCourseTeacherFilter isDirectedByCourseTeacherFilter = new _IsDirectedByCourseTeacherFilter();
 	            isDirectedByCourseTeacherFilter.setIdTeacher(filter.getTeacher().getIdUser());
 	            Collection isDirectedByCourseTeachers = get(TABLE_ISDIRECTING, isDirectedByCourseTeacherFilter, Hibernate.getCurrentSession());
@@ -164,21 +161,40 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	                if (course.getBeginDate().getTimeInMillis() >= filter.getBeginPeriod().getTimeInMillis() && course.getEndDate().getTimeInMillis() <= filter.getEndPeriod().getTimeInMillis())
 	                    timetable.addCourse(course);
 	            }
-
-	            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
-	                Course tmp = (Course) i.next();
-	                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
-	                f.setIdCourse(tmp.getIdCourse());
-	                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
-	                if (co != null && co.size() > 0) {
-		                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
-		                for (Iterator j = allSubjects.iterator(); j.hasNext(); ) {
-		                    Subject s = (Subject) j.next();
-		                    if (s.getIdSubject().equals(takePart.getIdSubject()))
-		                        tmp.setSubject(s);
-		                }
+            }
+            
+            else if (filter.getRoom() != null) {
+                // caractéristiques du local
+                ElementDao elementDao = ElementDaoImpl.getInstance();
+                timetable.setRoom(elementDao.getRoom(filter.getRoom(), null));
+                
+                // cours du local
+                timetable.setCourses(elementDao.getCoursesInRoom(timetable.getRoom(), filter.getBeginPeriod(), filter.getEndPeriod()));
+            }
+            
+            else if (filter.getMaterial() != null) {
+                // caractéristiques du matériel
+                ElementDao elementDao = ElementDaoImpl.getInstance();
+                timetable.setMaterial(elementDao.getMaterial(filter.getMaterial(), null));
+                
+                // cours du matériel
+                timetable.setCourses(elementDao.getCoursesWithMaterial(timetable.getMaterial(), filter.getBeginPeriod(), filter.getEndPeriod()));
+            }
+            
+            // matière correspondante pour chaque cours
+            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
+                Course tmp = (Course) i.next();
+                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
+                f.setIdCourse(tmp.getIdCourse());
+                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
+                if (co != null && co.size() > 0) {
+	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
+	                for (Iterator j = allSubjects.iterator(); j.hasNext(); ) {
+	                    Subject s = (Subject) j.next();
+	                    if (s.getIdSubject().equals(takePart.getIdSubject()))
+	                        tmp.setSubject(s);
 	                }
-	            }
+                }
             }
 
             return timetable;

@@ -2,33 +2,30 @@ package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.timetable.Timetable;
+import fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom;
+import fr.umlv.smoreau.beontime.model.association.UseCourseMaterial;
 
 /**
  * @author BeOnTime
  */
-public class TimetableFilter extends Timetable implements Filter {
+public class _UseCourseMaterialFilter extends UseCourseMaterial implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("Group.IdGroup", new FilterObject("id_groupe"));
-        corres.put("Formation.IdFormation", new FilterObject("id_formation"));
-        corres.put("Teacher", null);
-        corres.put("Formation", null);
-        corres.put("Room", null);
-        corres.put("Material", null);
+        corres.put("IdMaterial.IdMaterial", new FilterObject("id_materiel"));
+        corres.put("IdCourse.IdCourse", new FilterObject("id_cours"));
     }
 
 
-    public TimetableFilter() {
+    public _UseCourseMaterialFilter() {
         super();
     }
     
-    public TimetableFilter(Timetable timetable) {
+    public _UseCourseMaterialFilter(TakePlaceCourseRoom takePlace) {
         super();
         try {
-            FilterUtils.fillFilterClass(this, timetable, corres.keySet());
+            FilterUtils.fillFilterClass(this, takePlace, corres.keySet());
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }

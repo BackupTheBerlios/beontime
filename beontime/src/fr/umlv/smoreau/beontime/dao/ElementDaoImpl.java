@@ -2,6 +2,8 @@ package fr.umlv.smoreau.beontime.dao;
 /* DESS CRI - BeOnTime - timetable project */
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,7 +15,12 @@ import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.MaterialFilter;
 import fr.umlv.smoreau.beontime.filter.RoomFilter;
+import fr.umlv.smoreau.beontime.filter._TakePlaceCourseRoomFilter;
+import fr.umlv.smoreau.beontime.filter._UseCourseMaterialFilter;
+import fr.umlv.smoreau.beontime.model.association.TakePlaceCourseRoom;
+import fr.umlv.smoreau.beontime.model.association.UseCourseMaterial;
 import fr.umlv.smoreau.beontime.model.element.*;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
@@ -34,8 +41,10 @@ public class ElementDaoImpl extends Dao implements ElementDao {
 		}
     }
     
-    private static final String TABLE_MATERIAL = "Material";
-    private static final String TABLE_ROOM     = "Room";
+    private static final String TABLE_MATERIAL  = "Material";
+    private static final String TABLE_ROOM      = "Room";
+    private static final String TABLE_TAKEPLACE = "TakePlaceCourseRoom";
+    private static final String TABLE_USE       = "UseCourseMaterial";
     
     private ElementDaoImpl() throws RemoteException {
     }
@@ -95,6 +104,54 @@ public class ElementDaoImpl extends Dao implements ElementDao {
 	
 	public Collection getMaterials() throws RemoteException, HibernateException {
 		return getMaterials(null);
+	}
+	
+	public Collection getCoursesInRoom(Room room, Calendar beginDate, Calendar endDate) throws RemoteException, HibernateException {
+	    Collection courses = new ArrayList();
+
+	    Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            _TakePlaceCourseRoomFilter filter = new _TakePlaceCourseRoomFilter();
+            filter.setIdRoom(room);
+            Collection takePlaces = get(TABLE_TAKEPLACE, filter, session);
+            TimetableDao timetableDao = TimetableDaoImpl.getInstance();
+            for (Iterator i = takePlaces.iterator(); i.hasNext(); ) {
+                TakePlaceCourseRoom takePlace = (TakePlaceCourseRoom) i.next();
+                Course course = timetableDao.getCourse(takePlace.getIdCourse(), null);
+                if ((beginDate == null || course.getBeginDate().getTimeInMillis() >= beginDate.getTimeInMillis()) &&
+                        (endDate == null || course.getEndDate().getTimeInMillis() <= endDate.getTimeInMillis()))
+                    courses.add(course);
+            }
+        } finally {
+            Hibernate.closeSession();
+        }
+
+        return courses;
+	}
+	
+	public Collection getCoursesWithMaterial(Material material, Calendar beginDate, Calendar endDate) throws RemoteException, HibernateException {
+	    Collection courses = new ArrayList();
+
+	    Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            _UseCourseMaterialFilter filter = new _UseCourseMaterialFilter();
+            filter.setIdMaterial(material);
+            Collection takePlaces = get(TABLE_USE, filter, session);
+            TimetableDao timetableDao = TimetableDaoImpl.getInstance();
+            for (Iterator i = takePlaces.iterator(); i.hasNext(); ) {
+                UseCourseMaterial use = (UseCourseMaterial) i.next();
+                Course course = timetableDao.getCourse(use.getIdCourse(), null);
+                if ((beginDate == null || course.getBeginDate().getTimeInMillis() >= beginDate.getTimeInMillis()) &&
+                        (endDate == null || course.getEndDate().getTimeInMillis() <= endDate.getTimeInMillis()))
+                    courses.add(course);
+            }
+        } finally {
+            Hibernate.closeSession();
+        }
+
+        return courses;
 	}
 	
 	public Room addRoom(Room room) throws RemoteException, HibernateException {

@@ -4,6 +4,7 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
@@ -33,6 +34,10 @@ public interface ElementDao extends Remote {
 	public Collection getMaterials() throws RemoteException, HibernateException;
 	
 	public Material getMaterial(Material material, String[] join) throws RemoteException, HibernateException;
+	
+	public Collection getCoursesInRoom(Room room, Calendar beginDate, Calendar endDate) throws RemoteException, HibernateException;
+	
+	public Collection getCoursesWithMaterial(Material material, Calendar beginDate, Calendar endDate) throws RemoteException, HibernateException;
 	
 	public Room addRoom(Room room) throws RemoteException, HibernateException;
 	
