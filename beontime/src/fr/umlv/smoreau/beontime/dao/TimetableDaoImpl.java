@@ -95,6 +95,8 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	    Session session = null;
         try {
             Timetable timetable = new Timetable();
+            timetable.setBeginPeriod(filter.getBeginPeriod());
+            timetable.setEndPeriod(filter.getEndPeriod());
             
             // toutes les matières
             Collection allSubjects = get(TABLE_SUBJECT, new SubjectFilter(), Hibernate.getCurrentSession());
