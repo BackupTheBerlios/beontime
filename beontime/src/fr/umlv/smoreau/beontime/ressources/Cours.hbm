@@ -45,7 +45,7 @@
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>
 		
-		<set inverse="true" name="TeachersDirecting" lazy="true">
+		<set inverse="true" name="TeachersDirecting" lazy="false">
 			<key column="id_cours" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher" />
 		</set>
@@ -63,7 +63,7 @@
 			cascade="none"
 			name="Rooms"
 			table="a_lieu_cours_local"
-			lazy="true"
+			lazy="false"
 		>
 			<key column="id_cours" />
 			<many-to-many class="fr.umlv.smoreau.beontime.model.element.Room" column="id_local" />

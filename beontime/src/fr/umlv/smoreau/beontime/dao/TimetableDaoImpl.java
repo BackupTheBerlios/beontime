@@ -4,6 +4,7 @@ package fr.umlv.smoreau.beontime.dao;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -145,9 +146,6 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	            GroupDao groupDao = GroupDaoImpl.getInstance();
 	            timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
 	            
-	            //TODO à voir plus précisemment
-	            //timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
-	            
 	            // cours de la formation
 	            Course course = new Course();
 	            course.setIdFormation(filter.getFormation().getIdFormation());
@@ -205,10 +203,12 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
                 // cours du matériel
                 timetable.setCourses(elementDao.getCoursesWithMaterial(timetable.getMaterial(), filter.getBeginPeriod(), filter.getEndPeriod()));
             }
-            
-            // matière correspondante pour chaque cours
+
+            UserDao userDao = UserDaoImpl.getInstance();
             for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
                 Course tmp = (Course) i.next();
+                
+                // matière correspondante pour chaque cours
                 _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
                 f.setIdCourse(tmp.getIdCourse());
                 Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
@@ -219,6 +219,14 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	                    if (s.getIdSubject().equals(takePart.getIdSubject()))
 	                        tmp.setSubject(s);
 	                }
+                }
+                
+                // enseignants correspondants pour chaque cours
+                Collection teachers = tmp.getTeachersDirecting();
+                tmp.setTeachersDirecting(new HashSet());
+                for (Iterator j = teachers.iterator(); j.hasNext(); ) {
+                    IsDirectedByCourseTeacher isDirected = (IsDirectedByCourseTeacher) j.next();
+                    tmp.addTeacherDirecting(userDao.getUser(new User(isDirected.getIdTeacher()), null));
                 }
             }
 
