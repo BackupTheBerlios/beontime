@@ -162,7 +162,11 @@ public class TimeTableViewPanelBar extends JPanel {
 						}
 						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_GROUPE.equals(event.getItem())) {
-						Collection formations = DaoManager.getFormationDao().getFormations();
+						Collection formations = null;
+						if (UserDao.TYPE_SECRETARY.equals(mainFrame.getUserConnected().getUserType()))
+					        formations = mainFrame.getUserConnected().getFormationsInCharge();
+					    else
+					        formations = DaoManager.getFormationDao().getFormations();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = formations.iterator(); i.hasNext(); ) {
 							Formation formation = (Formation) i.next();
@@ -225,6 +229,7 @@ public class TimeTableViewPanelBar extends JPanel {
 					    }
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
 			}
