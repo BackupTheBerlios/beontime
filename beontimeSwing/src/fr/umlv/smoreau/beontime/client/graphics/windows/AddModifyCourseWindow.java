@@ -82,150 +82,151 @@ public class AddModifyCourseWindow {
     	
     	
     	teacherLabel = new JLabel("Le cours sera donné par :");
-    	addComponent(AMCWLayout,layoutConstraints,teacherLabel,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,teacherLabel,1,1,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
     	AMCWFrame.getContentPane().add(teacherLabel);
 
     	teacherCourseJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,teacherCourseJcb,GridBagConstraints.RELATIVE,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,teacherCourseJcb,4,1,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
     	AMCWFrame.getContentPane().add(teacherCourseJcb);
     	
     	teacherPlus = new JButton("+");
-    	addComponent(AMCWLayout,layoutConstraints,teacherPlus,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,teacherPlus,6,1,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,15,10));
     	AMCWFrame.getContentPane().add(teacherPlus);
     	
     	
     	
     	dateCourseTheLabel = new JLabel("le");
-    	addComponent(AMCWLayout,layoutConstraints,dateCourseTheLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,dateCourseTheLabel,1,2,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(dateCourseTheLabel);
     	
     	dateCourse = new JDateChooser();
-    	addComponent(AMCWLayout,layoutConstraints,dateCourse,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,dateCourse,2,2,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(dateCourse);
     	
     	
     	
     	
     	dureeCourseDeLabel = new JLabel("de");
-    	addComponent(AMCWLayout,layoutConstraints,dureeCourseDeLabel,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,dureeCourseDeLabel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(dureeCourseDeLabel);
     	
     	startCourseHourJcb = new JComboBox();
     	initCourseHourJcb(startCourseHourJcb);
-    	addComponent(AMCWLayout,layoutConstraints,startCourseHourJcb,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,startCourseHourJcb,2,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(startCourseHourJcb);
     	
     	startCourseHourLabel = new JLabel("heure");
-    	addComponent(AMCWLayout,layoutConstraints,startCourseHourLabel,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,startCourseHourLabel,3,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(startCourseHourLabel);
     	
     	dureeCourseALabel = new JLabel("à");
-    	addComponent(AMCWLayout,layoutConstraints,dureeCourseALabel,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,dureeCourseALabel,4,3,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(dureeCourseALabel);
     	
     	endCourseHourJcb = new JComboBox();
     	initCourseHourJcb(endCourseHourJcb);
-    	addComponent(AMCWLayout,layoutConstraints,endCourseHourJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,endCourseHourJcb,5,3,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(endCourseHourJcb);
     	
     	endCourseHourLabel = new JLabel("heure");
-    	addComponent(AMCWLayout,layoutConstraints,endCourseHourLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,endCourseHourLabel,6,3,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(endCourseHourLabel);
     	
     	
     	
     	startCourseMinuteJcb = new JComboBox();
     	initCourseMinuteJcb(startCourseMinuteJcb);
-    	addComponent(AMCWLayout,layoutConstraints,startCourseMinuteJcb,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,startCourseMinuteJcb,2,4,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(startCourseMinuteJcb);
     	
     	startCourseMinuteLabel = new JLabel("min");
-    	addComponent(AMCWLayout,layoutConstraints,startCourseMinuteLabel,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,startCourseMinuteLabel,3,4,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(startCourseMinuteLabel);
     	
     	endCourseMinuteJcb = new JComboBox();
     	initCourseMinuteJcb(endCourseMinuteJcb);
-    	addComponent(AMCWLayout,layoutConstraints,endCourseMinuteJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,endCourseMinuteJcb,5,4,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(endCourseMinuteJcb);
     	
     	endCourseMinuteLabel = new JLabel("min");
-    	addComponent(AMCWLayout,layoutConstraints,endCourseMinuteLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,endCourseMinuteLabel,6,4,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(endCourseMinuteLabel);
 
     	
     	
     	
-    	placeCourseLabel = new JLabel("dans le local ou les locaux");
-    	addComponent(AMCWLayout,layoutConstraints,placeCourseLabel,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	placeCourseLabel = new JLabel("dans le local ou les locaux :");
+    	addComponent(AMCWLayout,layoutConstraints,placeCourseLabel,1,5,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(placeCourseLabel);
     	
     	placeCourseJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,placeCourseJcb,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,placeCourseJcb,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(placeCourseJcb);
 
     	placeCoursePlus = new JButton("+");
-    	addComponent(AMCWLayout,layoutConstraints,placeCoursePlus,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,placeCoursePlus,6,5,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(placeCoursePlus);
     	
 
     	
     	repeatCourseLabel = new JLabel("Sur combien de semaines se déroulera le cours ?");
-    	addComponent(AMCWLayout,layoutConstraints,repeatCourseLabel,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,repeatCourseLabel,1,6,5,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(repeatCourseLabel);
     	
     	repeatCourseJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,repeatCourseJcb,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(0,10,0,10));
+    	initRepeatCourseJcb(repeatCourseJcb);
+    	addComponent(AMCWLayout,layoutConstraints,repeatCourseJcb,6,6,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(repeatCourseJcb);
    
     	
     	
-    	courseEquipmentLabel = new JLabel("Le(s)matériel(s) utilisé(s) :");
-    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentLabel,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	courseEquipmentLabel = new JLabel("Le(s) matériel(s) utilisé(s) :");
+    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentLabel,1,7,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(courseEquipmentLabel);
     	
     	courseEquipmentJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentJcb,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,courseEquipmentJcb,4,7,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(courseEquipmentJcb);
     	
     	CourseEquipmentPlus = new JButton("+");
-    	addComponent(AMCWLayout,layoutConstraints,CourseEquipmentPlus,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,CourseEquipmentPlus,6,7,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(CourseEquipmentPlus);
     	
     	
     	
     	courseFormationLabel = new JLabel("Le cours est attribué à la formation :");
-    	addComponent(AMCWLayout,layoutConstraints,courseFormationLabel,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,courseFormationLabel,1,8,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(courseFormationLabel);
     	
     	courseFormationJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,courseFormationJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,courseFormationJcb,5,8,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(courseFormationJcb);
     	
     	
     	courseGroupLabel = new JLabel("et plus précisément, au groupe :");
-    	addComponent(AMCWLayout,layoutConstraints,courseGroupLabel,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,courseGroupLabel,1,9,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMCWFrame.getContentPane().add(courseGroupLabel);
 
     	courseGroupJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,courseGroupJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,courseGroupJcb,5,9,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(courseGroupJcb);
     	
     	
     	
     	typeCourseLabel = new JLabel("Choisissez le type de cours :");
-    	addComponent(AMCWLayout,layoutConstraints,typeCourseLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
+    	addComponent(AMCWLayout,layoutConstraints,typeCourseLabel,1,10,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,0,10));
     	AMCWFrame.getContentPane().add(typeCourseLabel);
     	
     	magistral = new JRadioButton("Cours magistral",true);
-		addComponent(AMCWLayout,layoutConstraints,magistral,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,10,10));
+		addComponent(AMCWLayout,layoutConstraints,magistral,1,11,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,10,20,10));
 		AMCWFrame.getContentPane().add(magistral);
 		
     	td = new JRadioButton("TD");
-		addComponent(AMCWLayout,layoutConstraints,td,1,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,10,10));
+		addComponent(AMCWLayout,layoutConstraints,td,3,11,1,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,20,10));
 		AMCWFrame.getContentPane().add(td);
 		
     	tp = new JRadioButton("TP");
-		addComponent(AMCWLayout,layoutConstraints,tp,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,10,10));
+		addComponent(AMCWLayout,layoutConstraints,tp,4,11,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,20,10));
 		AMCWFrame.getContentPane().add(tp);
     
     	ButtonGroup buttonGroup = new ButtonGroup();
@@ -233,13 +234,13 @@ public class AddModifyCourseWindow {
 		buttonGroup.add(td);
 		buttonGroup.add(tp);
     
-    
+    	
 		ok = new JButton("OK");
-		addComponent(AMCWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMCWLayout,layoutConstraints,ok,5,12,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMCWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
-		addComponent(AMCWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMCWLayout,layoutConstraints,annuler,6,12,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMCWFrame.getContentPane().add(annuler);
     }
 
@@ -261,7 +262,12 @@ public class AddModifyCourseWindow {
     	}
 
     }
-    
+    private void initRepeatCourseJcb(JComboBox jcb) {
+
+    	for(int i=1;i<=30;i++) {
+    		jcb.addItem(""+i);
+    	}
+    }
 	
 	
     /* (non-Javadoc)
@@ -274,17 +280,21 @@ public class AddModifyCourseWindow {
     }
 
 	    
-    public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
-     	     constraints. gridwidth= gridwidth;
-     	     constraints. gridheight = gridheight;
-     	     constraints.weightx = weightx;
-     	     constraints.weighty = weighty;
-     	     constraints.anchor = anchor;
-     	     constraints.fill = fill;
-     	     constraints.insets = insets;
+    public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+     	     
+    	constraints. gridx= gridx;
+    	constraints. gridy = gridy;
+    	constraints. gridwidth= gridwidth;
+     	constraints. gridheight = gridheight;
+     	constraints.weightx = weightx;
+ 	    constraints.weighty = weighty;
+ 	    constraints.anchor = anchor;
+ 	    constraints.fill = fill;
+ 	    constraints.insets = insets;
      	 
-     	     gbLayout.setConstraints(comp,constraints);
-     	    }
+     	gbLayout.setConstraints(comp,constraints);
+     	
+    }
      	    
 
      public static void main(String[] args){
