@@ -127,6 +127,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		public void refreshAll(BoTEvent e) {
 		    view.getTable().setVisible(true);
 		    view.getJScrollPane().getVerticalScrollBar().setEnabled(true);
+		    view.getJScrollPane().getHorizontalScrollBar().setEnabled(true);
 			Timetable timetable = e.getTimetable();
 		    Collection courses = timetable.getCourses();
 		    initDataTab();
@@ -185,6 +186,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    initDataTab();
 		    view.getTable().setVisible(false);
 		    view.getJScrollPane().getVerticalScrollBar().setEnabled(false);
+		    view.getJScrollPane().getHorizontalScrollBar().setEnabled(false);
 		    fireTableDataChanged();
 		}
 

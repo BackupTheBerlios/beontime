@@ -112,7 +112,8 @@ public class View {
         rowHeader.setCellRenderer(new RowHeaderRenderer(table));
 		jScrollPane=new JScrollPane(table);
 		jScrollPane.setRowHeaderView(rowHeader);
-		jScrollPane.getVerticalScrollBar().setEnabled(false);		
+		jScrollPane.getVerticalScrollBar().setEnabled(false);
+		jScrollPane.getHorizontalScrollBar().setEnabled(false);
 		//header.setSize(table.getWidth(),50);
 		table.setVisible(false); 
     }
