@@ -112,6 +112,7 @@ public class ManageElementsWindow {
 		else if (type == TYPE_USERS_BY_ADMIN) {
 		    try {
                 Collection users = DaoManager.getUserDao().getUsers(false);
+                users.remove(MainFrame.getInstance().getUserConnected());
                 panel = new ManageUsersTable(model, users).getPanel();
             } catch (Exception e) {
             	panel.setLayout(new BorderLayout());
