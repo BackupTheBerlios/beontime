@@ -44,9 +44,15 @@ public class AddCourse extends Action {
         int[] columns = table.getSelectedColumns();
         int[] rows    = table.getSelectedRows();
     	AddModifyCourseWindow window = new AddModifyCourseWindow(AddModifyCourseWindow.TYPE_ADD);
-    	if (columns.length>1){
+    	if (columns.length > 1) {
     		window.setStartHour(columns[0]);
     		window.setEndHour(columns[columns.length-1]);
+    	}
+    	if (rows.length > 0) {
+    	    Calendar date = Calendar.getInstance();
+    	    date.setTime(mainFrame.getDateSelected());
+    	    date.set(Calendar.DAY_OF_WEEK, rows[0] + 2);
+    	    window.setDateCourse(date);
     	}
     	window.setIdFormation(mainFrame.getSubjectSelected().getIdFormation());
     	window.setTypeCourse(mainFrame.getCourseTypeSelected());
@@ -138,14 +144,6 @@ public class AddCourse extends Action {
                         unavailability.setIdUnavailabilitySubject(tmp.getIdRoom());
                         unavailabilityDao.addUnavailability(unavailability);
                     }
-
-
-
-                    /*if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&
-                            course.getEndDate().getTimeInMillis() <= mainFrame.getEndPeriod().getTimeInMillis()) {
-	                    course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getBeginDate().get(Calendar.HOUR_OF_DAY));
-	                    course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndDate().get(Calendar.HOUR_OF_DAY));
-                    }*/
                 }
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);

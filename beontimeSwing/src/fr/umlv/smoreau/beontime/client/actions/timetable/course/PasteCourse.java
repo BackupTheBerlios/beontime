@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 import fr.umlv.smoreau.beontime.client.ClipboardManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
@@ -45,10 +46,25 @@ public class PasteCourse extends Action {
             return;
         
         course.setIdCourse(null);
+        
+        JTable table = mainFrame.getTable();
+        int[] columns = table.getSelectedColumns();
+        int[] rows    = table.getSelectedRows();
 
         AddModifyCourseWindow window = new AddModifyCourseWindow(AddModifyCourseWindow.TYPE_MODIFY);
-        window.setBeginDate(course.getBeginDate());
-        window.setEndDate(course.getEndDate());
+        if (columns.length > 1) {
+    		window.setStartHour(columns[0]);
+    		window.setEndHour(columns[columns.length-1]);
+    	} else
+    	    window.setBeginDate(course.getBeginDate());
+    	if (rows.length > 0) {
+    	    Calendar date = Calendar.getInstance();
+    	    date.setTime(mainFrame.getDateSelected());
+    	    date.set(Calendar.DAY_OF_WEEK, rows[0] + 2);
+    	    window.setDateCourse(date);
+    	} else
+    	    window.setEndDate(course.getEndDate());
+
         window.setTypeCourse(course.getIdCourseType().getNameCourseType());
         
         try {
@@ -104,17 +120,10 @@ public class PasteCourse extends Action {
 
 	            course = DaoManager.getTimetableDao().addCourse(course);
 
-	            /*if (course.getBeginDate().getTimeInMillis() >= mainFrame.getBeginPeriod().getTimeInMillis() &&
-                        course.getEndDate().getTimeInMillis() <= mainFrame.getEndPeriod().getTimeInMillis()) {
-	                course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getBeginDate().get(Calendar.HOUR_OF_DAY));
-	                course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndDate().get(Calendar.HOUR_OF_DAY));
-	                mainFrame.getModel().getTimetable().addCourse(course);
-	                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
-                }*/
-
 	            JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

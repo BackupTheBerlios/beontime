@@ -266,6 +266,8 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setRooms(Collection rooms) {
+	    if (rooms == null || rooms.size() == 0)
+	        return;
 	    
 	    placeCoursePanel.removeAll();
 	    placeCourseJcb = new JComboBox(roomsName);
@@ -314,6 +316,9 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setMaterials(Collection materials) {
+	    if (materials == null || materials.size() == 0)
+	        return;
+
 	    courseEquipmentPanel.removeAll();
 	    courseEquipmentJcb = new JComboBox(materialsName);
 	    courseEquipmentPanel.add(courseEquipmentJcb);
@@ -737,6 +742,10 @@ public class AddModifyCourseWindow {
     public void setStartHour(int start){
     	startCourseHourJcb.setSelectedIndex((start/4)+8 - FIRST_HOUR);
     	startCourseMinuteJcb.setSelectedIndex((start%4));
+    }
+    
+    public void setDateCourse(Calendar date) {
+        dateCourse.setDate(date.getTime());
     }
     
     public void setBeginDate(Calendar date){
