@@ -62,51 +62,50 @@ public class AddCourse extends Action {
     	window.show();
     	
     	if (window.isOk()) {
-    	    Course course = new Course();
-    	    course.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
-    	    
-    	    course.setSubject(mainFrame.getSubjectSelected());
-    	    
-    	    TakePartGroupSubjectCourse takePart = new TakePartGroupSubjectCourse();
-    	    takePart.setIdGroup(window.getCourseGroup().getIdGroup());
-    	    takePart.setIdSubject(mainFrame.getSubjectSelected().getIdSubject());
-    	    course.addGroupSubjectTakingPart(takePart);
-    	    
-    	    Collection teachers = window.getTeachers();
-    	    course.setTeachersDirecting(new HashSet());
-    	    course.setTeachers(new HashSet());
-            for (Iterator j = teachers.iterator(); j.hasNext(); ) {
-                User user = (User)j.next();
-                course.addTeacher(user);
-                course.addTeacherDirecting(new IsDirectedByCourseTeacher(user, course));
-            }
-    	    
-    	    course.setRooms(new HashSet());
-    	    Collection rooms = window.getPlaceCourse();
-    	    for (Iterator i = rooms.iterator(); i.hasNext(); )
-    	        course.addRoom((Room) i.next());
-    	    
-    	    course.setMaterials(new HashSet());
-    	    Collection materials = window.getCourseEquipment();
-    	    for (Iterator i = materials.iterator(); i.hasNext(); )
-    	        course.addMaterial((Material) i.next());
-
     	    try {
-                course.setIdCourseType(DaoManager.getTimetableDao().getTypeCourse(window.getTypeCourse()));
-
-                for (int i = 0; i < window.getNbWeeksCourse(); ++i) {
+    	        for (int k = 0; k < window.getNbWeeksCourse(); ++k) {
+		    	    Course course = new Course();
+		    	    course.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
+		    	    
+		    	    course.setSubject(mainFrame.getSubjectSelected());
+		    	    
+		    	    TakePartGroupSubjectCourse takePart = new TakePartGroupSubjectCourse();
+		    	    takePart.setIdGroup(window.getCourseGroup().getIdGroup());
+		    	    takePart.setIdSubject(mainFrame.getSubjectSelected().getIdSubject());
+		    	    course.addGroupSubjectTakingPart(takePart);
+		    	    
+		    	    Collection teachers = window.getTeachers();
+		    	    course.setTeachersDirecting(new HashSet());
+		    	    course.setTeachers(new HashSet());
+		            for (Iterator j = teachers.iterator(); j.hasNext(); ) {
+		                User user = (User)j.next();
+		                course.addTeacher(user);
+		                course.addTeacherDirecting(new IsDirectedByCourseTeacher(user, course));
+		            }
+		    	    
+		    	    course.setRooms(new HashSet());
+		    	    Collection rooms = window.getPlaceCourse();
+		    	    for (Iterator i = rooms.iterator(); i.hasNext(); )
+		    	        course.addRoom((Room) i.next());
+		    	    
+		    	    course.setMaterials(new HashSet());
+		    	    Collection materials = window.getCourseEquipment();
+		    	    for (Iterator i = materials.iterator(); i.hasNext(); )
+		    	        course.addMaterial((Material) i.next());
+	
+	                course.setIdCourseType(DaoManager.getTimetableDao().getTypeCourse(window.getTypeCourse()));
+                
             	    Calendar beginDate = window.getBeginDate();
-            	    beginDate.set(Calendar.DAY_OF_YEAR, beginDate.get(Calendar.DAY_OF_YEAR) + 7*i);
+            	    beginDate.set(Calendar.DAY_OF_YEAR, beginDate.get(Calendar.DAY_OF_YEAR) + 7*k);
             	    beginDate.set(Calendar.HOUR_OF_DAY, beginDate.get(Calendar.HOUR_OF_DAY) + (beginDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
             	    Calendar endDate = window.getEndDate();
-            	    endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7*i);
+            	    endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7*k);
             	    endDate.set(Calendar.HOUR_OF_DAY, endDate.get(Calendar.HOUR_OF_DAY) + (endDate.get(Calendar.DST_OFFSET) == 0 ? 1 : 2));
 
                     course.setBeginDate(beginDate);
                     course.setEndDate(endDate);
 	                
                     course = DaoManager.getTimetableDao().addCourse(course);
-
 
                     // ajoute les indisponibilités qui en découlent
                     UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
