@@ -196,7 +196,12 @@ public class AddModifyUserWindow {
 		
 		try {
             Collection buildings = DaoManager.getElementDao().getBuildings();
-            buildingJcb = new JComboBox(buildings.toArray(new String[buildings.size()]));
+            String[] b = new String[buildings.size()+1];
+            b[0] = "";
+            int j = 1;
+            for (Iterator i = buildings.iterator(); i.hasNext(); ++j)
+                b[j] = (String) i.next();
+            buildingJcb = new JComboBox(b);
         } catch (Exception e) {
             JLabel label = new JLabel("Erreur lors de la récupération des batiments existants");
             label.setForeground(Color.RED);
@@ -250,7 +255,6 @@ public class AddModifyUserWindow {
 	}
 	
 	private void initAdminParts() {
-	
 		JLabel courrielMailLabel = new JLabel("E-mail :");
 		addComponent(AMUWLayout,layoutConstraints,courrielMailLabel,1,3,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(courrielMailLabel);
@@ -303,8 +307,16 @@ public class AddModifyUserWindow {
         return nameJtf.getText().trim();
     }
     
+    public void setName(String name) {
+        nameJtf.setText(name);
+    }
+    
     public String getSurname() {
         return surnameJtf.getText().trim();
+    }
+    
+    public void setSurname(String surname) {
+        surnameJtf.setText(surname);
     }
     
     public String getCourrielMail() {
@@ -312,6 +324,10 @@ public class AddModifyUserWindow {
         if ("".equals(tmp))
             return null;
         return tmp;
+    }
+    
+    public void setCourrielMail(String courriel) {
+        courrielMailJtf.setText(courriel);
     }
     
     public String getBuilding() {
@@ -324,6 +340,11 @@ public class AddModifyUserWindow {
         return string;
     }
     
+    public void setBuilding(String building) {
+        if (buildingJcb != null)
+            buildingJcb.setSelectedItem(building);
+    }
+    
     public String getLocal() {
         String tmp = null;
         if (localJtf != null) {
@@ -334,6 +355,11 @@ public class AddModifyUserWindow {
         return tmp;
     }
     
+    public void setLocal(String local) {
+        if (localJtf != null)
+            localJtf.setText(local);
+    }
+    
     public String getPhone() {
         String tmp = null;
         if (phoneJtf != null) {
@@ -342,6 +368,11 @@ public class AddModifyUserWindow {
                 return null;
         }
         return tmp;
+    }
+    
+    public void setPhone(String phone) {
+        if (phoneJtf != null)
+            phoneJtf.setText(phone);
     }
     
     public Set getFormations() {
@@ -361,6 +392,10 @@ public class AddModifyUserWindow {
 		}
 		
 		return list;
+    }
+    
+    public void setFormations(Collection formations) {
+		//TODO Sandrine: ajouter les formations en créant des JComboBox avec des boutons "x" ...
     }
     
     public boolean isOk() {

@@ -32,7 +32,7 @@ public class ButtonPlusListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String text = ((JButton)e.getSource()).getText();
 		
-		if(text.compareTo("+") == 0) {
+		if("+".equals(text)) {
 			jcbPanel.add(new JComboBox(contents));
 			jcbPanel.add(Box.createVerticalStrut(5));
 		

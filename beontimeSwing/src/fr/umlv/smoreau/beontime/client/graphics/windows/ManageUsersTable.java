@@ -11,7 +11,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.user.User;
@@ -39,9 +38,6 @@ public class ManageUsersTable extends JTable {
 		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				ActionsList.getAction("ModifyUser").setEnabled(true);
-				ActionsList.getAction("RemoveUser").setEnabled(true);
-				
 				mainFrame.setUserSelected((User)((ManageUsersAdapter)table.getModel()).getObjectAt(table.getSelectedRow()));
 			}
 		});

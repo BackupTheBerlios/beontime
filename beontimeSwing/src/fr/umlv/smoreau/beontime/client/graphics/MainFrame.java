@@ -253,6 +253,13 @@ public class MainFrame {
 	}
 	
 	public void setUserSelected(User user) {
+	    if (user != null) {
+			ActionsList.getAction("ModifyUser").setEnabled(true);
+			ActionsList.getAction("RemoveUser").setEnabled(true);
+	    } else {
+	        ActionsList.getAction("ModifyUser").setEnabled(false);
+			ActionsList.getAction("RemoveUser").setEnabled(false);
+	    }
 	    this.userSelected = user;
 	}
 	

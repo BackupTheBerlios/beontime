@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Collection;
 
 import javax.swing.BorderFactory;
@@ -194,20 +196,12 @@ public class ManageElementsWindow {
 		validateButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
 		JButton ok = new JButton("OK");
-		ok.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				MEWFrame.dispose();
-			}
-		});
+		ok.addActionListener(new ActionButton());
 		validateButtonPanel.add(ok);
 		
-		JButton annuler = new JButton("annuler");
-		annuler.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				MEWFrame.dispose();
-			}
-		});
-		validateButtonPanel.add(annuler);
+		/*JButton annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionButton());
+		validateButtonPanel.add(annuler);*/
 	}	
 	
 	private Action getActionButton(String nameButton, int type) {
@@ -284,8 +278,30 @@ public class ManageElementsWindow {
 	public void show() {
 		MEWFrame.setSize(600,450);
 		MEWFrame.setResizable(false);
-		MEWFrame.setLocationRelativeTo(MainFrame.getInstance().getMainFrame());
-		MEWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		MEWFrame.addWindowListener(new WindowListener() {
+            public void windowOpened(WindowEvent arg0) {
+            }
+
+            public void windowClosing(WindowEvent arg0) {
+                (new ActionButton()).actionPerformed(null);
+            }
+
+            public void windowClosed(WindowEvent arg0) {
+            }
+
+            public void windowIconified(WindowEvent arg0) {
+            }
+
+            public void windowDeiconified(WindowEvent arg0) {
+            }
+
+            public void windowActivated(WindowEvent arg0) {
+            }
+
+            public void windowDeactivated(WindowEvent arg0) {
+            }
+		});
+		MEWFrame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		MEWFrame.setLocationRelativeTo(null);
 		MEWFrame.setVisible(true);
 	}
@@ -301,4 +317,16 @@ public class ManageElementsWindow {
 		
 		gbLayout.setConstraints(comp,constraints);
 	}
+	
+	
+    private class ActionButton implements ActionListener {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent arg0) {
+            if (TYPE_USERS_BY_ADMIN == type || TYPE_USERS_BY_SECRETARY == type)
+                MainFrame.getInstance().setUserSelected(null);
+			MEWFrame.dispose();
+        }
+    }
 }
