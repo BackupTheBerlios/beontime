@@ -124,9 +124,8 @@ public class LdapManager {
 				tmp = attrs.get("uidNumber");
 				if (tmp != null)
 					person.setIdPersonne(new Long((String) tmp.get()));
-				//TODO ajouter sans doute login et password !
-				person.setTypePersonne(UserDao.TYPE_TEACHER);
-				
+				person.setTypePersonne(filter.getTypePersonne());
+
 				result.add(person);
 			}
 		} catch (NamingException e) {
