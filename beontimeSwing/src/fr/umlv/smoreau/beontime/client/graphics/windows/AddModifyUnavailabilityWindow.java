@@ -174,9 +174,12 @@ public class AddModifyUnavailabilityWindow {
     	AMUWFrame.getContentPane().add(typeUnavailabilityLabel);
     	
     	typeUnavailabilityJcb = new JComboBox();
+    	typeUnavailabilityJcb.addItem("Calendrier");
+    	typeUnavailabilityJcb.addItem("Cours");
     	typeUnavailabilityJcb.addItem("Enseignant");
     	typeUnavailabilityJcb.addItem("Etudiant");
-    	typeUnavailabilityJcb.addItem("Cours");
+    	typeUnavailabilityJcb.addItem("Local");
+    	typeUnavailabilityJcb.addItem("Matériel");
     	
     	
     	typeUnavailabilityJcb.addItemListener(new ItemListener() {
