@@ -20,7 +20,7 @@ public class UnavailabilityDaoTest extends TestCase {
         assertNotNull(unavailabilityDao.getUnavailabilities());
     }
     
-    public void testAddRemoveGroup() {
+    public void testAddRemoveUnavailability() {
         Unavailability unavailability = new Unavailability();
         /*group.setIdFormation(new Long(1));
         group.setIntitule("groupe pour essayer");
