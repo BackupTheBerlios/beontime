@@ -123,7 +123,11 @@ public class TimeTableViewPanelBar extends JPanel {
 					    mainFrame.getModel().fireCloseTimetable(false);
 				    }
 					if (TYPE_FORMATION.equals(event.getItem())) {
-						Collection formations = DaoManager.getFormationDao().getFormations();
+					    Collection formations = null;
+					    if (UserDao.TYPE_SECRETARY.equals(mainFrame.getUserConnected().getUserType()))
+					        formations = mainFrame.getUserConnected().getFormationsInCharge();
+					    else
+					        formations = DaoManager.getFormationDao().getFormations();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = formations.iterator(); i.hasNext(); ) {
 							Formation formation = (Formation) i.next();
