@@ -6,6 +6,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 
@@ -14,17 +16,11 @@ import fr.umlv.smoreau.beontime.model.Formation;
  * @author BeOnTime team
  */
 public interface FormationDao extends Remote {
-//    private static final LdapManager ldapManager = LdapManager.getInstance();  
-//    private static final String TABLE = "Formation";
-    
- //   public static FormationDao getInstance() throws RemoteException;
-
-	public Collection getFormations(FormationFilter filter) throws RemoteException;
+	public Collection getFormations(FormationFilter filter) throws RemoteException, HibernateException;
 	
-	public Collection getFormations() throws RemoteException;
+	public Collection getFormations() throws RemoteException, HibernateException;
 	
-	public boolean addFormation(Formation formation) throws RemoteException;
+	public void addFormation(Formation formation) throws RemoteException, HibernateException;
 	
-	public boolean modifyFormation(Formation formation) throws RemoteException;
-	
+	public void modifyFormation(Formation formation) throws RemoteException, HibernateException;
 }

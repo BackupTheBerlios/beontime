@@ -1,6 +1,11 @@
 package junit;
 
+import java.rmi.RemoteException;
+
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.dao.ElementDao;
+import fr.umlv.smoreau.beontime.dao.ElementDaoImpl;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import junit.framework.Test;
@@ -11,36 +16,62 @@ import junit.framework.TestSuite;
  * @author BeOnTime
  */
 public class ElementDaoTest extends TestCase {
-    private static final ElementDao elementDao = ElementDao.getInstance();
+    private static ElementDao elementDao = ElementDaoImpl.getInstance();
     
     public ElementDaoTest(String name) {
         super(name);
     }
 
     public void testGetMaterials() {
-        assertNotNull(elementDao.getMaterials());
+        try {
+            assertNotNull(elementDao.getMaterials());
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
     public void testGetRooms() {
-        assertNotNull(elementDao.getRooms());
+        try {
+            assertNotNull(elementDao.getRooms());
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
     public void testAddRemoveMaterial() {
-        Material material = new Material();
-        material.setName("m1");
-        assertTrue(elementDao.addMaterial(material));
-        material.setDescription("matériel n°1");
-        assertTrue(elementDao.modifyMaterial(material));
-        assertTrue(elementDao.removeMaterial(material));
+        try {
+	        Material material = new Material();
+	        material.setName("m1");
+            elementDao.addMaterial(material);
+	        material.setDescription("matériel n°1");
+	        elementDao.modifyMaterial(material);
+	        elementDao.removeMaterial(material);
+	        assertTrue(true);
+	    } catch (RemoteException e) {
+        	assertTrue(false);
+	    } catch (HibernateException e) {
+	        assertTrue(false);
+        }
     }
     
     public void testAddRemoveRoom() {
-        Room room = new Room();
-        room.setName("r1");
-        assertTrue(elementDao.addRoom(room));
-        room.setDescription("local n°1");
-        assertTrue(elementDao.modifyRoom(room));
-        assertTrue(elementDao.removeRoom(room));
+        try {
+	        Room room = new Room();
+	        room.setName("r1");
+	        elementDao.addRoom(room);
+	        room.setDescription("local n°1");
+	        elementDao.modifyRoom(room);
+	        elementDao.removeRoom(room);
+	        assertTrue(true);
+        } catch (RemoteException e) {
+        	assertTrue(false);
+	    } catch (HibernateException e) {
+	        assertTrue(false);
+        } 
     }
     
     public static Test suite() {

@@ -3,6 +3,8 @@ package junit;
 
 import java.rmi.RemoteException;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.dao.*;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.User;
@@ -15,36 +17,47 @@ import junit.framework.TestSuite;
  * @author BeOnTime
  */
 public class UserDaoTest extends TestCase {
-//    private static final UserDao userDao = UserDao.getInstance();
-    private static UserDao userDao;
-    static {
-    	try {
-			userDao = UserDaoImpl.getInstance();
-		} catch (RemoteException e) {
-			System.err.println("Problème RMI dans le test JUnit du user Dao");
-		}
-    }
+    private static UserDao userDao = UserDaoImpl.getInstance();
 
     public UserDaoTest(String name) {
         super(name);
     }
     
-    public void testGetUsers() throws RemoteException {
-        assertNotNull(userDao.getAdministrators());
+    public void testGetUsers() {
+        try {
+            assertNotNull(userDao.getAdministrators());
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
-    public void testGetUsersWithFilter() throws RemoteException {
+    public void testGetUsersWithFilter() {
         UserFilter filter = new UserFilter();
         filter.setName("toto");
-        assertNotNull(userDao.getAdministrators(filter));
+        try {
+            assertNotNull(userDao.getAdministrators(filter));
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
-    public void testAddRemoveUser() throws RemoteException {
+    public void testAddRemoveUser() {
         User person = new User();
         person.setName("toto");
         person.setUserType("secretaire");
-        assertTrue(userDao.addUser(person));
-        assertTrue(userDao.removeUser(person));
+        try {
+            userDao.addUser(person);
+            userDao.removeUser(person);
+            assertTrue(true);
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
     public static Test suite() {
@@ -54,6 +67,5 @@ public class UserDaoTest extends TestCase {
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
-        //TODO catcher la remote Exception ?
     }
 }

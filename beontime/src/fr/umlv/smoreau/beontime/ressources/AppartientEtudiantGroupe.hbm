@@ -6,11 +6,11 @@
 <hibernate-mapping>
 	<class name="fr.umlv.smoreau.beontime.model.association.BelongStudentGroup" table="appartient_etudiant_groupe">
 		<composite-id>
-			<key-many-to-one
-				class="fr.umlv.smoreau.beontime.model.user.User"
+			<key-property
 				column="id_etudiant"
 				name="IdStudent"
-			 />
+				type="java.lang.Long"
+			/>
 			<key-many-to-one
 				class="fr.umlv.smoreau.beontime.model.Group"
 				column="id_groupe"

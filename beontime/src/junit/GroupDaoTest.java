@@ -1,7 +1,12 @@
 package junit;
 
 
+import java.rmi.RemoteException;
+
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.dao.GroupDao;
+import fr.umlv.smoreau.beontime.dao.GroupDaoImpl;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
@@ -12,32 +17,46 @@ import junit.framework.TestSuite;
  * @author BeOnTime
  */
 public class GroupDaoTest extends TestCase {
-    private static final GroupDao groupDao = GroupDao.getInstance();
+    private static GroupDao groupDao = GroupDaoImpl.getInstance();
     
     public GroupDaoTest(String name) {
         super(name);
     }
 
     public void testGetGroups() {
-        assertNotNull(groupDao.getGroups());
+        try {
+            assertNotNull(groupDao.getGroups());
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
     public void testAddRemoveGroup() {
-        // ajout d'un groupe simple
-        Group group = new Group();
-        group.setIdFormation(new Long(1));
-        group.setHeading("groupe pour essayer");
-        assertTrue(groupDao.addGroup(group));
+        try {
+	        // ajout d'un groupe simple
+	        Group group = new Group();
+	        group.setIdFormation(new Long(1));
+	        group.setHeading("groupe pour essayer");
+            groupDao.addGroup(group);
         
-        // assignation d'un étudiant à ce groupe
-        User person = new User();
-        person.setIdUser(new Long(1054));
-        person.setUserType("etudiant");
-        group.addStudent(person);
-        assertTrue(groupDao.modifyGroup(group));
-        
-        // suppression du groupe
-        assertTrue(groupDao.removeGroup(group));
+	        // assignation d'un étudiant à ce groupe
+	        User person = new User();
+	        person.setIdUser(new Long(1054));
+	        person.setUserType("enseignant");
+	        group.addStudent(person);
+	        groupDao.modifyGroup(group);
+
+	        // suppression du groupe
+            groupDao.removeGroup(group);
+            
+            assertTrue(true);
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
     public static Test suite() {

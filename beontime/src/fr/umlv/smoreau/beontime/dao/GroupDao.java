@@ -6,6 +6,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.model.Group;
 
@@ -15,14 +17,14 @@ import fr.umlv.smoreau.beontime.model.Group;
  */
 public interface GroupDao extends Remote {
 
-	public Collection getGroups(GroupFilter filter) throws RemoteException;
+	public Collection getGroups(GroupFilter filter) throws RemoteException, HibernateException;
 	
-	public Collection getGroups() throws RemoteException;
+	public Collection getGroups() throws RemoteException, HibernateException;
 	
-	public boolean addGroup(Group group) throws RemoteException;
+	public void addGroup(Group group) throws RemoteException, HibernateException;
 	
-	public boolean modifyGroup(Group group) throws RemoteException;
+	public void modifyGroup(Group group) throws RemoteException, HibernateException;
 	
-	public boolean removeGroup(Group group) throws RemoteException;
+	public void removeGroup(Group group) throws RemoteException, HibernateException;
 	
 }

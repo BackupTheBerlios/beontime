@@ -3,7 +3,10 @@ package junit;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.dao.FormationDao;
+import fr.umlv.smoreau.beontime.dao.FormationDaoImpl;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.dao.UserDaoImpl;
 import fr.umlv.smoreau.beontime.model.Formation;
@@ -16,33 +19,39 @@ import junit.framework.TestSuite;
  * @author BeOnTime
  */
 public class FormationDaoTest extends TestCase {
-    private static final FormationDao formationDao = FormationDao.getInstance();
+    private static FormationDao formationDao = FormationDaoImpl.getInstance();
     
     public FormationDaoTest(String name) {
         super(name);
     }
 
     public void testGetFormations() {
-        assertNotNull(formationDao.getFormations());
+        try {
+            assertNotNull(formationDao.getFormations());
+        } catch (RemoteException e) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
     }
     
     public void testModifyFormation() {
     	try {
     		Formation formation = new Formation();
-//       UserDao userDao = UserDao.getInstance();
     		UserDao userDao = UserDaoImpl.getInstance();
-//       Collection c = userDao.getSecretaries();
     		Collection c = userDao.getSecretaries();
     		User[] persons = (User[]) c.toArray(new User[c.size()]);
     		formation.setIdSecretary(persons[0]);
     		formation.setIdTeacher(new Long(6));
-    		assertTrue(formationDao.addFormation(formation));
+    		formationDao.addFormation(formation);
     		formation.setHeading("formation de test");
-    		assertTrue(formationDao.modifyFormation(formation));
+    		formationDao.modifyFormation(formation);
+    		assertTrue(true);
     	} catch (RemoteException e) {
-    		System.err.println("Problème RMI à l'execution test JUnit sur Formation");
-    		//TODO gerer ?
-    	}
+    		assertTrue(false);
+    	} catch (HibernateException e) {
+    	    assertTrue(false);
+        }
     }
     
     public static Test suite() {

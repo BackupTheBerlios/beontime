@@ -25,8 +25,7 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 	//TODO en cas de modif refaire le rmic et rebalancer coté client
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
-	
- //   private static final FormationDao INSTANCE = new FormationDao();
+
     private static FormationDao INSTANCE;
     static {
     	try {
@@ -44,27 +43,26 @@ public class FormationDaoImpl extends Dao implements FormationDao {
     private FormationDaoImpl() throws RemoteException {
     }
 
-    public static FormationDao getInstance() throws RemoteException {
+    public static FormationDao getInstance() {
         return INSTANCE;
     }
 
 
-	public Collection getFormations(FormationFilter filter) throws RemoteException {
+	public Collection getFormations(FormationFilter filter) throws RemoteException, HibernateException {
 	    Collection result = new ArrayList();
 
+	    Session session = null;
         try {
-            Session session = Hibernate.getCurrentSession();
-            TransactionManager.beginTransaction();
-            result.addAll(get(TABLE, filter));
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des formations sur la base de données SQL : " + e.getMessage());
+            session = Hibernate.getCurrentSession();
+            result.addAll(get(TABLE, filter, session));
+        } finally {
+            Hibernate.closeSession();
         }
         
         try {
             result.addAll(ldapManager.getFormations());
         } catch (NamingException e) {
-            System.err.println("Erreur lors de la récupération des formations sur la base de données LDAP : " + e.getMessage());
+            System.err.println("LDAP est inaccessible : " + e.getMessage());
             //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
             Formation formation = new Formation(new Long(66));
             formation.setHeading("formation de test sans LDAP");
@@ -74,32 +72,38 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 
 		return result;
 	}
-	
-	public Collection getFormations() throws RemoteException {
+
+	public Collection getFormations() throws RemoteException, HibernateException {
 		return getFormations(null);
 	}
-	
-	public boolean addFormation(Formation formation) throws RemoteException {
+
+	public void addFormation(Formation formation) throws RemoteException, HibernateException {
+	    Session session = null;
 	    try {
             TransactionManager.beginTransaction();
-            add(formation);
+            session = Hibernate.getCurrentSession();
+            add(formation, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la modification d'une formation : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
-	
-	public boolean modifyFormation(Formation formation) throws RemoteException {
+
+	public void modifyFormation(Formation formation) throws RemoteException, HibernateException {
+	    Session session = null;
 	    try {
             TransactionManager.beginTransaction();
-            modify(formation);
+            session = Hibernate.getCurrentSession();
+            modify(formation, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la modification d'une formation : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 }

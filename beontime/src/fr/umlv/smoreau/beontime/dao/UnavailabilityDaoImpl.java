@@ -22,23 +22,24 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
 
-//	   private static final UnavailabilityDao INSTANCE = new UnavailabilityDao();
-	   private static UnavailabilityDao INSTANCE;
-	   static {
-	   	try {
-	   		INSTANCE = new UnavailabilityDaoImpl();
-	   	} catch (RemoteException e) {
-			System.err.println("problème RMI à l'instanciation du Unavalability DAO");
-			//TODO gerer
-	   	}
-	   }
+	private static UnavailabilityDao INSTANCE;
+	static {
+	    try {
+	        INSTANCE = new UnavailabilityDaoImpl();
+	    } catch (RemoteException e) {
+	        System.err.println("problème RMI à l'instanciation du Unavalability DAO");
+	        //TODO gerer
+	    } catch (HibernateException e) {
+	        System.err.println("Erreur lors de l'instanciation : " + e.getMessage());
+        }
+	}
     
     private static final String TABLE      = "Unavailability";
     private static final String TABLE_TYPE = "UnavailabilityType";
     
     private String[] DEFAULT_TYPES = { "enseignant", "étudiant", "cours", "matériel", "local", "calendrier" };
     
-    private UnavailabilityDaoImpl() throws RemoteException {
+    private UnavailabilityDaoImpl() throws RemoteException, HibernateException {
         Collection types = getTypesUnavailability();
         if (types != null && types.size() == 0) {
             for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
@@ -49,92 +50,93 @@ public class UnavailabilityDaoImpl extends Dao implements UnavailabilityDao {
         }
     }
 
-    public static UnavailabilityDao getInstance() /*throws RemoteException*/ {
+    public static UnavailabilityDao getInstance() {
         return INSTANCE;
     }
 
 
-	public Collection getUnavailabilities(UnavailabilityFilter filter) throws RemoteException {
-	    Collection result = null;
-
+	public Collection getUnavailabilities(UnavailabilityFilter filter) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
-            Session session = Hibernate.getCurrentSession();
-            TransactionManager.beginTransaction();
-            result = get(TABLE, filter);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des indisponibilités : " + e.getMessage());
+            session = Hibernate.getCurrentSession();
+            return get(TABLE, filter, session);
+        } finally {
+            Hibernate.closeSession();
         }
-
-		return result;
 	}
 	
-	public Collection getUnavailabilities() throws RemoteException {
+	public Collection getUnavailabilities() throws RemoteException, HibernateException {
 		return getUnavailabilities(null);
 	}
 	
-	public boolean addUnavailability(Unavailability unavailability) throws RemoteException {
+	public void addUnavailability(Unavailability unavailability) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            add(unavailability);
+            session = Hibernate.getCurrentSession();
+            add(unavailability, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'une indisponibilité : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
-	public boolean modifyUnavailability(Unavailability unavailability) throws RemoteException {
-        try {
+	public void modifyUnavailability(Unavailability unavailability) throws RemoteException, HibernateException {
+	    Session session = null;
+	    try {
             TransactionManager.beginTransaction();
-            modify(unavailability);
+            session = Hibernate.getCurrentSession();
+            modify(unavailability, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la modification d'une indisponibilité : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
-	public boolean removeUnavailability(Unavailability unavailability) throws RemoteException {
+	public void removeUnavailability(Unavailability unavailability) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            remove(TABLE, new UnavailabilityFilter(unavailability));
+            session = Hibernate.getCurrentSession();
+            remove(TABLE, new UnavailabilityFilter(unavailability), session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            System.err.println("Erreur lors de la suppression d'une indisponibilité : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
 	
-	public Collection getTypesUnavailability() throws RemoteException {
-	    Collection result = null;
-
+	public Collection getTypesUnavailability() throws RemoteException, HibernateException {
+	    Session session = null;
         try {
-            Session session = Hibernate.getCurrentSession();
-            TransactionManager.beginTransaction();
-            result = get(TABLE_TYPE, null);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des types d'indisponibilité : " + e.getMessage());
+            session = Hibernate.getCurrentSession();
+            return get(TABLE_TYPE, null, session);
+        } finally {
+            Hibernate.closeSession();
         }
-
-		return result;
 	}
 	
-	private boolean addTypeUnavailability(UnavailabilityType typeUnavailability) /*throws RemoteException*/ {
+	private void addTypeUnavailability(UnavailabilityType typeUnavailability) throws HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            add(typeUnavailability);
+            session = Hibernate.getCurrentSession();
+            add(typeUnavailability, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout du type d'indisponibilité : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 }

@@ -3,7 +3,6 @@ package fr.umlv.smoreau.beontime.model.base;
 import java.io.Serializable;
 
 import fr.umlv.smoreau.beontime.model.Group;
-import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -27,7 +26,7 @@ public abstract class BaseBelongStudentGroup implements Serializable {
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private User _idStudent;
+	private java.lang.Long _idStudent;
 	private Group _idGroup;
 
 
@@ -40,7 +39,7 @@ public abstract class BaseBelongStudentGroup implements Serializable {
 	 * Constructor for primary key
 	 */
 	public BaseBelongStudentGroup (
-		User _idStudent,
+		Long _idStudent,
 		Group _idGroup) {
 
 		this.setIdStudent(_idStudent);
@@ -75,7 +74,7 @@ public abstract class BaseBelongStudentGroup implements Serializable {
 	/**
 	 * Return the value associated with the column: id_etudiant
 	 */
-	public User getIdStudent () {
+	public java.lang.Long getIdStudent () {
 		return _idStudent;
 	}
 
@@ -83,7 +82,7 @@ public abstract class BaseBelongStudentGroup implements Serializable {
 	 * Set the value related to the column: id_etudiant
 	 * @param _idStudent the id_etudiant value
 	 */
-	public void setIdStudent (User _idStudent) {
+	public void setIdStudent (java.lang.Long _idStudent) {
 		this._idStudent = _idStudent;
 	}
 

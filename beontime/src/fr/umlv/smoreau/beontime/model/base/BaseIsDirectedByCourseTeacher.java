@@ -3,7 +3,6 @@ package fr.umlv.smoreau.beontime.model.base;
 import java.io.Serializable;
 
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.user.User;
 
 
 /**
@@ -25,7 +24,7 @@ public abstract class BaseIsDirectedByCourseTeacher  implements Serializable {
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private User _idTeacher;
+	private java.lang.Long _idTeacher;
 	private Course _idCourse;
 
 
@@ -38,7 +37,7 @@ public abstract class BaseIsDirectedByCourseTeacher  implements Serializable {
 	 * Constructor for primary key
 	 */
 	public BaseIsDirectedByCourseTeacher (
-		User _idTeacher,
+	    java.lang.Long _idTeacher,
 		Course _idCourse) {
 
 		this.setIdTeacher(_idTeacher);
@@ -55,7 +54,7 @@ public abstract class BaseIsDirectedByCourseTeacher  implements Serializable {
      *  column=ID_enseignant
 	 * not-null=true
 	 */
-	public User getIdTeacher () {
+	public java.lang.Long getIdTeacher () {
 		return this._idTeacher;
 	}
 
@@ -63,7 +62,7 @@ public abstract class BaseIsDirectedByCourseTeacher  implements Serializable {
 	 * Set the value related to the column: ID_enseignant
 	 * @param _idTeacher the ID_enseignant value
 	 */
-	public void setIdTeacher (User _idTeacher) {
+	public void setIdTeacher (java.lang.Long _idTeacher) {
 		this._idTeacher = _idTeacher;
 		this.hashCode = Integer.MIN_VALUE;
 	}

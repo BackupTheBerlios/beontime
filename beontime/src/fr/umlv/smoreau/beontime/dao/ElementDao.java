@@ -6,6 +6,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.filter.MaterialFilter;
 import fr.umlv.smoreau.beontime.filter.RoomFilter;
 import fr.umlv.smoreau.beontime.model.element.*;
@@ -16,30 +18,24 @@ import fr.umlv.smoreau.beontime.model.element.*;
  */
 public interface ElementDao extends Remote {
 
-//	private static final String TABLE_MATERIAL = "Material";
-//    private static final String TABLE_ROOM     = "Room";
-    
- //   public static ElementDao getInstance() throws RemoteException;
+	public Collection getRooms(RoomFilter filter) throws RemoteException, HibernateException;
+	
+	public Collection getMaterials(MaterialFilter filter) throws RemoteException, HibernateException;
+	
+	public Collection getRooms() throws RemoteException, HibernateException;
+	
+	public Collection getMaterials() throws RemoteException, HibernateException;
+	
+	public void addRoom(Room room) throws RemoteException, HibernateException;
+	
+	public void addMaterial(Material material) throws RemoteException, HibernateException;
+	
+	public void modifyRoom(Room room) throws RemoteException, HibernateException;
+	
+	public void modifyMaterial(Material material) throws RemoteException, HibernateException;
+	
+	public void removeRoom(Room room) throws RemoteException, HibernateException;
+	
+	public void removeMaterial(Material material) throws RemoteException, HibernateException;
 
-
-	public Collection getRooms(RoomFilter filter) throws RemoteException;
-	
-	public Collection getMaterials(MaterialFilter filter) throws RemoteException;
-	
-	public Collection getRooms() throws RemoteException;
-	
-	public Collection getMaterials() throws RemoteException;
-	
-	public boolean addRoom(Room room) throws RemoteException;
-	
-	public boolean addMaterial(Material material) throws RemoteException;
-	
-	public boolean modifyRoom(Room room) throws RemoteException;
-	
-	public boolean modifyMaterial(Material material) throws RemoteException;
-	
-	public boolean removeRoom(Room room) throws RemoteException;
-	
-	public boolean removeMaterial(Material material) throws RemoteException;
-	
 }

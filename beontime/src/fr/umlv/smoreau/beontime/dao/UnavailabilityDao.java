@@ -6,6 +6,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
+import net.sf.hibernate.HibernateException;
+
 import fr.umlv.smoreau.beontime.filter.UnavailabilityFilter;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 
@@ -15,16 +17,16 @@ import fr.umlv.smoreau.beontime.model.Unavailability;
  */
 public interface UnavailabilityDao extends Remote {
 
-	public Collection getUnavailabilities(UnavailabilityFilter filter) throws RemoteException;
+	public Collection getUnavailabilities(UnavailabilityFilter filter) throws RemoteException, HibernateException;
 	
-	public Collection getUnavailabilities() throws RemoteException;
+	public Collection getUnavailabilities() throws RemoteException, HibernateException;
 	
-	public boolean addUnavailability(Unavailability unavailability) throws RemoteException;
+	public void addUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
 	
-	public boolean modifyUnavailability(Unavailability unavailability) throws RemoteException;
+	public void modifyUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
 	
-	public boolean removeUnavailability(Unavailability unavailability) throws RemoteException;
+	public void removeUnavailability(Unavailability unavailability) throws RemoteException, HibernateException;
 	
-	public Collection getTypesUnavailability() throws RemoteException;
+	public Collection getTypesUnavailability() throws RemoteException, HibernateException;
 		
 }

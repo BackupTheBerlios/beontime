@@ -30,13 +30,9 @@
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>
 		
-		<set
-			cascade="none"
-			name="Students"
-			table="appartient_etudiant_groupe"
-		>
+		<set inverse="true" name="Students">
 			<key column="id_groupe" />
-			<many-to-many class="fr.umlv.smoreau.beontime.model.user.User" column="id_etudiant" />
+			<one-to-many class="fr.umlv.smoreau.beontime.model.association.BelongStudentGroup" />
 		</set>
 	</class>
 </hibernate-mapping>

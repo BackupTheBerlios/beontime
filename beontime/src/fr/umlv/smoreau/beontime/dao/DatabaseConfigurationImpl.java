@@ -32,7 +32,7 @@ public class DatabaseConfigurationImpl extends UnicastRemoteObject implements Da
     private DatabaseConfigurationImpl() throws RemoteException {
     }
 
-    public static DatabaseConfiguration getInstance() /*throws RemoteException*/ {
+    public static DatabaseConfiguration getInstance() {
         return INSTANCE;
     }
 

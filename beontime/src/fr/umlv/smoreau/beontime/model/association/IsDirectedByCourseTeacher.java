@@ -19,11 +19,20 @@ public class IsDirectedByCourseTeacher extends BaseIsDirectedByCourseTeacher {
 	 * Constructor for primary key
 	 */
 	public IsDirectedByCourseTeacher (
+	        java.lang.Long _idTeacher,
+			Course _idCourse) {
+
+			super (
+				_idTeacher,
+				_idCourse);
+		}
+
+	public IsDirectedByCourseTeacher (
 		User _idTeacher,
 		Course _idCourse) {
 
 		super (
-			_idTeacher,
+			_idTeacher.getIdUser(),
 			_idCourse);
 	}
 

@@ -3,14 +3,21 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
+import fr.umlv.smoreau.beontime.filter._BelongStudentGroupFilter;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
+import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.BelongStudentGroup;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * RMI implementation of the Group DAO
@@ -21,7 +28,6 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 	/** This class has to be serialisable */
 	private static final long serialVersionUID = 1L;
 
-//    private static final GroupDao INSTANCE = new GroupDao();
     private static GroupDao INSTANCE;
     static {
     	try {
@@ -32,69 +38,109 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 		}
     }
     
-    private static final String TABLE = "Group";
+    private static final String TABLE        = "Group";
+    private static final String TABLE_BELONG = "BelongStudentGroup";
     
     private GroupDaoImpl() throws RemoteException {
     }
 
-    public static GroupDao getInstance() throws RemoteException {
+    public static GroupDao getInstance() {
         return INSTANCE;
     }
 
 
-	public Collection getGroups(GroupFilter filter) throws RemoteException {
-	    Collection result = null;
-
+	public Collection getGroups(GroupFilter filter) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
-            Session session = Hibernate.getCurrentSession();
-            TransactionManager.beginTransaction();
-            result = get(TABLE, filter);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des groupes : " + e.getMessage());
+            session = Hibernate.getCurrentSession();
+            Collection c = get(TABLE, filter, session);
+            UserDao userDao = UserDaoImpl.getInstance();
+            for (Iterator i = c.iterator(); i.hasNext(); ) {
+                Group group = (Group) i.next();
+                Set belongs = group.getStudents();
+                if (belongs != null) {
+	                group.setStudents(new HashSet());
+	                for (Iterator j = belongs.iterator(); j.hasNext(); ) {
+	                    BelongStudentGroup belong = (BelongStudentGroup) j.next();
+	                    Collection tmp = userDao.getStudents(new UserFilter(new User(belong.getIdStudent())));
+	                    group.addStudent(tmp.toArray()[0]);
+	                }
+                }
+            }
+            return c;
+        } finally {
+            Hibernate.closeSession();
         }
-
-		return result;
 	}
 	
-	public Collection getGroups() throws RemoteException {
+	public Collection getGroups() throws RemoteException, HibernateException {
 		return getGroups(null);
 	}
 	
-	public boolean addGroup(Group group) throws RemoteException {
+	public void addGroup(Group group) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            add(group);
+            session = Hibernate.getCurrentSession();
+            add(group, session);
+            Collection c = group.getStudents();
+            if (c != null) {
+	            for (Iterator i = c.iterator(); i.hasNext(); ) {
+	                BelongStudentGroup belong = new BelongStudentGroup((User) i.next(), group);
+	                add(belong, session);
+	            }
+            }
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un groupe : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            session = null;
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
-	public boolean modifyGroup(Group group) throws RemoteException {
+	public void modifyGroup(Group group) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            modify(group);
+            session = Hibernate.getCurrentSession();
+            modify(group, session);
+            Collection c = group.getStudents();
+            if (c != null) {
+	            for (Iterator i = c.iterator(); i.hasNext(); ) {
+	                BelongStudentGroup belong = new BelongStudentGroup((User) i.next(), group);
+                	addOrModify(belong, session);
+	            }
+            }
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la modification d'un groupe : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
-	public boolean removeGroup(Group group) throws RemoteException {
+	public void removeGroup(Group group) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            remove(TABLE, new GroupFilter(group));
+            session = Hibernate.getCurrentSession();
+            Set p = group.getStudents();
+            if (p != null) {
+	            for (Iterator i = p.iterator(); i.hasNext(); ) {
+	                BelongStudentGroup belong = new BelongStudentGroup(((User)i.next()).getIdUser(), group);
+	                remove(TABLE_BELONG, new _BelongStudentGroupFilter(belong), session);
+	            }
+            }
+            remove(TABLE, new GroupFilter(group), session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
-            System.err.println("Erreur lors de la suppression d'un groupe : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 }

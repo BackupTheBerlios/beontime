@@ -13,10 +13,6 @@ import fr.umlv.smoreau.beontime.model.Database;
  * @author BeOnTime team
  */
 public interface DatabaseConfiguration extends Remote {
- //   private static final DatabaseConfiguration INSTANCE = new DatabaseConfiguration();
-    
-//    public static DatabaseConfiguration getInstance() throws RemoteException;
-
 	public Database getLDAPDatabase() throws RemoteException;
 	
 	public Database getSQLDatabase() throws RemoteException;

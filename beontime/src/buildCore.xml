@@ -1,0 +1,62 @@
+<project name="bot" default="lib" basedir="..">
+    <description>
+        Build file of bot core for the customers
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="classes" location="classesCore"/>
+  <property name="lib" location="lib"/>
+  <property name="bin" location="classes"/>
+  <property environment="env"/>
+	
+  <!-- definition of the project classpath -->
+  <path id="classpath">
+    <fileset dir="${lib}">
+      <include name="*.jar"/>
+      <exclude name="bot.jar"/>
+    </fileset>
+  	<pathelement location="${bin}" />
+  </path>
+
+  <echo message="JAVA_HOME = ${env.JAVA_HOME}"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the classes directory structure used by compile -->
+    <mkdir dir="${classes}"/>
+  </target>
+
+  <target name="compile" depends="init" description="compile the source" >
+    <!-- Compile the java code from ${src} into ${classes} -->
+    <javac srcdir="${src}" destdir="${classes}">
+    	<include name="**/beontime/dao/*.java" />
+    	<include name="**/beontime/filter/*.java" />
+    	<exclude name="**/beontime/filter/_*.java" />
+    	<include name="**/beontime/model/**/*.java" />
+    	<classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="rmi" depends="compile" description="generate the RMI stub" >
+	<rmic base="${classes}" includes="**/beontime/dao/*Impl.class">
+		<classpath refid="classpath"/>
+	</rmic>
+  </target>
+
+  <target name="final" depends="rmi" description="delete the RMI implementation" >
+  	<delete>
+  	  <fileset dir="${classes}">
+  	  	<include name="**/dao/*Impl.class" />
+  	  </fileset>
+  	</delete>
+  </target>
+
+  <target name="lib" depends="final" description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${lib}"/>
+
+	<!-- Put everything in ${classes} into the ${lib}/bot.jar file -->
+	<jar jarfile="${lib}/bot.jar" basedir="${classes}" />
+  </target>
+</project>

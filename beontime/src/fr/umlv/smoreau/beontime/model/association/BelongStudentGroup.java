@@ -19,13 +19,22 @@ public class BelongStudentGroup extends BaseBelongStudentGroup {
 	 * Constructor for primary key
 	 */
 	public BelongStudentGroup (
-		User _idStudent,
+		Long _idStudent,
 		Group _idGroup) {
 
 		super (
 			_idStudent,
 			_idGroup);
 	}
+	
+	public BelongStudentGroup (
+			User _idStudent,
+			Group _idGroup) {
+
+			super (
+				_idStudent.getIdUser(),
+				_idGroup);
+		}
 
 /*[CONSTRUCTOR MARKER END]*/
 }

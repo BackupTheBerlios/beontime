@@ -8,7 +8,9 @@ import java.util.Collection;
 import javax.naming.NamingException;
 
 import net.sf.hibernate.HibernateException;
+import net.sf.hibernate.Session;
 
+import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
@@ -26,11 +28,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 	private static final LdapManager ldapManager = LdapManager.getInstance();
     
     private static final String TABLE = "User";
- //   public static final String TYPE_TEACHER   = "enseignant";
- //   public static final String TYPE_STUDENT   = "etudiant";
- //   public static final String TYPE_SECRETARY = "secretaire";
- //   public static final String TYPE_ADMIN     = "administrateur";
-//	private static final UserDao INSTANCE = new UserDao();
+
 	private static UserDao INSTANCE;
 	static {
 		try {
@@ -44,26 +42,26 @@ public class UserDaoImpl extends Dao implements UserDao {
     private UserDaoImpl() throws RemoteException {
     }
 
-    public static UserDao getInstance() throws RemoteException {
+    public static UserDao getInstance() {
         return INSTANCE;
     }
 
 
-	private Collection getUsers(UserFilter filter) throws RemoteException {
+	private Collection getUsers(UserFilter filter) throws RemoteException, HibernateException {
 	    Collection result = null;
 
+	    Session session = null;
         try {
-            TransactionManager.beginTransaction();
-            result = get(TABLE, filter);
-            TransactionManager.commit();
-        } catch (HibernateException e) {
-            System.err.println("Erreur lors de la récupération des utilisateurs sur la base de données SQL : " + e.getMessage());
+            session = Hibernate.getCurrentSession();
+            result = get(TABLE, filter, session);
+        } finally {
+            Hibernate.closeSession();
         }
         
         try {
             result.addAll(ldapManager.getUsers(filter));
         } catch (NamingException e) {
-            System.err.println("Erreur lors de la récupération des utilisateurs sur la base de données LDAP : " + e.getMessage());
+            System.err.println("LDAP est inaccessible : " + e.getMessage());
             //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
             User user = new User(new Long(33), filter.getUserType());
             user.setFirstName("Toto");
@@ -76,7 +74,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return result;
 	}
 	
-	public Collection getAdministrators(UserFilter filter) throws RemoteException {
+	public Collection getAdministrators(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
@@ -85,7 +83,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return getUsers(f);
 	}
 	
-	public Collection getSecretaries(UserFilter filter) throws RemoteException {
+	public Collection getSecretaries(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
@@ -94,7 +92,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return getUsers(f);
 	}
 	
-	public Collection getStudents(UserFilter filter) throws RemoteException {
+	public Collection getStudents(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
@@ -103,7 +101,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return getUsers(f);
 	}
 	
-	public Collection getTeachers(UserFilter filter) throws RemoteException {
+	public Collection getTeachers(UserFilter filter) throws RemoteException, HibernateException {
 	    UserFilter f = new UserFilter(filter);
 	    if (f == null)
 	        f = new UserFilter();
@@ -112,64 +110,73 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return getUsers(f);
 	}
 	
-	public Collection getAdministrators() throws RemoteException {
+	public Collection getAdministrators() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_ADMIN);
 		return getUsers(filter);
 	}
 	
-	public Collection getSecretaries() throws RemoteException {
+	public Collection getSecretaries() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_SECRETARY);
 		return getUsers(filter);
 	}
 	
-	public Collection getStudents() throws RemoteException {
+	public Collection getStudents() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_STUDENT);
 		return getUsers(filter);
 	}
 	
-	public Collection getTeachers() throws RemoteException {
+	public Collection getTeachers() throws RemoteException, HibernateException {
 	    UserFilter filter = new UserFilter();
 	    filter.setUserType(TYPE_TEACHER);
 		return getUsers(filter);
 	}
 	
-	public boolean addUser(User user) throws RemoteException {
+	public void addUser(User user) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            add(user);
+            session = Hibernate.getCurrentSession();
+            add(user, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
-	public boolean modifyUser(User user) throws RemoteException {
+	public void modifyUser(User user) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            modify(user);
+            session = Hibernate.getCurrentSession();
+            modify(user, session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 	
-	public boolean removeUser(User user) throws RemoteException {
+	public void removeUser(User user) throws RemoteException, HibernateException {
+	    Session session = null;
         try {
             TransactionManager.beginTransaction();
-            remove(TABLE, new UserFilter(user));
+            session = Hibernate.getCurrentSession();
+            remove(TABLE, new UserFilter(user), session);
             TransactionManager.commit();
         } catch (HibernateException e) {
-            System.err.println("Erreur lors de la suppression d'un utilisateur : " + e.getMessage());
-            return false;
+            TransactionManager.rollback();
+            throw e;
+        } finally {
+            Hibernate.closeSession();
         }
-        return true;
 	}
 
 

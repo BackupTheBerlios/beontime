@@ -2,30 +2,29 @@ package fr.umlv.smoreau.beontime.filter;
 
 import java.util.HashMap;
 
-import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 
 /**
  * @author BeOnTime
  */
-public class TakePartGroupSubjectCourseFilter extends TakePartGroupSubjectCourse implements Filter {
+public class _IsDirectedByCourseTeacherFilter extends IsDirectedByCourseTeacher implements Filter {
     private static final HashMap corres;
     
     static {
         corres = new HashMap();
-        corres.put("IdGroup.IdGroup", "id_groupe");
         corres.put("IdCourse.IdCourse", "id_cours");
-        corres.put("IdSubject.IdSubject", "id_matiere");
+        corres.put("IdTeacher", "id_enseignant");
     }
 
 
-    public TakePartGroupSubjectCourseFilter() {
+    public _IsDirectedByCourseTeacherFilter() {
         super();
     }
     
-    public TakePartGroupSubjectCourseFilter(TakePartGroupSubjectCourse takePart) {
+    public _IsDirectedByCourseTeacherFilter(IsDirectedByCourseTeacher isDirected) {
         super();
         try {
-            FilterUtils.fillFilterClass(this, takePart, corres.keySet());
+            FilterUtils.fillFilterClass(this, isDirected, corres.keySet());
         } catch (Exception e) {
             throw new RuntimeException("Erreur lors de l'introspection", e);
         }
