@@ -16,7 +16,7 @@ public class Person extends BasePerson {
 	/**
 	 * Constructor for primary key
 	 */
-	public Person (java.lang.String _idPersonne) {
+	public Person (java.lang.Long _idPersonne) {
 		super(_idPersonne);
 	}
 
@@ -24,7 +24,7 @@ public class Person extends BasePerson {
 	 * Constructor for required fields
 	 */
 	public Person (
-		java.lang.String _idPersonne,
+		java.lang.Long _idPersonne,
 		java.lang.String _typePersonne) {
 
 		super (

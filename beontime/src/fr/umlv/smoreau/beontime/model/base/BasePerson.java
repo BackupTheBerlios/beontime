@@ -30,7 +30,7 @@ public abstract class BasePerson  implements Serializable {
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private java.lang.String _idPersonne;
+	private java.lang.Long _idPersonne;
 
 	// fields
 	private java.lang.String _nom;
@@ -57,7 +57,7 @@ public abstract class BasePerson  implements Serializable {
 	/**
 	 * Constructor for primary key
 	 */
-	public BasePerson (java.lang.String _idPersonne) {
+	public BasePerson (java.lang.Long _idPersonne) {
 		this.setIdPersonne(_idPersonne);
 		initialize();
 	}
@@ -66,7 +66,7 @@ public abstract class BasePerson  implements Serializable {
 	 * Constructor for required fields
 	 */
 	public BasePerson (
-		java.lang.String _idPersonne,
+		java.lang.Long _idPersonne,
 		java.lang.String _typePersonne) {
 
 		this.setIdPersonne(_idPersonne);
@@ -84,7 +84,7 @@ public abstract class BasePerson  implements Serializable {
      *  generator-class="vm"
      *  column="ID_personne"
      */
-	public java.lang.String getIdPersonne () {
+	public java.lang.Long getIdPersonne () {
 		return _idPersonne;
 	}
 
@@ -92,7 +92,7 @@ public abstract class BasePerson  implements Serializable {
 	 * Set the unique identifier of this class
 	 * @param _idPersonne the new ID
 	 */
-	public void setIdPersonne (java.lang.String _idPersonne) {
+	public void setIdPersonne (java.lang.Long _idPersonne) {
 		this._idPersonne = _idPersonne;
 		this.hashCode = Integer.MIN_VALUE;
 	}
