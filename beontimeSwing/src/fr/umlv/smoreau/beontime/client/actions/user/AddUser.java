@@ -14,7 +14,6 @@ import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUserWindow;
-import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.user.User;
 
@@ -63,7 +62,7 @@ public class AddUser extends Action {
             user.setBuildingNameForOffice(window.getBuilding());
             user.setOfficeName(window.getLocal());
             user.setTelephone(window.getPhone());
-            user.setUserType(UserDao.TYPE_TEACHER);
+            user.setUserType(type);
             
             try {
                 String login = generateLogin(window.getName(), window.getSurname());

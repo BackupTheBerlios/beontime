@@ -1,34 +1,34 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.ElementDao;
 
 /**
  * @author BeOnTime
  */
 public class AddModifyElementWindow {
-
-	private static String TITRE = "Ajouter une secrétaire ou un enseignant";
-
-	private JLabel equipmentNameLabel;
-	private JLabel buildingNameLabel;
-	private JLabel descriptionEquipmentLabel;
+    private static final String TITRE_LOCAL    = "Ajouter un local";
+	private static final String TITRE_MATERIEL = "Ajouter un matériel";
 
 	private JTextField equipmentNameJtf;
 	
@@ -36,40 +36,39 @@ public class AddModifyElementWindow {
 	
 	private JTextArea descriptionEquipmentJta;
 	
-	private JButton ok;
-	private JButton annuler;
-	
 	private JPanel secretaryPanel = new JPanel();
 	private JPanel teacherPanel = new JPanel();
 	
 	private JDialog AMEWFrame;
 	private GridBagLayout AMEWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
-
+	
+	private int type;
+	private boolean isOk;
 	
 	
 	public AddModifyElementWindow(int type) {
-		
-		
+	    this.type = type;
+
+	    String titre = new String();
 		switch(type) {
-		case 1: TITRE = "Créer un matériel"; break;
-		case 2: TITRE = "Créer un local";break;
+			case ElementDao.TYPE_MATERIAL: titre = TITRE_MATERIEL; break;
+			case ElementDao.TYPE_ROOM: titre = TITRE_LOCAL;break;
 		}
 		
-		AMEWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
+		AMEWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), titre, true);
 		AMEWFrame.getContentPane().setLayout(AMEWLayout);
         
-		initAddModifyUserWindow(type);  
+		initAddModifyUserWindow();  
 	}
 	
-	private void initAddModifyUserWindow(int type) {
-		
+	private void initAddModifyUserWindow() {	
 		switch(type) {
-		case 1: initEquipmentParts(); break;
-		case 2: initLocalParts();break;
+			case ElementDao.TYPE_MATERIAL: initEquipmentParts(); break;
+			case ElementDao.TYPE_ROOM: initLocalParts();break;
 		}
 		
-		descriptionEquipmentLabel = new JLabel("Description");
+		JLabel descriptionEquipmentLabel = new JLabel("Description");
 		addComponent(AMEWLayout,layoutConstraints,descriptionEquipmentLabel,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(descriptionEquipmentLabel);
 		
@@ -80,37 +79,37 @@ public class AddModifyElementWindow {
     	addComponent(AMEWLayout,layoutConstraints,pane,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,20,10));
     	AMEWFrame.getContentPane().add(pane);
 		
+
 		
-		
-		ok = new JButton("OK");
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionOk());
 		addComponent(AMEWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(ok);
 		
-		annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                AMEWFrame.dispose();
+            }
+		});
 		addComponent(AMEWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(annuler);
-		
 	}
 	
 	
 	
 	private void initEquipmentParts() {
-		
-		
-		equipmentNameLabel = new JLabel("Nom du matériel :");
+	    JLabel equipmentNameLabel = new JLabel("Nom du matériel :");
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameLabel);
 		
 		equipmentNameJtf = new JTextField();
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameJtf);
-		
-		
 	}
 	
 	private void initLocalParts() {
-		
-		equipmentNameLabel = new JLabel("Nom du local :");
+	    JLabel equipmentNameLabel = new JLabel("Nom du local :");
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameLabel);
 		
@@ -118,18 +117,24 @@ public class AddModifyElementWindow {
 		addComponent(AMEWLayout,layoutConstraints,equipmentNameJtf,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(equipmentNameJtf);
 		
-		
-		
-		buildingNameLabel = new JLabel("Nom du batiment:");
+		try {
+            Collection buildings = DaoManager.getElementDao().getBuildings();
+            buildingNameJcB = new JComboBox(buildings.toArray(new String[buildings.size()]));
+        } catch (Exception e) {
+            JLabel label = new JLabel("Erreur lors de la récupération des batiments existants");
+            label.setForeground(Color.RED);
+            addComponent(AMEWLayout,layoutConstraints,label,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+            AMEWFrame.getContentPane().add(label);
+            buildingNameJcB = new JComboBox();
+        }
+        
+        JLabel buildingNameLabel = new JLabel("Nom du batiment:");
 		addComponent(AMEWLayout,layoutConstraints,buildingNameLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(buildingNameLabel);
-		
-		buildingNameJcB = new JComboBox();
+
+		buildingNameJcB.setEditable(true);
 		addComponent(AMEWLayout,layoutConstraints,buildingNameJcB,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMEWFrame.getContentPane().add(buildingNameJcB);
-		
-		
-		
 	}
 	
     /* (non-Javadoc)
@@ -139,6 +144,7 @@ public class AddModifyElementWindow {
     	AMEWFrame.pack();
     	AMEWFrame.setResizable(false);
     	AMEWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    	AMEWFrame.setLocationRelativeTo(null);
     	AMEWFrame.setVisible(true);
     }
 
@@ -154,15 +160,53 @@ public class AddModifyElementWindow {
  
         gbLayout.setConstraints(comp,constraints);
     }
-    
 
-    public static void main(String[] args){
-    	
-        	MainFrame frame = MainFrame.getInstance();
-         	frame.open();
-         	
-         	AddModifyElementWindow form = new AddModifyElementWindow(2);
-         	form.show();
-    			
-        } 
+    
+    public String getEquipmentName() {
+        return equipmentNameJtf.getText().trim();
+    }
+    
+    public String getDescriptionEquipment() {
+        return descriptionEquipmentJta.getText().trim();
+    }
+    
+    public String getBuildingName() {
+        String string = (String) buildingNameJcB.getSelectedItem();
+        if (string != null)
+            string = string.trim();
+        return string;
+    }
+
+    public boolean isOk() {
+        return isOk;
+    }
+    
+    private int checking() {
+        String equipmentName = getEquipmentName();
+        if (equipmentName == null || "".equals(equipmentName))
+            return 1;
+        return 0;
+    }
+
+
+    private class ActionOk implements ActionListener {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent arg0) {
+            String errorMessage = null;
+            switch (checking()) {
+            case 0:
+                isOk = true;
+                AMEWFrame.dispose();
+                return;
+            case 1:
+                errorMessage = "Le nom est obligatoire";
+                break;
+            default:
+                errorMessage = "Erreur inconnue";
+            }
+            JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

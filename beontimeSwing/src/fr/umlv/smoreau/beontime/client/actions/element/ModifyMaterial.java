@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyElementWindow;
+import fr.umlv.smoreau.beontime.dao.ElementDao;
 
 /**
  * @author BeOnTime
@@ -34,7 +35,7 @@ public class ModifyMaterial extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        AddModifyElementWindow window = new AddModifyElementWindow(1);
+        AddModifyElementWindow window = new AddModifyElementWindow(ElementDao.TYPE_MATERIAL);
         window.show();
     }
 }

@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -160,44 +161,45 @@ public class AddModifyUserWindow {
             Collection buildings = DaoManager.getElementDao().getBuildings();
             buildingJcb = new JComboBox(buildings.toArray(new String[buildings.size()]));
         } catch (Exception e) {
-            JLabel label = new JLabel("Erreur lors de la récupération des batiments");
-            addComponent(AMUWLayout,layoutConstraints,label,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+            JLabel label = new JLabel("Erreur lors de la récupération des batiments existants");
+            label.setForeground(Color.RED);
+            addComponent(AMUWLayout,layoutConstraints,label,2,5,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
             AMUWFrame.getContentPane().add(label);
             buildingJcb = new JComboBox();
         }
 
         JLabel buildingLabel = new JLabel("Batiment :");
-		addComponent(AMUWLayout,layoutConstraints,buildingLabel,2,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,buildingLabel,2,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingLabel);
 
 		buildingJcb.setEditable(true);
-		addComponent(AMUWLayout,layoutConstraints,buildingJcb,3,5,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,buildingJcb,3,6,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(buildingJcb);
     	
 
 		
 		JLabel localLabel = new JLabel("Local :");
-		addComponent(AMUWLayout,layoutConstraints,localLabel,2,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,localLabel,2,7,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(localLabel);
 		
 		localJtf = new JTextField();
-		addComponent(AMUWLayout,layoutConstraints,localJtf,3,6,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,localJtf,3,7,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(localJtf);
 		
 		
 		
 		JLabel phoneLabel = new JLabel("Téléphone :");
-		addComponent(AMUWLayout,layoutConstraints,phoneLabel,1,7,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,phoneLabel,1,8,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(phoneLabel);
 		
 		phoneJtf = new JTextField();
-		addComponent(AMUWLayout,layoutConstraints,phoneJtf,3,7,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,phoneJtf,3,8,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(phoneJtf);
 
 		
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionOk());
-		addComponent(AMUWLayout,layoutConstraints,ok,3,8,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,ok,3,9,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(ok);
 		
 		JButton annuler = new JButton("Annuler");
@@ -206,7 +208,7 @@ public class AddModifyUserWindow {
                 AMUWFrame.dispose();
             }
 		});
-		addComponent(AMUWLayout,layoutConstraints,annuler,4,8,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		addComponent(AMUWLayout,layoutConstraints,annuler,4,9,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMUWFrame.getContentPane().add(annuler);
 	}
 	
@@ -311,7 +313,7 @@ public class AddModifyUserWindow {
                 errorMessage = "L'adresse email est invalide";
                 break;
             default:
-                errorMessage = "Il y a une erreur ...";
+                errorMessage = "Erreur inconnue";
             }
             JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
         }
