@@ -28,6 +28,7 @@ import com.toedter.calendar.JDateChooser;
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
@@ -105,11 +106,13 @@ public class AddModifyCourseWindow {
 	private String[] groupsName;
 	private Group[] groups;
 	private int type;
+	private MainFrame mainFrame;
 	
 	
 	public AddModifyCourseWindow(int type) {
 	    this.isOk = false;
 	    this.type = type;
+	    this.mainFrame = MainFrame.getInstance();
 		AMCWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		AMCWFrame.getContentPane().setLayout(AMCWLayout);
 		
@@ -164,7 +167,17 @@ public class AddModifyCourseWindow {
             materials = null;
         }
         
-        Collection g = MainFrame.getInstance().getModel().getTimetable().getGroups();
+        GroupFilter groupFilter = new GroupFilter();
+        if (mainFrame.getSubjectSelected() != null)
+            groupFilter.setIdFormation(mainFrame.getSubjectSelected().getIdFormation());
+        else if (mainFrame.getCourseSelected() != null)
+            groupFilter.setIdFormation(mainFrame.getCourseSelected().getIdFormation());
+        Collection g = null;
+        try {
+            g = DaoManager.getGroupDao().getGroups(groupFilter);
+        } catch (Exception e) {
+            g = new ArrayList();
+        }
         groups = new Group[g.size()];
         groupsName = new String[g.size()];
         int j = 0;
@@ -418,9 +431,17 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().remove(courseFormationLabel);
 		AMCWFrame.getContentPane().remove(courseFormationJcb);
 		
-		courseFormationLabel = new JLabel("Le cours est attribué à la formation "+formation.getHeading());
+		courseFormationLabel = new JLabel("Le cours est attribué à la formation "+(formation == null ? "?" : formation.getHeading()));
 		addComponent(AMCWLayout,layoutConstraints,courseFormationLabel,1,8,6,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		AMCWFrame.getContentPane().add(courseFormationLabel);
+	}
+	
+	public void setIdFormation(Long idFormation) {
+	    try {
+	        setCourseFormation(DaoManager.getFormationDao().getFormation(new Formation(idFormation), null));
+        } catch (Exception e) {
+            setCourseFormation(null);
+        }
 	}
 	
 	public void setIdGroup(Long idGroup) {

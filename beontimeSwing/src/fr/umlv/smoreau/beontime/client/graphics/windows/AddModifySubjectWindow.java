@@ -47,16 +47,19 @@ public class AddModifySubjectWindow {
 	private JComboBox nbGroupsMag;
 	private JComboBox nbGroupsTd;
 	private JComboBox nbGroupsTp;
+	private JComboBox formationFieldJcb;
 	
 	private JButton createGroupButton;
 	
 	private boolean isOk;
+	private User teacher;
 	private static String[] teachersName;
 	private User[] teachers;
 	private static String[] groupsName;
 	private Group[] groups;
 	private Formation formation;
-	
+	private Formation[] formations;
+	private static String[] formationsName;
 	
 	private JPanel courseMPanel = new JPanel();
 	private JPanel tdPanel = new JPanel();
@@ -159,7 +162,9 @@ public class AddModifySubjectWindow {
     	AMFWFrame.getContentPane().setLayout(AMFWLayout);
     	
     	this.isOk = false;
-    	this.formation = MainFrame.getInstance().getFormationSelected();
+    	MainFrame mainFrame = MainFrame.getInstance();
+    	this.formation = mainFrame.getFormationSelected();
+    	this.teacher = mainFrame.getModel().getTimetable().getTeacher();
         
     	initAddModifyFieldWindow();  
     }
@@ -170,42 +175,57 @@ public class AddModifySubjectWindow {
     	addComponent(AMFWLayout,layoutConstraints,formationFieldLabel,1,1,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,0,10));
     	AMFWFrame.getContentPane().add(formationFieldLabel);
     	
-    	/*formationFieldJcb = new JComboBox();
-    	addComponent(AMFWLayout,layoutConstraints,formationFieldJcb,5,1,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
-    	AMFWFrame.getContentPane().add(formationFieldJcb);*/
-    	
-    	JLabel formationValue = new JLabel(formation.getHeading());
-    	addComponent(AMFWLayout,layoutConstraints,formationValue,5,1,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,0,10));
-    	AMFWFrame.getContentPane().add(formationValue);
+    	if (formation != null) {
+    	    JLabel formationValue = new JLabel(formation.getHeading());
+	    	addComponent(AMFWLayout,layoutConstraints,formationValue,5,1,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,0,10));
+	    	AMFWFrame.getContentPane().add(formationValue);
+    	} else {
+            Collection tmp = MainFrame.getInstance().getUserConnected().getFormationsInCharge();
+            formationsName = new String[tmp.size()+1];
+            formations = new Formation[tmp.size()+1];
+            formationsName[0] = "";
+            int j = 1;
+            for (Iterator i = tmp.iterator(); i.hasNext(); ++j) {
+                formations[j] = (Formation) i.next();
+                formationsName[j] = formations[j].getHeading();
+            }
+            formationFieldJcb = new JComboBox(formationsName);
+	    	addComponent(AMFWLayout,layoutConstraints,formationFieldJcb,5,1,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10));
+	    	AMFWFrame.getContentPane().add(formationFieldJcb);
+    	}
     	
     	JLabel teacherFieldLabel = new JLabel("Enseignant responsable :");
     	addComponent(AMFWLayout,layoutConstraints,teacherFieldLabel,1,3,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
     	AMFWFrame.getContentPane().add(teacherFieldLabel);
     	
-    	try {
-            Collection t = DaoManager.getUserDao().getTeachers();
-            teachersName = new String[t.size()+1];
-            teachers = new User[t.size()+1];
-            teachersName[0] = "";
-            int j = 1;
-            for (Iterator i = t.iterator(); i.hasNext(); ++j) {
-                teachers[j] = (User) i.next();
-                teachersName[j] = teachers[j].getName() + " " + teachers[j].getFirstName();
-            }
-            teacherFieldJcb = new JComboBox(teachersName);
-        } catch (Exception e) {
-            JLabel label = new JLabel("Erreur lors de la récupération des enseignants");
-            label.setForeground(Color.RED);
-            addComponent(AMFWLayout,layoutConstraints,label,5,2,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
-            AMFWFrame.getContentPane().add(label);
-            teacherFieldLabel.setEnabled(false);
-            teacherFieldJcb = new JComboBox();
-            teacherFieldJcb.setEnabled(false);
-        }
- 	
-    	addComponent(AMFWLayout,layoutConstraints,teacherFieldJcb,5,3,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
-    	AMFWFrame.getContentPane().add(teacherFieldJcb);
-    	
+    	if (teacher != null) {
+    	    JLabel teacherValue = new JLabel(teacher.getName()+" "+teacher.getFirstName());
+	    	addComponent(AMFWLayout,layoutConstraints,teacherValue,5,3,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,0,10));
+	    	AMFWFrame.getContentPane().add(teacherValue);
+    	} else {
+	    	try {
+	            Collection t = DaoManager.getUserDao().getTeachers();
+	            teachersName = new String[t.size()+1];
+	            teachers = new User[t.size()+1];
+	            teachersName[0] = "";
+	            int j = 1;
+	            for (Iterator i = t.iterator(); i.hasNext(); ++j) {
+	                teachers[j] = (User) i.next();
+	                teachersName[j] = teachers[j].getName() + " " + teachers[j].getFirstName();
+	            }
+	            teacherFieldJcb = new JComboBox(teachersName);
+	        } catch (Exception e) {
+	            JLabel label = new JLabel("Erreur lors de la récupération des enseignants");
+	            label.setForeground(Color.RED);
+	            addComponent(AMFWLayout,layoutConstraints,label,5,2,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
+	            AMFWFrame.getContentPane().add(label);
+	            teacherFieldLabel.setEnabled(false);
+	            teacherFieldJcb = new JComboBox();
+	            teacherFieldJcb.setEnabled(false);
+	        }
+	    	addComponent(AMFWLayout,layoutConstraints,teacherFieldJcb,5,3,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
+	    	AMFWFrame.getContentPane().add(teacherFieldJcb);
+    	}
     	
     	
     	JLabel intitleFieldLabel = new JLabel("Intitulé de la matière :");
@@ -489,9 +509,12 @@ public class AddModifySubjectWindow {
     
     public void setIntitule(String intitule) {
         intitleFieldJtf.setText(intitule);
+        intitleFieldJtf.setEnabled(false);
     }
     
     public User getTeacher() {
+        if (teacher != null)
+            return teacher;
         int index = teacherFieldJcb.getSelectedIndex();
         if (index == 0)
             return null;
@@ -499,14 +522,37 @@ public class AddModifySubjectWindow {
             return teachers[index];
     }
     
+    public Formation getFormation() {
+        if (formation != null)
+            return formation;
+        int index = formationFieldJcb.getSelectedIndex();
+        if (index == 0)
+            return null;
+        else
+            return formations[index];
+    }
+    
     public void setIdTeacher(Long idTeacher) {
-        for (int i = 1; i < teachers.length; ++i) {
-            if (teachers[i].getIdUser().equals(idTeacher)) {
-                teacherFieldJcb.setSelectedIndex(i);
-                break;
-            }
+        if (teachers != null) {
+	        for (int i = 1; i < teachers.length; ++i) {
+	            if (teachers[i].getIdUser().equals(idTeacher)) {
+	                teacherFieldJcb.setSelectedIndex(i);
+	                break;
+	            }
+	        }
         }
     }
+    
+    public void setIdFormation(Long idFormation) {
+	    try {
+	        formation = DaoManager.getFormationDao().getFormation(new Formation(idFormation), null);
+	        AMFWFrame.getContentPane().remove(formationFieldJcb);
+	        JLabel formationValue = new JLabel(formation.getHeading());
+	    	addComponent(AMFWLayout,layoutConstraints,formationValue,5,1,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,0,10));
+	    	AMFWFrame.getContentPane().add(formationValue);
+        } catch (Exception e) {
+        }
+	}
     
     public Integer getNbMagHours() {
         return new Integer((String) magistrauxJcb.getSelectedItem());
@@ -575,6 +621,8 @@ public class AddModifySubjectWindow {
             return 1;
         if (getTeacher() == null)
             return 2;
+        if (getFormation() == null)
+            return 3;
         return 0;
     }
 
@@ -595,6 +643,9 @@ public class AddModifySubjectWindow {
                 break;
             case 2:
                 errorMessage = "L'enseignant responsable est obligatoire";
+                break;
+            case 3:
+                errorMessage = "La formation doit être renseignée";
                 break;
             default:
                 errorMessage = "Erreur inconnue";

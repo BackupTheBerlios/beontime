@@ -95,6 +95,26 @@ public class TimeTableViewPanelBar extends JPanel {
 		gbLayout.setConstraints(comp,constraints);
 	}
 	
+	private Calendar getBeginPeriod() {
+	    Calendar begin = Calendar.getInstance();
+		begin.setTime(mainFrame.getDateSelected());
+		begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		begin.set(Calendar.HOUR_OF_DAY, 0);
+		begin.set(Calendar.MINUTE, 0);
+		begin.set(Calendar.SECOND, 0);
+		return begin;
+	}
+	
+	private Calendar getEndPeriod() {
+	    Calendar end = Calendar.getInstance();
+		end.setTime(mainFrame.getDateSelected());
+		end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		end.set(Calendar.HOUR_OF_DAY, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		return end;
+	}
+	
 	private class ItemListenerType implements ItemListener {
 	    private JPanel panel;
 	    GridBagLayout visuEDTPanelLayout;
@@ -178,14 +198,8 @@ public class TimeTableViewPanelBar extends JPanel {
 							Long id = ((Item)event.getItem()).getId();
 							TimetableFilter filter = new TimetableFilter();
 							filter.setFormation(new Formation(id));
-							Calendar begin = Calendar.getInstance();
-							begin.setTime(mainFrame.getDateSelected());
-							begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-							filter.setBeginPeriod(begin);
-							Calendar end = Calendar.getInstance();
-							end.setTime(mainFrame.getDateSelected());
-							end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-							filter.setEndPeriod(end);
+							filter.setBeginPeriod(getBeginPeriod());
+							filter.setEndPeriod(getEndPeriod());
 							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
 							mainFrame.getModel().fireShowTimetable(timetable);
 					    } else if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem())) {
@@ -198,6 +212,14 @@ public class TimeTableViewPanelBar extends JPanel {
 							for (Iterator i = groups.iterator(); i.hasNext(); )
 							    jcbGroupEDT.addItem(((Group) i.next()).getHeading());
 							jcbGroupEDT.setEnabled(true);
+					    } else if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
+					        Long id = ((Item)event.getItem()).getId();
+							TimetableFilter filter = new TimetableFilter();
+							filter.setTeacher(new User(id));
+							filter.setBeginPeriod(getBeginPeriod());
+							filter.setEndPeriod(getEndPeriod());
+							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+							mainFrame.getModel().fireShowTimetable(timetable);
 					    }
 					}
 				} catch (Exception e) {

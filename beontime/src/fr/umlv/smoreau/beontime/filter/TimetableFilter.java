@@ -14,6 +14,8 @@ public class TimetableFilter extends Timetable implements Filter {
         corres = new HashMap();
         corres.put("Group.IdGroup", new FilterObject("id_groupe"));
         corres.put("Formation.IdFormation", new FilterObject("id_formation"));
+        corres.put("Teacher", null);
+        corres.put("Formation", null);
     }
 
 

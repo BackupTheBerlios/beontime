@@ -2,6 +2,7 @@ package fr.umlv.smoreau.beontime.dao;
 /* DESS CRI - BeOnTime - timetable project */
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -94,51 +95,91 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	    Session session = null;
         try {
             Timetable timetable = new Timetable();
-            FormationDao formationDao = FormationDaoImpl.getInstance();
-            Collection c = formationDao.getFormations(new FormationFilter(filter.getFormation()));
-            if (c == null || c.size() == 0)
-                return null;
-            timetable.setFormation((Formation) c.toArray()[0]);
-
-            Subject subject = new Subject();
-            subject.setIdFormation(filter.getFormation().getIdFormation());
-            timetable.setSubjects(get(TABLE_SUBJECT, new SubjectFilter(subject), Hibernate.getCurrentSession()));
             
-            Group group = new Group();
-            group.setIdFormation(filter.getFormation().getIdFormation());
-            GroupDao groupDao = GroupDaoImpl.getInstance();
-            timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
-            
-            //TODO à voir plus précisemment
-            timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
-            
-            Course course = new Course();
-            course.setIdFormation(filter.getFormation().getIdFormation());
-            course.setBeginPeriod(filter.getBeginPeriod());
-            course.setEndPeriod(filter.getEndPeriod());
-            timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
-
-            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
-                Course tmp = (Course) i.next();
-                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
-                f.setIdCourse(tmp.getIdCourse());
-                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
-                if (co != null && co.size() > 0) {
-	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
-	                for (Iterator j = timetable.getSubjects().iterator(); j.hasNext(); ) {
-	                    Subject s = (Subject) j.next();
-	                    if (s.getIdSubject().equals(takePart.getIdSubject()))
-	                        tmp.setSubject(s);
+            if (filter.getFormation() != null) {
+	            FormationDao formationDao = FormationDaoImpl.getInstance();
+	            Collection c = formationDao.getFormations(new FormationFilter(filter.getFormation()));
+	            if (c == null || c.size() == 0)
+	                return null;
+	            timetable.setFormation((Formation) c.toArray()[0]);
+	
+	            Subject subject = new Subject();
+	            subject.setIdFormation(filter.getFormation().getIdFormation());
+	            timetable.setSubjects(get(TABLE_SUBJECT, new SubjectFilter(subject), Hibernate.getCurrentSession()));
+	            
+	            Group group = new Group();
+	            group.setIdFormation(filter.getFormation().getIdFormation());
+	            GroupDao groupDao = GroupDaoImpl.getInstance();
+	            timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
+	            
+	            //TODO à voir plus précisemment
+	            timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
+	            
+	            Course course = new Course();
+	            course.setIdFormation(filter.getFormation().getIdFormation());
+	            course.setBeginPeriod(filter.getBeginPeriod());
+	            course.setEndPeriod(filter.getEndPeriod());
+	            timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
+	
+	            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
+	                Course tmp = (Course) i.next();
+	                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
+	                f.setIdCourse(tmp.getIdCourse());
+	                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
+	                if (co != null && co.size() > 0) {
+		                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
+		                for (Iterator j = timetable.getSubjects().iterator(); j.hasNext(); ) {
+		                    Subject s = (Subject) j.next();
+		                    if (s.getIdSubject().equals(takePart.getIdSubject()))
+		                        tmp.setSubject(s);
+		                }
 	                }
-                }
+	            }
+	            
+	            UserFilter userFilter = new UserFilter();
+	            userFilter.setIdUser(timetable.getFormation().getIdTeacher());
+	            userFilter.setUserType(UserDao.TYPE_TEACHER);
+	            UserDao userDao = UserDaoImpl.getInstance();
+	            c = userDao.getUsers(userFilter);
+	            timetable.setPersonInCharge((User) c.toArray()[0]);
             }
             
-            UserFilter userFilter = new UserFilter();
-            userFilter.setIdUser(timetable.getFormation().getIdTeacher());
-            userFilter.setUserType(UserDao.TYPE_TEACHER);
-            UserDao userDao = UserDaoImpl.getInstance();
-            c = userDao.getUsers(userFilter);
-            timetable.setPersonInCharge((User) c.toArray()[0]);
+            else if (filter.getTeacher() != null) {
+                UserDao userDao = UserDaoImpl.getInstance();
+                timetable.setTeacher(userDao.getUser(filter.getTeacher(), null));
+
+	            Collection allSubjects = get(TABLE_SUBJECT, new SubjectFilter(), Hibernate.getCurrentSession());
+	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
+	                Subject subject = (Subject) i.next();
+	                if (subject.getIdTeacher().equals(timetable.getTeacher().getIdUser()))
+	                    timetable.addSubject(subject);
+	            }
+	            
+	            _IsDirectedByCourseTeacherFilter isDirectedByCourseTeacherFilter = new _IsDirectedByCourseTeacherFilter();
+	            isDirectedByCourseTeacherFilter.setIdTeacher(filter.getTeacher().getIdUser());
+	            Collection isDirectedByCourseTeachers = get(TABLE_ISDIRECTING, isDirectedByCourseTeacherFilter, Hibernate.getCurrentSession());
+	            timetable.setCourses(new ArrayList());
+	            for (Iterator i = isDirectedByCourseTeachers.iterator(); i.hasNext(); ) {
+	                Course course = ((IsDirectedByCourseTeacher) i.next()).getIdCourse();
+	                if (course.getBeginDate().getTimeInMillis() >= filter.getBeginPeriod().getTimeInMillis() && course.getEndDate().getTimeInMillis() <= filter.getEndPeriod().getTimeInMillis())
+	                    timetable.addCourse(course);
+	            }
+
+	            for (Iterator i = timetable.getCourses().iterator(); i.hasNext(); ) {
+	                Course tmp = (Course) i.next();
+	                _TakePartGroupSubjectCourseFilter f = new _TakePartGroupSubjectCourseFilter();
+	                f.setIdCourse(tmp.getIdCourse());
+	                Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
+	                if (co != null && co.size() > 0) {
+		                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
+		                for (Iterator j = allSubjects.iterator(); j.hasNext(); ) {
+		                    Subject s = (Subject) j.next();
+		                    if (s.getIdSubject().equals(takePart.getIdSubject()))
+		                        tmp.setSubject(s);
+		                }
+	                }
+	            }
+            }
 
             return timetable;
         } finally {

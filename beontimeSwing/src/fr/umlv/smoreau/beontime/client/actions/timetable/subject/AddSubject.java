@@ -43,7 +43,7 @@ public class AddSubject extends Action {
             subject.setNbTdGroups(window.getNbTdGroups());
             subject.setNbTpGroups(window.getNbTpGroups());
             
-            subject.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
+            subject.setIdFormation(window.getFormation().getIdFormation());
             
             try {
                 subject = DaoManager.getTimetableDao().addSubject(subject);

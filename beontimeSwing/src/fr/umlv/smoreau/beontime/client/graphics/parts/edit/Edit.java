@@ -156,7 +156,11 @@ public class Edit extends JTree {
             String tooltip = null;
             if (value instanceof Timetable) {
                 font = new Font("Arial", Font.BOLD, 15);
-                setText(((Timetable) value).getFormation().getHeading());
+                Timetable timetable = (Timetable) value;
+                if (timetable.getFormation() != null)
+                    setText(timetable.getFormation().getHeading());
+                else if (timetable.getTeacher() != null)
+                    setText(timetable.getTeacher().getName() + " " + timetable.getTeacher().getFirstName());
             } else if (value instanceof Subject) {
                 font = new Font("Arial", Font.PLAIN, 14);
                 Subject subject = (Subject) value;

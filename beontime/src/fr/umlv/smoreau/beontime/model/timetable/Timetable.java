@@ -15,6 +15,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public class Timetable implements Serializable {
     private Formation formation;
+    private User teacher;
     private Group group;
     private Collection groups;
     private Collection subjects;
@@ -34,6 +35,10 @@ public class Timetable implements Serializable {
         this.formation = formation;
         this.group = group;
     }
+    
+    public Timetable(User teacher) {
+        this.teacher = teacher;
+    }
 
     /**
      * @return Renvoie formation.
@@ -47,6 +52,14 @@ public class Timetable implements Serializable {
      */
     public void setFormation(Formation formation) {
         this.formation = formation;
+    }
+    
+    public User getTeacher() {
+        return teacher;
+    }
+    
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 
     /**
@@ -71,6 +84,8 @@ public class Timetable implements Serializable {
     }
     
     public void addCourse(Course course) {
+        if (courses == null)
+            courses = new ArrayList();
         courses.add(course);
     }
     
@@ -90,6 +105,8 @@ public class Timetable implements Serializable {
     }
     
     public void addSubject(Subject subject) {
+        if (subjects == null)
+            subjects = new ArrayList();
         subjects.add(subject);
     }
     

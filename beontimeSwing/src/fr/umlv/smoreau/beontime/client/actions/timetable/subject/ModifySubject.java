@@ -36,6 +36,7 @@ public class ModifySubject extends Action {
         AddModifySubjectWindow window = new AddModifySubjectWindow(AddModifySubjectWindow.TYPE_MODIFY);
         window.setIntitule(subject.getHeading());
         window.setIdTeacher(subject.getIdTeacher());
+        window.setIdFormation(subject.getIdFormation());
         window.setNbMagHours(subject.getNbMagHours());
         window.setNbTdHours(subject.getNbTdHours());
         window.setNbTpHours(subject.getNbTpHours());

@@ -95,10 +95,10 @@ public class TitleBar extends JPanel {
 		periodChooser.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
                 MainFrame mainFrame = MainFrame.getInstance();
-                if (mainFrame.getFormationSelected() == null)
+                if (mainFrame.getModel().getTimetable() == null)
                     return;
-				TimetableFilter filter = new TimetableFilter();
-				filter.setFormation(mainFrame.getFormationSelected());
+				TimetableFilter filter = new TimetableFilter(mainFrame.getModel().getTimetable());
+				//filter.setFormation(mainFrame.getFormationSelected());
 				Calendar begin = Calendar.getInstance();
 				begin.setTime(getPeriod());
 				begin.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);

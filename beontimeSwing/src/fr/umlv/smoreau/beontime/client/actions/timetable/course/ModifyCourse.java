@@ -13,6 +13,7 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
@@ -44,12 +45,22 @@ public class ModifyCourse extends Action {
             return;
 
         AddModifyCourseWindow window = new AddModifyCourseWindow(AddModifyCourseWindow.TYPE_MODIFY);
-        window.setCourseFormation(mainFrame.getFormationSelected());
         window.setBeginDate(course.getBeginDate());
         window.setEndDate(course.getEndDate());
         window.setTypeCourse(course.getIdCourseType().getNameCourseType());
         
         try {
+            if (mainFrame.getFormationSelected() != null)
+                window.setCourseFormation(mainFrame.getFormationSelected());
+            else {
+                Formation formation = new Formation();
+                if (mainFrame.getSubjectSelected() != null) {
+                    formation.setIdFormation(mainFrame.getSubjectSelected().getIdFormation());
+                } else if (mainFrame.getCourseSelected() != null) {
+                    formation.setIdFormation(mainFrame.getCourseSelected().getIdFormation());
+                }
+                window.setCourseFormation(DaoManager.getFormationDao().getFormation(formation, null));
+            }
             Course courseTmp = DaoManager.getTimetableDao().getCourse(course, new String[] {TimetableDao.JOIN_GROUPS_SUBJECTS, TimetableDao.JOIN_TEACHERS_DIRECTING, TimetableDao.JOIN_ROOMS, TimetableDao.JOIN_MATERIALS});
             courseTmp.setSubject(course.getSubject());
             course = courseTmp;
