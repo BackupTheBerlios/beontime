@@ -172,10 +172,8 @@ public class MenuBar extends JMenuBar {
 		    ActionsList.getAction("CloseTimetable").setEnabled(true);
 		    ActionsList.getAction("PrintTimetable").setEnabled(true);
 		    ActionsList.getAction("ExportTimetable").setEnabled(true);
-		    ActionsList.getAction("ShowTimetableVertical").setEnabled(true);
-		    ActionsList.getAction("ShowTimetableHorizontal").setEnabled(true);
-		    //ActionsList.getAction("ShowTimetableByWeek").setEnabled(true);
-		    //ActionsList.getAction("ShowTimetableBySixMonthPeriod").setEnabled(true);
+		    //ActionsList.getAction("ShowTimetableVertical").setEnabled(true);
+		    //ActionsList.getAction("ShowTimetableHorizontal").setEnabled(true);
 		    if (timetable.getRoom() != null) {
 		        ActionsList.getAction("ModifyRoom").setEnabled(true);
 		        ActionsList.getAction("RemoveRoom").setEnabled(true);
