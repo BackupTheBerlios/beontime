@@ -46,6 +46,8 @@ public class AddModifyUserWindow {
 	private JTextField localJtf;
 	private JTextField phoneJtf;
 	private JComboBox formationsJcb;
+	private JButton formationPlusButton;
+	private JPanel formationsPlusPanel;
 	private String[] formationsName;
 	private Long[] formationsId;
 	
@@ -120,8 +122,8 @@ public class AddModifyUserWindow {
 		formationsPanel = new JPanel();
 		formationsPanel.setLayout(new BoxLayout(formationsPanel, BoxLayout.Y_AXIS));
 
-    	JPanel formationsPlusPanel = new JPanel();
-		JButton formationPlusButton = new JButton("+");
+    	formationsPlusPanel = new JPanel();
+		formationPlusButton = new JButton("+");
 
 		try {
             Collection formations = DaoManager.getFormationDao().getNotAllottedFormations();
@@ -398,7 +400,39 @@ public class AddModifyUserWindow {
     }
     
     public void setFormations(Collection formations) {
-		//TODO Sandrine: ajouter les formations en créant des JComboBox avec des boutons "x" ...
+    	
+    	int cpt = 0;
+    	int sizeFormations = formations.size();
+    	
+    	for(Iterator it = formations.iterator();it.hasNext();) {
+    		
+    		if (cpt == 0) {
+    			formationsJcb.setSelectedItem(((Formation) it.next()).getHeading());
+    	    	formationPlusButton.setText("x");  	
+    		}
+    		else {
+    		
+    		
+    		JComboBox jcb = new JComboBox(formationsName);
+    		jcb.setSelectedItem(((Formation) it.next()).getHeading());
+    		
+    		formationsPanel.add(jcb);
+    		formationsPanel.add(Box.createVerticalStrut(5));
+		
+    		JButton plus;
+			if(cpt == (sizeFormations-1))
+				plus = new JButton("+");
+			else
+				plus = new JButton("x");
+			
+			plus.addActionListener(new ButtonPlusListener(formationsPlusPanel, formationsPanel, AMUWFrame, formationsName));
+			formationsPlusPanel.add(plus);
+			formationsPlusPanel.add(Box.createVerticalStrut(5));
+    		}
+    		
+    		cpt++;
+		}
+    	
     }
     
     public boolean isOk() {
