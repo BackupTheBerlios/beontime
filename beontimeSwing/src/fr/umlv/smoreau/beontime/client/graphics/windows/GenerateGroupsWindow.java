@@ -9,6 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.model.Formation;
 
 
 /**
@@ -28,17 +32,17 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 
 public class GenerateGroupsWindow {
-
-
+	
+	
 	private static final String TITRE = "Générer automatiquement des groupes";
-
+	
 	private JLabel formationLabel;
 	private JLabel nbGroupsLabel;
 	private JLabel nameGroup1Label;
-
-	private JComboBox formationLabelJcb;
-	private JComboBox nbGroupsLabelJcb;
-
+	
+	private JComboBox formationJcb;
+	private JComboBox nbGroupsJcb;
+	
 	private JTextField nameGroup1Jtf;
 	
 	private JButton ok;
@@ -50,26 +54,62 @@ public class GenerateGroupsWindow {
 	private JDialog GGWFrame;
 	private GridBagLayout GGWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
-
+	
 	
 	
 	public GenerateGroupsWindow() {
 		GGWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
-    	GGWFrame.getContentPane().setLayout(GGWLayout);
-        
-    	initGenerateGroupsWindow();  
+		GGWFrame.getContentPane().setLayout(GGWLayout);
+		
+		initGenerateGroupsWindow();  
 	}
 	
+	
+	public String getFormation() {
+		return formationJcb.getSelectedItem().toString();
+	}
+	
+	
+	public int getnbGroups () {
+		return Integer.parseInt(nbGroupsJcb.getSelectedItem().toString());
+	}
+	
+	public Collection getNameGroups() {
+		
+		int nbteachers = nameGroupJtfPanel.getComponentCount();
+		
+		ArrayList list = new ArrayList();
+		Component [] components = nameGroupJtfPanel.getComponents();
+		
+		for(int i=0; i<nbteachers;i++) {
+			list.add(((JComboBox)components[i]).getSelectedItem().toString());
+		}
+		
+		return list;
+	}
+	
+	public void setFormation(Collection formations) {
+		
+		for(Iterator it = formations.iterator();it.hasNext();) {
+			formationJcb.addItem(((Formation)it.next()).getHeading());
+		}	
+	}
+	
+	public void setnbGroups (int nb) {
+		nbGroupsJcb.addItem(""+nb);
+	}
+	
+	
 	private void initGenerateGroupsWindow() {
-    	
+		
 		
 		formationLabel = new JLabel("Formation correspondante :");
 		addComponent(GGWLayout,layoutConstraints,formationLabel,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(formationLabel);
 		
-		formationLabelJcb = new JComboBox();
-		addComponent(GGWLayout,layoutConstraints,formationLabelJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		GGWFrame.getContentPane().add(formationLabelJcb);
+		formationJcb = new JComboBox();
+		addComponent(GGWLayout,layoutConstraints,formationJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		GGWFrame.getContentPane().add(formationJcb);
 		
 		
 		
@@ -77,55 +117,55 @@ public class GenerateGroupsWindow {
 		addComponent(GGWLayout,layoutConstraints,nbGroupsLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(nbGroupsLabel);
 		
-		nbGroupsLabelJcb = new JComboBox();
-		initNumberJcb(nbGroupsLabelJcb, 1, 10);
-		nbGroupsLabelJcb.addItemListener(new ItemListener() {
+		nbGroupsJcb = new JComboBox();
+		initNumberJcb(nbGroupsJcb, 1, 10);
+		nbGroupsJcb.addItemListener(new ItemListener() {
 			
-    		public void itemStateChanged(ItemEvent e) {
-    			
-    			int nbGroupsChoose = ((JComboBox)e.getSource()).getSelectedIndex()+1;
-    			int nbGroupsVisible = nameGroupLabelPanel.getComponentCount()/2;
-    			
-    			if (nbGroupsChoose > nbGroupsVisible) {
-    				
-    				int nbSup = nbGroupsChoose-nbGroupsVisible;
-    				
-    				for(int i=nbSup-1;i>=0;i--) {
-    					nameGroupLabelPanel.add(new JLabel("Nom du groupe "+(nbGroupsChoose-i)+" :"));
-    					nameGroupLabelPanel.add(Box.createVerticalStrut(9));
-    				
-    					nameGroupJtfPanel.add(new JTextField());
-    					nameGroupJtfPanel.add(Box.createVerticalStrut(5));
-    				
-    				}
-    				GGWFrame.pack();
-    			}
-    			
-    			if (nbGroupsChoose < nbGroupsVisible) {
-    				
-    				int nbInf = nbGroupsVisible - nbGroupsChoose;
-        			int position = nbGroupsVisible*2;
-        			
-    				for(int i=1;i<=nbInf;i++) {
-    				
-    					nameGroupLabelPanel.remove(position-i);
-    					nameGroupLabelPanel.remove(position-(i+1));
-    				
-    					nameGroupJtfPanel.remove(position-i);
-    					nameGroupJtfPanel.remove(position-(i+1));
-    					
-    					position-=1;
-    				}
-    					
-    				GGWFrame.pack();
-    			}
-    			
-    		}
+			public void itemStateChanged(ItemEvent e) {
+				
+				int nbGroupsChoose = ((JComboBox)e.getSource()).getSelectedIndex()+1;
+				int nbGroupsVisible = nameGroupLabelPanel.getComponentCount()/2;
+				
+				if (nbGroupsChoose > nbGroupsVisible) {
+					
+					int nbSup = nbGroupsChoose-nbGroupsVisible;
+					
+					for(int i=nbSup-1;i>=0;i--) {
+						nameGroupLabelPanel.add(new JLabel("Nom du groupe "+(nbGroupsChoose-i)+" :"));
+						nameGroupLabelPanel.add(Box.createVerticalStrut(9));
+						
+						nameGroupJtfPanel.add(new JTextField());
+						nameGroupJtfPanel.add(Box.createVerticalStrut(5));
+						
+					}
+					GGWFrame.pack();
+				}
+				
+				if (nbGroupsChoose < nbGroupsVisible) {
+					
+					int nbInf = nbGroupsVisible - nbGroupsChoose;
+					int position = nbGroupsVisible*2;
+					
+					for(int i=1;i<=nbInf;i++) {
+						
+						nameGroupLabelPanel.remove(position-i);
+						nameGroupLabelPanel.remove(position-(i+1));
+						
+						nameGroupJtfPanel.remove(position-i);
+						nameGroupJtfPanel.remove(position-(i+1));
+						
+						position-=1;
+					}
+					
+					GGWFrame.pack();
+				}
+				
+			}
 		});
-
 		
-		addComponent(GGWLayout,layoutConstraints,nbGroupsLabelJcb,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
-		GGWFrame.getContentPane().add(nbGroupsLabelJcb);
+		
+		addComponent(GGWLayout,layoutConstraints,nbGroupsJcb,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
+		GGWFrame.getContentPane().add(nbGroupsJcb);
 		
 		
 		
@@ -156,46 +196,46 @@ public class GenerateGroupsWindow {
 		annuler = new JButton("Annuler");
 		addComponent(GGWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(annuler);
-    	
+		
 	}
 	
-	 private void initNumberJcb(JComboBox jcb, int start, int end) {
-
-    	for(int i=start;i<=end;i++) {
-    		jcb.addItem(""+i);
-    	}
-    }
-    	
-    /* (non-Javadoc)
-     * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
-     */
-    public void show() {
-    	GGWFrame.pack();
-    	GGWFrame.setResizable(false);
-	    GGWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	    GGWFrame.setVisible(true);
-    }
-
-    private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
-        constraints. gridwidth= gridwidth;
-        constraints. gridheight = gridheight;
-        constraints.weightx = weightx;
-        constraints.weighty = weighty;
-        constraints.anchor = anchor;
-        constraints.fill = fill;
-        constraints.insets = insets;
- 
-        gbLayout.setConstraints(comp,constraints);
-    }
-    
-    
-    public static void main(String[] args){
+	private void initNumberJcb(JComboBox jcb, int start, int end) {
+		
+		for(int i=start;i<=end;i++) {
+			jcb.addItem(""+i);
+		}
+	}
 	
-    	MainFrame frame = MainFrame.getInstance();
-     	frame.open();
-     	
-     	GenerateGroupsWindow form = new GenerateGroupsWindow();
-     	form.show();
-			
-    }    
+	/* (non-Javadoc)
+	 * @see fr.umlv.smoreau.beontimeSwing.graphics.windows.Window#show(java.lang.Object[])
+	 */
+	public void show() {
+		GGWFrame.pack();
+		GGWFrame.setResizable(false);
+		GGWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		GGWFrame.setVisible(true);
+	}
+	
+	private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+		constraints. gridwidth= gridwidth;
+		constraints. gridheight = gridheight;
+		constraints.weightx = weightx;
+		constraints.weighty = weighty;
+		constraints.anchor = anchor;
+		constraints.fill = fill;
+		constraints.insets = insets;
+		
+		gbLayout.setConstraints(comp,constraints);
+	}
+	
+	
+	public static void main(String[] args){
+		
+		MainFrame frame = MainFrame.getInstance();
+		frame.open();
+		
+		GenerateGroupsWindow form = new GenerateGroupsWindow();
+		form.show();
+		
+	}    
 }
