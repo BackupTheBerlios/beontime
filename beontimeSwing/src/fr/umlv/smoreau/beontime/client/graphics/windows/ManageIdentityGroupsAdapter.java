@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -111,7 +112,7 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 		for(Iterator it = ((Group)(groups.get(columnIndex-1))).getStudents().iterator();it.hasNext();) {
 			
 			if ( ((Long)it.next()).compareTo(ID_student) == 0)
-				return "oui";
+				return new JPanel().add(new CrossDrawing());
 		}	
 		
 		return "non";
