@@ -423,9 +423,10 @@ public class AddModifyUserWindow {
 	    this.formationsId = ids;
 	    this.formationsName = names;
 	    
-	    formationsPanel.remove(formationsJcb);
+	    formationsPanel.removeAll();
 	    formationsJcb = new JComboBox(formationsName);
 	    formationsPanel.add(formationsJcb);
+	    formationsPanel.add(Box.createVerticalStrut(5));
 	    //finTODO
 
 		int cpt = 0;
