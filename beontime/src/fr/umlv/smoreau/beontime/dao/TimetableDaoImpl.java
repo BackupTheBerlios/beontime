@@ -13,11 +13,15 @@ import net.sf.hibernate.Session;
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.CourseFilter;
+import fr.umlv.smoreau.beontime.filter.FormationFilter;
+import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.filter._TakePartGroupSubjectCourseFilter;
 import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.filter._IsDirectedByCourseTeacherFilter;
+import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.timetable.*;
@@ -103,8 +107,32 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	}
 
 	public Timetable getTimetable(TimetableFilter filter) throws RemoteException, HibernateException {
-		//TODO à implémenter
-		return null;
+	    Session session = null;
+        try {
+            Timetable timetable = new Timetable();
+            FormationDao formationDao = FormationDaoImpl.getInstance();
+            Collection c = formationDao.getFormations(new FormationFilter(filter.getFormation()));
+            timetable.setFormation((Formation) c.toArray()[0]);
+
+            Subject subject = new Subject();
+            subject.setIdFormation(filter.getFormation().getIdFormation());
+            timetable.setSubjects(get(TABLE_SUBJECT, new SubjectFilter(subject), Hibernate.getCurrentSession()));
+            
+            Group group = new Group();
+            group.setIdFormation(filter.getFormation().getIdFormation());
+            GroupDao groupDao = GroupDaoImpl.getInstance();
+            timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
+            
+            Course course = new Course();
+            course.setIdFormation(filter.getFormation().getIdFormation());
+            timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
+            
+            //TODO manque la relation ternaire ...
+
+            return timetable;
+        } finally {
+            Hibernate.closeSession();
+        }
 	}
 
 	public Collection getCourses() throws RemoteException, HibernateException {

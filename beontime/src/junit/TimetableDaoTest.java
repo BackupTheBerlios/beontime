@@ -9,6 +9,8 @@ import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.dao.GroupDaoImpl;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.dao.TimetableDaoImpl;
+import fr.umlv.smoreau.beontime.filter.TimetableFilter;
+import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
@@ -16,6 +18,7 @@ import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.CourseType;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 import fr.umlv.smoreau.beontime.model.user.User;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -131,6 +134,18 @@ public class TimetableDaoTest extends TestCase {
 	        timetableDao.modifySubject(subject);
 	        timetableDao.removeSubject(subject);
 	        assertTrue(true);
+        } catch (RemoteException e2) {
+            assertTrue(false);
+        } catch (HibernateException e) {
+            assertTrue(false);
+        }
+    }
+    
+    public void testGetTimetable() {
+        try {
+	        Timetable timetable = new Timetable(new Formation(new Long(3)));
+	        TimetableFilter filter = new TimetableFilter(timetable);
+	        assertNotNull(timetableDao.getTimetable(filter));
         } catch (RemoteException e2) {
             assertTrue(false);
         } catch (HibernateException e) {
