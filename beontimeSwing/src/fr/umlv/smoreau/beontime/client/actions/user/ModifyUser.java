@@ -16,7 +16,7 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public class ModifyUser extends Action {
     private static final String NAME = "Modifier l'utilisateur";
-    private static final String ICON = "";
+    private static final String ICON = "modifier_user.png";
 
 
     public ModifyUser(MainFrame mainFrame) {

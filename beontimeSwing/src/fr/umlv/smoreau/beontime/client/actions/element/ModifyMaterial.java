@@ -17,7 +17,7 @@ import fr.umlv.smoreau.beontime.model.element.Material;
  */
 public class ModifyMaterial extends Action {
     private static final String NAME = "Modifier le matériel";
-    private static final String ICON = "";
+    private static final String ICON = "modifier_materiel.png";
 
 
     public ModifyMaterial(MainFrame mainFrame) {

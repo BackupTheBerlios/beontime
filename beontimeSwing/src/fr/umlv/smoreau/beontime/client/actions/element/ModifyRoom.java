@@ -17,7 +17,7 @@ import fr.umlv.smoreau.beontime.model.element.Room;
  */
 public class ModifyRoom extends Action {
     private static final String NAME = "Modifier le local";
-    private static final String ICON = "";
+    private static final String ICON = "modifier_local.png";
 
 
     public ModifyRoom(MainFrame mainFrame) {
