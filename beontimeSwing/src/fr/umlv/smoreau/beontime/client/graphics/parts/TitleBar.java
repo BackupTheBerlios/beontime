@@ -1,7 +1,5 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.parts;
+/* DESS CRI - BeOnTime - timetable project */
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -10,10 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -30,14 +27,17 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 
 /**
+ * Manages the title bar of the swing application including title labels and date chooser
  * @author BeOnTime
  */
 public class TitleBar extends JPanel {
-    
+	/** This class must be serializable */
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel responsibleLabel;
 	private JLabel intitleLabel;
 	
-	private JButton periodButton;
+	private JDateChooser periodChooser;
 	private JButton previousButton;
 	private JButton nextButton;
 	
@@ -45,9 +45,16 @@ public class TitleBar extends JPanel {
 	private JPanel titleBarPanel = new JPanel();
 	protected TitleBar titleBar=this;
 	 
+	private BoTModel model;
 	
+	/** time in millis for a week*/
+	private static final long aWeek = new GregorianCalendar(2005, 02, 14).getTimeInMillis() - (new GregorianCalendar(2005, 02, 07).getTimeInMillis());
+	/** time in millis for half a year*/
+	private static final long anHalfYear = new GregorianCalendar(2005, 06, 01).getTimeInMillis() - (new GregorianCalendar(2005, 01, 01).getTimeInMillis());
+
 	
 	public TitleBar(BoTModel model) {
+		this.model = model;
 		titleBarPanel.setLayout(new BorderLayout());
 		
 		initTitleBarPanel();
@@ -69,13 +76,17 @@ public class TitleBar extends JPanel {
 		intitleLabel.setName(intitle);
 	}
 	
-	public void setPeriod(String period) {
-		periodButton.setText(period);
+	public void setPeriod(Calendar period) {
+		periodChooser.setDate(period.getTime());
 	}
+	
+	public void setPeriod(Date period) {
+		periodChooser.setDate(period);
+	}
+	
 	public void setTitleBarPanel(JPanel panel) {
 		titleBarPanel = panel;
 	}
-	
 	
 	public String getResponsible() {
 		return responsibleLabel.getName();
@@ -85,14 +96,13 @@ public class TitleBar extends JPanel {
 		return intitleLabel.getName();
 	}
 	
-	public String getPeriod() {
-		return periodButton.getText();
+	public Date getPeriod() {
+		return periodChooser.getDate();
 	}
 	
 	public JPanel getTitleBarPanel() {
 		return titleBarPanel;
 	}
-	
 	
 	
 	private void initTitleBarPanel() {
@@ -103,22 +113,13 @@ public class TitleBar extends JPanel {
 		
 	}
 	
-
 	private void initPeriodPanel() {
 		
 		periodPanel.setLayout(new BorderLayout());
 		
-		final JDateChooser myDateChooser = new JDateChooser();
-		Date date=myDateChooser.getDate();
-		final SimpleDateFormat df = new SimpleDateFormat( "dd/MM/yyyy" );
-		periodButton = new JButton(df.format(date));
-		periodPanel.add(periodButton, BorderLayout.CENTER);
-		periodButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				new fr.umlv.smoreau.beontime.client.graphics.windows.CalendarDialog(titleBar);
-			}
-		});
-		
+		periodChooser = new JDateChooser();
+		//TODO fire ?
+		periodPanel.add(periodChooser, BorderLayout.CENTER);
 		previousButton = new JButton(Action.getImage("Back24.gif"));
 		periodPanel.add(previousButton, BorderLayout.WEST);
 		
@@ -127,32 +128,33 @@ public class TitleBar extends JPanel {
 		
 		previousButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				String per=getPeriod();
-				Calendar c=df.getCalendar();
-				try {
-					c.setTime(df.parse(per));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
+				//TODO prendre en considération le type d'affichage : semaine / semestre
+				//if week
+				periodChooser.setDate(new Date(periodChooser.getDate().getTime()-aWeek));
+				//if semestre
+		//		periodChooser.setDate(new Date(periodChooser.getDate().getTime()-anHalfYear));	
+				try {			
+					model.fireShowTimetable(model.getTimetable()); //TODO modifier
+				} catch (InterruptedException e) {
+					System.err.println("calendar -- fire exception");
 					e.printStackTrace();
 				}
-				int d=c.get(Calendar.DAY_OF_MONTH);
-				c.set(Calendar.DAY_OF_MONTH,d-1);
-				setPeriod(df.format(c.getTime()));
+			
 			}
 		});
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				String per=getPeriod();
-				Calendar c=df.getCalendar();
-				try {
-					c.setTime(df.parse(per));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
+				//TODO prendre en considération le type d'affichage : semaine / semestre
+				//if week
+				periodChooser.setDate(new Date(periodChooser.getDate().getTime()+aWeek));
+				//if semestre
+		//		periodChooser.setDate(new Date(periodChooser.getDate().getTime()+anHalfYear));	
+				try {			
+					model.fireShowTimetable(model.getTimetable()); //TODO modifier
+				} catch (InterruptedException e) {
+					System.err.println("calendar ++ fire exception");
 					e.printStackTrace();
 				}
-				int d=c.get(Calendar.DAY_OF_MONTH);
-				c.set(Calendar.DAY_OF_MONTH,d+1);
-				setPeriod(df.format(c.getTime()));
 			}
 		});
 		
@@ -183,7 +185,16 @@ public class TitleBar extends JPanel {
 		public void refreshAll(BoTEvent e) {
 		    Timetable timetable = e.getTimetable();
 		    intitleLabel.setText(timetable.getFormation().getHeading());
-		    responsibleLabel.setText(timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
+		    if (timetable.getPersonInCharge()==null) {
+		    	responsibleLabel.setEnabled(false);
+		    	intitleLabel.setEnabled(false);
+		    }
+		    else {
+		    	responsibleLabel.setEnabled(true);
+		    	intitleLabel.setEnabled(true);
+		    	responsibleLabel.setText(timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
+		    }
+		    //TODO : changer la date ?
 		    panel.validate();
 		}
 	}

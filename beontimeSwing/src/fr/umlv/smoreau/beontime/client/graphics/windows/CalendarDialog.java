@@ -23,7 +23,7 @@ import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 
 /**
  * @author Mohamed
- *
+ * @deprecated ? à supprimer si personne s'en sert....
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
@@ -51,7 +51,8 @@ public class CalendarDialog extends JDialog{
 			public void actionPerformed(ActionEvent ae) {
 				Date date=myDateChooser.getDate();
 				SimpleDateFormat df = new SimpleDateFormat( "dd/MM/yyyy" );
-				titleBar.setPeriod(df.format(date));
+//				titleBar.setPeriod(df.format(date)); //TODO nettoyer
+				titleBar.setPeriod(date);
 				dispose();
 			}
 		});
