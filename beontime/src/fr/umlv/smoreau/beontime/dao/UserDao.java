@@ -3,19 +3,17 @@ package fr.umlv.smoreau.beontime.dao;
 import java.util.Collection;
 
 import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
 
-import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.model.user.*;
 
 /**
  * @author BeOnTime
  */
-public class UserDao {
+public class UserDao extends Dao {
     private static final UserDao INSTANCE = new UserDao();
     
-    private static final String DB = "Person";
+    private static final String TABLE = "Person";
     private static final String TYPE_TEACHER   = "enseignant";
     private static final String TYPE_STUDENT   = "etudiant";
     private static final String TYPE_SECRETARY = "secretaire";
@@ -33,15 +31,8 @@ public class UserDao {
 	    Collection result = null;
 
         try {
-            Session session = Hibernate.getCurrentSession();
             TransactionManager.beginTransaction();
-            String f = "";
-            if (filter != null) {
-                f = filter.getHQLQuery();
-                if (f.length() != 0)
-                    f = " where " + f;
-            }
-            result = session.find("from " + DB + f);
+            result = get(TABLE, filter);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la récupération des personnes : " + e.getMessage());
@@ -102,9 +93,8 @@ public class UserDao {
 	
 	public void addUser(Person user) {
         try {
-            Session session = Hibernate.getCurrentSession();
             TransactionManager.beginTransaction();
-            session.save(user);
+            add(user);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'une personne : " + e.getMessage());
@@ -113,9 +103,8 @@ public class UserDao {
 	
 	public void modifyUser(Person user) {
         try {
-            Session session = Hibernate.getCurrentSession();
             TransactionManager.beginTransaction();
-            session.update(user);
+            modify(user);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'une personne : " + e.getMessage());
@@ -124,13 +113,8 @@ public class UserDao {
 	
 	public void removeUser(Person user) {
         try {
-            Session session = Hibernate.getCurrentSession();
             TransactionManager.beginTransaction();
-            UserFilter filter = new UserFilter(user);
-            String f = filter.getHQLQuery();
-            if (f.length() != 0)
-                f = " where " + f;
-            session.delete("from " + DB + f);
+            remove(TABLE, new UserFilter(user));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'une personne : " + e.getMessage());

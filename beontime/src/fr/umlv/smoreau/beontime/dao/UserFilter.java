@@ -6,7 +6,15 @@ import fr.umlv.smoreau.beontime.model.user.Person;
  * @author BeOnTime
  */
 public class UserFilter extends Person implements Filter {
-    
+    private static final String DB_ID_PERSONNE = "id_personne";
+    private static final String DB_NOM = "nom";
+    private static final String DB_PRENOM = "prenom";
+    private static final String DB_TYPE_PERSONNE = "type_personne";
+    private static final String DB_TELEPHONE = "telephone";
+    private static final String DB_EMAIL = "e_mail";
+    private static final String DB_NOM_BUREAU = "nom_bureau";
+    private static final String DB_NOM_BATIMENT_BUREAU = "nom_batiment_bureau";
+
     public UserFilter() {
         super();
     }
@@ -25,46 +33,49 @@ public class UserFilter extends Person implements Filter {
         }
     }
 
+	/* (non-Javadoc)
+	 * @see fr.umlv.smoreau.beontime.filter.Filter#getQueryHQL()
+	 */
 	public String getHQLQuery() {
 	    StringBuffer query = new StringBuffer();
 
 	    if (getIdPersonne() != null) {
-	        query.append("id_personne").append("='").append(getIdPersonne()).append("'");
+	        query.append(DB_ID_PERSONNE).append("='").append(getIdPersonne()).append("'");
 	    }
 		if (getNom() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("nom").append("='").append(getNom()).append("'");
+		    query.append(DB_NOM).append("='").append(getNom()).append("'");
 		}
 		if (getPrenom() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("prenom").append("='").append(getPrenom()).append("'");
+		    query.append(DB_PRENOM).append("='").append(getPrenom()).append("'");
 		}
 		if (getTypePersonne() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("type_personne").append("='").append(getTypePersonne()).append("'");
+		    query.append(DB_TYPE_PERSONNE).append("='").append(getTypePersonne()).append("'");
 		}
 		if (getTelephone() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("telephone").append("='").append(getTelephone()).append("'");
+		    query.append(DB_TELEPHONE).append("='").append(getTelephone()).append("'");
 		}
 		if (getEMail() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("e_mail").append("='").append(getEMail()).append("'");
+		    query.append(DB_EMAIL).append("='").append(getEMail()).append("'");
 		}
 		if (getNomBureau() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("nom_bureau").append("='").append(getNomBureau()).append("'");
+		    query.append(DB_NOM_BUREAU).append("='").append(getNomBureau()).append("'");
 		}
 		if (getNomBatimentBureau() != null) {
 		    if (query.length() != 0)
 		        query.append(" AND ");
-		    query.append("nom_batiment_bureau").append("='").append(getNomBatimentBureau()).append("'");
+		    query.append(DB_NOM_BATIMENT_BUREAU).append("='").append(getNomBatimentBureau()).append("'");
 		}
 		    
 		return query.toString();
