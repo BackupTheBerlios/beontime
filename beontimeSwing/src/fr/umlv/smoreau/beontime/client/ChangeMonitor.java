@@ -104,8 +104,8 @@ public class ChangeMonitor extends UnicastRemoteObject implements ChangeListener
                     return;
                 mainFrame.setCourseSelected(null);
             } else if (ChangeListener.TYPE_MODIFY == type) {
+            	courseChanged(course, ChangeListener.TYPE_REMOVE);
                 courseChanged(course, ChangeListener.TYPE_ADD);
-                courseChanged(course, ChangeListener.TYPE_REMOVE);
                 return;
             }
 
