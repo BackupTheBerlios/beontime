@@ -57,6 +57,8 @@ public class ActionsList {
 		ACTIONS.put("AddMaterial", new AddMaterial(null));
 		ACTIONS.put("ManageMaterials", new ManageMaterials(null));
 		ACTIONS.put("AddUnavailability", new AddUnavailability(null));
+		ACTIONS.put("ModifyUnavailability", new ModifyUnavailability(null));
+		ACTIONS.put("RemoveUnavailability", new RemoveUnavailability(null));
 		ACTIONS.put("ManageUnavailabilities", new ManageUnavailabilities(null));
 		ACTIONS.put("SearchAvailability", new SearchAvailability(null));
 		ACTIONS.put("About", new About(null));
