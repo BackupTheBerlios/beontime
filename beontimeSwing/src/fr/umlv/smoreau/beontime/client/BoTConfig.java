@@ -13,7 +13,7 @@ public class BoTConfig {
     private static final SimpleDateFormat FORMAT_DATE  = new SimpleDateFormat("dd/MM");
 
     private static final String CONFIG_BOT = "beontime.properties";
-    private static final String DEFAULT_BEGIN_FIRST_HALF_YEAR = "01/09";
+    private static final String DEFAULT_BEGIN_FIRST_HALF_YEAR = "01/07";
     private static final String DEFAULT_END_FIRST_HALF_YEAR = "31/12";
     private static final String DEFAULT_BEGIN_SECOND_HALF_YEAR = "01/01";
     private static final String DEFAULT_END_SECOND_HALF_YEAR = "30/06";
