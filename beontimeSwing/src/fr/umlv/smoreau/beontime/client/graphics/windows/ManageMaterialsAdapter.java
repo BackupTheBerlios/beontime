@@ -14,57 +14,57 @@ import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
-import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.element.Material;
 
 /**
- * @author BeOnTime
+ * @author sandrine
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ManageRoomsAdapter implements TableModel {
-
+public class ManageMaterialsAdapter implements TableModel {
+	
 	private final EventListenerList list;
 	private BoTModel model;
-	private ArrayList listRooms;
+	private ArrayList listMaterials;
 	private final static String[] columnNames = {"Nom","Description"};
 	
 	
-	public ManageRoomsAdapter(BoTModel model) {
+	public ManageMaterialsAdapter(BoTModel model) {
 		this.model = model;
 		this.list = new EventListenerList();
 		
 		//TODO pour tester en local
-		Room room1 = new Room(new Long(1)); 
-		room1.setName("Nom1");
-		room1.setDescription("Description1");
+		Material material1 = new Material(new Long(1)); 
+		material1.setName("Nom1");
+		material1.setDescription("Vidéo projecteur");
 		
-		Room room2 = new Room(new Long(2)); 
-		room2.setName("Nom2");
-		room2.setDescription("Description2");
+		Material material2 = new Material(new Long(2)); 
+		material2.setName("Nom2");
+		material2.setDescription("Description2");
 		
-		Room room3 = new Room(new Long(3)); 
-		room3.setName("Nom3");
-		room3.setDescription("Description3");
+		Material material3 = new Material(new Long(3)); 
+		material3.setName("Nom3");
+		material3.setDescription("Description3");
 		
-		Room room4 = new Room(new Long(4)); 
-		room4.setName("Nom4");
-		room4.setDescription("Description4");
+		Material material4 = new Material(new Long(4)); 
+		material4.setName("Nom4");
+		material4.setDescription("Description4");
 		
-		Room room5 = new Room(new Long(5)); 
-		room5.setName("Nom5");
-		room5.setDescription("Description5");
+		Material material5 = new Material(new Long(5)); 
+		material5.setName("Nom5");
+		material5.setDescription("Description5");
 		//finTODO
 		
 		
-		listRooms = new ArrayList();
-		listRooms.add(room1);
-		listRooms.add(room2);
-		listRooms.add(room3);
-		listRooms.add(room4);
-		listRooms.add(room5);
+		listMaterials = new ArrayList();
+		listMaterials.add(material1);
+		listMaterials.add(material2);
+		listMaterials.add(material3);
+		listMaterials.add(material4);
+		listMaterials.add(material5);
 		
-		model.addBoTListener(new ManageRoomsListener(this));
+		model.addBoTListener(new ManageMaterialsListener(this));
 	}
 	
 	/* (non-Javadoc)
@@ -72,7 +72,7 @@ public class ManageRoomsAdapter implements TableModel {
 	 */
 	public int getRowCount() {
 		
-		return listRooms.size();
+		return listMaterials.size();
 	}
 	
 	/* (non-Javadoc)
@@ -110,12 +110,12 @@ public class ManageRoomsAdapter implements TableModel {
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		
-		Room room  = (Room)listRooms.get(rowIndex);
+		Material material  = (Material)listMaterials.get(rowIndex);
 		
 		switch(columnIndex) {
 		
-		case 0: return room.getName();
-		case 1: return room.getDescription();
+		case 0: return material.getName();
+		case 1: return material.getDescription();
 		}
 		
 		throw new IllegalArgumentException("colonne invalide ("+rowIndex+','+columnIndex+')');
@@ -146,10 +146,10 @@ public class ManageRoomsAdapter implements TableModel {
 		list.remove(l.getClass(), l);
 	}
 	
-	private class ManageRoomsListener extends DefaultBoTListener {
+	private class  ManageMaterialsListener extends DefaultBoTListener {
 		private TableModel source;
 		
-		public ManageRoomsListener(TableModel source) {
+		public  ManageMaterialsListener(TableModel source) {
 			this.source = source;
 		}	
 	}

@@ -55,8 +55,8 @@ public class ManageUsersTable extends JTable {
         return panel;
     }
     
-    /*public Subject getSubjectSelected() {
-        return subjectSelected;
+    /*public User getUserSelected() {
+        return userSelected;
     }*/
     
     

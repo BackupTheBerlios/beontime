@@ -19,41 +19,42 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.element.Room;
 
 /**
- * @author BeOnTime
+ * @author sandrine
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ManageRoomsTable extends JTable {
+public class ManageMaterialsTable extends JTable {
 	private JPanel panel;
-    private final JTable table;
-    private static MainFrame mainFrame;
-    private Room roomSelected;
-    
-    public ManageRoomsTable(final BoTModel model) {
-        super();
-        super.setModel(new ManageRoomsAdapter(model));
-        ManageRoomsTable.mainFrame = MainFrame.getInstance();
-        
-        panel = new JPanel(new GridLayout(1, 0));
-        
-        
-        table = this;
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      
-        
-        JScrollPane scrollPane = new JScrollPane(this);
-
+	private final JTable table;
+	private static MainFrame mainFrame;
+	private Room MaterialSelected;
+	
+	public ManageMaterialsTable(final BoTModel model) {
+		super();
+		super.setModel(new ManageMaterialsAdapter(model));
+		ManageMaterialsTable.mainFrame = MainFrame.getInstance();
+		
+		panel = new JPanel(new GridLayout(1, 0));
+		
+		
+		table = this;
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		
+		JScrollPane scrollPane = new JScrollPane(this);
+		
 		super.setMinimumSize(new Dimension(100, 50));
-
+		
 		panel.add(scrollPane);
-    }
-    
-    public JPanel getPanel() {
-        return panel;
-    }
-    
-    /*public Room getRoomSelected() {
-        return roomSelected;
-    }*/
+	}
+	
+	public JPanel getPanel() {
+		return panel;
+	}
+	
+	/*public Material getMaterialSelected() {
+	 return materialSelected;
+	 }*/
 }
+
