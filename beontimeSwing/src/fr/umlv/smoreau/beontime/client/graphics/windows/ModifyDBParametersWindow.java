@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -155,6 +157,11 @@ public class ModifyDBParametersWindow {
 		MDBPWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	MDBPWFrame.dispose();
+            }
+		});
 		addComponent(MDBPWLayout,layoutConstraints,annuler,6,8,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		MDBPWFrame.getContentPane().add(annuler);
 	

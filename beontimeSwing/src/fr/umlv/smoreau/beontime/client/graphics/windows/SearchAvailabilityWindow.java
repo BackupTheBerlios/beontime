@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.ButtonGroup;
@@ -200,6 +202,11 @@ public class SearchAvailabilityWindow {
 		
 		
 		annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	SAWFrame.dispose();
+            }
+		});
 		addComponent(SAWLayout,layoutConstraints,annuler,6,8,2,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		SAWFrame.getContentPane().add(annuler);
 	}
@@ -214,13 +221,12 @@ public class SearchAvailabilityWindow {
 	
 	private void initMinuteJcb(JComboBox jcb) {
 		
-		for(int i=0;i<10;i++) {
-			jcb.addItem("0"+i);
-		}
-		for(int i=10;i<=60;i++) {
-			jcb.addItem(""+i);
-		}
+		String [] tabMin = new String[] {"00","15","30","45"};
 		
+		for (int i=0;i<tabMin.length;i++) {
+			jcb.addItem(tabMin[i]);
+			
+		}
 	}
 	
 	

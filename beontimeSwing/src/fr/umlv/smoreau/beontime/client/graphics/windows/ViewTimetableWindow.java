@@ -171,6 +171,11 @@ public class ViewTimetableWindow {
 		VTWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	VTWFrame.dispose();
+            }
+		});
 		addComponent(VTWLayout,layoutConstraints,annuler,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		VTWFrame.getContentPane().add(annuler);
 		

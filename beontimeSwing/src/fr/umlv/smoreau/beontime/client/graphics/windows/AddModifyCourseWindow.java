@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -404,6 +406,11 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(ok);
 		
 		annuler = new JButton("Annuler");
+		annuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            	AMCWFrame.dispose();
+            }
+		});
 		addComponent(AMCWLayout,layoutConstraints,annuler,6,12,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMCWFrame.getContentPane().add(annuler);
 	}
@@ -420,13 +427,12 @@ public class AddModifyCourseWindow {
 	
 	private void initMinuteJcb(JComboBox jcb) {
 		
-		for(int i=0;i<10;i++) {
-			jcb.addItem("0"+i);
-		}
-		for(int i=10;i<=60;i++) {
-			jcb.addItem(""+i);
-		}
+		String [] tabMin = new String[] {"00","15","30","45"};
 		
+		for (int i=0;i<tabMin.length;i++) {
+			jcb.addItem(tabMin[i]);
+			
+		}
 	}
 	private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
 		
@@ -497,5 +503,7 @@ public class AddModifyCourseWindow {
     	ret=ret+(ind_min/15)-1;
     	return ret;
     }
+    
+   
 
 }
