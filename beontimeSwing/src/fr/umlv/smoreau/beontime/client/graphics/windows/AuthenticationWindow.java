@@ -63,8 +63,10 @@ public class AuthenticationWindow {
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                isOk = true;
-                IWFrame.dispose();
+                if (!"".equals(getLogin()) && !"".equals(getPassword())) {
+	                isOk = true;
+	                IWFrame.dispose();
+                }
             }
 		});
 		addComponent(IWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
