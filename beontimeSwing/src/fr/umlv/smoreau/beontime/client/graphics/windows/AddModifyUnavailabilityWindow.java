@@ -159,6 +159,7 @@ public class AddModifyUnavailabilityWindow {
     	AMUWFrame.getContentPane().add(repeatUnavailabilityLabel);
     	
     	repeatUnavailabilityJcb = new JComboBox();
+    	initNumberJcb(repeatUnavailabilityJcb,1,48);
     	addComponent(AMUWLayout,layoutConstraints,repeatUnavailabilityJcb,1,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,20,10));
     	AMUWFrame.getContentPane().add(repeatUnavailabilityJcb);
     	
