@@ -124,6 +124,9 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             GroupDao groupDao = GroupDaoImpl.getInstance();
             timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
             
+            //TODO à voir plus précisemment
+            timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
+            
             Course course = new Course();
             course.setIdFormation(filter.getFormation().getIdFormation());
             timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
@@ -170,8 +173,11 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             add(course, session);
             Set p = course.getGroupsSubjectsTakingPart();
             if (p != null) {
-	            for (Iterator i = p.iterator(); i.hasNext(); )
-	                add((TakePartGroupSubjectCourse)i.next(), session);
+	            for (Iterator i = p.iterator(); i.hasNext(); ) {
+	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse)i.next();
+	                takePart.setIdCourse(course.getIdCourse());
+	                add(takePart, session);
+	            }
             }
             Collection c = course.getTeachersDirecting();
             if (c != null) {
