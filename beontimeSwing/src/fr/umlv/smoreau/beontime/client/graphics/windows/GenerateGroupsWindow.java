@@ -60,7 +60,7 @@ public class GenerateGroupsWindow {
     	initGenerateGroupsWindow();  
 	}
 	
-	public void initGenerateGroupsWindow() {
+	private void initGenerateGroupsWindow() {
     	
 		
 		formationLabel = new JLabel("Formation correspondante :");
@@ -176,7 +176,7 @@ public class GenerateGroupsWindow {
 	    GGWFrame.setVisible(true);
     }
 
-    public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+    private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
         constraints. gridwidth= gridwidth;
         constraints. gridheight = gridheight;
         constraints.weightx = weightx;

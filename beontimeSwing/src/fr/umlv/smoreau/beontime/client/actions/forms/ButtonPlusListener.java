@@ -49,7 +49,7 @@ public class ButtonPlusListener implements ActionListener {
 		}
 		
 		else {
-			//int pos = ((JButton)e.getSource()).getComponentCount();
+	
 			int position = ownPanel.getComponentZOrder(((JButton)e.getSource()));
 			
 			jcbPanel.remove(position);
@@ -59,7 +59,7 @@ public class ButtonPlusListener implements ActionListener {
 			ownPanel.remove(position);
 			
 			formFrame.pack();
-			//System.out.println(""+position);
+			
 		}
 	}
 

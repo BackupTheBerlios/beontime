@@ -83,7 +83,7 @@ public class AddModifyUnavailabilityWindow {
     }
 
 
-    public void initAddModifyUnavailabilityWindow() {
+    private void initAddModifyUnavailabilityWindow() {
     	
     	
     	startUnavailabilityLabel = new JLabel("Début d'indisponibilité :");
@@ -254,7 +254,7 @@ public class AddModifyUnavailabilityWindow {
     	    
     	    
     	    
-   public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+   private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
     	     constraints. gridwidth= gridwidth;
     	     constraints. gridheight = gridheight;
     	     constraints.weightx = weightx;

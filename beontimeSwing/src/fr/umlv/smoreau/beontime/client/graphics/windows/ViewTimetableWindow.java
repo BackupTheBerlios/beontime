@@ -68,7 +68,7 @@ public class ViewTimetableWindow {
 	}
 	
 	
-	public void initViewTimetableWindow() {
+	private void initViewTimetableWindow() {
 		
 		
 		visuEDTLabel = new JLabel("Visualisation d'un emploi du temps d'un(e)");
@@ -170,7 +170,7 @@ public class ViewTimetableWindow {
     
     
     
-    public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+    private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
         constraints. gridwidth= gridwidth;
         constraints. gridheight = gridheight;
         constraints.weightx = weightx;

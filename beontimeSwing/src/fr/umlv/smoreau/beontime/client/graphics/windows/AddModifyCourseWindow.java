@@ -93,7 +93,7 @@ public class AddModifyCourseWindow {
     }
 
 
-    public void initAddModifyCourseWindow() {
+    private void initAddModifyCourseWindow() {
     	
     	
     	teacherLabel = new JLabel("Le cours sera donné par :");
@@ -324,7 +324,7 @@ public class AddModifyCourseWindow {
     }
 
 	    
-    public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+    private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
      	     
     	constraints. gridx= gridx;
     	constraints. gridy = gridy;

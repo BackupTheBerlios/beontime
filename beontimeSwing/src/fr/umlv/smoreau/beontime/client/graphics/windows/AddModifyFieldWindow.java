@@ -7,7 +7,11 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -53,6 +57,205 @@ public class AddModifyFieldWindow {
     private GridBagConstraints layoutConstraints = new GridBagConstraints();
  
 
+    
+    private static class NbHourJcbListener implements ItemListener {
+
+    	private int type;
+    	
+    	private JPanel panel;
+    	
+    	private GridBagConstraints layoutConstraints;
+    	private JDialog formFrame;
+    	
+    	
+    	
+    	public NbHourJcbListener(JDialog formFrame, GridBagConstraints layoutConstraints, JPanel panel, int type) {
+    		
+    		this.type = type;
+    		
+    		this.panel = panel;
+    		
+    		this.layoutConstraints = layoutConstraints;
+    		this.formFrame = formFrame;
+    	}
+    	
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+		 */
+		public void itemStateChanged(ItemEvent e) {
+			int nbGroupsChoose = ((JComboBox)e.getSource()).getSelectedIndex()+1;
+			int nbGroupsVisible = ((JPanel)(panel.getComponent(3))).getComponentCount()/2;
+			//int nbGroupsVisible = nameGroupLabelPanel.getComponentCount()/2;
+			
+		
+			formFrame.getContentPane().remove(panel);
+			
+			if (nbGroupsChoose > nbGroupsVisible) {
+				
+				int nbSup = nbGroupsChoose-nbGroupsVisible;
+				
+				for(int i=nbSup-1;i>=0;i--) {
+					
+					((JPanel)(panel.getComponent(3))).add(new JLabel("Groupe "+(nbGroupsChoose-i)+" :"));
+					((JPanel)(panel.getComponent(3))).add(Box.createVerticalStrut(9));
+					
+					((JPanel)(panel.getComponent(4))).add(new JComboBox());
+					((JPanel)(panel.getComponent(4))).add(Box.createVerticalStrut(5));
+					
+					((JPanel)(panel.getComponent(5))).add(new JLabel("Enseignant :"));
+					((JPanel)(panel.getComponent(5))).add(Box.createVerticalStrut(9));
+					
+					((JPanel)(panel.getComponent(6))).add(new JComboBox());
+					((JPanel)(panel.getComponent(6))).add(Box.createVerticalStrut(5));
+				
+				}
+				
+				
+				switch (type) {
+				case 1 :
+					addComponent((GridBagLayout)formFrame.getLayout(),layoutConstraints,panel,1,6,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+					break;
+				
+				case 2 :
+					addComponent((GridBagLayout)formFrame.getLayout(),layoutConstraints,panel,1,7,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+					break;
+				
+				case 3 :
+					addComponent((GridBagLayout)formFrame.getLayout(),layoutConstraints,panel,1,8,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+					break;		
+				}
+				
+				formFrame.getContentPane().add(panel);
+				formFrame.pack();
+				
+			}
+			
+			if (nbGroupsChoose < nbGroupsVisible) {
+			
+				if (nbGroupsChoose == 0) {
+					//formFrame.getContentPane().remove(panel);
+					initTypeCoursePanel(panel, type);
+				}
+ 				
+				else {
+					int nbInf = nbGroupsVisible - nbGroupsChoose;
+					int position = nbGroupsVisible*2;
+    			
+					for(int i=1;i<=nbInf;i++) {
+				
+						((JPanel)(panel.getComponent(3))).remove(position-i);
+						((JPanel)(panel.getComponent(3))).remove(position-(i+1));
+						
+						((JPanel)(panel.getComponent(4))).remove(position-i);
+						((JPanel)(panel.getComponent(4))).remove(position-(i+1));
+						
+						((JPanel)(panel.getComponent(5))).remove(position-i);
+						((JPanel)(panel.getComponent(5))).remove(position-(i+1));
+						
+						((JPanel)(panel.getComponent(6))).remove(position-i);
+						((JPanel)(panel.getComponent(6))).remove(position-(i+1));
+					
+						position-=1;
+					}
+				}
+			
+				switch (type) {
+				case 1 :
+					addComponent((GridBagLayout)formFrame.getLayout(),layoutConstraints,panel,1,6,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+					break;
+				
+				case 2 :
+					addComponent((GridBagLayout)formFrame.getLayout(),layoutConstraints,panel,1,7,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+					break;
+				
+				case 3 :
+					addComponent((GridBagLayout)formFrame.getLayout(),layoutConstraints,panel,1,8,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+					break;		
+				}
+				
+				formFrame.getContentPane().add(panel);
+				formFrame.pack();
+			}
+		}
+		
+		
+		/*private void initTypeCoursePanel(JPanel panel, int type) {
+		    
+		    	GridBagLayout layout = new GridBagLayout();
+		        GridBagConstraints layoutConstraints = new GridBagConstraints();
+		    	panel.setLayout(layout);
+		    	
+		    	JLabel typeCourseLabel = new JLabel();
+		    	
+		    	JLabel nbGroupsLabel;
+		    	nbGroupsLabel = new JLabel("Nombre de groupes :");
+		    	
+		    	JLabel nameGroupLabel = new JLabel("Groupe1 :");
+		    	
+		    	JLabel teacherGroupsLabel;
+		    	teacherGroupsLabel = new JLabel("Enseignant :");
+		    	
+		    	JComboBox nbGroupsJcB = new JComboBox();
+		    	initNumberJcb(nbGroupsJcB, 1, 10);
+		    	
+		    	JComboBox nameGroupJcb = new JComboBox();
+		    	JComboBox teacherGroupsJcB = new JComboBox();
+		    	
+		    	JPanel nameGroupsPanel = new JPanel();
+		    	JPanel chooseNameGroupsPanel = new JPanel();
+		    	JPanel teacherGroupsPanel = new JPanel();
+		    	JPanel chooseTeacherGroupsPanel = new JPanel();
+		    	
+		    	switch(type) {
+		    	
+		    	case 1:  typeCourseLabel.setText("Cours magistraux :"); break;
+		    		
+		        case 2:  typeCourseLabel.setText("Travaux dirigés :"); break;
+		        	
+		        case 3:  typeCourseLabel.setText("Travaux pratiques :"); break;
+		    	}
+		    	
+		    	addComponent(layout,layoutConstraints,typeCourseLabel,1,1,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+		    	panel.add(typeCourseLabel);
+		    	
+		    
+		    	addComponent(layout,layoutConstraints,nbGroupsLabel,1,2,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+		    	panel.add(nbGroupsLabel);
+		    	
+		    	addComponent(layout,layoutConstraints,nbGroupsJcB,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
+		    	panel.add(nbGroupsJcB);
+		    	
+		    
+		    	nameGroupsPanel.setLayout(new BoxLayout(nameGroupsPanel, BoxLayout.Y_AXIS));
+		    	nameGroupsPanel.add(nameGroupLabel);
+		    	nameGroupsPanel.add(Box.createVerticalStrut(5));
+		    	addComponent(layout,layoutConstraints,nameGroupsPanel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
+		    	panel.add(nameGroupsPanel);
+		    	
+		    	chooseNameGroupsPanel.setLayout(new BoxLayout(chooseNameGroupsPanel, BoxLayout.Y_AXIS));
+		    	chooseNameGroupsPanel.add(nameGroupJcb);
+		    	chooseNameGroupsPanel.add(Box.createVerticalStrut(5));
+		    	addComponent(layout,layoutConstraints,chooseNameGroupsPanel,2,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+		    	panel.add(chooseNameGroupsPanel);
+		    	
+		    	teacherGroupsPanel.setLayout(new BoxLayout(teacherGroupsPanel, BoxLayout.Y_AXIS));
+		    	teacherGroupsPanel.add(teacherGroupsLabel);
+		    	teacherGroupsPanel.add(Box.createVerticalStrut(5));
+		    	addComponent(layout,layoutConstraints,teacherGroupsPanel,6,3,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+		    	panel.add(teacherGroupsPanel);
+		    	
+		   
+		    	chooseTeacherGroupsPanel.setLayout(new BoxLayout(chooseTeacherGroupsPanel, BoxLayout.Y_AXIS));
+		    	chooseTeacherGroupsPanel.add(teacherGroupsJcB);
+		    	chooseTeacherGroupsPanel.add(Box.createVerticalStrut(5));
+		    	addComponent(layout,layoutConstraints,chooseTeacherGroupsPanel,8,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+		    	panel.add(chooseTeacherGroupsPanel);
+		    }*/
+
+    }
+    
+    
     public AddModifyFieldWindow() {
     	
     	AMFWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
@@ -63,7 +266,7 @@ public class AddModifyFieldWindow {
     }
     
     
-    public void initAddModifyFieldWindow() {
+    private void initAddModifyFieldWindow() {
     	
     	
     	
@@ -99,12 +302,31 @@ public class AddModifyFieldWindow {
     	addComponent(AMFWLayout,layoutConstraints,hourCourseFieldLabel,1,4,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMFWFrame.getContentPane().add(hourCourseFieldLabel);
     	
+    	
+    	
+    	initTypeCoursePanel(courseMPanel, 1);
+    	//addComponent(AMFWLayout,layoutConstraints,courseMPanel,1,6,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+    	//AMFWFrame.getContentPane().add(courseMPanel);
+    	
+    	initTypeCoursePanel(tdPanel, 2);
+    	//addComponent(AMFWLayout,layoutConstraints,tdPanel,1,7,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+    	//AMFWFrame.getContentPane().add(tdPanel);
+    	
+    	initTypeCoursePanel(tpPanel, 3);
+    	//addComponent(AMFWLayout,layoutConstraints,tpPanel,1,8,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+    	//AMFWFrame.getContentPane().add(tpPanel);
+    	
+    	
+    	
+    	
+    	
     	magistrauxLabel = new JLabel("Magistraux");
     	addComponent(AMFWLayout,layoutConstraints,magistrauxLabel,2,5,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMFWFrame.getContentPane().add(magistrauxLabel);
     	
     	magistrauxJcb = new JComboBox();
     	initNumberJcb(magistrauxJcb, 0, 300);
+    	magistrauxJcb.addItemListener(new NbHourJcbListener(AMFWFrame, layoutConstraints, courseMPanel, 1));
     	addComponent(AMFWLayout,layoutConstraints,magistrauxJcb,3,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMFWFrame.getContentPane().add(magistrauxJcb);
     	
@@ -114,6 +336,7 @@ public class AddModifyFieldWindow {
     	
     	tdJcb = new JComboBox();
     	initNumberJcb(tdJcb, 0, 300);
+    	tdJcb.addItemListener(new NbHourJcbListener(AMFWFrame, layoutConstraints, tdPanel, 2));
     	addComponent(AMFWLayout,layoutConstraints,tdJcb,6,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMFWFrame.getContentPane().add(tdJcb);
     	
@@ -123,20 +346,12 @@ public class AddModifyFieldWindow {
     	
     	tpJcb = new JComboBox();
     	initNumberJcb(tpJcb, 0, 300);
+    	tpJcb.addItemListener(new NbHourJcbListener(AMFWFrame, layoutConstraints, tpPanel, 3));
     	addComponent(AMFWLayout,layoutConstraints,tpJcb,9,5,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMFWFrame.getContentPane().add(tpJcb);
     	
     	
     	
-    	
-    	/*addComponent(AMFWLayout,layoutConstraints,courseMPanel,1,6,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMFWFrame.getContentPane().add(courseMPanel);
-    	
-    	addComponent(AMFWLayout,layoutConstraints,tdPanel,1,7,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMFWFrame.getContentPane().add(tdPanel);
-    	
-    	addComponent(AMFWLayout,layoutConstraints,tpPanel,1,8,9,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMFWFrame.getContentPane().add(tpPanel);*/
     	
     	
     	
@@ -163,7 +378,81 @@ public class AddModifyFieldWindow {
     }
     
     
-    private void initNumberJcb(JComboBox jcb, int start, int end) {
+    private static void initTypeCoursePanel(JPanel panel, int type) {
+    
+    	GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints layoutConstraints = new GridBagConstraints();
+    	panel.setLayout(layout);
+    	
+    	JLabel typeCourseLabel = new JLabel();
+    	
+    	JLabel nbGroupsLabel;
+    	nbGroupsLabel = new JLabel("Nombre de groupes :");
+    	
+    	JLabel nameGroupLabel = new JLabel("Groupe1 :");
+    	
+    	JLabel teacherGroupsLabel;
+    	teacherGroupsLabel = new JLabel("Enseignant :");
+    	
+    	JComboBox nbGroupsJcB = new JComboBox();
+    	initNumberJcb(nbGroupsJcB, 1, 10);
+    	
+    	JComboBox nameGroupJcb = new JComboBox();
+    	JComboBox teacherGroupsJcB = new JComboBox();
+    	
+    	JPanel nameGroupsPanel = new JPanel();
+    	JPanel chooseNameGroupsPanel = new JPanel();
+    	JPanel teacherGroupsPanel = new JPanel();
+    	JPanel chooseTeacherGroupsPanel = new JPanel();
+    	
+    	switch(type) {
+    	
+    	case 1:  typeCourseLabel.setText("Cours magistraux :"); break;
+    		
+        case 2:  typeCourseLabel.setText("Travaux dirigés :"); break;
+        	
+        case 3:  typeCourseLabel.setText("Travaux pratiques :"); break;
+    	}
+    	
+    	addComponent(layout,layoutConstraints,typeCourseLabel,1,1,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	panel.add(typeCourseLabel);
+    	
+    
+    	addComponent(layout,layoutConstraints,nbGroupsLabel,1,2,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	panel.add(nbGroupsLabel);
+    	
+    	addComponent(layout,layoutConstraints,nbGroupsJcB,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	panel.add(nbGroupsJcB);
+    	
+    
+    	nameGroupsPanel.setLayout(new BoxLayout(nameGroupsPanel, BoxLayout.Y_AXIS));
+    	nameGroupsPanel.add(nameGroupLabel);
+    	nameGroupsPanel.add(Box.createVerticalStrut(5));
+    	addComponent(layout,layoutConstraints,nameGroupsPanel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(15,10,15,10));
+    	panel.add(nameGroupsPanel);
+    	
+    	chooseNameGroupsPanel.setLayout(new BoxLayout(chooseNameGroupsPanel, BoxLayout.Y_AXIS));
+    	chooseNameGroupsPanel.add(nameGroupJcb);
+    	chooseNameGroupsPanel.add(Box.createVerticalStrut(5));
+    	addComponent(layout,layoutConstraints,chooseNameGroupsPanel,2,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+    	panel.add(chooseNameGroupsPanel);
+    	
+    	teacherGroupsPanel.setLayout(new BoxLayout(teacherGroupsPanel, BoxLayout.Y_AXIS));
+    	teacherGroupsPanel.add(teacherGroupsLabel);
+    	teacherGroupsPanel.add(Box.createVerticalStrut(5));
+    	addComponent(layout,layoutConstraints,teacherGroupsPanel,6,3,2,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+    	panel.add(teacherGroupsPanel);
+    	
+   
+    	chooseTeacherGroupsPanel.setLayout(new BoxLayout(chooseTeacherGroupsPanel, BoxLayout.Y_AXIS));
+    	chooseTeacherGroupsPanel.add(teacherGroupsJcB);
+    	chooseTeacherGroupsPanel.add(Box.createVerticalStrut(5));
+    	addComponent(layout,layoutConstraints,chooseTeacherGroupsPanel,8,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(15,10,15,10));
+    	panel.add(chooseTeacherGroupsPanel);
+    }
+    
+    
+    private static void initNumberJcb(JComboBox jcb, int start, int end) {
 
     	for(int i=start;i<=end;i++) {
     		jcb.addItem(""+i);
@@ -182,7 +471,7 @@ public class AddModifyFieldWindow {
     }
 
     
-    public void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
+    private static void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
 	     
 	constraints. gridx= gridx;
 	constraints. gridy = gridy;
