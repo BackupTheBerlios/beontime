@@ -1,12 +1,11 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.model;
+
+import java.io.Serializable;
 
 /**
  * @author BeOnTime
  */
-public class Database {
+public class Database implements Serializable {
 	public static final int LDAP = 0;
 	public static final int SQL  = 1;
 	
