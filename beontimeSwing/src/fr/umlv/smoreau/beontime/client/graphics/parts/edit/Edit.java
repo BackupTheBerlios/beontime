@@ -14,13 +14,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.ModifySubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.ColorBoT;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -58,15 +58,13 @@ public class Edit extends JTree {
 		super.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				// Popup Menus
-				if (e.getButton() == MouseEvent.BUTTON3) {
+				if (e.getButton() == MouseEvent.BUTTON3 && model.getTimetable() != null) {
 					int row = tree.getRowForLocation(e.getX(), e.getY());
 					tree.setSelectionRow(row);
-					subjectSelected = null;
 					if (row != -1) {
 						Object object = tree.getPathForRow(row).getLastPathComponent();
 						if (object instanceof Subject) {
 						    popupSubject.show(e.getComponent(), e.getX(), e.getY());
-						    subjectSelected = (Subject) object;
 						} else if (object instanceof String) {
 						    popupTypes.show(e.getComponent(), e.getX(), e.getY());
 						}
@@ -85,6 +83,29 @@ public class Edit extends JTree {
 			}
 		});
         
+		super.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                TreePath treePath = e.getPath();
+                Object selected = treePath.getLastPathComponent();
+                if (selected instanceof Timetable) {
+                    ActionsList.getAction("ModifySubject").setEnabled(false);
+                    ActionsList.getAction("RemoveSubject").setEnabled(false);
+                    ActionsList.getAction("AddCourse").setEnabled(false);
+                    subjectSelected = null;
+                } else if (selected instanceof Subject) {
+                    ActionsList.getAction("ModifySubject").setEnabled(true);
+                    ActionsList.getAction("RemoveSubject").setEnabled(true);
+                    ActionsList.getAction("AddCourse").setEnabled(true);
+                    subjectSelected = (Subject) selected;
+                } else if (selected instanceof String) {
+                    ActionsList.getAction("ModifySubject").setEnabled(true);
+                    ActionsList.getAction("RemoveSubject").setEnabled(true);
+                    ActionsList.getAction("AddCourse").setEnabled(true);
+                    subjectSelected = (Subject) treePath.getPathComponent(treePath.getPathCount()-2);
+                }
+            }
+		});
+
         JScrollPane scrollPane = new JScrollPane(this);
 
 		super.setMinimumSize(new Dimension(100, 50));
@@ -148,17 +169,17 @@ public class Edit extends JTree {
 	        super();
 
 	        if (object == null) {
-	            JMenuItem menuItem = new JMenuItem(new AddSubject(false, mainFrame));
+	            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddSubject"));
 				add(menuItem);
 	        } else if (object instanceof Subject) {
-	            JMenuItem menuItem = new JMenuItem(new AddCourse(false, mainFrame));
+	            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddCourse"));
 				add(menuItem);
-				menuItem = new JMenuItem(new ModifySubject(false, mainFrame));
+				menuItem = new JMenuItem(ActionsList.getAction("ModifySubject"));
 				add(menuItem);
-				menuItem = new JMenuItem(new RemoveSubject(false, mainFrame));
+				menuItem = new JMenuItem(ActionsList.getAction("RemoveSubject"));
 				add(menuItem);
 	        } else if (object instanceof String) {
-	            JMenuItem menuItem = new JMenuItem(new AddCourse(false, mainFrame));
+	            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddCourse"));
 				add(menuItem);
 	        }
 	    }

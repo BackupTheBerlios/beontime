@@ -27,7 +27,7 @@ public class EditAdapter implements TreeModel {
 		this.tree = t;
 		
 		//TODO pour tester en local
-/*		Timetable timetable = new Timetable();
+		/*Timetable timetable = new Timetable();
 		Formation formation = new Formation();
 		formation.setHeading("DESS CRI");
 		formation.setIdFormation(new Long(1));
