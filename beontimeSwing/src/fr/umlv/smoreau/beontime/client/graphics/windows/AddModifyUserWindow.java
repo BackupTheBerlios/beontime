@@ -351,10 +351,12 @@ public class AddModifyUserWindow {
 		for(int i = 0; i < components.length; ++i) {
 		    if (components[i] instanceof JComboBox) {
 		        int index = ((JComboBox)components[i]).getSelectedIndex();
-		        Formation formation = new Formation();
-		        formation.setHeading(formationsName[index]);
-		        formation.setIdFormation(formationsId[index]);
-		        list.add(formation);
+		        if (index > 0) {
+			        Formation formation = new Formation();
+			        formation.setHeading(formationsName[index]);
+			        formation.setIdFormation(formationsId[index]);
+			        list.add(formation);
+		        }
 		    }
 		}
 		
