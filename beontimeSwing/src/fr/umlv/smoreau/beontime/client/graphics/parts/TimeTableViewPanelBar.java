@@ -168,6 +168,8 @@ public class TimeTableViewPanelBar extends JPanel {
 		public void itemStateChanged(ItemEvent event) {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				try {
+				    jcbGroupEDT.removeAllItems();
+				    jcbGroupEDT.setEnabled(false);
 				    if (mainFrame.getModel().getTimetable() != null) {
 					    mainFrame.getModel().setTimetable(null);
 					    mainFrame.getModel().fireCloseTimetable(false);
@@ -195,8 +197,10 @@ public class TimeTableViewPanelBar extends JPanel {
 							Collection groups = DaoManager.getGroupDao().getGroups(groupFilter);
 							jcbGroupEDT.removeAll();
 							jcbGroupEDT.addItem("");
-							for (Iterator i = groups.iterator(); i.hasNext(); )
-							    jcbGroupEDT.addItem(((Group) i.next()).getHeading());
+							for (Iterator i = groups.iterator(); i.hasNext(); ) {
+							    Group group = (Group) i.next();
+							    jcbGroupEDT.addItem(new Item(group.getHeading(), group.getIdGroup()));
+							}
 							jcbGroupEDT.setEnabled(true);
 					    }
 					    
@@ -218,8 +222,19 @@ public class TimeTableViewPanelBar extends JPanel {
 		public void itemStateChanged(ItemEvent event) {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				try {
+				    if (mainFrame.getModel().getTimetable() != null) {
+					    mainFrame.getModel().setTimetable(null);
+					    mainFrame.getModel().fireCloseTimetable(false);
+				    }
 					if (!TYPE_VIDE.equals(event.getItem())) {
-					    //TODO récupérer l'emploi du temps du groupe (sans doute modifier le noyau)
+					    Long id = ((Item)event.getItem()).getId();
+					    TimetableFilter filter = new TimetableFilter();
+					    filter.setGroup(new Group(id));
+					    filter.setFormation(new Formation(((Item)jcbSubjectEDT.getSelectedItem()).getId()));
+					    filter.setBeginPeriod(mainFrame.getBeginPeriod());
+						filter.setEndPeriod(mainFrame.getEndPeriod());
+						Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+						mainFrame.getModel().fireShowTimetable(timetable);
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);

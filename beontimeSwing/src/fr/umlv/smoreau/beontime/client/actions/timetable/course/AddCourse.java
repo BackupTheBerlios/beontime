@@ -50,6 +50,8 @@ public class AddCourse extends Action {
     	window.setIdFormation(mainFrame.getSubjectSelected().getIdFormation());
     	window.setTypeCourse(mainFrame.getCourseTypeSelected());
     	window.setIdTeacher(mainFrame.getSubjectSelected().getIdTeacher());
+    	if (mainFrame.getModel().getTimetable().getGroup() != null)
+    	    window.setIdGroup(mainFrame.getModel().getTimetable().getGroup().getIdGroup());
     	window.show();
     	
     	if (window.isOk()) {
@@ -104,8 +106,8 @@ public class AddCourse extends Action {
 	        	    course.setEndDate(endDate);
 	                
 	                course = DaoManager.getTimetableDao().addCourse(course);
-	                course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
-	                course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
+	                course.getBeginDate().set(Calendar.HOUR_OF_DAY, window.getStartHour());
+	                course.getEndDate().set(Calendar.HOUR_OF_DAY, window.getEndHour());
 	                mainFrame.getModel().getTimetable().addCourse(course);
 	                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
 	                

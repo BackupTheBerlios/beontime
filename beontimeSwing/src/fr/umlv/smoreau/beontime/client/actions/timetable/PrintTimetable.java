@@ -72,7 +72,10 @@ public class PrintTimetable extends Action {
     	
     	Timetable timetable = mainFrame.getModel().getTimetable();
     	StringBuffer header = new StringBuffer();
-    	if (timetable.getFormation() != null) {
+    	if (timetable.getGroup() != null) {
+    	    header.append("Groupe: ");
+    	    header.append(timetable.getGroup().getHeading());
+    	} else if (timetable.getFormation() != null) {
     	    header.append("Formation: ");
     	    header.append(timetable.getFormation().getHeading());
     	    header.append("\r\n");

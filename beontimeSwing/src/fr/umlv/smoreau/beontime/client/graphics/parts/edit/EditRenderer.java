@@ -35,7 +35,9 @@ public class EditRenderer extends DefaultTreeCellRenderer {
         if (value instanceof Timetable) {
             font = new Font("Arial", Font.BOLD, 15);
             Timetable timetable = (Timetable) value;
-            if (timetable.getFormation() != null)
+            if (timetable.getGroup() != null)
+                setText(timetable.getFormation().getHeading() + " (" + timetable.getGroup().getHeading() + ")");
+            else if (timetable.getFormation() != null)
                 setText(timetable.getFormation().getHeading());
             else if (timetable.getTeacher() != null)
                 setText(timetable.getTeacher().getName() + " " + timetable.getTeacher().getFirstName());

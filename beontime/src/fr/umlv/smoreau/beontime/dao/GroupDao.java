@@ -16,15 +16,17 @@ import fr.umlv.smoreau.beontime.model.Group;
  * @author BeOnTime team
  */
 public interface GroupDao extends Remote {
+    public static final String JOIN_STUDENTS = "Students";
 
 	public Collection getGroups(GroupFilter filter) throws RemoteException, HibernateException;
 	
 	public Collection getGroups() throws RemoteException, HibernateException;
+	
+	public Group getGroup(Group group, String[] join) throws RemoteException, HibernateException;
 	
 	public Group addGroup(Group group) throws RemoteException, HibernateException;
 	
 	public void modifyGroup(Group group) throws RemoteException, HibernateException;
 	
 	public void removeGroup(Group group) throws RemoteException, HibernateException;
-	
 }

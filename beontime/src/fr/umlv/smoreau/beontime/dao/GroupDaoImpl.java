@@ -75,6 +75,18 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 		return getGroups(null);
 	}
 	
+	public Group getGroup(Group group, String[] join) throws RemoteException, HibernateException {
+	    Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            group = (Group) get(TABLE, new GroupFilter(group), session).toArray()[0];
+            join(group, join);
+        } finally {
+            Hibernate.closeSession();
+        }
+        return group;
+	}
+	
 	public Group addGroup(Group group) throws RemoteException, HibernateException {
 	    Session session = null;
         try {

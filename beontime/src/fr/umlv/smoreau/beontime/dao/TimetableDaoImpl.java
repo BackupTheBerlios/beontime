@@ -13,14 +13,12 @@ import net.sf.hibernate.Session;
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.CourseFilter;
-import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
 import fr.umlv.smoreau.beontime.filter._TakePartGroupSubjectCourseFilter;
 import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.filter._IsDirectedByCourseTeacherFilter;
-import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
@@ -98,14 +96,41 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             
             // toutes les matières
             Collection allSubjects = get(TABLE_SUBJECT, new SubjectFilter(), Hibernate.getCurrentSession());
-
-            if (filter.getFormation() != null) {
+            
+            if (filter.getGroup() != null) {
+                // caractéristiques du groupe
+                GroupDao groupDao = GroupDaoImpl.getInstance();
+                timetable.setGroup(groupDao.getGroup(filter.getGroup(), null));
+                
+                // cours du groupe
+	            _TakePartGroupSubjectCourseFilter takePartGroupSubjectCourseFilter = new _TakePartGroupSubjectCourseFilter();
+	            takePartGroupSubjectCourseFilter.setIdGroup(filter.getGroup().getIdGroup());
+	            Collection list = get(TABLE_ASSOCIATION, takePartGroupSubjectCourseFilter, Hibernate.getCurrentSession());
+	            timetable.setCourses(new ArrayList());
+	            for (Iterator i = list.iterator(); i.hasNext(); ) {
+	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) i.next();
+	                Course course = new Course(takePart.getIdCourse());
+	                course = getCourse(course, null);
+	                if (course.getBeginDate().getTimeInMillis() >= filter.getBeginPeriod().getTimeInMillis() && course.getEndDate().getTimeInMillis() <= filter.getEndPeriod().getTimeInMillis())
+	                    timetable.addCourse(course);
+	            }
+	            
+	            // caractéristiques de la formation du groupe
+	            FormationDao formationDao = FormationDaoImpl.getInstance();
+	            timetable.setFormation(formationDao.getFormation(filter.getFormation(), null));
+	            
+	            // matières de la formation
+	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
+	                Subject subject = (Subject) i.next();
+	                if (subject.getIdFormation().equals(timetable.getFormation().getIdFormation()))
+	                    timetable.addSubject(subject);
+	            }
+            }
+            
+            else if (filter.getFormation() != null) {
                 // caractéristiques de la formation
 	            FormationDao formationDao = FormationDaoImpl.getInstance();
-	            Collection c = formationDao.getFormations(new FormationFilter(filter.getFormation()));
-	            if (c == null || c.size() == 0)
-	                return null;
-	            timetable.setFormation((Formation) c.toArray()[0]);
+	            timetable.setFormation(formationDao.getFormation(filter.getFormation(), null));
 
 	            // matières de la formation
 	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
@@ -121,7 +146,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	            timetable.setGroups(groupDao.getGroups(new GroupFilter(group)));
 	            
 	            //TODO à voir plus précisemment
-	            timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
+	            //timetable.setGroup((Group) timetable.getGroups().toArray()[0]);
 	            
 	            // cours de la formation
 	            Course course = new Course();
@@ -135,7 +160,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 	            userFilter.setIdUser(timetable.getFormation().getIdTeacher());
 	            userFilter.setUserType(UserDao.TYPE_TEACHER);
 	            UserDao userDao = UserDaoImpl.getInstance();
-	            c = userDao.getUsers(userFilter);
+	            Collection c = userDao.getUsers(userFilter);
 	            timetable.setPersonInCharge((User) c.toArray()[0]);
             }
             
