@@ -12,7 +12,7 @@ import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
-import fr.umlv.smoreau.beontime.model.user.User;
+import fr.umlv.smoreau.beontime.model.user.Person;
 
 /**
  * @author BeOnTime
@@ -56,7 +56,7 @@ public class MainFrame {
 		return null;
 	}
 	
-	public User getUserSelected() {
+	public Person getUserSelected() {
 		//TODO à implémenter
 		return null;
 	}

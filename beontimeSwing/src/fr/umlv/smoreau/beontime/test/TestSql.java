@@ -52,7 +52,7 @@ public class TestSql {
 	}
 	public static void main(String[] args) {
 		TestSql tSql=new TestSql();
-		Connection connexion=tSql.getConnection("jdbc:postgresql://saadouni.dyndns.org:5432/bot","bot","bot");
+		Connection connexion=tSql.getConnection("jdbc:postgresql://saadouni.dyndns.org:5432/BoT_db","bot","bot");
 		System.out.println(tSql.getIdentification(connexion,1));
 		System.out.println(tSql.getIdentification(connexion,2));
 		System.out.println(tSql.getIdentification(connexion,3));

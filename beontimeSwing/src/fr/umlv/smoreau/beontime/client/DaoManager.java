@@ -3,13 +3,12 @@
  */
 package fr.umlv.smoreau.beontime.client;
 
-import fr.umlv.smoreau.beontime.dao.*;
 
 /**
  * @author BeOnTime
  */
 public class DaoManager {
-	private static final AvailabilityDao availabilityDao;
+/*	private static final AvailabilityDao availabilityDao;
 	private static final DatabaseDao databaseDao;
 	private static final ElementDao elementDao;
 	private static final FormationDao formationDao;
@@ -26,48 +25,48 @@ public class DaoManager {
 		timetableDao = null;
 		userDao = null;
 	}
-
+*/
 	
     /**
      * @return Renvoie availabilityDao.
      */
-    public static AvailabilityDao getAvailabilityDao() {
+/*    public static AvailabilityDao getAvailabilityDao() {
         return availabilityDao;
-    }
+    }*/
     /**
      * @return Renvoie databaseDao.
      */
-    public static DatabaseDao getDatabaseDao() {
+/*    public static DatabaseDao getDatabaseDao() {
         return databaseDao;
-    }
+    }*/
     /**
      * @return Renvoie elementDao.
      */
-    public static ElementDao getElementDao() {
+/*    public static ElementDao getElementDao() {
         return elementDao;
-    }
+    }*/
     /**
      * @return Renvoie formationDao.
      */
-    public static FormationDao getFormationDao() {
+/*    public static FormationDao getFormationDao() {
         return formationDao;
-    }
+    }*/
     /**
      * @return Renvoie groupDao.
      */
-    public static GroupDao getGroupDao() {
+/*    public static GroupDao getGroupDao() {
         return groupDao;
-    }
+    }*/
     /**
      * @return Renvoie timetableDao.
      */
-    public static TimetableDao getTimetableDao() {
+/*    public static TimetableDao getTimetableDao() {
         return timetableDao;
-    }
+    }*/
     /**
      * @return Renvoie userDao.
      */
-    public static UserDao getUserDao() {
+/*    public static UserDao getUserDao() {
         return userDao;
-    }
+    }*/
 }

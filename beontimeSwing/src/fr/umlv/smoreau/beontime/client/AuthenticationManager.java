@@ -3,13 +3,13 @@
  */
 package fr.umlv.smoreau.beontime.client;
 
-import fr.umlv.smoreau.beontime.model.user.User;
+import fr.umlv.smoreau.beontime.model.user.Person;
 
 /**
  * @author BeOnTime
  */
 public class AuthenticationManager {
-	private User user;
+	private Person user;
 	
 	public AuthenticationManager() {
 		this.user = null;
