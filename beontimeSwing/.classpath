@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/bot.jar"/>
 	<classpathentry kind="lib" path="lib/pg72jdbc2.jar"/>
+	<classpathentry kind="lib" path="lib/jcalendar.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
