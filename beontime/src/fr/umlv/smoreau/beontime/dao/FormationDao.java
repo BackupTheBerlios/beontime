@@ -16,6 +16,8 @@ import fr.umlv.smoreau.beontime.model.Formation;
  * @author BeOnTime team
  */
 public interface FormationDao extends Remote {
+    public Collection getNotAllottedFormations() throws RemoteException, HibernateException;
+
 	public Collection getFormations(FormationFilter filter) throws RemoteException, HibernateException;
 	
 	public Collection getFormations() throws RemoteException, HibernateException;

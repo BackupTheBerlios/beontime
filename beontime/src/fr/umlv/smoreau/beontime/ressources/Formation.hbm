@@ -31,7 +31,7 @@
 			column="id_enseignant"
 			name="IdTeacher"
 			type="java.lang.Long"
-			not-null="true"
+			not-null="false"
 		 />
 
 		<set inverse="true" name="Groups">

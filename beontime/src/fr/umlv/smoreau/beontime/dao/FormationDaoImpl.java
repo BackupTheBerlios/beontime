@@ -4,6 +4,8 @@ package fr.umlv.smoreau.beontime.dao;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.naming.NamingException;
 
@@ -47,17 +49,8 @@ public class FormationDaoImpl extends Dao implements FormationDao {
         return INSTANCE;
     }
 
-
-	public Collection getFormations(FormationFilter filter) throws RemoteException, HibernateException {
-	    Collection result = new ArrayList();
-
-	    Session session = null;
-        try {
-            session = Hibernate.getCurrentSession();
-            result.addAll(get(TABLE, filter, session));
-        } finally {
-            Hibernate.closeSession();
-        }
+    public Collection getNotAllottedFormations() throws RemoteException, HibernateException {
+        Collection result = new HashSet();
         
         try {
             result.addAll(ldapManager.getFormations());
@@ -65,9 +58,47 @@ public class FormationDaoImpl extends Dao implements FormationDao {
             System.err.println("LDAP est inaccessible : " + e.getMessage());
             //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
             Formation formation = new Formation(new Long(66));
-            formation.setHeading("dslg01");
+            formation.setHeading("dslg00");
             result.add(formation);
             //finTODO
+        }
+        
+        Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            Collection tmp = get(TABLE, null, session);
+            for (Iterator i = tmp.iterator(); i.hasNext(); ) {
+                Formation formation = (Formation) i.next();
+                if (formation.getIdSecretary() != null)
+                    result.remove(formation);
+            }
+        } finally {
+            Hibernate.closeSession();
+        }
+        
+        return result;
+    }
+
+	public Collection getFormations(FormationFilter filter) throws RemoteException, HibernateException {
+	    Collection result = new ArrayList();
+        
+        /*try {
+            result.addAll(ldapManager.getFormations());
+        } catch (NamingException e) {
+            System.err.println("LDAP est inaccessible : " + e.getMessage());
+            //TODO à supprimer plus tard, mais permet de tester l'application en dehors de la fac
+            Formation formation = new Formation(new Long(66));
+            formation.setHeading("dslg00");
+            result.add(formation);
+            //finTODO
+        }*/
+        
+        Session session = null;
+        try {
+            session = Hibernate.getCurrentSession();
+            result.addAll(get(TABLE, filter, session));
+        } finally {
+            Hibernate.closeSession();
         }
 
 		return result;

@@ -6,6 +6,8 @@ import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.naming.NamingException;
 
@@ -16,6 +18,7 @@ import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.LdapManager;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
+import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.user.*;
 
 /**
@@ -149,6 +152,12 @@ public class UserDaoImpl extends Dao implements UserDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             add(user, session);
+            Set formations = user.getFormationsInCharge();
+            for (Iterator i = formations.iterator(); i.hasNext(); ) {
+                Formation formation = (Formation) i.next();
+                formation.setIdSecretary(user);
+                add(formation, session);
+            }
             TransactionManager.commit();
         } catch (HibernateException e) {
             TransactionManager.rollback();
