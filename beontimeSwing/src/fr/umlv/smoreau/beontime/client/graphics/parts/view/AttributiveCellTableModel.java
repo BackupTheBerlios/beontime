@@ -31,6 +31,8 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	  	colNb=nbcolumn;
 	  	this.data=data;
 	  	cellAtt = new DefaultCellAttribute(data.length,nbcolumn);
+	  	
+	  	model.addBoTListener(new ViewListener());
 	  }
 
 	public int getRowCount() {
@@ -74,7 +76,7 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    initDataTab();
 		    for (Iterator i = courses.iterator(); i.hasNext(); ) {
 		        Course course = (Course) i.next();
-		        
+
 		        //TODO Mohamed: afficher le cours
 		    }
 		}
