@@ -54,6 +54,7 @@ public class MainFrame {
 	private Room roomSelected;
 	private Material materialSelected;
 	private Group groupSelected;
+	private Course courseSelected;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
@@ -200,7 +201,18 @@ public class MainFrame {
 	}
 
 	public Course getCourseSelected() {
-		return view.getCourseSelected();
+		return courseSelected;
+	}
+	
+	public void setCourseSelected(Course course) {
+	    boolean enable = (course != null);
+
+	    ActionsList.getAction("ModifyCourse").setEnabled(enable);
+		ActionsList.getAction("RemoveCourse").setEnabled(enable);
+		ActionsList.getAction("CutCourse").setEnabled(enable);
+		ActionsList.getAction("CopyCourse").setEnabled(enable);
+
+	    this.courseSelected = course;
 	}
 	
 	public Subject getSubjectSelected() {

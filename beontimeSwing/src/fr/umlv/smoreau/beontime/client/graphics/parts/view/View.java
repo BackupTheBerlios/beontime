@@ -59,20 +59,8 @@ public class View {
 				Point p=new Point(x,y);
 				int row=table.rowAtPoint(p);
 				int column=table.columnAtPoint(p);
-				if (((Course) table.getValueAt(row,column))!=null){
-					ActionsList.getAction("AddCourse").setEnabled(false);
-					ActionsList.getAction("ModifyCourse").setEnabled(true);
-					ActionsList.getAction("RemoveCourse").setEnabled(true);
-					ActionsList.getAction("CutCourse").setEnabled(true);
-					ActionsList.getAction("CopyCourse").setEnabled(true);
-				}
-				else{
-					ActionsList.getAction("ModifyCourse").setEnabled(false);
-					ActionsList.getAction("RemoveCourse").setEnabled(false);
-					ActionsList.getAction("CutCourse").setEnabled(false);
-					ActionsList.getAction("CopyCourse").setEnabled(false);
-				}
-
+				Course course = (Course) table.getValueAt(row,column);
+				mainFrame.setCourseSelected(course);
 			}
 
 			public void mousePressed(MouseEvent e) {
