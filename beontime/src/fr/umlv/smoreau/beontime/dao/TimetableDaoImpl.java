@@ -53,15 +53,14 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
     private static final String TABLE_TYPE_COURSE = "CourseType";
     private static final String TABLE_ASSOCIATION = "TakePartGroupSubjectCourse";
     private static final String TABLE_ISDIRECTING = "IsDirectedByCourseTeacher";
-    
-    private String[] DEFAULT_TYPES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
+
 
     private TimetableDaoImpl() throws RemoteException, HibernateException {
         Collection types = getTypesCourse();
         if (types != null && types.size() == 0) {
-            for (int i = 0; i < DEFAULT_TYPES.length; ++i) {
+            for (int i = 0; i < TYPES_COURSES.length; ++i) {
                 CourseType type = new CourseType();
-                type.setNameCourseType(DEFAULT_TYPES[i]);
+                type.setNameCourseType(TYPES_COURSES[i]);
                 addTypeCourse(type);
             }
         }

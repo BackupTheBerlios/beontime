@@ -17,6 +17,7 @@ import fr.umlv.smoreau.beontime.model.timetable.*;
  * @author BeOnTime team
  */
 public interface TimetableDao extends Remote {
+    public static final String[] TYPES_COURSES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
 	
 	public Collection getCourses(CourseFilter filter) throws RemoteException, HibernateException;
 	
