@@ -1,6 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.edit;
+/* DESS CRI - BeOnTime - timetable project */
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JTree;
@@ -11,14 +11,17 @@ import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
-import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
- * @author BeOnTime
+ * An Adapter on the BotModel to manage the tree view (edit panel)
+ * @author BeOnTime team
  */
 public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
+	/** This class has to be serializable */
+	private static final long serialVersionUID = 1L;
+	
 	private BoTModel model;
 	private final EventListenerList list;
 	private JTree tree;
@@ -29,30 +32,6 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		this.list = new EventListenerList();
 		this.tree = t;
 		
-		// pour tester en local
-	/*	Timetable timetable = new Timetable();
-		Formation formation = new Formation();
-		formation.setHeading("DESS CRI");
-		formation.setIdFormation(new Long(1));
-		timetable.setFormation(formation);
-		
-		Subject subject = new Subject();
-		subject.setHeading("Matière1");
-		subject.setIdSubject(new Long(1));
-		Subject subject2 = new Subject();
-		subject2.setHeading("Matière2");
-		subject2.setIdSubject(new Long(2));
-		Subject subject3 = new Subject();
-		subject3.setHeading("Matière3");
-		subject3.setIdSubject(new Long(3));
-		ArrayList list = new ArrayList();
-		list.add(subject);
-		list.add(subject2);
-		list.add(subject3);
-		timetable.setSubjects(list);
-		
-		model.setTimetable(timetable); */
-
 		model.addBoTListener(new EditListener());
 	}
 
@@ -135,10 +114,9 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 	
 	private class EditListener extends DefaultBoTListener {
 		public void refreshAll(BoTEvent e) {
-		    Timetable timetable = e.getTimetable();
-		    model.setTimetable(timetable);
+		    model.setTimetable(e.getTimetable());
 		    
-		    //TODO rafraîchir l'arbre
+		    //TODO améliorer
 		/*    if (timetable.getFormation() == null)
 		    	System.err.println("pas de formation");
 		    else
@@ -151,16 +129,17 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		  //  tree.;
 		//    ((DefaultTreeModel) tree.getModel()).nodeStructureChanged(new DefaultMutableTreeNode(tree.getModel().getRoot()));
 		//    ((DefaultTreeModel) tree.getModel()).reload();
-		//    tree.treeDidChange();
+		 //   tree.treeDidChange();
 		    tree.updateUI();
-		    System.out.println("refeshall");
+		    tree.setVisible(true);
+	//	    System.out.println("refeshall");
 		}
 		
 		public void addSubject(BoTEvent e) {
-		    Subject subject = e.getSubject();
+	//	    Subject subject = e.getSubject();
 		    
-		    //TODO ajouter la matière ++
-		    System.out.println("addSubject");
+		    //TODO améliorer
+	//	    System.out.println("addSubject");
 		    
 		  /*  try {
 		    ((EditAdapter) tree.getModel()).nodesWereInserted(new DefaultMutableTreeNode(subject), new int[]{0});
@@ -186,33 +165,37 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		    		tme.getChildIndices(),
 		    		tme.getChildren());
 		*/
-		    Timetable tt = e.getTimetable();
+		/*    Timetable tt = e.getTimetable();
 		    EditAdapter ea = (EditAdapter) tree.getModel();
 		    ea.fireTreeNodesInserted(ea,
 		    		new Object[]{tree.getModel().getRoot(), subject}, 
 		    		new int[]{0, 1, 2}, 
 		    		new Object[]{TimetableDao.TYPES_COURSES[0], TimetableDao.TYPES_COURSES[1], TimetableDao.TYPES_COURSES[2]});
-		    
+		  */  
 		    
 	//	   tree.treeDidChange();
-		//    tree.updateUI();
 		//    refreshAll(e);
+
+		    tree.updateUI();
+		    tree.setVisible(true);
 		}
 		
 		public void modifySubject(BoTEvent e) {
-		    Subject subject = e.getSubject();
+		//    Subject subject = e.getSubject();
 		    
-		    //TODO modifier la matière
-		    System.out.println("modSubject");
-		    refreshAll(e);
+		    //TODO améliorer
+		//    System.out.println("modSubject");
+		    tree.updateUI();
+		    tree.setVisible(true);
 		}
 		
 		public void removeSubject(BoTEvent e) {
-		    Subject subject = e.getSubject();
+		//    Subject subject = e.getSubject();
 		    
-		    //TODO supprimer la matière
-		    System.out.println("delSubject");
-		    refreshAll(e);
+		    //TODO améliorer
+		//    System.out.println("delSubject");
+		    tree.updateUI();
+		    tree.setVisible(true);
 		}
 	}
 }
