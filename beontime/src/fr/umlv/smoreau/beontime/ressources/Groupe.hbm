@@ -25,12 +25,12 @@
 			type="string"
 		 />
 
-		<set inverse="true" name="SubjectsCoursesTakePart">
+		<set inverse="true" name="SubjectsCoursesTakePart" lazy="true">
 			<key column="id_groupe" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse" />
 		</set>
 		
-		<set inverse="true" name="Students">
+		<set inverse="true" name="Students" lazy="true">
 			<key column="id_groupe" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.BelongStudentGroup" />
 		</set>
