@@ -14,11 +14,11 @@ public class MultiSpanCellTable extends JTable {
 
   public MultiSpanCellTable(TableModel model) {
     super(model);
-    setUI(new MultiSpanCellTableUI());
-    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+    setUI(new MultiSpanCellTableUI());    
     setRowSelectionAllowed(false);
-    setCellSelectionEnabled(true);
+    setCellSelectionEnabled(true);   
     setRowHeight(77);
+    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);    
     setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
   }
   
@@ -48,24 +48,19 @@ public class MultiSpanCellTable extends JTable {
     Enumeration enumeration = getColumnModel().getColumns();
     while (enumeration.hasMoreElements()) {
       TableColumn aColumn = (TableColumn)enumeration.nextElement();
-      cellFrame.width = aColumn.getWidth() + columnMargin;
+      cellFrame.width = aColumn.getWidth();// + columnMargin;
       if (index == column) break;
       cellFrame.x += cellFrame.width;
       index++;
     }
     for (int i=0;i< n[CellSpan.COLUMN]-1;i++) {
       TableColumn aColumn = (TableColumn)enumeration.nextElement();
-      cellFrame.width += aColumn.getWidth() + columnMargin;
+      cellFrame.width += aColumn.getWidth();// + columnMargin;
     }
     
-    
-
     if (!includeSpacing) {
       Dimension spacing = getIntercellSpacing();
-      cellFrame.setBounds(cellFrame.x +      spacing.width/2,
-			  cellFrame.y +      spacing.height/2,
-			  cellFrame.width -  spacing.width,
-			  cellFrame.height - spacing.height);
+      cellFrame.setBounds(cellFrame.x +spacing.width/2,cellFrame.y +spacing.height/2,cellFrame.width - spacing.width,cellFrame.height - spacing.height);
     }
     return cellFrame;
   }
@@ -76,7 +71,7 @@ public class MultiSpanCellTable extends JTable {
     int[] retValue = {-1,-1};
     int row = point.y / (rowHeight + rowMargin);
     if ((row <0)||(getRowCount() <= row)) return retValue;
-    int column = getColumnModel().getColumnIndexAtX((int)((95*point.getX())/100));
+    int column = getColumnModel().getColumnIndexAtX((int)((point.getX())));
     CellSpan cellAtt = (CellSpan)((AttributiveCellTableModel)getModel()).getCellAttribute();
 
     if (cellAtt.isVisible(row,column)) {

@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable.course;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +12,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.DefaultCellAttribute;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
 
 /**
  * @author BeOnTime
@@ -67,9 +69,9 @@ public class AddCourse extends Action {
         c.setTime(date);
         int day=c.get(Calendar.DAY_OF_WEEK)-2;
         int [] row=new int[]{day};
-
         changeColor(false,row,columns,Color.BLUE);
-        ml.setValueAt("Cours XXX",row[0],columns[0]);
+        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
+        ml.setValueAt(new Course(new Long(4)),row[0],columns[0]);
         ml.fireTableDataChanged();
         cellAtt.combine(row,columns);
         table.revalidate();

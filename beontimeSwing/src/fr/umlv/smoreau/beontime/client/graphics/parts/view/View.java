@@ -9,6 +9,7 @@ import javax.swing.table.TableColumnModel;
 import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
 
 
 /**
@@ -33,7 +34,7 @@ public class View {
     }
     public void init(){
     	UIManager.put(GroupableTableHeader.uiClassID, "fr.umlv.smoreau.beontime.client.graphics.parts.view.GroupableTableHeaderUI");
-    	String[][] data=new String[6][52];
+    	Course[][] data=new Course[6][52];
     	ml = new AttributiveCellTableModel(model,data,13*4);
         cellAtt =(DefaultCellAttribute)ml.getCellAttribute();
         table = new MultiSpanCellTable(ml);
@@ -53,11 +54,12 @@ public class View {
 			hoursGroup.add(columns.getColumn(j+3));
 			j=j+4;
 			header.addGroup(hoursGroup);
+			
 		}
+		header.setResizingAllowed(false);
 		table.setTableHeader(header);
-		table.getTableHeader().setReorderingAllowed(false);
 		jScrollPane=new JScrollPane(table);
-
+		//header.setSize(table.getWidth(),50);
 		
 		
     }

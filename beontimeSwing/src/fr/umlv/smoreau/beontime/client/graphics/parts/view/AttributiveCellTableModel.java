@@ -12,20 +12,22 @@ import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 public class AttributiveCellTableModel extends AbstractTableModel {
-	int colNb=0;
+	private int colNb=0;
 	private DefaultCellAttribute cellAtt;
-	private String[][] data;
+	private Course[][] data;
 	private String[] plage=new String[]{"00","15","30","45"};
+	private int rowNb=0;
 
 	public AttributiveCellTableModel(BoTModel model, int numRows, int numColumns) {
 		colNb = numColumns;
-		data =new String[numRows][numColumns];
+		rowNb=numRows;
+		data =new Course[numRows][numColumns];
 	    cellAtt = new DefaultCellAttribute(numRows,numColumns);
 	    
 	    model.addBoTListener(new ViewListener());
 	}
 	
-	  public AttributiveCellTableModel(BoTModel model, String[][] data, int nbcolumn) {
+	  public AttributiveCellTableModel(BoTModel model, Course[][] data, int nbcolumn) {
 	  	colNb=nbcolumn;
 	  	this.data=data;
 	  	cellAtt = new DefaultCellAttribute(data.length,nbcolumn);
@@ -40,10 +42,10 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return (String)(data[rowIndex][columnIndex]);
+		return (Course)(data[rowIndex][columnIndex]);
 	}
 	public void setValueAt(Object o,int rowIndex, int columnIndex){
-		data[rowIndex][columnIndex]=(String)o;
+		data[rowIndex][columnIndex]=(Course)o;
 	}
 	
 	public DefaultCellAttribute getCellAttribute() {
@@ -69,14 +71,13 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		public void refreshAll(BoTEvent e) {
 		    Timetable timetable = e.getTimetable();
 		    Collection courses = timetable.getCourses();
-		    
+		    initDataTab();
 		    for (Iterator i = courses.iterator(); i.hasNext(); ) {
 		        Course course = (Course) i.next();
 		        
 		        //TODO Mohamed: afficher le cours
 		    }
 		}
-		
 		public void addCourse(BoTEvent e) {
 		    Course course = e.getCourse();
 
@@ -93,6 +94,10 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		    Course course = e.getCourse();
 
 		    //TODO Mohamed: supprimer le cours
+		}
+		private void initDataTab() {
+			data =new Course[rowNb][colNb];
+		    cellAtt = new DefaultCellAttribute(rowNb,colNb);		
 		}
 	}
 }

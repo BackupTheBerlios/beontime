@@ -49,7 +49,7 @@ public class RemoveCourse extends Action {
     	int[] rows=new int[]{row};
     	int[] columns = new int[]{column};
     	cellAtt.split(row,column);
-        ml.setValueAt("",rows[0],columns[0]);
+        ml.setValueAt(null,rows[0],columns[0]);
         ml.fireTableDataChanged();
     	table.clearSelection();
     	table.revalidate();

@@ -1,8 +1,18 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+
+import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.Subject;
 
 public class AttributiveCellRenderer extends JLabel implements TableCellRenderer {
   protected static Border noFocusBorder; 
@@ -55,7 +65,17 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
     return this;
   }  
   protected void setValue(Object value) {
-    setText((value == null) ? "" : value.toString());
+  		Course c=(Course)value;
+  		if (value==null){
+  			setText("");
+  		}
+  		else{
+  			String prtScreen="";
+  			Subject subj=c.getSubject();
+  			prtScreen=subj.getHeading();  				
+  			setText(prtScreen);
+  		}
+    	
   }
 }
 
