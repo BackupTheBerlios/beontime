@@ -17,11 +17,16 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime team
  */
 public interface FormationDao extends Remote {
+    public static final String JOIN_GROUPS = "Groups";
+    public static final String JOIN_SUBJECTS = "Subjects";
+
     public Collection getNotAllottedFormations() throws RemoteException, HibernateException;
 
 	public Collection getFormations(FormationFilter filter) throws RemoteException, HibernateException;
 	
 	public Collection getFormations() throws RemoteException, HibernateException;
+	
+	public Formation getFormation(Formation formation, String[] join) throws RemoteException, HibernateException;
 	
 	public Collection getFormationsResponsible(User user) throws RemoteException, HibernateException;
 	

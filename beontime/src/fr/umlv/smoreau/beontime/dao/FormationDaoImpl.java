@@ -107,6 +107,17 @@ public class FormationDaoImpl extends Dao implements FormationDao {
 
 		return result;
 	}
+	
+	public Formation getFormation(Formation formation, String[] join) throws RemoteException, HibernateException {
+        try {
+            Session session = Hibernate.getCurrentSession();
+            formation = (Formation) get(TABLE, new FormationFilter(formation), session).toArray()[0];
+            join(formation, join);
+        } finally {
+            Hibernate.closeSession();
+        }
+        return formation;
+	}
 
 	public Collection getFormations() throws RemoteException, HibernateException {
 		return getFormations(null);
