@@ -134,7 +134,34 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 		
 		public void modifyCourse(BoTEvent e) {
 		    Course course = e.getCourse();
-
+		    for(int i=0;i<rowNb;i++){
+		    	for(int j=0;j<colNb;j++){
+		    		Course courseRead=(Course)getValueAt(i,j);
+		    		if (courseRead.equals(course)){
+		    			cellAtt.split(i,j);
+		    	        setValueAt(null,i,j);
+		    	        j=colNb;
+			    		i=rowNb;
+		    		}		    		
+		    	}
+		    }
+	        Calendar beginDate=course.getBeginDate();
+	        Calendar endDate=course.getEndDate();
+	        int day=beginDate.get(Calendar.DAY_OF_WEEK)-2;
+	        int startColumn=getStartColumnHour(beginDate.get(Calendar.HOUR_OF_DAY),beginDate.get(Calendar.MINUTE));
+	        int endColumn=getEndColumnHour(endDate.get(Calendar.HOUR_OF_DAY),endDate.get(Calendar.MINUTE));
+	        if (endColumn<startColumn) return;
+	        int[] columns=new int[(endColumn-startColumn)+1];
+	        for(int j=0;j<=(endColumn-startColumn);j++){
+	        	columns[j]=startColumn+j;
+	        }
+	        int [] row=new int[]{day};
+	        changeColor(false,row,columns,ColorBoT.getColorAt(course.getSubject().getIdSubject().intValue()));
+	        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
+	        setValueAt(course,row[0],columns[0]);
+	        cellAtt.combine(row,columns);
+	        fireTableDataChanged();
+		    
 		}
 		
 		public void removeCourse(BoTEvent e) {

@@ -93,4 +93,16 @@ public class View {
 	public MultiSpanCellTable getTable() {
 		return table;
 	}
+	/**
+	 * @return
+	 */
+	public Course getCourseSelected() {
+		int row=getTable().getSelectedRow();
+		int column=getTable().getSelectedColumn();
+		if ((row==-1)&&(column==-1)){
+			return null;
+		}
+		Course course=(Course)ml.getValueAt(row,column);
+		return course;
+	}
 }

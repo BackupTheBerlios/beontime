@@ -194,8 +194,7 @@ public class MainFrame {
 	}
 
 	public Course getCourseSelected() {
-		//TODO à implémenter
-		return null;
+		return view.getCourseSelected();
 	}
 	
 	public Subject getSubjectSelected() {
