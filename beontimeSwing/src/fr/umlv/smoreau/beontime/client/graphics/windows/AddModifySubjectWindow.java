@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -150,6 +149,7 @@ public class AddModifySubjectWindow {
     
     
     public AddModifySubjectWindow() {
+    	
     	AMFWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
     	AMFWFrame.getContentPane().setLayout(AMFWLayout);
     	
@@ -361,17 +361,19 @@ public class AddModifySubjectWindow {
     	JComboBox nameGroupJcb = new JComboBox(groupsName);
     	JComboBox teacherGroupsJcB = new JComboBox(teachersName);
     	
+    	/*
     	JPanel nameGroupsPanel = new JPanel();
     	JPanel chooseNameGroupsPanel = new JPanel();
     	JPanel teacherGroupsPanel = new JPanel();
     	JPanel chooseTeacherGroupsPanel = new JPanel();
+    	*/
     	
     	switch(type) {
 	    	case 1:
 	    	    typeCourseLabel.setText("Cours magistraux :");
 	    	    nbGroupsMag = new JComboBox();
 	    	    initNumberJcb(nbGroupsMag, 1, 10);
-	    	    nbGroupsMag.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
+	    	    //nbGroupsMag.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
 	        	addComponent(layout,layoutConstraints,nbGroupsMag,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsMag);
 	    	    break;
@@ -379,7 +381,7 @@ public class AddModifySubjectWindow {
 	            typeCourseLabel.setText("Travaux dirigés :");
 	            nbGroupsTd = new JComboBox();
 	    	    initNumberJcb(nbGroupsTd, 1, 10);
-	    	    nbGroupsTd.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
+	    	    //nbGroupsTd.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
 	        	addComponent(layout,layoutConstraints,nbGroupsTd,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsTd);
 	            break;
@@ -387,7 +389,7 @@ public class AddModifySubjectWindow {
 	            typeCourseLabel.setText("Travaux pratiques :");
 	            nbGroupsTp = new JComboBox();
 	    	    initNumberJcb(nbGroupsTp, 1, 10);
-	    	    nbGroupsTp.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
+	    	    //nbGroupsTp.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
 	        	addComponent(layout,layoutConstraints,nbGroupsTp,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsTp);
 	            break;
@@ -406,7 +408,7 @@ public class AddModifySubjectWindow {
     	panel.add(nbGroupsJcb);*/
     	
     
-    	nameGroupsPanel.setLayout(new BoxLayout(nameGroupsPanel, BoxLayout.Y_AXIS));
+    	/*nameGroupsPanel.setLayout(new BoxLayout(nameGroupsPanel, BoxLayout.Y_AXIS));
     	nameGroupsPanel.add(nameGroupLabel);
     	nameGroupsPanel.add(Box.createVerticalStrut(13));
     	addComponent(layout,layoutConstraints,nameGroupsPanel,1,3,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,15,10));
@@ -429,7 +431,7 @@ public class AddModifySubjectWindow {
     	chooseTeacherGroupsPanel.add(teacherGroupsJcB);
     	chooseTeacherGroupsPanel.add(Box.createVerticalStrut(5));
     	addComponent(layout,layoutConstraints,chooseTeacherGroupsPanel,8,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(7,10,15,10));
-    	panel.add(chooseTeacherGroupsPanel);
+    	panel.add(chooseTeacherGroupsPanel);*/
     }
     
    
