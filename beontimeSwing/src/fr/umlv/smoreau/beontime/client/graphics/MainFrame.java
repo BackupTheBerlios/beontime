@@ -40,6 +40,8 @@ public class MainFrame {
     private JSplitPane splitPaneVertical;
 
 	private JFrame mainFrame;
+
+	private static MainFrame instance;
 	
 	
     /** Creates a new instance of FenetreConjugaison */
@@ -50,9 +52,10 @@ public class MainFrame {
     }
     
     
-    public JFrame getMainFrame() {
-    	return mainFrame;
-    }
+    public static MainFrame getInstance() {
+    	if (null == instance) instance = new MainFrame();
+		return instance;
+	}
     /**
      * Initialise la fenetre principale de l'application.
      */
@@ -142,5 +145,9 @@ public class MainFrame {
 	public static void main(String[] args){
 		MainFrame mf=new MainFrame();
 		mf.open();
+	}
+
+	public JFrame getMainFrame() {
+		return mainFrame;
 	}
 }
