@@ -91,6 +91,9 @@ public class LdapManager {
 				matchAttrs.put(new BasicAttribute("gidNumber","150"));
 			else if (UserDao.TYPE_TEACHER.equals(filter.getUserType()))
 				matchAttrs.put(new BasicAttribute("gidNumber","801"));
+			else if (UserDao.TYPE_STUDENT.equals(filter.getUserType()) &&
+			        filter.getIdFormation() != null)
+			    matchAttrs.put(new BasicAttribute("gidNumber",filter.getIdFormation()));
 		    if (filter.getName() != null)
 		        matchAttrs.put(new BasicAttribute("sn",filter.getName()));
 		    if (filter.getFirstName() != null)

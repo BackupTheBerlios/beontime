@@ -33,4 +33,14 @@ public class User extends BaseUser {
 	}
 
 /*[CONSTRUCTOR MARKER END]*/
+	
+	private Long _idFormation;
+	
+	public void setIdFormation(Long _idFormation) {
+	    this._idFormation = _idFormation;
+	}
+	
+	public Long getIdFormation() {
+	    return _idFormation;
+	}
 }
