@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.association.IsDirigeByCourseTeacher" table="Est_Dirige_par_Cours_Enseignant">
+		<composite-id>
+			<key-many-to-one
+				class="Personne"
+				column="ID_enseignant"
+				name="IdEnseignant"
+			 />
+			<key-many-to-one
+				class="Cours"
+				column="ID_cours"
+				name="IdCours"
+			 />
+		</composite-id>
+	</class>
+</hibernate-mapping>

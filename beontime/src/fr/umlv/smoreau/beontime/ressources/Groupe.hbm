@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.Group" table="Groupe">
+		<id
+			column="ID_groupe"
+			name="IdGroupe"
+			type="java.lang.Long"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="Intitule"
+			length="20"
+			name="Intitule"
+			not-null="false"
+			type="string"
+		 />
+
+		<many-to-one
+			class="Formation"
+			name="IdFormation"
+			not-null="true"
+		>
+			<column name="ID_formation" />
+		</many-to-one>
+		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
+			<key column="ID_groupe" />
+			<one-to-many class="ParticipeGroupeMatiereCours" />
+		</set>
+		<joined-subclass name="AppartientEtudiantGroupe" table="Appartient_Etudiant_Groupe">
+			<key column="ID_groupe" />
+			<property
+				column="ID_etudiant"
+				length="8"
+				name="IdEtudiant"
+				not-null="true"
+				type="java.lang.Long"
+			 />
+		</joined-subclass>
+	</class>
+</hibernate-mapping>

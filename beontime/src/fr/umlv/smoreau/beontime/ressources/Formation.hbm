@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.Formation" table="Formation">
+		<id
+			column="ID_formation"
+			name="IdFormation"
+			type="java.lang.Long"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="Intitule"
+			length="20"
+			name="Intitule"
+			not-null="false"
+			type="string"
+		 />
+		<!-- please tell Joe Hudson that the type 'SET' could not be resolved.. defaulting to java.lang.String -->
+		<property
+			column="........pg.dropped.4........"
+			name="........pg.dropped.4........"
+			not-null="false"
+			type="java.lang.String"
+		 />
+
+		<many-to-one
+			class="Personne"
+			name="IdSecretaire"
+			not-null="true"
+		>
+			<column name="ID_secretaire" />
+		</many-to-one>
+		<many-to-one
+			class="Personne"
+			name="IdEnseignant"
+			not-null="true"
+		>
+			<column name="ID_enseignant" />
+		</many-to-one>
+		<set inverse="true" name="GroupeSet">
+			<key column="ID_formation" />
+			<one-to-many class="Groupe" />
+		</set>
+		<set inverse="true" name="MatiereSet">
+			<key column="ID_formation" />
+			<one-to-many class="Matiere" />
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" table="Participe_Groupe_Matiere_Cours">
+		<composite-id class="ParticipeGroupSubjectCoursePK" name="Id">
+			<key-many-to-one
+				class="Personne"
+				column="ID_enseignant"
+				name="IdEnseignant"
+			 />
+			<key-many-to-one
+				class="Matiere"
+				column="ID_matiere"
+				name="IdMatiere"
+			 />
+			<key-many-to-one
+				class="Groupe"
+				column="ID_groupe"
+				name="IdGroupe"
+			 />
+			<key-many-to-one
+				class="Cours"
+				column="ID_cours"
+				name="IdCours"
+			 />
+		</composite-id>
+		<property
+			column="type_cours"
+			length="3"
+			name="TypeCours"
+			not-null="false"
+			type="string"
+		 />
+	</class>
+</hibernate-mapping>

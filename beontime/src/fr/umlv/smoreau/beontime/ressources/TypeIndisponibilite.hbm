@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.TypeUnvailability" table="Type_indisponibilite">
+		<id
+			column="ID_type_indisponibilite"
+			name="IdTypeIndisponibilite"
+			type="java.lang.Long"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="Nom_type_indisponibilite"
+			name="NomTypeIndisponibilite"
+			not-null="false"
+			type="string"
+		 />
+		<set inverse="true" name="IndisponibiliteSet">
+			<key column="ID_type_indisponibilite" />
+			<one-to-many class="Indisponibilite" />
+		</set>
+	</class>
+</hibernate-mapping>

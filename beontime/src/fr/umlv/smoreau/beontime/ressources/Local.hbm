@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.element.Room" table="Local">
+		<id
+			column="ID_local"
+			name="IdLocal"
+			type="java.lang.Long"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="Nom_batiment"
+			length="40"
+			name="NomBatiment"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="Description"
+			name="Description"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="Nom"
+			length="20"
+			name="Nom"
+			not-null="false"
+			type="string"
+		 />
+
+		<set
+			cascade="all"
+			name="CoursSet"
+			table="A_Lieu_Cours_Local"
+		>
+			<key column="ID_local" />
+			<many-to-many class="Cours" column="ID_cours" />
+		</set>
+	</class>
+</hibernate-mapping>

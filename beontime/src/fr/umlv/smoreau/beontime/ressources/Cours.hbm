@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.timetable.Course" table="Cours">
+		<id
+			column="ID_cours"
+			name="IdCours"
+			type="java.lang.Long"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="ID_formation"
+			length="8"
+			name="IdFormation"
+			not-null="true"
+			type="java.lang.Long"
+		 />
+		<property
+			column="Nb_semaine"
+			length="2"
+			name="NbSemaine"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="Date_fin"
+			length="4"
+			name="DateFin"
+			not-null="false"
+			type="date"
+		 />
+		<property
+			column="Date_debut"
+			length="4"
+			name="DateDebut"
+			not-null="false"
+			type="date"
+		 />
+
+		<many-to-one
+			class="TypeCours"
+			name="IdTypeCours"
+			not-null="true"
+		>
+			<column name="ID_type_cours" />
+		</many-to-one>
+		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
+			<key column="ID_cours" />
+			<one-to-many class="ParticipeGroupeMatiereCours" />
+		</set>
+		<set
+			cascade="all"
+			name="PersonneSet"
+			table="Est_Dirige_par_Cours_Enseignant"
+		>
+			<key column="ID_cours" />
+			<many-to-many class="Personne" column="ID_enseignant" />
+		</set>
+		<set
+			cascade="all"
+			name="MaterielSet"
+			table="Utilise_Cours_Materiel"
+		>
+			<key column="ID_cours" />
+			<many-to-many class="Materiel" column="ID_materiel" />
+		</set>
+		<set
+			cascade="all"
+			name="LocalSet"
+			table="A_Lieu_Cours_Local"
+		>
+			<key column="ID_cours" />
+			<many-to-many class="Local" column="ID_local" />
+		</set>
+	</class>
+</hibernate-mapping>

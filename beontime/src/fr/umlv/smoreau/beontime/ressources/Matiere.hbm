@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.timetable.Subject" table="Matiere">
+		<id
+			column="ID_matiere"
+			name="IdMatiere"
+			type="java.lang.Long"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="NB_heure_TP"
+			length="2"
+			name="NbHeureTp"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="NB_heure_MAG"
+			length="2"
+			name="NbHeureMag"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="NB_groupe_TD"
+			length="2"
+			name="NbGroupeTd"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="NB_groupe_MAG"
+			length="2"
+			name="NbGroupeMag"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="NB_heure_TD"
+			length="2"
+			name="NbHeureTd"
+			not-null="false"
+			type="integer"
+		 />
+		<property
+			column="Intitule"
+			length="40"
+			name="Intitule"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="NB_groupe_TP"
+			length="2"
+			name="NbGroupeTp"
+			not-null="false"
+			type="integer"
+		 />
+
+		<many-to-one
+			class="Personne"
+			name="IdEnseignant"
+			not-null="true"
+		>
+			<column name="ID_enseignant" />
+		</many-to-one>
+		<many-to-one
+			class="Formation"
+			name="IdFormation"
+			not-null="true"
+		>
+			<column name="ID_formation" />
+		</many-to-one>
+		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
+			<key column="ID_matiere" />
+			<one-to-many class="ParticipeGroupeMatiereCours" />
+		</set>
+	</class>
+</hibernate-mapping>

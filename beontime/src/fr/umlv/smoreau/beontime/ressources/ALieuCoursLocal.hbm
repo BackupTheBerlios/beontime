@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.association.ALieuCourseRoom" table="A_Lieu_Cours_Local">
+		<composite-id>
+			<key-many-to-one
+				class="Local"
+				column="ID_local"
+				name="IdLocal"
+			 />
+			<key-many-to-one
+				class="Cours"
+				column="ID_cours"
+				name="IdCours"
+			 />
+		</composite-id>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+
+<hibernate-mapping>
+	<class name="fr.umlv.smoreau.beontime.model.user.Person" table="Personne">
+		<id
+			column="ID_personne"
+			name="IdPersonne"
+			type="string"
+		>
+			<generator class="vm" />
+		</id>
+		<property
+			column="Nom"
+			length="20"
+			name="Nom"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="Telephone"
+			length="14"
+			name="Telephone"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="Prenom"
+			length="20"
+			name="Prenom"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="Nom_bureau"
+			length="20"
+			name="NomBureau"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="Nom_batiment_bureau"
+			length="40"
+			name="NomBatimentBureau"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="E_mail"
+			length="50"
+			name="EMail"
+			not-null="false"
+			type="string"
+		 />
+		<property
+			column="type_personne"
+			length="20"
+			name="TypePersonne"
+			not-null="true"
+			type="string"
+		 />
+
+		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
+			<key column="ID_enseignant" />
+			<one-to-many class="ParticipeGroupeMatiereCours" />
+		</set>
+		<set inverse="true" name="FormationSetByIdEnseignant">
+			<key column="ID_enseignant" />
+			<one-to-many class="Formation" />
+		</set>
+		<set inverse="true" name="FormationSetByIdSecretaire">
+			<key column="ID_secretaire" />
+			<one-to-many class="Formation" />
+		</set>
+		<set inverse="true" name="MatiereSet">
+			<key column="ID_enseignant" />
+			<one-to-many class="Matiere" />
+		</set>
+		<set
+			cascade="all"
+			name="CoursSet"
+			table="Est_Dirige_par_Cours_Enseignant"
+		>
+			<key column="ID_enseignant" />
+			<many-to-many class="Cours" column="ID_cours" />
+		</set>
+	</class>
+</hibernate-mapping>
