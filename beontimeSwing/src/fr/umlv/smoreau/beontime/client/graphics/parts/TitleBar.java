@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,7 +37,8 @@ public class TitleBar extends JPanel {
 		titleBarPanel.setLayout(new BorderLayout());
 		
 		initTitleBarPanel();
-		
+		responsibleLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		periodPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
 		titleBarPanel.add(responsibleLabel, BorderLayout.WEST);
 		titleBarPanel.add(intitleLabel, BorderLayout.CENTER);
 		titleBarPanel.add(periodPanel, BorderLayout.EAST);
@@ -82,6 +84,7 @@ public class TitleBar extends JPanel {
 		
 		responsibleLabel = new JLabel("Responsable");
 		intitleLabel = new JLabel("Intitule");
+		intitleLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		initPeriodPanel();
 		
