@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
@@ -13,7 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,34 +17,26 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.model.Formation;
 
 
 /**
  * @author BeOnTime
  */
-
-
 public class GenerateGroupsWindow {
-	
-	
 	private static final String TITRE = "Générer automatiquement des groupes";
 	
-	private JLabel formationLabel;
-	private JLabel nbGroupsLabel;
-	private JLabel nameGroup1Label;
-	
-	private JComboBox formationJcb;
+	//private JComboBox formationJcb;
 	private JComboBox nbGroupsJcb;
 	
 	private JTextField nameGroup1Jtf;
 	
-	private JButton ok;
-	private JButton annuler;
+	private boolean isOk;
+	private int nbMaxGroups;
 	
 	private JPanel nameGroupLabelPanel = new JPanel();
 	private JPanel nameGroupJtfPanel = new JPanel();
@@ -59,7 +47,10 @@ public class GenerateGroupsWindow {
 	
 	
 	
-	public GenerateGroupsWindow() {
+	public GenerateGroupsWindow(int nbMaxGroups) {
+	    this.isOk = false;
+	    this.nbMaxGroups = nbMaxGroups;
+
 		GGWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		GGWFrame.getContentPane().setLayout(GGWLayout);
 		
@@ -67,60 +58,44 @@ public class GenerateGroupsWindow {
 	}
 	
 	
-	public String getFormation() {
+	/*public String getFormation() {
 		return formationJcb.getSelectedItem().toString();
-	}
-	
-	
-	public int getnbGroups () {
-		return Integer.parseInt(nbGroupsJcb.getSelectedItem().toString());
-	}
+	}*/
 	
 	public Collection getNameGroups() {
-		
 		int nbteachers = nameGroupJtfPanel.getComponentCount();
 		
 		ArrayList list = new ArrayList();
-		Component [] components = nameGroupJtfPanel.getComponents();
+		Component[] components = nameGroupJtfPanel.getComponents();
 		
-		for(int i=0; i<nbteachers;i++) {
-			list.add(((JComboBox)components[i]).getSelectedItem().toString());
+		for (int i = 0; i < components.length; ++i) {
+		    if (components[i] instanceof JTextField)
+		        list.add(((JTextField)components[i]).getText());
 		}
 		
 		return list;
 	}
 	
-	public void setFormation(Collection formations) {
-		
-		for(Iterator it = formations.iterator();it.hasNext();) {
-			formationJcb.addItem(((Formation)it.next()).getHeading());
-		}	
-	}
-	
-	public void setnbGroups (int nb) {
-		nbGroupsJcb.addItem(""+nb);
-	}
-	
 	
 	private void initGenerateGroupsWindow() {
-		
-		
-		formationLabel = new JLabel("Formation correspondante :");
+	    JLabel formationLabel = new JLabel("Formation correspondante :");
 		addComponent(GGWLayout,layoutConstraints,formationLabel,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(formationLabel);
 		
-		formationJcb = new JComboBox();
+		/*formationJcb = new JComboBox();
 		addComponent(GGWLayout,layoutConstraints,formationJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
-		GGWFrame.getContentPane().add(formationJcb);
+		GGWFrame.getContentPane().add(formationJcb);*/
 		
+		JLabel formation = new JLabel(MainFrame.getInstance().getFormationSelected().getHeading());
+		addComponent(GGWLayout,layoutConstraints,formation,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
+		GGWFrame.getContentPane().add(formation);
 		
-		
-		nbGroupsLabel = new JLabel("Nombre de groupes :");
+		JLabel nbGroupsLabel = new JLabel("Nombre de groupes :");
 		addComponent(GGWLayout,layoutConstraints,nbGroupsLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(nbGroupsLabel);
 		
 		nbGroupsJcb = new JComboBox();
-		initNumberJcb(nbGroupsJcb, 1, 10);
+		initNumberJcb(nbGroupsJcb, 1, nbMaxGroups);
 		nbGroupsJcb.addItemListener(new ItemListener() {
 			
 			public void itemStateChanged(ItemEvent e) {
@@ -171,7 +146,7 @@ public class GenerateGroupsWindow {
 		
 		
 		
-		nameGroup1Label = new JLabel("Nom du groupe 1 :");
+		JLabel nameGroup1Label = new JLabel("Nom du groupe 1 :");
 		
 		nameGroupLabelPanel.setLayout(new BoxLayout(nameGroupLabelPanel, BoxLayout.Y_AXIS));
 		nameGroupLabelPanel.add(nameGroup1Label);
@@ -191,11 +166,12 @@ public class GenerateGroupsWindow {
 		
 		
 		
-		ok = new JButton("OK");
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionOk());
 		addComponent(GGWLayout,layoutConstraints,ok,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		GGWFrame.getContentPane().add(ok);
 		
-		annuler = new JButton("Annuler");
+		JButton annuler = new JButton("Annuler");
 		annuler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             	GGWFrame.dispose();
@@ -207,7 +183,6 @@ public class GenerateGroupsWindow {
 	}
 	
 	private void initNumberJcb(JComboBox jcb, int start, int end) {
-		
 		for(int i=start;i<=end;i++) {
 			jcb.addItem(""+i);
 		}
@@ -236,13 +211,49 @@ public class GenerateGroupsWindow {
 	}
 	
 	
-	public static void main(String[] args){
-		
-		MainFrame frame = MainFrame.getInstance();
-		frame.open();
-		
-		GenerateGroupsWindow form = new GenerateGroupsWindow();
-		form.show();
-		
-	}    
+    public boolean isOk() {
+        return isOk;
+    }
+    
+    private int checking() {
+        /*String name = getName();
+        if (name == null || "".equals(name))
+            return 1;
+        String surname = getSurname();
+        if (surname == null || "".equals(surname))
+            return 2;
+        String email = getCourrielMail();
+        if (email != null && !"".equals(email) && !email.matches(".*@.*\\..*")) {
+            return 3;
+        }*/
+        return 0;
+    }
+
+
+    private class ActionOk implements ActionListener {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent arg0) {
+            String errorMessage = null;
+            switch (checking()) {
+            case 0:
+                isOk = true;
+                GGWFrame.dispose();
+                return;
+            case 1:
+                errorMessage = "Le nom est obligatoire";
+                break;
+            case 2:
+                errorMessage = "Le prénom est obligatoire";
+                break;
+            case 3:
+                errorMessage = "L'adresse email est invalide";
+                break;
+            default:
+                errorMessage = "Erreur inconnue";
+            }
+            JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

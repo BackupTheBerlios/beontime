@@ -1,7 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JTree;
 import javax.swing.event.EventListenerList;
@@ -11,16 +10,12 @@ import javax.swing.tree.TreePath;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
-import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.dao.UnavailabilityDao;
-import fr.umlv.smoreau.beontime.model.Formation;
 
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
-import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**

@@ -153,7 +153,7 @@ public class ManageGroupsAdapter implements TreeModel {
 	 * @see javax.swing.tree.TreeModel#addTreeModelListener(javax.swing.event.TreeModelListener)
 	 */
 	public void addTreeModelListener(TreeModelListener l) {
-		list.add(l.getClass(), l);
+		list.add(TreeModelListener.class, l);
 
 	}
 
@@ -161,7 +161,7 @@ public class ManageGroupsAdapter implements TreeModel {
 	 * @see javax.swing.tree.TreeModel#removeTreeModelListener(javax.swing.event.TreeModelListener)
 	 */
 	public void removeTreeModelListener(TreeModelListener l) {
-		list.remove(l.getClass(), l);
+		list.remove(TreeModelListener.class, l);
 
 	}
 	

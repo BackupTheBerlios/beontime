@@ -153,7 +153,7 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
 	 */
 	public void addTableModelListener(TableModelListener l) {
-		list.add(l.getClass(), l);
+		list.add(TableModelListener.class, l);
 
 	}
 
@@ -162,7 +162,7 @@ public class ManageUsersAdapter implements TableModel {
 	 */
 	public void removeTableModelListener(TableModelListener l) {
 		// TODO Auto-generated method stub
-		 list.remove(l.getClass(), l);
+		 list.remove(TableModelListener.class, l);
 	}
 
 	private class ManageUsersListener extends DefaultBoTListener {
