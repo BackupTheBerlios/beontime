@@ -80,8 +80,9 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
     int    rowSpan = span[row][column][CellSpan.ROW];
     for (int i=0;i<rowSpan;i++) {
       for (int j=0;j<columnSpan;j++) {
-	span[row +i][column +j][CellSpan.COLUMN] = 1;
-	span[row +i][column +j][CellSpan.ROW]    = 1;
+      	span[row +i][column +j][CellSpan.COLUMN] = 1;
+      	span[row +i][column +j][CellSpan.ROW]    = 1;
+      	setBackground(Color.WHITE,row+i,column+j);
       }
     }
   }
@@ -103,9 +104,7 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan ,ColoredCel
     return background[row][column];
   }
   public void setBackground(Color color, int row, int column) {
-  	System.out.println("b");
     if (isOutOfBounds(row, column)) return;
-    System.out.println("c");
     background[row][column] = color;
   }
   public void setBackground(Color color, int[] rows, int[] columns) {

@@ -463,15 +463,11 @@ public class AddModifyCourseWindow {
     }
     public void setStartHour(int start){
     	startCourseHourJcb.setSelectedIndex((start/4)+8);
-    	Double d_start=new Double(start);
-    	Double d=new Double(Math.IEEEremainder(d_start.doubleValue(),4.0));
-    	startCourseMinuteJcb.setSelectedIndex(d.intValue()*15);
+    	startCourseMinuteJcb.setSelectedIndex((start%4)*15);
     }
     public void setEndHour(int end){
-    	endCourseHourJcb.setSelectedIndex((end/4)+8);
-    	Double e_start=new Double(end);
-    	Double e=new Double(Math.IEEEremainder(e_start.doubleValue(),4.0));
-    	endCourseMinuteJcb.setSelectedIndex((e.intValue()+1)*15);
+    	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8);
+    	endCourseMinuteJcb.setSelectedIndex(((end+1)%4)*15);
     }
     public int getStartHour(){
     	

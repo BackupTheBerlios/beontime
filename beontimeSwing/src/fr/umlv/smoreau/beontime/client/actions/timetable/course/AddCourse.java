@@ -1,6 +1,8 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable.course;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JTable;
 
@@ -53,11 +55,21 @@ public class AddCourse extends Action {
     		window.setEndHour(columns[columns.length-1]);
     	}
         window.show();
+        int startColumn=window.getStartHour();
+        int endColumn=window.getEndHour();
+        if (endColumn<startColumn) return;
+        columns=new int[(endColumn-startColumn)+1];
+        for(int i=0;i<=(endColumn-startColumn);i++){
+        	columns[i]=startColumn+i;
+        }
+        Date date=window.getDateCourse();
+        Calendar c=Calendar.getInstance();
+        c.setTime(date);
+        int day=c.get(Calendar.DAY_OF_WEEK)-2;
+        int [] row=new int[]{day};
 
-        int [] row=new int[]{rows[0]};
-
-        changeColor(false,rows,columns,Color.BLUE);
-        ml.setValueAt("Cours XXX",rows[0],columns[0]);
+        changeColor(false,row,columns,Color.BLUE);
+        ml.setValueAt("Cours XXX",row[0],columns[0]);
         ml.fireTableDataChanged();
         cellAtt.combine(row,columns);
         table.revalidate();
