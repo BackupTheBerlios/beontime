@@ -1,6 +1,8 @@
 package fr.umlv.smoreau.beontime.dao;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
@@ -8,8 +10,10 @@ import net.sf.hibernate.Session;
 import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter.CourseFilter;
+import fr.umlv.smoreau.beontime.filter.ParticipeGroupSubjectCourseFilter;
 import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
+import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.timetable.*;
 
 /**
@@ -18,9 +22,10 @@ import fr.umlv.smoreau.beontime.model.timetable.*;
 public class TimetableDao extends Dao {
     private static final TimetableDao INSTANCE = new TimetableDao();
 
-    private static final String TABLE_COURSE       = "Course";
-    private static final String TABLE_SUBJECT      = "Subject";
-    private static final String TABLE_TYPE_COURSE  = "TypeCourse";
+    private static final String TABLE_COURSE      = "Course";
+    private static final String TABLE_SUBJECT     = "Subject";
+    private static final String TABLE_TYPE_COURSE = "TypeCourse";
+    private static final String TABLE_ASSOCIATION = "ParticipeGroupSubjectCourse";
     
     private String[] DEFAULT_TYPES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
 
@@ -87,8 +92,14 @@ public class TimetableDao extends Dao {
         try {
             TransactionManager.beginTransaction();
             add(course);
+            Set p = course.getParticipeGroupeMatiereCoursSet();
+            if (p != null) {
+	            for (Iterator i = p.iterator(); i.hasNext(); )
+	                add((ParticipeGroupSubjectCourse)i.next());
+            }
             TransactionManager.commit();
         } catch (HibernateException e) {
+            e.printStackTrace();
             System.err.println("Erreur lors de l'ajout d'un cours : " + e.getMessage());
             return false;
         }
@@ -111,6 +122,11 @@ public class TimetableDao extends Dao {
         try {
             TransactionManager.beginTransaction();
             modify(course);
+            Set p = course.getParticipeGroupeMatiereCoursSet();
+            if (p != null) {
+	            for (Iterator i = p.iterator(); i.hasNext(); )
+	                add((ParticipeGroupSubjectCourse)i.next());
+            }
             TransactionManager.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -135,6 +151,11 @@ public class TimetableDao extends Dao {
 	public boolean removeCourse(Course course) {
         try {
             TransactionManager.beginTransaction();
+            Set p = course.getParticipeGroupeMatiereCoursSet();
+            if (p != null) {
+	            for (Iterator i = p.iterator(); i.hasNext(); )
+	                remove(TABLE_ASSOCIATION, new ParticipeGroupSubjectCourseFilter((ParticipeGroupSubjectCourse)i.next()));
+            }
             remove(TABLE_COURSE, new CourseFilter(course));
             TransactionManager.commit();
         } catch (HibernateException e) {

@@ -52,6 +52,7 @@
 			<key column="ID_cours" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
+
 		<set
 			cascade="none"
 			name="PersonneSet"

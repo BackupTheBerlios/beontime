@@ -2,7 +2,10 @@ package junit;
 
 import java.util.Collection;
 
+import fr.umlv.smoreau.beontime.dao.GroupDao;
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
+import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
@@ -17,6 +20,7 @@ import junit.framework.TestSuite;
  * @author BeOnTime
  */
 public class TimetableDaoTest extends TestCase {
+    private static final GroupDao groupDao = GroupDao.getInstance();
     private static final TimetableDao timetableDao = TimetableDao.getInstance();
     
     public TimetableDaoTest(String name) {
@@ -63,8 +67,26 @@ public class TimetableDaoTest extends TestCase {
         course.addToPersonneSet(person);
         assertTrue(timetableDao.modifyCourse(course));
         
-        // suppression du cours
+        // modification du cours, relation avec la matière et le groupe
+        ParticipeGroupSubjectCourse participe = new ParticipeGroupSubjectCourse();
+        participe.setIdCourse(course);
+        Group group = new Group();
+        group.setIdFormation(new Long(1));
+        group.setIntitule("groupe pour essayer");
+        groupDao.addGroup(group);
+        participe.setIdGroupe(group);
+        Subject subject = new Subject();
+        subject.setIdFormation(new Long(2));
+        subject.setIdTeacher(new Long(5));
+        timetableDao.addSubject(subject);
+        participe.setIdSubject(subject);
+        course.addToParticipeGroupeMatiereCoursSet(participe);
+        assertTrue(timetableDao.modifyCourse(course));
+        
+        // suppression du cours et des éléments utilisés
         assertTrue(timetableDao.removeCourse(course));
+        groupDao.removeGroup(group);
+        timetableDao.removeSubject(subject);
     }
     
     public void testAddRemoveSubject() {

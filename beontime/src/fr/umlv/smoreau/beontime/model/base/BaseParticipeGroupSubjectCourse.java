@@ -2,7 +2,11 @@ package fr.umlv.smoreau.beontime.model.base;
 
 import java.io.Serializable;
 
-import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCoursePK;
+import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.Subject;
+import fr.umlv.smoreau.beontime.model.user.Person;
 
 
 /**
@@ -17,55 +21,82 @@ import fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCoursePK;
  * @hibernate.class
  *  table="Participe_Groupe_Matiere_Cours"
  */
-public abstract class BaseParticipeGroupSubjectCourse  implements Serializable {
+public abstract class BaseParticipeGroupSubjectCourse implements Serializable {
 
 	public static String PROP_TYPE_COURS = "TypeCours";
-	public static String PROP_ID = "Id";
+	public static String PROP_ID_MATIERE = "IdSubject";
+	public static String PROP_ID_GROUPE = "IdGroupe";
+	public static String PROP_ID_COURS = "IdCours";
 
 
 	private int hashCode = Integer.MIN_VALUE;
 
 	// primary key
-	private ParticipeGroupSubjectCoursePK _id;
+	private Subject _idMatiere;
+	private Group _idGroupe;
+	private Course _idCours;
 
 	// fields
 	private java.lang.String _typeCours;
-
+	private Person _idEnseignant;
 
 	// constructors
 	public BaseParticipeGroupSubjectCourse () {
-		initialize();
+	    initialize();
 	}
-
+	
 	/**
 	 * Constructor for primary key
 	 */
-	public BaseParticipeGroupSubjectCourse (ParticipeGroupSubjectCoursePK _id) {
-		this.setId(_id);
+	public BaseParticipeGroupSubjectCourse (
+		Subject _idMatiere,
+		Group _idGroupe,
+		Course _idCours) {
+
+		this.setIdSubject(_idMatiere);
+		this.setIdGroupe(_idGroupe);
+		this.setIdCourse(_idCours);
 		initialize();
 	}
 
 	protected void initialize () {}
 
-
-
-	/**
-	 * Return the unique identifier of this class
-     * @hibernate.id
-     */
-	public ParticipeGroupSubjectCoursePK getId () {
-		return _id;
+	
+	public Person getIdTeacher () {
+		return _idEnseignant;
 	}
 
-	/**
-	 * Set the unique identifier of this class
-	 * @param _id the new ID
-	 */
-	public void setId (ParticipeGroupSubjectCoursePK _id) {
-		this._id = _id;
-		this.hashCode = Integer.MIN_VALUE;
+	public void setIdTeacher (Person _idEnseignant) {
+		hashCode = Integer.MIN_VALUE;
+		this._idEnseignant = _idEnseignant;
 	}
 
+	public Subject getIdSubject () {
+		return _idMatiere;
+	}
+
+	public void setIdSubject (Subject _idMatiere) {
+		hashCode = Integer.MIN_VALUE;
+		this._idMatiere = _idMatiere;
+	}
+
+	public Group getIdGroupe () {
+		return _idGroupe;
+	}
+
+	public void setIdGroupe (Group _idGroupe) {
+		hashCode = Integer.MIN_VALUE;
+		this._idGroupe = _idGroupe;
+	}
+
+	public Course getIdCourse () {
+		return _idCours;
+	}
+
+	public void setIdCourse (Course _idCours) {
+		hashCode = Integer.MIN_VALUE;
+		this._idCours = _idCours;
+	}
 
 	/**
 	 * Return the value associated with the column: type_cours
@@ -85,22 +116,63 @@ public abstract class BaseParticipeGroupSubjectCourse  implements Serializable {
 
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse)) return false;
+		if (!(obj instanceof ParticipeGroupSubjectCourse)) return false;
 		else {
-			fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse mObj = (fr.umlv.smoreau.beontime.model.base.BaseParticipeGroupSubjectCourse) obj;
-			if (null == this.getId() || null == mObj.getId()) return false;
-			else return (this.getId().equals(mObj.getId()));
+			ParticipeGroupSubjectCourse mObj = (ParticipeGroupSubjectCourse) obj;
+			if (null != this.getIdSubject() && null != mObj.getIdSubject()) {
+				if (!this.getIdSubject().equals(mObj.getIdSubject())) {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+			if (null != this.getIdGroupe() && null != mObj.getIdGroupe()) {
+				if (!this.getIdGroupe().equals(mObj.getIdGroupe())) {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+			if (null != this.getIdCourse() && null != mObj.getIdCourse()) {
+				if (!this.getIdCourse().equals(mObj.getIdCourse())) {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+			return true;
 		}
 	}
 
 
 	public int hashCode () {
 		if (Integer.MIN_VALUE == this.hashCode) {
-			if (null == this.getId()) return super.hashCode();
-			else {
-				String hashStr = this.getClass().getName() + ":" + this.getId().hashCode();
-				this.hashCode = hashStr.hashCode();
+			StringBuffer sb = new StringBuffer();
+			if (null != this.getIdSubject()) {
+				sb.append(this.getIdSubject().hashCode());
+				sb.append(":");
 			}
+			else {
+				return super.hashCode();
+			}
+			if (null != this.getIdGroupe()) {
+				sb.append(this.getIdGroupe().hashCode());
+				sb.append(":");
+			}
+			else {
+				return super.hashCode();
+			}
+			if (null != this.getIdCourse()) {
+				sb.append(this.getIdCourse().hashCode());
+				sb.append(":");
+			}
+			else {
+				return super.hashCode();
+			}
+			this.hashCode = sb.toString().hashCode();
 		}
 		return this.hashCode;
 	}
