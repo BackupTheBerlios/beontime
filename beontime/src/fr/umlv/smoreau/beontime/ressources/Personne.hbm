@@ -76,15 +76,15 @@
 			type="string"
 		 />
 
-		<set inverse="true" name="FormationsResponsible">
+		<set inverse="true" name="FormationsResponsible" lazy="true">
 			<key column="id_enseignant" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
-		<set inverse="true" name="FormationsInCharge">
+		<set inverse="true" name="FormationsInCharge" lazy="true">
 			<key column="id_secretaire" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.Formation" />
 		</set>
-		<set inverse="true" name="SubjectsResponsible">
+		<set inverse="true" name="SubjectsResponsible" lazy="true">
 			<key column="id_enseignant" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.timetable.Subject" />
 		</set>
@@ -92,6 +92,7 @@
 			cascade="all"
 			name="CoursesDirected"
 			table="est_dirige_par_cours_enseignant"
+			lazy="true"
 		>
 			<key column="id_enseignant" />
 			<many-to-many class="fr.umlv.smoreau.beontime.model.timetable.Course" column="id_cours" />
