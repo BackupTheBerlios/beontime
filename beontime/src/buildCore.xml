@@ -7,13 +7,13 @@
   <property name="classes" location="classesCore"/>
   <property name="lib" location="lib"/>
   <property name="bin" location="classes"/>
+  <property name="dest" location="bin"/>
   <property environment="env"/>
 	
   <!-- definition of the project classpath -->
   <path id="classpath">
     <fileset dir="${lib}">
       <include name="*.jar"/>
-      <exclude name="bot.jar"/>
     </fileset>
   	<pathelement location="${bin}" />
   </path>
@@ -56,7 +56,7 @@
     <!-- Create the distribution directory -->
     <mkdir dir="${lib}"/>
 
-	<!-- Put everything in ${classes} into the ${lib}/bot.jar file -->
-	<jar jarfile="${lib}/bot.jar" basedir="${classes}" />
+	<!-- Put everything in ${classes} into the ${dest}/bot.jar file -->
+	<jar jarfile="${dest}/bot.jar" basedir="${classes}" />
   </target>
 </project>

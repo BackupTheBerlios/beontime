@@ -1,0 +1,68 @@
+<project name="bot" default="lib" basedir="..">
+    <description>
+        Build file of server of BeOnTime project
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="classes" location="classes"/>
+  <property name="docs"  location="docs"/>
+  <property name="lib" location="lib"/>
+  <property name="dest" location="bin"/>
+	
+  <!-- definition of the project classpath -->
+  <path id="classpath">
+    <fileset dir="${lib}">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the classes directory structure used by compile -->
+    <mkdir dir="${classes}"/>
+  </target>
+
+  <target name="docs">
+	  <!-- Create the time stamp -->
+	  <tstamp/>
+	  <!-- Create the classes directory structure used by compile -->
+	  <mkdir dir="${docs}"/>
+	  <mkdir dir="${docs}/api"/>
+	  <javadoc packagenames="fr.umlv.smoreau.beontime.*"
+		  sourcepath="${src}"
+		  destdir="docs/api"/>
+  </target>
+	
+  <target name="compile" depends="init" description="compile the source" >
+    <!-- Compile the java code from ${src} into ${classes} -->
+    <javac srcdir="${src}" destdir="${classes}" excludes="**/junit/*.java">
+    	<classpath refid="classpath"/>
+    </javac>
+  	<copy todir="${classes}/fr/umlv/smoreau/beontime/ressources/">
+  	    <fileset dir="${src}/fr/umlv/smoreau/beontime/ressources"/>
+  	</copy>
+  </target>
+
+  <target name="lib" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dest}"/>
+
+	<!-- Put everything in ${classes} into the ${dest}/botServer.jar file -->
+	<jar jarfile="${dest}/botServer.jar" basedir="${classes}">
+		<manifest>
+			<attribute name="Main-class" value="fr.umlv.smoreau.beontime.Server"/>
+			<attribute name="Class-Path" value="../lib/hibernate2.jar ../lib/pg72jdbc2.jar ../lib/dom4j-1.5.2.jar ../lib/commons-logging.jar ../lib/commons-collections-3.1.jar ../lib/db-ojb-1.0.1.jar ../lib/cglib-full-2.0.2.jar ../lib/jta.jar"/>
+			<attribute name="Created-By" value="BeOnTime"/>
+		</manifest>
+	</jar>
+  </target>
+
+  <target name="clean" description="clean up" >
+    <!-- Delete the ${classes} and ${dest} directory trees -->
+    <delete dir="${classes}"/>
+	<delete file="${dest}/botServer.jar"/>
+	<delete dir="${docs}/api"/>
+  </target>
+</project>
