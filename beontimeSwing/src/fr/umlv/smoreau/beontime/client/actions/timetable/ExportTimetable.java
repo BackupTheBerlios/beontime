@@ -10,18 +10,21 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
  * @author BeOnTime
@@ -71,17 +74,87 @@ public class ExportTimetable extends Action {
 	}
 	
 	
+	/**
+     * Write a line into a file
+     * @param line line to write in the file
+     */
+    public static void writeLineFich(File file,String line) {
+	
+	try {
+	    FileWriter fichWriter  = new FileWriter(file);
+	    
+	    fichWriter.write(line);
+	    fichWriter.close();
+        }
+        catch(IOException ioe) {
+        	JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+
+    public static String createHeader(Timetable timetable) {
+    
+    	StringBuffer header = new StringBuffer();
+    	if (timetable.getGroup() != null) {
+    	    header.append("GROUPE : ");
+    	    header.append(timetable.getGroup().getHeading());
+    	} else if (timetable.getFormation() != null) {
+    	    header.append("FORMATION : ");
+    	    header.append(timetable.getFormation().getHeading());
+    	    header.append("\r\n");
+    	    header.append("RESPONSABLE : ");
+    	    header.append(timetable.getPersonInCharge().getName());
+    	    header.append(" ");
+    	    header.append(timetable.getPersonInCharge().getFirstName());
+    	} else if (timetable.getTeacher() != null) {
+    	    header.append("ENSEIGNANT : ");
+    	    header.append(timetable.getTeacher().getName());
+    	    header.append(" ");
+    	    header.append(timetable.getTeacher().getFirstName());
+    	} else if (timetable.getRoom() != null) {
+    	    header.append("LOCAL: ");
+    	    header.append(timetable.getRoom().getName());
+    	} else if (timetable.getMaterial() != null) {
+    	    header.append("MATERIEL : ");
+    	    header.append(timetable.getMaterial().getName());
+    	}
+    	header.append("\r\nEMPLOI DU TEMPS DU ");
+	    header.append(MainFrame.getInstance().getBeginPeriod().getTime());
+	    header.append(" AU ");
+	    header.append(MainFrame.getInstance().getEndPeriod().getTime());	
+    
+	    return header.toString();
+    }
+	
+	public static void exportTXT(File file) {
+		
+		/*filter.setBeginPeriod(mainFrame.getBeginPeriod());
+		filter.setEndPeriod(mainFrame.getEndPeriod());
+		Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+		MainFrame.getInstance().getModel().fireShowTimetable(timetable);
+		*/
+		/*Voir dans AttributiveCellTableModel, viewListener*/
+		
+		Timetable timetable = MainFrame.getInstance().getModel().getTimetable();
+		writeLineFich(file,ExportTimetable.createHeader(timetable));
+		
+		
+		
+		
+	}
+	
+	
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent arg0) {
 		JFileChooser EEDTFrame = new JFileChooser();
 		
-		BOTFileFilter filterJPEG = new BOTFileFilter(new String[] {"jpeg", "jpg"}, "JPEG Images");
-		BOTFileFilter filterPNG = new BOTFileFilter("png", "PNG Images");
-		BOTFileFilter filterTXT= new BOTFileFilter("txt", "TEXT FILE ");
-		BOTFileFilter filterXML = new BOTFileFilter("xml", "XML FILE");
-		BOTFileFilter filter = new BOTFileFilter(new String[] {"png", "jpeg", "txt","xml"}, "Images JPEG & PNG Images, Fichiers TXT & XML ");
+		BOTFileFilter filterJPEG = new BOTFileFilter(new String[] {"jpeg", "jpg"}, "Images JPEG");
+		BOTFileFilter filterPNG = new BOTFileFilter("png", "Images PNG");
+		BOTFileFilter filterTXT= new BOTFileFilter("txt", "Fichiers TEXT");
+		BOTFileFilter filterXML = new BOTFileFilter("xml", "Fichiers XML");
+		BOTFileFilter filter = new BOTFileFilter(new String[] {"png", "jpeg", "jpg", "txt","xml"}, "Images JPEG & Images PNG, Fichiers TXT & XML ");
 		
 		EEDTFrame.addChoosableFileFilter(filterJPEG);
 		EEDTFrame.addChoosableFileFilter(filterPNG);
@@ -90,45 +163,108 @@ public class ExportTimetable extends Action {
 		EEDTFrame.addChoosableFileFilter(filter);
 		
 		int returnVal = EEDTFrame.showSaveDialog(MainFrame.getInstance().getMainFrame());
+		
+		
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 			
 			System.out.println("You chose to save this file: " + EEDTFrame.getSelectedFile().getName());
 			
+			FileFilter selectedFilter = EEDTFrame.getFileFilter();
+			System.out.println("Filter choisi : "+selectedFilter.getDescription());
+			
+			
 			String formatName = null;
+			File file = EEDTFrame.getSelectedFile();
 			
-			if(EEDTFrame.getSelectedFile().getName().endsWith("txt")) {
-				formatName = "txt";
-				return;
-			}
-				
-			else if(EEDTFrame.getSelectedFile().getName().endsWith("xml")) {
-				formatName = "xml";
-				return;
-			}
-				
-			else if(EEDTFrame.getSelectedFile().getName().endsWith("jpeg"))
-				formatName = "image/jpeg";
-			
-				
-			else if(EEDTFrame.getSelectedFile().getName().endsWith("jpg"))
-				formatName = "jpg";
-			
-			else if(EEDTFrame.getSelectedFile().getName().endsWith("png"))
-				formatName = "png";
-			
-			
-			
-			Image image = ExportTimetable.getImage(MainFrame.getInstance().getView().getJScrollPane());
 			try {
 				
+				if (selectedFilter.equals(filter)) {
+					if( !(EEDTFrame.getSelectedFile().getName().endsWith(".txt")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".xml")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".png")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpeg")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpg")) ) {
+						
+						Object[] possibleValues = { "png", "jpeg", "jpg", "txt", "xml" };
+						Object selectedValue = JOptionPane.showInputDialog(null,
+								
+								"Veuillez sélectionner un format d'exportation dans la liste suivante", "Format d'exportation",
+								
+								JOptionPane.INFORMATION_MESSAGE, null,
+								
+								possibleValues, possibleValues[0]);
+						
+						if(selectedValue == null)
+							return;
+						
+						for(int i = 0, maxCounter = possibleValues.length;
+						i < maxCounter; i++) {
+							if(possibleValues[i].equals(selectedValue))
+								formatName = (String)possibleValues[i];
+						}
+						
+						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat("."+formatName));			
+					}
+					
+					else {
+						
+						int posPoint = EEDTFrame.getSelectedFile().getName().lastIndexOf('.');
+						formatName = EEDTFrame.getSelectedFile().getName().substring(posPoint+1);
+					}
+					
+					
+				}
 				
-				/* Possibilité d'exporter en "gif", "jpg", "bmp", "image/jpeg" */
-				ImageIO.write(ExportTimetable.toBufferedImage(image), formatName, EEDTFrame.getSelectedFile());
+				else if (selectedFilter.equals(filterTXT)) {
+					
+					if(!EEDTFrame.getSelectedFile().getName().endsWith(".txt"))
+						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat(".txt"));
+					
+					formatName = "txt";
+					
+					ExportTimetable.exportTXT(file);
+					
+					return;
+				}
+				
+				else if (selectedFilter.equals(filterXML)) {
+					
+					if(!EEDTFrame.getSelectedFile().getName().endsWith(".xml"))
+						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat(".xml"));
+					
+					formatName = "xml";
+					return;
+				}
+				
+				else if(selectedFilter.equals(filterJPEG)) {
+					
+					if(!(EEDTFrame.getSelectedFile().getName().endsWith(".jpeg")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpg"))) {
+						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat(".jpeg"));
+						formatName = "jpeg";
+					}
+					
+					else if(EEDTFrame.getSelectedFile().getName().endsWith(".jpeg"))
+						formatName = "jpeg";
+					
+					else
+						formatName = "jpg";
+					
+				}
+				
+				else if(selectedFilter.equals(filterPNG)) {
+					
+					if(!EEDTFrame.getSelectedFile().getName().endsWith(".png")) {
+						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat(".png"));
+						System.out.println("on est entré : "+ file.getName());
+					}
+					formatName = "png";
+				}
 				
 				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Image image = ExportTimetable.getImage(MainFrame.getInstance().getView().getJScrollPane());
+				
+				/* Accepted export "gif", "jpg", "bmp", "jpeg" */
+				ImageIO.write(ExportTimetable.toBufferedImage(image), formatName, file);
+				
+				
+			} catch (IOException e) {		
+				JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 			
 			
