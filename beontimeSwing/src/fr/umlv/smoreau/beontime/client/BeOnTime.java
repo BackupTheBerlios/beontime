@@ -18,7 +18,7 @@ public class BeOnTime {
     	    if (monitor == null)
     	        throw new RemoteException();
             DaoManager.addChangeListener(monitor);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Erreur lors de l'enregistrement du client sur le serveur");
         }
 

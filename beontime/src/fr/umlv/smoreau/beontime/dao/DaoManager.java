@@ -2,9 +2,7 @@ package fr.umlv.smoreau.beontime.dao;
 /* DESS CRI - BeOnTime - timetable project */
 
 import java.io.FileInputStream;
-import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
@@ -54,16 +52,9 @@ public class DaoManager {
 			timetableDao = (TimetableDao) Naming.lookup("rmi://"+host+"/TimeTableDao");
 			unavailabilityDao = (UnavailabilityDao) Naming.lookup("rmi://"+host+"/UnavailabitityDao");
 			userDao = (UserDao) Naming.lookup("rmi://"+host+"/UserDao");
-		} catch (MalformedURLException e) {
-			System.err.println("pb RMI");
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			System.err.println("pb RMI");
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			System.err.println("pb RMI");
-			e.printStackTrace();
-		} 
+		} catch (Exception e) {
+			System.err.println("Erreur lors de l'initialisation des DAO par RMI : " + e.getMessage());
+		}
 	}
 	
 	
