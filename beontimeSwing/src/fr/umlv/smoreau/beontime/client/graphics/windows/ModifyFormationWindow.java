@@ -17,12 +17,12 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
 import fr.umlv.smoreau.beontime.client.BoTConfig;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.model.user.User;
 
@@ -43,7 +43,7 @@ public class ModifyFormationWindow {
 	private JLabel startHalfYear2Label;
 	private JLabel endHalfYear2Label;
 	
-	private JTextField intituleJtf;
+	private TextFieldBoT intituleJtf;
 	
 	private JComboBox teacherJcb;
 	
@@ -172,7 +172,7 @@ public class ModifyFormationWindow {
 		MFWFrame.getContentPane().add(entitleLabel);
 		
 		
-		intituleJtf = new JTextField();
+		intituleJtf = new TextFieldBoT(20);
 		addComponent(MFWLayout,layoutConstraints,intituleJtf,3,1,3,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(30,10,15,10));
 		MFWFrame.getContentPane().add(intituleJtf);
 		
@@ -310,6 +310,8 @@ public class ModifyFormationWindow {
     }
 
     private int checking() {
+    	if (getTeacherJcb() == null)
+            return 1;
         return 0;
     }
 
@@ -324,6 +326,9 @@ public class ModifyFormationWindow {
                 isOk = true;
                 MFWFrame.dispose();
                 return;
+            case 1:
+                errorMessage = "Le responsable doit être sélectionné";
+                break;
             default:
                 errorMessage = "Erreur inconnue";
             }
