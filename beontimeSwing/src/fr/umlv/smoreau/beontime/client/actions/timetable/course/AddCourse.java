@@ -1,9 +1,11 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable.course;
-
 import java.awt.event.ActionEvent;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
+import fr.umlv.smoreau.beontime.client.graphics.parts.view.CellSpan;
+import fr.umlv.smoreau.beontime.client.graphics.parts.view.MultiSpanCellTable;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 
 /**
@@ -12,7 +14,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 public class AddCourse extends Action {
     private static final String NAME = "Placer un cours";
     private static final String ICON = "New24.gif";
-
+    
 
     public AddCourse(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
@@ -36,5 +38,19 @@ public class AddCourse extends Action {
     public void actionPerformed(ActionEvent arg0) {
         AddModifyCourseWindow window = new AddModifyCourseWindow();
         window.show();
+        CellSpan cellAtt =mainFrame.getCellAtt();
+        MultiSpanCellTable table = mainFrame.getTable();
+        int[] columns = table.getSelectedColumns();
+        int[] rows    = table.getSelectedRows();
+        System.out.println(rows.length);
+        System.out.println(columns.length);
+        cellAtt.combine(rows,columns);
+        //table.clearSelection();
+        table.revalidate();
+        table.repaint();
+        //table.clearSelection();
+        //table.revalidate();
+        //table.repaint();
+
     }
 }

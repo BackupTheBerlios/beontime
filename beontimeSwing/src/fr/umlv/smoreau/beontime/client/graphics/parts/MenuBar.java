@@ -44,8 +44,9 @@ public class MenuBar extends JMenuBar {
 	private MainFrame mainFrame;
 
 	public MenuBar(MainFrame mainFrame) {
-		initJMenuBar();
 		this.mainFrame = mainFrame;
+		initJMenuBar();
+		
 	}
 	
 

@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
@@ -24,6 +25,9 @@ import fr.umlv.smoreau.beontime.client.graphics.parts.StateBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
+import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
+import fr.umlv.smoreau.beontime.client.graphics.parts.view.CellSpan;
+import fr.umlv.smoreau.beontime.client.graphics.parts.view.MultiSpanCellTable;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.View;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
@@ -81,7 +85,7 @@ public class MainFrame {
         stateBar = new StateBar();
         timetableviewpanel = new TimeTableViewPanelBar();
         edit = new Edit(model, this);
-        view = new View();
+        view = new View(this);
         
         mainFrame = new JFrame();
 		mainFrame.setSize(WIDTH,HEIGHT);
@@ -166,9 +170,21 @@ public class MainFrame {
 		});
 
     }
-    
-
-    
+    public View getView(){
+		return view;
+    	
+    }
+    public AttributiveCellTableModel getTableModel(){
+		return view.getTableModel();
+    	
+    }
+    public MultiSpanCellTable getTable(){
+		return view.getTable();
+    	
+    }
+	public CellSpan getCellAtt() {
+		return view.getCellAtt();
+	}
 	public void open() {
 		mainFrame.setVisible(true);
 	}

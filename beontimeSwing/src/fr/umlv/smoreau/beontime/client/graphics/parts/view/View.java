@@ -3,10 +3,15 @@
  */
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.TableColumnModel;
+
+import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 
 
 /**
@@ -14,15 +19,27 @@ import javax.swing.table.TableColumnModel;
  */
 public class View {
 	private JScrollPane jScrollPane;
-    public View() {
+	private MultiSpanCellTable table;
+	private CellSpan cellAtt;
+	private static MainFrame mainFrame;
+	private AttributiveCellTableModel ml;
+	/**
+	 * @return Returns the table.
+	 */
+
+	
+    public View(MainFrame mainframe) {
+    	mainFrame=mainframe;
     	init();
     }
     public void init(){
     	UIManager.put(GroupableTableHeader.uiClassID, "fr.umlv.smoreau.beontime.client.graphics.parts.view.GroupableTableHeaderUI");
-    	JTable table;
-    	Object[][] obj=new Object[6][52];
     	String [] subHead=new String[]{"00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45","00","15","30","45"};
-    	table=new JTable(obj,subHead);
+        Object[][] data=new Object[6][52];
+    	ml = new AttributiveCellTableModel(data,subHead);
+        cellAtt =(CellSpan)ml.getCellAttribute();
+        table = new MultiSpanCellTable(ml);
+
 		GroupableTableHeader header = new GroupableTableHeader(table.getColumnModel());
 		TableColumnModel columns = table.getColumnModel();
 		String [] hours=new String[]{"8H","9H","10H","11H","12H","13H","14H","15H","16H","17H","18H","19H","20H"};
@@ -51,7 +68,37 @@ public class View {
 	/**
 	 * @return Returns the jPanel.
 	 */
-	public JScrollPane getJScrollPane() {
+
+    public JScrollPane getJScrollPane() {
 		return jScrollPane;
+	}
+	private static class PopupMenu extends JPopupMenu {
+	    private Object selected;
+	    
+	    public PopupMenu(Object object) {
+	        super();
+            JMenuItem menuItem = new JMenuItem(new AddCourse(false, mainFrame));
+			add(menuItem);
+	    }
+	}
+
+
+	/**
+	 * @return Returns the cellAtt.
+	 */
+	public AttributiveCellTableModel getTableModel() {
+		return ml;
+	}
+	/**
+	 * @return Returns the table.
+	 */
+	public MultiSpanCellTable getTable() {
+		return table;
+	}
+	/**
+	 * @return Returns the cellAtt.
+	 */
+	public CellSpan getCellAtt() {
+		return cellAtt;
 	}
 }
