@@ -15,10 +15,10 @@ public class UserDao extends Dao {
     private static final UserDao INSTANCE = new UserDao();
     
     private static final String TABLE = "Person";
-    private static final String TYPE_TEACHER   = "enseignant";
-    private static final String TYPE_STUDENT   = "etudiant";
-    private static final String TYPE_SECRETARY = "secretaire";
-    private static final String TYPE_ADMIN     = "administrateur";
+    public static final String TYPE_TEACHER   = "enseignant";
+    public static final String TYPE_STUDENT   = "etudiant";
+    public static final String TYPE_SECRETARY = "secretaire";
+    public static final String TYPE_ADMIN     = "administrateur";
     
     private UserDao() {
     }

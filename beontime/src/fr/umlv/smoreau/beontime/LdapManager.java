@@ -2,9 +2,9 @@ package fr.umlv.smoreau.beontime;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -17,9 +17,11 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchResult;
 
+import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.filter.FormationFilter;
 import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.user.Person;
 
 /**
  * @author BeOnTime
@@ -57,8 +59,55 @@ public class LdapManager {
 
 
 	public Collection getUsers(UserFilter filter) {
-		//TODO à implémenter
-		return null;
+	    ArrayList result = new ArrayList();
+
+		try {
+			Attributes matchAttrs = new BasicAttributes(true);
+			matchAttrs.put(new BasicAttribute("gidNumber","801"));
+			if (filter != null) {
+				if (filter.getTypePersonne().equals(UserDao.TYPE_ADMIN))
+					matchAttrs.put(new BasicAttribute("gidNumber","150"));
+				else if (filter.getTypePersonne().equals(UserDao.TYPE_TEACHER))
+					matchAttrs.put(new BasicAttribute("gidNumber","801"));
+				/*else if (filter.getTypePersonne().equals(UserDao.TYPE_STUDENT))
+					matchAttrs.put(new BasicAttribute(*/
+			    if (filter.getNom() != null)
+			        matchAttrs.put(new BasicAttribute("sn",filter.getNom()));
+			    if (filter.getPrenom() != null)
+			        matchAttrs.put(new BasicAttribute("givenName",filter.getPrenom()));
+			    if (filter.getEMail() != null)
+			        matchAttrs.put(new BasicAttribute("mail",filter.getEMail()));
+			    if (filter.getIdPersonne() != null)
+			        matchAttrs.put(new BasicAttribute("uidNumber",filter.getIdPersonne()));
+			}
+			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("users"),matchAttrs);
+			
+			while (items != null && items.hasMore()) {
+				SearchResult sr = (SearchResult)items.next();
+				Person person = new Person();
+				
+				Attributes attrs = sr.getAttributes();
+				Attribute tmp = attrs.get("sn");
+				if (tmp != null)
+				    person.setNom((String) tmp.get());
+				tmp = attrs.get("givenName");
+				if (tmp != null)
+					person.setPrenom((String) tmp.get());
+				tmp = attrs.get("mail");
+				if (tmp != null)
+					person.setEMail((String) tmp.get());
+				tmp = attrs.get("uidNumber");
+				if (tmp != null)
+					person.setIdPersonne(new Long((String) tmp.get()));
+				person.setTypePersonne(UserDao.TYPE_TEACHER);
+				
+				result.add(person);
+			}
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 	
 	public Collection getAdministrators(UserFilter filter) {
@@ -73,33 +122,52 @@ public class LdapManager {
 	}
 		
 	public Collection getTeachers(UserFilter filter) {
+	    ArrayList result = new ArrayList();
+
 		try {
 			Attributes matchAttrs = new BasicAttributes(true);
 			matchAttrs.put(new BasicAttribute("gidNumber","801"));
+			if (filter != null) {
+			    if (filter.getNom() != null)
+			        matchAttrs.put(new BasicAttribute("sn",filter.getNom()));
+			    if (filter.getPrenom() != null)
+			        matchAttrs.put(new BasicAttribute("givenName",filter.getPrenom()));
+			    if (filter.getEMail() != null)
+			        matchAttrs.put(new BasicAttribute("mail",filter.getEMail()));
+			    if (filter.getIdPersonne() != null)
+			        matchAttrs.put(new BasicAttribute("uidNumber",filter.getIdPersonne()));
+			}
 			NamingEnumeration items = search(DatabasesProperties.getLdapDNBase("users"),matchAttrs);
 			
 			while (items != null && items.hasMore()) {
 				SearchResult sr = (SearchResult)items.next();
+				Person person = new Person();
 				
 				Attributes attrs = sr.getAttributes();
-				NamingEnumeration attributs = attrs.getAll();
+				Attribute tmp = attrs.get("sn");
+				if (tmp != null)
+				    person.setNom((String) tmp.get());
+				tmp = attrs.get("givenName");
+				if (tmp != null)
+					person.setPrenom((String) tmp.get());
+				tmp = attrs.get("mail");
+				if (tmp != null)
+					person.setEMail((String) tmp.get());
+				tmp = attrs.get("uidNumber");
+				if (tmp != null)
+					person.setIdPersonne(new Long((String) tmp.get()));
+				person.setTypePersonne(UserDao.TYPE_TEACHER);
 				
-				while (attributs != null && attributs.hasMore()) {
-					Attribute attr = (Attribute)attributs.next();
-					String attrId = attr.getID();
-					if (attrId.equals("uid")) {
-						Enumeration values = attr.getAll();
-						while (values != null && values.hasMoreElements()) {
-							System.out.println(values.nextElement());
-						}
-					}
-				}
+				result.add(person);
 			}
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		//TODO à terminer
-		return null;
+		
+		for (Iterator i = result.iterator(); i.hasNext(); )
+			System.out.println(((Person) i.next()).getNom());
+
+		return result;
 	}
 
 	public Collection getUsers() {
@@ -138,7 +206,7 @@ public class LdapManager {
 				Attributes attrs = sr.getAttributes();
 				Attribute tmp = attrs.get("gidNumber");
 				if (tmp != null)
-				    formation.setIdFormation((Long) tmp.get());
+				    formation.setIdFormation(new Long((String) tmp.get()));
 				tmp = attrs.get("cn");
 				if (tmp != null)
 				    formation.setIntitule((String) tmp.get());
@@ -148,7 +216,7 @@ public class LdapManager {
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		//TODO à tester à la fac
+
 		return result;
 	}
 
@@ -181,4 +249,5 @@ public class LdapManager {
 
 		return true;
 	}
+
 }
