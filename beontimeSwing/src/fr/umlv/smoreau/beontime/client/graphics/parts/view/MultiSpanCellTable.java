@@ -10,8 +10,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-public class MultiSpanCellTable extends JTable {
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
 
+public class MultiSpanCellTable extends JTable {
   public MultiSpanCellTable(TableModel model) {
     super(model);
     setUI(new MultiSpanCellTableUI());    
@@ -77,10 +79,12 @@ public class MultiSpanCellTable extends JTable {
     if (cellAtt.isVisible(row,column)) {
       retValue[CellSpan.COLUMN] = column;
       retValue[CellSpan.ROW   ] = row;
-      return retValue;
     }
-    retValue[CellSpan.COLUMN] = column + cellAtt.getSpan(row,column)[CellSpan.COLUMN];
-    retValue[CellSpan.ROW   ] = row + cellAtt.getSpan(row,column)[CellSpan.ROW];
+    else{
+      retValue[CellSpan.COLUMN] = column + cellAtt.getSpan(row,column)[CellSpan.COLUMN];
+      retValue[CellSpan.ROW   ] = row + cellAtt.getSpan(row,column)[CellSpan.ROW];    	
+    }
+
     return retValue;
   }
 
@@ -92,10 +96,11 @@ public class MultiSpanCellTable extends JTable {
     return rowColumnAtPoint(point)[CellSpan.COLUMN];
   }
  
-
+  
   
   public void columnSelectionChanged(ListSelectionEvent e) {
     repaint();
+    
   }
 
   public void valueChanged(ListSelectionEvent e) {

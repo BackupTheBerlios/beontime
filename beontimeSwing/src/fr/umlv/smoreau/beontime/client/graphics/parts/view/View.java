@@ -1,15 +1,22 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 
+import java.awt.Point;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.table.TableColumnModel;
 
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.Subject;
 
 
 /**
@@ -39,7 +46,48 @@ public class View {
         cellAtt =(DefaultCellAttribute)ml.getCellAttribute();
         table = new MultiSpanCellTable(ml);
         table.setDefaultRenderer(Object.class ,new AttributiveCellRenderer());
+        table.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				int x=e.getX();
+				int y=e.getY();
+				Point p=new Point(x,y);
+				int row=table.rowAtPoint(p);
+				int column=table.columnAtPoint(p);
+				if (((Course) table.getValueAt(row,column))!=null){
+					ActionsList.getAction("ModifyCourse").setEnabled(true);
+					ActionsList.getAction("RemoveCourse").setEnabled(true);
+					ActionsList.getAction("CutCourse").setEnabled(true);
+					ActionsList.getAction("CopyCourse").setEnabled(true);
+				}
+				else{
+					ActionsList.getAction("ModifyCourse").setEnabled(false);
+					ActionsList.getAction("RemoveCourse").setEnabled(false);
+					ActionsList.getAction("CutCourse").setEnabled(false);
+					ActionsList.getAction("CopyCourse").setEnabled(false);
+				}
 
+			}
+
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		GroupableTableHeader header = new GroupableTableHeader(table.getColumnModel());
 		TableColumnModel columns = table.getColumnModel();
 		String [] hours=new String[]{"8H","9H","10H","11H","12H","13H","14H","15H","16H","17H","18H","19H","20H"};
