@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.UserDao;
+import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Formation;
 
 
@@ -483,6 +484,17 @@ public class AddModifyUserWindow {
 		if (email != null && !"".equals(email) && !email.matches(".*@.*\\..*")) {
 			return 3;
 		}
+		
+		try {
+		    UserFilter filter = new UserFilter();
+		    filter.setName(getName());
+		    filter.setFirstName(getSurname());
+		    if (DaoManager.getUserDao().getUsers(filter).size() > 0)
+                return 4;
+        } catch (Exception e) {
+            return -1;
+        }
+
 		return 0;
 	}
 	
@@ -507,6 +519,9 @@ public class AddModifyUserWindow {
 			case 3:
 				errorMessage = "L'adresse email est invalide";
 				break;
+            case 4:
+                errorMessage = "Un utilisateur de même nom et prénom existe déjà";
+                break;
 			default:
 				errorMessage = "Erreur inconnue";
 			}
