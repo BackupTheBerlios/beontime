@@ -10,7 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -104,7 +106,7 @@ public class TitleBar extends JPanel {
 		
 		final JDateChooser myDateChooser = new JDateChooser();
 		Date date=myDateChooser.getDate();
-		SimpleDateFormat df = new SimpleDateFormat( "dd/MM/yyyy" );
+		final SimpleDateFormat df = new SimpleDateFormat( "dd/MM/yyyy" );
 		periodButton = new JButton(df.format(date));
 		periodPanel.add(periodButton, BorderLayout.CENTER);
 		periodButton.addActionListener(new ActionListener() {
@@ -118,6 +120,37 @@ public class TitleBar extends JPanel {
 		
 		nextButton = new JButton(Action.getImage("images/Forward24.gif"));
 		periodPanel.add(nextButton, BorderLayout.EAST);
+		
+		previousButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				String per=getPeriod();
+				Calendar c=df.getCalendar();
+				try {
+					c.setTime(df.parse(per));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				int d=c.get(Calendar.DAY_OF_MONTH);
+				c.set(Calendar.DAY_OF_MONTH,d-1);
+				setPeriod(df.format(c.getTime()));
+			}
+		});
+		nextButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				String per=getPeriod();
+				Calendar c=df.getCalendar();
+				try {
+					c.setTime(df.parse(per));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				int d=c.get(Calendar.DAY_OF_MONTH);
+				c.set(Calendar.DAY_OF_MONTH,d+1);
+				setPeriod(df.format(c.getTime()));
+			}
+		});
 		
 	}
 
