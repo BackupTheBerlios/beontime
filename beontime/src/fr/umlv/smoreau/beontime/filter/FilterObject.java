@@ -5,6 +5,7 @@ package fr.umlv.smoreau.beontime.filter;
  */
 public class FilterObject {
     public static final String EQUAL = "=";
+    public static final String NOT_EQUAL = "!=";
     public static final String LESS = "<";
     public static final String GREAT = ">";
     public static final String LESS_EQUAL = "<=";

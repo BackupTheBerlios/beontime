@@ -43,6 +43,7 @@ public class Unavailability extends BaseUnavailability {
 	
     private Calendar beginPeriod;
     private Calendar endPeriod;
+    private String notDescription;
 
 	
     public String getBeginPeriod() {
@@ -83,5 +84,13 @@ public class Unavailability extends BaseUnavailability {
             this.endPeriod.setTime(FORMAT_DATE.parse(endPeriod));
         } catch (ParseException e) {
         }
+    }
+    
+    public void setNotDescription(String notDescription) {
+        this.notDescription = notDescription;
+    }
+    
+    public String getNotDescription() {
+        return notDescription;
     }
 }

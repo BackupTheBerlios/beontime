@@ -19,12 +19,11 @@ import fr.umlv.smoreau.beontime.model.UnavailabilityType;
 public interface UnavailabilityDao extends Remote {
     public static final String TYPE_TEACHER  = "enseignant";
     public static final String TYPE_GROUP    = "groupe";
-    public static final String TYPE_COURSE   = "cours";
     public static final String TYPE_MATERIAL = "matériel";
     public static final String TYPE_ROOM     = "local";
     public static final String TYPE_CALENDAR = "calendrier";
     
-    public static String[] ALL_TYPES = { TYPE_TEACHER, TYPE_GROUP, TYPE_COURSE, TYPE_MATERIAL, TYPE_ROOM, TYPE_CALENDAR };
+    public static String[] ALL_TYPES = { TYPE_TEACHER, TYPE_GROUP, TYPE_MATERIAL, TYPE_ROOM, TYPE_CALENDAR };
 
 
     public static final String AUTO_DESCRIPTION = "Ajout automatique ...";
