@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -67,6 +69,7 @@ public class AddModifyUnavailabilityWindow {
     private GridBagConstraints layoutConstraints = new GridBagConstraints();
 	
 
+  
     
     public AddModifyUnavailabilityWindow() {
     	
@@ -171,12 +174,20 @@ public class AddModifyUnavailabilityWindow {
     	typeUnavailabilityJcb.addItem("Enseignant");
     	typeUnavailabilityJcb.addItem("Etudiant");
     	typeUnavailabilityJcb.addItem("Cours");
+    	
+    	
+    	typeUnavailabilityJcb.addItemListener(new ItemListener() {
+    		public void itemStateChanged(ItemEvent e) {
+    			subjectUnavailabilityLabel.setText(typeUnavailabilityJcb.getSelectedItem()+" indisponible :");
+    		}
+
+    	});
     	addComponent(AMUWLayout,layoutConstraints,typeUnavailabilityJcb,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(20,10,10,10));
     	AMUWFrame.getContentPane().add(typeUnavailabilityJcb);
     	
     	
     	
-    	subjectUnavailabilityLabel = new JLabel("<type> indisponible :");
+    	subjectUnavailabilityLabel = new JLabel("Enseignant indisponible :");
     	addComponent(AMUWLayout,layoutConstraints,subjectUnavailabilityLabel,2,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(10,10,10,10));
     	AMUWFrame.getContentPane().add(subjectUnavailabilityLabel);
     	

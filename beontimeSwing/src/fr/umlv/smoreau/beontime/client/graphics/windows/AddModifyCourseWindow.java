@@ -7,12 +7,16 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.toedter.calendar.JDateChooser;
@@ -62,6 +66,9 @@ public class AddModifyCourseWindow {
 	private JButton CourseEquipmentPlus;
 	private JButton ok;
 	private JButton annuler;
+	
+	private JPanel placeCoursePanel = new JPanel();
+	private JPanel placeCoursePlusPanel = new JPanel();
 	
 	private JFrame AMCWFrame;
 	private GridBagLayout AMCWLayout = new GridBagLayout();
@@ -160,10 +167,27 @@ public class AddModifyCourseWindow {
     	AMCWFrame.getContentPane().add(placeCourseLabel);
     	
     	placeCourseJcb = new JComboBox();
-    	addComponent(AMCWLayout,layoutConstraints,placeCourseJcb,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMCWFrame.getContentPane().add(placeCourseJcb);
+    	/*addComponent(AMCWLayout,layoutConstraints,placeCourseJcb,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+    	AMCWFrame.getContentPane().add(placeCourseJcb);*/
 
+    	BoxLayout layout = new BoxLayout(placeCoursePanel, BoxLayout.Y_AXIS);
+    	placeCoursePanel.setLayout(layout);
+    	placeCoursePanel.add(placeCourseJcb);
+    	addComponent(AMCWLayout,layoutConstraints,placeCoursePanel,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
+    	AMCWFrame.getContentPane().add(placeCoursePanel);
+    	
     	placeCoursePlus = new JButton("+");
+    	placeCoursePlus.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				placeCoursePanel.add(new JComboBox());
+				System.out.println("coucou");
+				placeCoursePlus.setLabel("x");
+				AMCWFrame.pack();
+			}
+    		
+    	});
+    	
     	addComponent(AMCWLayout,layoutConstraints,placeCoursePlus,6,5,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
     	AMCWFrame.getContentPane().add(placeCoursePlus);
     	
