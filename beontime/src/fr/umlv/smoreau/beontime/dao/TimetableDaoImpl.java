@@ -126,6 +126,13 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
             course.setIdFormation(filter.getFormation().getIdFormation());
             timetable.setCourses(get(TABLE_COURSE, new CourseFilter(course), Hibernate.getCurrentSession()));
             
+            UserFilter userFilter = new UserFilter();
+            userFilter.setIdUser(timetable.getFormation().getIdTeacher());
+            userFilter.setUserType(UserDao.TYPE_TEACHER);
+            UserDao userDao = UserDaoImpl.getInstance();
+            c = userDao.getUsers(userFilter);
+            timetable.setPersonInCharge((User) c.toArray()[0]);
+            
             //TODO manque la relation ternaire ...
 
             return timetable;

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -15,6 +16,7 @@ public class Timetable implements Serializable {
     private Collection groups;
     private Collection subjects;
     private Collection courses;
+    private User personInCharge;
     
     public Timetable() {
     }
@@ -84,5 +86,13 @@ public class Timetable implements Serializable {
      */
     public void setGroup(Group group) {
         this.group = group;
+    }
+    
+    public void setPersonInCharge(User personInCharge) {
+        this.personInCharge = personInCharge;
+    }
+    
+    public User getPersonInCharge() {
+        return personInCharge;
     }
 }
