@@ -45,33 +45,39 @@ public class GroupDao extends Dao {
 		return getGroups(null);
 	}
 	
-	public void addGroup(Group group) {
+	public boolean addGroup(Group group) {
         try {
             TransactionManager.beginTransaction();
             add(group);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'un groupe : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void modifyGroup(Group group) {
+	public boolean modifyGroup(Group group) {
         try {
             TransactionManager.beginTransaction();
             modify(group);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la modification d'un groupe : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void removeGroup(Group group) {
+	public boolean removeGroup(Group group) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE, new GroupFilter(group));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'un groupe : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 }

@@ -1,7 +1,6 @@
 package fr.umlv.smoreau.beontime.model.association;
 
 import fr.umlv.smoreau.beontime.model.base.BaseAppartientEtudiantGroupe;
-import fr.umlv.smoreau.beontime.model.Formation;
 
 /**
  * This is the object class that relates to the Appartient_Etudiant_Groupe table.
@@ -26,7 +25,7 @@ public class AppartientEtudiantGroupe extends BaseAppartientEtudiantGroupe {
 	 */
 	public AppartientEtudiantGroupe (
 		java.lang.Long _idGroupe,
-		Formation _idFormation) {
+		java.lang.Long _idFormation) {
 
 		super (
 			_idGroupe,

@@ -12,11 +12,10 @@ import junit.framework.TestSuite;
 /**
  * @author BeOnTime
  */
-public class DaoTest extends TestCase {
+public class UserDaoTest extends TestCase {
     private static final UserDao userDao = UserDao.getInstance();
-    private static final GroupDao groupDao = GroupDao.getInstance();
-    
-    public DaoTest(String name) {
+
+    public UserDaoTest(String name) {
         super(name);
     }
     
@@ -38,12 +37,8 @@ public class DaoTest extends TestCase {
         assertTrue(userDao.removeUser(person));
     }
     
-    public void testGetGroups() {
-        assertNotNull(groupDao.getGroups());
-    }
-    
     public static Test suite() {
-        return new TestSuite(DaoTest.class);
+        return new TestSuite(UserDaoTest.class);
     }
 
 

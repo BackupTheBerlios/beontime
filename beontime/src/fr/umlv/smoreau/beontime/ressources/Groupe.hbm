@@ -4,14 +4,19 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
 
 <hibernate-mapping>
-	<class name="fr.umlv.smoreau.beontime.model.Group" table="Groupe">
+	<class name="fr.umlv.smoreau.beontime.model.Group" table="groupe">
 		<id
-			column="ID_groupe"
+			column="id_groupe"
 			name="IdGroupe"
 			type="java.lang.Long"
 		>
 			<generator class="vm" />
 		</id>
+		<property
+			column="id_formation"
+			name="IdFormation"
+			type="java.lang.Long"
+		 />
 		<property
 			column="Intitule"
 			length="20"
@@ -20,21 +25,14 @@
 			type="string"
 		 />
 
-		<many-to-one
-			class="fr.umlv.smoreau.beontime.model.Formation"
-			name="IdFormation"
-			not-null="true"
-		>
-			<column name="ID_formation" />
-		</many-to-one>
 		<set inverse="true" name="ParticipeGroupeMatiereCoursSet">
-			<key column="ID_groupe" />
+			<key column="id_groupe" />
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
 		<joined-subclass name="fr.umlv.smoreau.beontime.model.association.AppartientEtudiantGroupe" table="Appartient_Etudiant_Groupe">
-			<key column="ID_groupe" />
+			<key column="id_groupe" />
 			<property
-				column="ID_etudiant"
+				column="id_etudiant"
 				length="8"
 				name="IdEtudiant"
 				not-null="true"

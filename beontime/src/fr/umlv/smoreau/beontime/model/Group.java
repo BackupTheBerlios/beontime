@@ -25,7 +25,7 @@ public class Group extends BaseGroup {
 	 */
 	public Group (
 		java.lang.Long _idGroupe,
-		Formation _idFormation) {
+		java.lang.Long _idFormation) {
 
 		super (
 			_idGroupe,
