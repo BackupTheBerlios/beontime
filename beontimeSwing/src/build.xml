@@ -39,14 +39,11 @@
     <javac srcdir="${src}" destdir="${classes}" excludes="**/test/*.java">
     	<classpath refid="classpath"/>
     </javac>
-  	<copy todir="${classes}/fr/umlv/smoreau/beontime/client/actions/images/">
-  	  	<fileset dir="${src}/fr/umlv/smoreau/beontime/client/actions/images"/>
-  	</copy>
-  	<copy todir="${classes}/fr/umlv/smoreau/beontime/client/graphics/">
-  	  	<fileset file="${src}/fr/umlv/smoreau/beontime/client/graphics/miniLogoBoT.png"/>
-  	</copy>
-  	<copy todir="${classes}/fr/umlv/smoreau/beontime/client/graphics/windows/">
-  	  	<fileset file="${src}/fr/umlv/smoreau/beontime/client/graphics/windows/logoBoT.gif"/>
+  	<copy todir="${classes}" filtering="on">
+  		<fileset dir="${src}">
+  			<include name="**/*.png"/>
+  			<include name="**/*.gif"/>
+  		</fileset>
   	</copy>
   </target>
 
