@@ -10,8 +10,8 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
  * @author BeOnTime
  */
 public class ModifyCourse extends Action {
-    private static final String NAME = "Placer un cours";
-    private static final String ICON = "Edit24.gif";
+    private static final String NAME = "Modifier le cours";
+    private static final String ICON = "modifier_cours.png";
 
 
     public ModifyCourse(MainFrame mainFrame) {

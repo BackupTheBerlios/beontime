@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUnavailabilityW
  */
 public class AddUnavailability extends Action {
     private static final String NAME = "Ajouter une indisponibilité";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "ajouter_indisponibilite.png";
     
     public AddUnavailability(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

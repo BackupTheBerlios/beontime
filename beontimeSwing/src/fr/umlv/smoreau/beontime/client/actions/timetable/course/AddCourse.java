@@ -13,7 +13,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
  */
 public class AddCourse extends Action {
     private static final String NAME = "Placer un cours";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "ajouter_cours.png";
     
 
     public AddCourse(MainFrame mainFrame) {

@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
  */
 public class ManageUsers extends Action {
     private static final String NAME = "Gérer les utilisateurs";
-    private static final String ICON = "";
+    private static final String ICON = "gerer_user.png";
 
 
     public ManageUsers(MainFrame mainFrame) {

@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class RemoveUser extends Action {
     private static final String NAME = "Supprimer l'utilisateur";
-    private static final String ICON = "Remove24.gif";
+    private static final String ICON = "supprimer_user.png";
 
 
     public RemoveUser(MainFrame mainFrame) {

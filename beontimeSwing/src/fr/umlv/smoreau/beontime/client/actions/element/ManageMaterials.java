@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
  */
 public class ManageMaterials extends Action {
     private static final String NAME = "Gérer les matériels";
-    private static final String ICON = "";
+    private static final String ICON = "gerer_materiel.png";
 
 
     public ManageMaterials(MainFrame mainFrame) {

@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class RemoveUnavailability extends Action {
     private static final String NAME = "Supprimer l'indisponibilité";
-    private static final String ICON = "Remove24.gif";
+    private static final String ICON = "supprimer_indisponibilite.png";
     
     public RemoveUnavailability(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
  */
 public class ManageSubjects extends Action {
     private static final String NAME = "Gérer les matières";
-    private static final String ICON = "";
+    private static final String ICON = "gerer_matiere.png";
 
 
     public ManageSubjects(MainFrame mainFrame) {

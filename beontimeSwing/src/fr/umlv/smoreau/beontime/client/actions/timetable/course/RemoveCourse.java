@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class RemoveCourse extends Action {
     private static final String NAME = "Supprimer le cours";
-    private static final String ICON = "Delete24.gif";
+    private static final String ICON = "supprimer_cours.png";
 
 
     public RemoveCourse(MainFrame mainFrame) {

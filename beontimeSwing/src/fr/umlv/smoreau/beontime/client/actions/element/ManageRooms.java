@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
  */
 public class ManageRooms extends Action {
     private static final String NAME = "Gérer les locaux";
-    private static final String ICON = "";
+    private static final String ICON = "gerer_local.png";
 
 
     public ManageRooms(MainFrame mainFrame) {

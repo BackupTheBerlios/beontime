@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class RemoveGroup extends Action {
     private static final String NAME = "Supprimer le groupe";
-    private static final String ICON = "Remove24.gif";
+    private static final String ICON = "supprimer_groupe.png";
 
 
     public RemoveGroup(MainFrame mainFrame) {

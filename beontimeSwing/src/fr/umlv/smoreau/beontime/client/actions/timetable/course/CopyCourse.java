@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class CopyCourse extends Action {
     private static final String NAME = "Copier le cours";
-    private static final String ICON = "Copy24.gif";
+    private static final String ICON = "copier.png";
 
 
     public CopyCourse(MainFrame mainFrame) {

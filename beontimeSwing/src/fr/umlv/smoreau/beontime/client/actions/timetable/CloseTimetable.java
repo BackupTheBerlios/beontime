@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class CloseTimetable extends Action {
     private static final String NAME = "Fermer l'emploi du temps";
-    private static final String ICON = "";
+    private static final String ICON = "fermer_emploi.png";
 
 
     public CloseTimetable(MainFrame mainFrame) {

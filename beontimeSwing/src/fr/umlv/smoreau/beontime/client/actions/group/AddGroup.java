@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyGroupWindow;
  */
 public class AddGroup extends Action {
     private static final String NAME = "Créer un groupe";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "creer_groupe.png";
 
 
     public AddGroup(MainFrame mainFrame) {

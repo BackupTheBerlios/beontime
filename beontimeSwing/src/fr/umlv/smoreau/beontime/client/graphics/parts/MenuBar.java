@@ -6,38 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import fr.umlv.smoreau.beontime.client.actions.About;
-import fr.umlv.smoreau.beontime.client.actions.ViewAllFunctionalities;
-import fr.umlv.smoreau.beontime.client.actions.authentication.ModifyDBParameters;
-import fr.umlv.smoreau.beontime.client.actions.authentication.Quit;
-import fr.umlv.smoreau.beontime.client.actions.availability.AddUnavailability;
-import fr.umlv.smoreau.beontime.client.actions.availability.ManageUnavailabilities;
-import fr.umlv.smoreau.beontime.client.actions.availability.SearchAvailability;
-import fr.umlv.smoreau.beontime.client.actions.element.AddMaterial;
-import fr.umlv.smoreau.beontime.client.actions.element.AddRoom;
-import fr.umlv.smoreau.beontime.client.actions.element.ManageMaterials;
-import fr.umlv.smoreau.beontime.client.actions.element.ManageRooms;
-import fr.umlv.smoreau.beontime.client.actions.group.AddGroup;
-import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
-import fr.umlv.smoreau.beontime.client.actions.group.ManageGroups;
-import fr.umlv.smoreau.beontime.client.actions.group.ModifyGroup;
-import fr.umlv.smoreau.beontime.client.actions.group.RemoveGroup;
-import fr.umlv.smoreau.beontime.client.actions.timetable.CloseTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.ExportTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.PrintTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.ViewTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.CopyCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.CutCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.ModifyCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.PasteCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.RemoveCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.ManageSubjects;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.ModifySubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
-import fr.umlv.smoreau.beontime.client.actions.user.AddUser;
-import fr.umlv.smoreau.beontime.client.actions.user.ManageUsers;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 
@@ -72,40 +41,42 @@ public class MenuBar extends JMenuBar {
 
 		JMenu fichier = new JMenu("Fichier");
 		if (isSecretary || all) {
-			fichier.add(new JMenuItem(new ViewTimetable(mainFrame)));
-			fichier.add(new JMenuItem(new CloseTimetable(mainFrame)));
+			fichier.add(new JMenuItem(ActionsList.getAction("ViewTimetable")));
+			fichier.add(new JMenuItem(ActionsList.getAction("CloseTimetable")));
 			fichier.addSeparator();
-			fichier.add(new JMenuItem(new PrintTimetable("Imprimer",null)));
-			fichier.add(new JMenuItem(new ExportTimetable("Exporter", mainFrame)));
+			fichier.add(new JMenuItem(ActionsList.getAction("PrintTimetable")));
+			fichier.add(new JMenuItem(ActionsList.getAction("ExportTimetable")));
 			fichier.addSeparator();
 		}
-		fichier.add(new JMenuItem(new Quit(mainFrame)));
+		fichier.add(new JMenuItem(ActionsList.getAction("Quit")));
 
 		JMenu edition = null;
 		JMenu affichage = null;
 		if (isSecretary || all) {
 			edition = new JMenu("Edition");
-			edition.add(new JMenuItem(new CutCourse("Couper", mainFrame)));
-			edition.add(new JMenuItem(new CopyCourse("Copier", mainFrame)));		
-			edition.add(new JMenuItem(new PasteCourse("Coller", mainFrame)));
+			edition.add(new JMenuItem(ActionsList.getAction("CutCourse")));
+			edition.add(new JMenuItem(ActionsList.getAction("CopyCourse")));		
+			edition.add(new JMenuItem(ActionsList.getAction("PasteCourse")));
 			
 			affichage = new JMenu("Affichage");
 			JMenu presentation = new JMenu("Présentation");		
-			presentation.add(new JMenuItem("Verticale"));
-			presentation.add(new JMenuItem("Horizontale"));
+			presentation.add(new JMenuItem(ActionsList.getAction("ShowTimetableVertical")));
+			presentation.add(new JMenuItem(ActionsList.getAction("ShowTimetableHorizontal")));
 			affichage.add(presentation);
 			JMenu vue = new JMenu("Vue");
-			vue.add(new JMenuItem("Semaine"));		
-			vue.add(new JMenuItem("Semestre"));
+			vue.add(new JMenuItem(ActionsList.getAction("ShowTimetableByWeek")));		
+			vue.add(new JMenuItem(ActionsList.getAction("ShowTimetableBySixMonthPeriod")));
 			affichage.add(vue);
 		}
 		
 		JMenu utilisateur = new JMenu("Utilisateur");
 		if (isSecretary || all)
-		    utilisateur.add(new JMenuItem(new AddUser("Créer un enseignant", mainFrame, UserDao.TYPE_TEACHER)));
-		if (!isSecretary)
-		    utilisateur.add(new JMenuItem(new AddUser("Créer une secrétaire", mainFrame, UserDao.TYPE_SECRETARY)));
-		utilisateur.add(new JMenuItem(new ManageUsers(mainFrame)));
+		    utilisateur.add(new JMenuItem(ActionsList.getAction("AddTeacher")));
+		if (!isSecretary) {
+		    utilisateur.add(new JMenuItem(ActionsList.getAction("AddAdministrator")));
+		    utilisateur.add(new JMenuItem(ActionsList.getAction("AddSecretary")));
+		}
+		utilisateur.add(new JMenuItem(ActionsList.getAction("ManageUsers")));
 		
 		JMenu emploi_du_temps = null;
 		JMenu indisponibilite = null;
@@ -113,58 +84,58 @@ public class MenuBar extends JMenuBar {
 			emploi_du_temps = new JMenu("Emploi du temps");
 			
 			JMenu matiere = new JMenu("Matière");
-			matiere.add(new JMenuItem(new AddSubject("Ajouter", mainFrame)));
-			matiere.add(new JMenuItem(new ModifySubject("Modifier", mainFrame)));
-			matiere.add(new JMenuItem(new RemoveSubject("Supprimer", mainFrame)));
-			matiere.add(new JMenuItem(new ManageSubjects(mainFrame)));
+			matiere.add(new JMenuItem(ActionsList.getAction("AddSubject")));
+			matiere.add(new JMenuItem(ActionsList.getAction("ModifySubject")));
+			matiere.add(new JMenuItem(ActionsList.getAction("RemoveSubject")));
+			matiere.add(new JMenuItem(ActionsList.getAction("ManageSubjects")));
 			
 			emploi_du_temps.add(matiere);
 			
 			JMenu cours = new JMenu("Cours");
-			cours.add(new JMenuItem(new AddCourse("Placer", mainFrame)));
-			cours.add(new JMenuItem(new ModifyCourse("Modifier", mainFrame)));
-			cours.add(new JMenuItem(new RemoveCourse("Supprimer", mainFrame)));
+			cours.add(new JMenuItem(ActionsList.getAction("AddCourse")));
+			cours.add(new JMenuItem(ActionsList.getAction("ModifyCourse")));
+			cours.add(new JMenuItem(ActionsList.getAction("RemoveCourse")));
 			
 			emploi_du_temps.add(cours);
 			
 			JMenu groupe = new JMenu("Groupe");
-			groupe.add(new JMenuItem(new AddGroup("Créer", mainFrame)));
-			groupe.add(new JMenuItem(new ModifyGroup("Modifier", mainFrame)));
-			groupe.add(new JMenuItem(new RemoveGroup("Supprimer", mainFrame)));
-			groupe.add(new JMenuItem(new ManageGroups(mainFrame)));
+			groupe.add(new JMenuItem(ActionsList.getAction("AddGroup")));
+			groupe.add(new JMenuItem(ActionsList.getAction("ModifyGroup")));
+			groupe.add(new JMenuItem(ActionsList.getAction("RemoveGroup")));
+			groupe.add(new JMenuItem(ActionsList.getAction("ManageGroups")));
 			groupe.addSeparator();
-			groupe.add(new JMenuItem(new GenerateGroups(mainFrame)));
+			groupe.add(new JMenuItem(ActionsList.getAction("GenerateGroups")));
 			
 			emploi_du_temps.add(groupe);
 			
 			JMenu local = new JMenu("Local"); 
-			local.add(new JMenuItem(new AddRoom("Créer", mainFrame)));
-			local.add(new JMenuItem(new ManageRooms(mainFrame)));
+			local.add(new JMenuItem(ActionsList.getAction("AddRoom")));
+			local.add(new JMenuItem(ActionsList.getAction("ManageRooms")));
 			
 			emploi_du_temps.add(local);
 			
 			JMenu materiel = new JMenu("Matériel"); 
-			materiel.add(new JMenuItem(new AddMaterial("Créer", mainFrame)));
-			materiel.add(new JMenuItem(new ManageMaterials(mainFrame)));
+			materiel.add(new JMenuItem(ActionsList.getAction("AddMaterial")));
+			materiel.add(new JMenuItem(ActionsList.getAction("ManageMaterials")));
 			
 			emploi_du_temps.add(materiel);
 			
 			indisponibilite = new JMenu("Indisponibilite");
-			indisponibilite.add(new JMenuItem(new AddUnavailability("Ajouter", mainFrame)));
-			indisponibilite.add(new JMenuItem(new ManageUnavailabilities(mainFrame)));
-			indisponibilite.add(new JMenuItem(new SearchAvailability(mainFrame)));
+			indisponibilite.add(new JMenuItem(ActionsList.getAction("AddUnavailability")));
+			indisponibilite.add(new JMenuItem(ActionsList.getAction("ManageUnavailabilities")));
+			indisponibilite.add(new JMenuItem(ActionsList.getAction("SearchAvailability")));
 		}
 		
 		JMenu outils = null;
 		if (!isSecretary) {
 			outils = new JMenu("Outils");
-			outils.add(new JMenuItem(new ModifyDBParameters(mainFrame)));
+			outils.add(new JMenuItem(ActionsList.getAction("ModifyDBParameters")));
 			if (!all)
-			    outils.add(new JMenuItem(new ViewAllFunctionalities(mainFrame)));
+			    outils.add(new JMenuItem(ActionsList.getAction("ViewAllFunctionalities")));
 		}
 		
 		JMenu a_propos_de = new JMenu("?");
-		a_propos_de.add(new JMenuItem(new About(mainFrame)));
+		a_propos_de.add(new JMenuItem(ActionsList.getAction("About")));
 		
 
 		add(fichier);

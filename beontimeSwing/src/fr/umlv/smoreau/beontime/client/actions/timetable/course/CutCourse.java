@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class CutCourse extends Action {
     private static final String NAME = "Couper le cours";
-    private static final String ICON = "Cut24.gif";
+    private static final String ICON = "couper.png";
 
 
     public CutCourse(MainFrame mainFrame) {

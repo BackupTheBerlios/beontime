@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
  */
 public class ViewTimetable extends Action{
     private static final String NAME = "Visualiser un emploi du temps";
-    private static final String ICON = "Find24.gif";
+    private static final String ICON = "visualiser_emploi.png";
 
 
     public ViewTimetable(MainFrame mainFrame) {

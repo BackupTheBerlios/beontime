@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.SearchAvailabilityWindow
  */
 public class SearchAvailability extends Action {
     private static final String NAME = "Rechercher une disponibilité";
-    private static final String ICON = "Find24.gif";
+    private static final String ICON = "rechercher_indisponibilite.png";
     
     public SearchAvailability(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

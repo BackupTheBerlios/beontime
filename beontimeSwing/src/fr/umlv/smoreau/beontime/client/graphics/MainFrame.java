@@ -18,6 +18,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.parts.ButtonBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.MenuBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.StateBar;
@@ -67,6 +68,7 @@ public class MainFrame {
     /** Creates a new instance of FenetreConjugaison */
     private MainFrame() {
         initMainFrame();
+        ActionsList.initActions(this);
     }
     
     
@@ -165,7 +167,6 @@ public class MainFrame {
 			public void componentShown(ComponentEvent e) {
 			}
 		});
-	
     }
 
     public View getView(){

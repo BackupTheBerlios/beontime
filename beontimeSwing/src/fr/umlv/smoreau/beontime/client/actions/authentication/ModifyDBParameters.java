@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ModifyDBParametersWindow
  */
 public class ModifyDBParameters extends Action {
     private static final String NAME = "Configurer les connexions aux bases de données";
-    private static final String ICON = "Preferences24.gif";
+    private static final String ICON = "configurer.png";
     
     public ModifyDBParameters(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

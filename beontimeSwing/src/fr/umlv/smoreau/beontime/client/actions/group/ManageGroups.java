@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageGroupsWindow;
  */
 public class ManageGroups extends Action {
     private static final String NAME = "Gérer les groupes";
-    private static final String ICON = "";
+    private static final String ICON = "gerer_groupe.png";
 
 
     public ManageGroups(MainFrame mainFrame) {

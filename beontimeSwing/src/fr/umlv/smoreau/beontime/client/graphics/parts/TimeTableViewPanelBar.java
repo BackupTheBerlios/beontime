@@ -50,23 +50,21 @@ public class TimeTableViewPanelBar extends JPanel {
 		final GridBagConstraints layoutConstraints = new GridBagConstraints();
 		setLayout(visuEDTPanelLayout);
 		visuEDTLabel = new JLabel("Visualiser un emploi du temps");
-		addComponent(visuEDTPanelLayout,layoutConstraints,visuEDTLabel,1,1,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(10,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,visuEDTLabel,1,1,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(5,5,5,5));
 		add(visuEDTLabel);
 		jcbTypeEDT = new JComboBox(ALL_TYPES);
-		jcbTypeEDT.addItem("Formation");
-		jcbTypeEDT.addItem("Enseignant");
-		jcbTypeEDT.addItem("Groupe");
-		jcbTypeEDT.addItem("Local");
-		jcbTypeEDT.addItem("Materiel");
 		jcbTypeEDT.addItemListener(new ItemListenerType(this,visuEDTPanelLayout,layoutConstraints));
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbTypeEDT,1,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(2,2,2,2));
 		add(jcbTypeEDT);
 		jcbSubjectEDT = new JComboBox();
 		jcbSubjectEDT.addItemListener(new ItemListenerSubject());
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,3,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbSubjectEDT,3,2,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(2,2,2,2));
 		add(jcbSubjectEDT);
 		jcbGroupEDT = new JComboBox(); 
-		addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,3,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
+		addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,3,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(2,2,2,2));
+		add(jcbGroupEDT);
+		jcbSubjectEDT.setEnabled(false);
+		jcbGroupEDT.setEnabled(false);
 	}
 	
 	private static void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
@@ -101,10 +99,8 @@ public class TimeTableViewPanelBar extends JPanel {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				jcbSubjectEDT.removeAllItems();
 				try {
-				    if (panel.getComponentCount() > 3) {
-						remove(3);
-						panel.validate();
-				    }
+				    jcbSubjectEDT.setEnabled(false);
+				    jcbGroupEDT.setEnabled(false);
 					if (TYPE_FORMATION.equals(event.getItem())) {
 						Collection formations = DaoManager.getFormationDao().getFormations();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
@@ -112,6 +108,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							Formation formation = (Formation) i.next();
 							jcbSubjectEDT.addItem(new Item(formation.getHeading(), formation.getIdFormation()));
 						}
+						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_ENSEIGNANT.equals(event.getItem())) {
 						Collection teachers = DaoManager.getUserDao().getTeachers();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
@@ -119,6 +116,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							User teacher = (User) i.next();
 							jcbSubjectEDT.addItem(new Item(teacher.getName()+" "+teacher.getFirstName(), teacher.getIdUser()));
 						}
+						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_LOCAL.equals(event.getItem())) {
 						Collection rooms = DaoManager.getElementDao().getRooms();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
@@ -126,6 +124,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							Room room = (Room) i.next();
 							jcbSubjectEDT.addItem(new Item(room.getName(),room.getIdRoom()));
 						}
+						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_MATERIEL.equals(event.getItem())) {
 						Collection materials = DaoManager.getElementDao().getMaterials();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
@@ -133,6 +132,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							Material material = (Material) i.next();
 							jcbSubjectEDT.addItem(new Item(material.getName(), material.getIdMaterial()));
 						}
+						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_GROUPE.equals(event.getItem())) {
 						Collection formations = DaoManager.getFormationDao().getFormations();
 						jcbSubjectEDT.addItem(TYPE_VIDE);
@@ -140,10 +140,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							Formation formation = (Formation) i.next();
 							jcbSubjectEDT.addItem(new Item(formation.getHeading(), formation.getIdFormation()));
 						}
-						
-						addComponent(visuEDTPanelLayout,layoutConstraints,jcbGroupEDT,3,3,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(10,10,10,10));
-						add(jcbGroupEDT);
-						panel.validate();
+						jcbSubjectEDT.setEnabled(true);
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -156,12 +153,16 @@ public class TimeTableViewPanelBar extends JPanel {
 		public void itemStateChanged(ItemEvent event) {
 			if (ItemEvent.SELECTED == event.getStateChange()) {
 				try {
-					if (!TYPE_VIDE.equals(event.getItem()) && TYPE_FORMATION.equals(jcbTypeEDT.getSelectedItem())) {
-						Long id = ((Item)event.getItem()).getId();
-						TimetableFilter filter = new TimetableFilter();
-						filter.setFormation(new Formation(id));
-						Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
-						mainFrame.getModel().fireShowTimetable(timetable);
+					if (!TYPE_VIDE.equals(event.getItem())) {
+					    if (TYPE_FORMATION.equals(jcbTypeEDT.getSelectedItem())) {
+							Long id = ((Item)event.getItem()).getId();
+							TimetableFilter filter = new TimetableFilter();
+							filter.setFormation(new Formation(id));
+							Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
+							mainFrame.getModel().fireShowTimetable(timetable);
+					    } else if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem())) {
+					        jcbGroupEDT.setEnabled(true);
+					    }
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);

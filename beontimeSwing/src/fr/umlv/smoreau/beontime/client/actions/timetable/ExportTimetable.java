@@ -20,7 +20,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class ExportTimetable extends Action {
     private static final String NAME = "Exporter l'emploi du temps";
-    private static final String ICON = "Export24.gif";
+    private static final String ICON = "exporter.png";
 
 
     public ExportTimetable(MainFrame mainFrame) {

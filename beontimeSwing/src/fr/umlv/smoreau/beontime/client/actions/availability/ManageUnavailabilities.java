@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
  */
 public class ManageUnavailabilities extends Action {
     private static final String NAME = "Gérer les indisponibilités";
-    private static final String ICON = "";
+    private static final String ICON = "gerer_indisponibilite.png";
 
 
     public ManageUnavailabilities(MainFrame mainFrame) {

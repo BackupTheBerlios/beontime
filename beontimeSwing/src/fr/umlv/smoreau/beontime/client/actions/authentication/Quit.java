@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class Quit extends Action {
     private static final String NAME = "Quitter";
-    private static final String ICON = "";
+    private static final String ICON = "quitter.png";
     
     public Quit(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

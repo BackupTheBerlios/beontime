@@ -14,13 +14,13 @@ import fr.umlv.smoreau.beontime.client.actions.timetable.subject.*;
 import fr.umlv.smoreau.beontime.client.actions.toolbar.ManageButtons;
 import fr.umlv.smoreau.beontime.client.actions.user.*;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.dao.UserDao;
 
 /**
  * @author BeOnTime
  */
 public class ActionsList {
 	private static final HashMap ACTIONS;
+	private static final HashMap ACTIONS_ADMIN;
 	
 	static {
 	    ACTIONS = new HashMap();
@@ -32,9 +32,11 @@ public class ActionsList {
 		ACTIONS.put("CutCourse", new CutCourse(null));
 		ACTIONS.put("CopyCourse", new CopyCourse(null));
 		ACTIONS.put("PasteCourse", new PasteCourse(null));
+		ACTIONS.put("ShowTimetableHorizontal", new ShowTimetableHorizontal(null));
+		ACTIONS.put("ShowTimetableVertical", new ShowTimetableVertical(null));
 		ACTIONS.put("ShowTimetableByWeek", new ShowTimetableByWeek(null));
 		ACTIONS.put("ShowTimetableBySixMonthPeriod", new ShowTimetableBySixMonthPeriod(null));
-		ACTIONS.put("AddUser", new AddUser("Créer un enseignant", null, UserDao.TYPE_TEACHER));
+		ACTIONS.put("AddTeacher", new AddTeacher(null));
 		ACTIONS.put("ManageUsers", new ManageUsers(null));
 		ACTIONS.put("AddSubject", new AddSubject(null));
 		ACTIONS.put("ModifySubject", new ModifySubject(null));
@@ -55,23 +57,58 @@ public class ActionsList {
 		ACTIONS.put("AddUnavailability", new AddUnavailability(null));
 		ACTIONS.put("ManageUnavailabilities", new ManageUnavailabilities(null));
 		ACTIONS.put("SearchAvailability", new SearchAvailability(null));
+		ACTIONS.put("About", new About(null));
 		ACTIONS.put("ManageButtons", new ManageButtons(null));
+		
+		ACTIONS_ADMIN = new HashMap();
+		ACTIONS_ADMIN.put("AddAdministrator", new AddAdministrator(null));
+		ACTIONS_ADMIN.put("AddSecretary", new AddSecretary(null));
+		ACTIONS_ADMIN.put("ModifyDBParameters", new ModifyDBParameters(null));
+		ACTIONS_ADMIN.put("ViewAllFunctionalities", new ViewAllFunctionalities(null));
 	}
 	
-	public static ArrayList getActions(MainFrame mainFrame) {
-	    ArrayList list = new ArrayList();
+	public static void initActions(MainFrame mainFrame) {
 	    for (Iterator i = ACTIONS.values().iterator(); i.hasNext(); ) {
 	        Action action = (Action) i.next();
 	        action.setMainFrame(mainFrame);
-	        list.add(action);
 	    }
-	    return list;
+	    for (Iterator i = ACTIONS_ADMIN.values().iterator(); i.hasNext(); ) {
+	        Action action = (Action) i.next();
+	        action.setMainFrame(mainFrame);
+	    }
+	    
+	    getAction("CloseTimetable").setEnabled(false);
+	    getAction("PrintTimetable").setEnabled(false);
+	    getAction("ExportTimetable").setEnabled(false);
+	    getAction("CutCourse").setEnabled(false);
+	    getAction("CopyCourse").setEnabled(false);
+	    getAction("PasteCourse").setEnabled(false);
+	    getAction("ShowTimetableVertical").setEnabled(false);
+	    getAction("ShowTimetableHorizontal").setEnabled(false);
+	    getAction("ShowTimetableByWeek").setEnabled(false);
+	    getAction("ShowTimetableBySixMonthPeriod").setEnabled(false);
+	    getAction("AddSubject").setEnabled(false);
+	    getAction("ModifySubject").setEnabled(false);
+	    getAction("RemoveSubject").setEnabled(false);
+	    getAction("ManageSubjects").setEnabled(false);
+	    getAction("AddCourse").setEnabled(false);
+	    getAction("ModifyCourse").setEnabled(false);
+	    getAction("RemoveCourse").setEnabled(false);
+	    getAction("AddGroup").setEnabled(false);
+	    getAction("ModifyGroup").setEnabled(false);
+	    getAction("RemoveGroup").setEnabled(false);
+	    getAction("ManageGroups").setEnabled(false);
+	    getAction("GenerateGroups").setEnabled(false);
 	}
 	
-	public static Action getAction(String name, MainFrame mainFrame) {
+	public static ArrayList getActions() {
+	    return new ArrayList(ACTIONS.values());
+	}
+	
+	public static Action getAction(String name) {
 	    Action action = (Action) ACTIONS.get(name);
-	    if (action != null)
-	        action.setMainFrame(mainFrame);
+	    if (action == null)
+	        action = (Action) ACTIONS_ADMIN.get(name);
 	    return action;
 	}
 }

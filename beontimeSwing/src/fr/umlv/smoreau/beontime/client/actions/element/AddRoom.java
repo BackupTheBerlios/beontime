@@ -16,7 +16,7 @@ import fr.umlv.smoreau.beontime.model.element.Room;
  */
 public class AddRoom extends Action {
     private static final String NAME = "Ajouter un local";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "ajouter_local.png";
 
 
     public AddRoom(MainFrame mainFrame) {

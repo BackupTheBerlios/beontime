@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class RemoveRoom extends Action {
     private static final String NAME = "Supprimer le local";
-    private static final String ICON = "Remove24.gif";
+    private static final String ICON = "supprimer_local.png";
 
 
     public RemoveRoom(MainFrame mainFrame) {

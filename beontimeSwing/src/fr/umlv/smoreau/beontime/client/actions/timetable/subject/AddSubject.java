@@ -11,7 +11,7 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifySubjectWindow;
  */
 public class AddSubject extends Action {
     private static final String NAME = "Ajouter une matière";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "ajouter_matiere.png";
 
 
     public AddSubject(MainFrame mainFrame) {

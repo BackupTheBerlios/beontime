@@ -23,22 +23,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
-import fr.umlv.smoreau.beontime.client.actions.element.AddMaterial;
-import fr.umlv.smoreau.beontime.client.actions.element.AddRoom;
-import fr.umlv.smoreau.beontime.client.actions.group.GenerateGroups;
-import fr.umlv.smoreau.beontime.client.actions.timetable.ExportTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.PrintTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.ShowTimetableBySixMonthPeriod;
-import fr.umlv.smoreau.beontime.client.actions.timetable.ShowTimetableByWeek;
-import fr.umlv.smoreau.beontime.client.actions.timetable.ViewTimetable;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.CopyCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.CutCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.PasteCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.RemoveCourse;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
-import fr.umlv.smoreau.beontime.client.actions.toolbar.ManageButtons;
-import fr.umlv.smoreau.beontime.client.actions.user.AddUser;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 
@@ -52,7 +36,6 @@ public class ButtonBar {
 	private ArrayList defToolBar;
 	private int deb_index;
 	private int nb_max;
-	private ActionsList afl=new ActionsList();
 	private boolean isSecretary;
 	private boolean all;
 	
@@ -151,7 +134,7 @@ public class ButtonBar {
 			LineNumberReader lnr = new LineNumberReader(new InputStreamReader(fis));
 			String line = lnr.readLine();
 			while (line != null) {
-			    Action action = ActionsList.getAction(line, mainFrame);
+			    Action action = ActionsList.getAction(line);
 			    defToolBar.add(action);
 			    line = lnr.readLine();
 			}
@@ -163,32 +146,34 @@ public class ButtonBar {
 	public void setDefaultToolBar() {
 	    if (isSecretary || all) {
 			defToolBar = new ArrayList();
-			addButton(new ViewTimetable(mainFrame));
-			addButton(new PrintTimetable(mainFrame));
-			addButton(new ExportTimetable(mainFrame));
+			addButton(ActionsList.getAction("ViewTimetable"));
+			addButton(ActionsList.getAction("PrintTimetable"));
+			addButton(ActionsList.getAction("ExportTimetable"));
 			addButton(null);
-			addButton(new CutCourse(mainFrame));
-			addButton(new CopyCourse(mainFrame));
-			addButton(new PasteCourse(mainFrame));
+			addButton(ActionsList.getAction("CutCourse"));
+			addButton(ActionsList.getAction("CopyCourse"));
+			addButton(ActionsList.getAction("PasteCourse"));
 			addButton(null);
-			addButton(new AddUser("Créer un enseignant", mainFrame, UserDao.TYPE_TEACHER));
+			addButton(ActionsList.getAction("AddTeacher"));
 	    }
-		if (!isSecretary)
-		    addButton(new AddUser("Créer une secrétaire", mainFrame, UserDao.TYPE_SECRETARY));
+		if (!isSecretary) {
+		    addButton(ActionsList.getAction("AddAdministrator"));
+		    addButton(ActionsList.getAction("AddSecretary"));
+		}
 		if (isSecretary || all) {
-			addButton(new AddSubject(mainFrame));
-			addButton(new AddRoom(mainFrame));
-			addButton(new AddMaterial(mainFrame));
-			addButton(new GenerateGroups(mainFrame));
+			addButton(ActionsList.getAction("AddSubject"));
+			addButton(ActionsList.getAction("AddRoom"));
+			addButton(ActionsList.getAction("AddMaterial"));
+			addButton(ActionsList.getAction("GenerateGroups"));
 			addButton(null);
-			addButton(new AddCourse(mainFrame));
-			addButton(new RemoveCourse(mainFrame));
+			addButton(ActionsList.getAction("AddCourse"));
+			addButton(ActionsList.getAction("RemoveCourse"));
 			addButton(null);
-			addButton(new ShowTimetableByWeek(mainFrame));
-			addButton(new ShowTimetableBySixMonthPeriod(mainFrame));
+			addButton(ActionsList.getAction("ShowTimetableByWeek"));
+			addButton(ActionsList.getAction("ShowTimetableBySixMonthPeriod"));
 		}
 		addButton(null);
-		addButton(new ManageButtons(mainFrame));
+		addButton(ActionsList.getAction("ManageButtons"));
 	}
 
 	public void repaintToolBar() {

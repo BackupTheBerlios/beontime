@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class PasteCourse extends Action {
     private static final String NAME = "Coller le cours";
-    private static final String ICON = "Paste24.gif";
+    private static final String ICON = "coller.png";
 
 
     public PasteCourse(MainFrame mainFrame) {

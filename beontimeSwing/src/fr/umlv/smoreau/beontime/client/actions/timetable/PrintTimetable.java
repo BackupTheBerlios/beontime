@@ -10,7 +10,7 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class PrintTimetable extends Action {
     private static final String NAME = "Imprimer l'emploi du temps";
-    private static final String ICON = "Print24.gif";
+    private static final String ICON = "imprimer.png";
 
 
     public PrintTimetable(MainFrame mainFrame) {

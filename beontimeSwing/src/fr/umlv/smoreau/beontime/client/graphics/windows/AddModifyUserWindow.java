@@ -88,7 +88,9 @@ public class AddModifyUserWindow {
 		if (type.equals(UserDao.TYPE_SECRETARY))
 		    initSecretaryParts();
 		else if (type.equals(UserDao.TYPE_TEACHER))
-			initTeacherParts();		
+			initTeacherParts();
+		else if (type.equals(UserDao.TYPE_ADMIN))
+			initAdminParts();
 	}
 
 
@@ -281,23 +283,32 @@ public class AddModifyUserWindow {
     }
     
     public String getBuilding() {
-        String string = (String) buildingJcb.getSelectedItem();
-        if (string != null)
-            string = string.trim();
+        String string = null;
+        if (buildingJcb != null) {
+            string = (String) buildingJcb.getSelectedItem();
+	        if (string != null)
+	            string = string.trim();
+        }
         return string;
     }
     
     public String getLocal() {
-        String tmp = localJtf.getText().trim();
-        if ("".equals(tmp))
-            return null;
+        String tmp = null;
+        if (localJtf != null) {
+            localJtf.getText().trim();
+            if ("".equals(tmp))
+                return null;
+        }
         return tmp;
     }
     
     public String getPhone() {
-        String tmp = phoneJtf.getText().trim();
-        if ("".equals(tmp))
-            return null;
+        String tmp = null;
+        if (phoneJtf != null) {
+            phoneJtf.getText().trim();
+            if ("".equals(tmp))
+                return null;
+        }
         return tmp;
     }
     

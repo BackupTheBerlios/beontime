@@ -16,7 +16,7 @@ import fr.umlv.smoreau.beontime.model.element.Material;
  */
 public class AddMaterial extends Action {
     private static final String NAME = "Ajouter un matériel";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "ajouter_materiel.png";
     
     public AddMaterial(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);

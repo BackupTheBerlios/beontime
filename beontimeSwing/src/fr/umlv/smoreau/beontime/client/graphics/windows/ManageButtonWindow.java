@@ -83,7 +83,7 @@ public class ManageButtonWindow {
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			    int index = list_g.getSelectedIndex();
-			    ArrayList actions = ActionsList.getActions(mainFrame);
+			    ArrayList actions = ActionsList.getActions();
 			    if (index == actions.size())
 			        model_d.add(null);
 			    else {
@@ -174,7 +174,7 @@ public class ManageButtonWindow {
 
 
 	private class RefListModel implements ListModel {
-	    private ArrayList actions = ActionsList.getActions(mainFrame);
+	    private ArrayList actions = ActionsList.getActions();
 
 		public int getSize() {
 			return actions.size() + 1;
