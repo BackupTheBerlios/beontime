@@ -1,18 +1,26 @@
 package fr.umlv.smoreau.beontime.client.actions.timetable.course;
-import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collection;
+import java.util.Iterator;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.DefaultCellAttribute;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
+import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
+import fr.umlv.smoreau.beontime.model.timetable.CourseType;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -56,67 +64,72 @@ public class AddCourse extends Action {
     		window.setStartHour(columns[0]);
     		window.setEndHour(columns[columns.length-1]);
     	}
-        window.show();
-        int startColumn=window.getStartHour();
-        int endColumn=window.getEndHour();
-        if (endColumn<startColumn) return;
-        columns=new int[(endColumn-startColumn)+1];
-        for(int i=0;i<=(endColumn-startColumn);i++){
-        	columns[i]=startColumn+i;
-        }
-        Date date=window.getDateCourse();
-        Calendar c=Calendar.getInstance();
-        c.setTime(date);
-        int day=c.get(Calendar.DAY_OF_WEEK)-2;
-        int [] row=new int[]{day};
-        changeColor(false,row,columns,Color.BLUE);
-        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
-        Course course=new Course();
-         ml.setValueAt(course,row[0],columns[0]);
-        ml.fireTableDataChanged();
-        cellAtt.combine(row,columns);
-        table.revalidate();
-        table.repaint();
-        
-        
+    	window.setCourseFormation(mainFrame.getFormationSelected());
+    	window.show();
+    	
+    	if (window.isOk()) {
+    	    Course course = new Course();
+    	    course.setIdFormation(mainFrame.getFormationSelected().getIdFormation());
+    	    
+    	    course.setSubject(mainFrame.getSubjectSelected());
 
+    	    Calendar beginDate = Calendar.getInstance();
+    	    beginDate.setTime(window.getDateCourse());
+    	    beginDate.set(Calendar.HOUR_OF_DAY, window.getStartHour()+1);
+    	    beginDate.set(Calendar.MINUTE, window.getStartMinute());
+    	    beginDate.set(Calendar.SECOND, 0);
+    	    beginDate.set(Calendar.MILLISECOND, 0);
+    	    course.setBeginDate(beginDate);
+    	    
+    	    Calendar endDate = Calendar.getInstance();
+    	    endDate.setTime(window.getDateCourse());
+    	    endDate.set(Calendar.HOUR_OF_DAY, window.getEndHour()+1);
+    	    endDate.set(Calendar.MINUTE, window.getEndMinute());
+    	    endDate.set(Calendar.SECOND, 0);
+    	    endDate.set(Calendar.MILLISECOND, 0);
+    	    course.setEndDate(endDate);
+    	    
+    	    course.setNbWeeks(new Integer(window.getNbWeeksCourse()));
+    	    
+    	    TakePartGroupSubjectCourse takePart = new TakePartGroupSubjectCourse();
+    	    takePart.setIdGroup(window.getCourseGroup().getIdGroup());
+    	    takePart.setIdSubject(mainFrame.getSubjectSelected().getIdSubject());
+    	    course.addGroupSubjectTakingPart(takePart);
+    	    
+    	    Collection teachers = window.getTeachers();
+    	    for (Iterator i = teachers.iterator(); i.hasNext(); )
+    	        course.addTeacherDirecting((User) i.next());
+    	    
+    	    Collection rooms = window.getPlaceCourse();
+    	    for (Iterator i = rooms.iterator(); i.hasNext(); )
+    	        course.addRoom((Room) i.next());
+    	    
+    	    Collection materials = window.getCourseEquipment();
+    	    for (Iterator i = materials.iterator(); i.hasNext(); )
+    	        course.addMaterial((Material) i.next());
+
+    	    try {
+                Collection types = DaoManager.getTimetableDao().getTypesCourse();
+                String tmp = window.getTypeCourse();
+                for (Iterator i = types.iterator(); i.hasNext(); ) {
+                    CourseType type = (CourseType) i.next();
+                    if (tmp.equals(type.getNameCourseType())) {
+                        course.setIdCourseType(type);
+                        break;
+                    }
+                }
+                
+                DaoManager.getTimetableDao().addCourse(course);
+                
+                course.getBeginDate().set(Calendar.HOUR_OF_DAY, course.getBeginDate().get(Calendar.HOUR_OF_DAY)-1);
+                course.getEndDate().set(Calendar.HOUR_OF_DAY, course.getEndDate().get(Calendar.HOUR_OF_DAY)-1);
+                mainFrame.getModel().fireRefreshCourse(course, BoTModel.TYPE_ADD);
+                
+                JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+    	}
     }
-    private final void changeColor(boolean isForeground,int[] rows,int[] columns,Color c) {
-        if ((rows == null) || (columns == null)) return;
-        if ((rows.length<1)||(columns.length<1)) return;
-        Color target    = cellAtt.getForeground(rows[0], columns[0]);
-        Color reference = cellAtt.getBackground(rows[0], columns[0]);
-        for (int i=0;i<rows.length;i++) {
-          int row = rows[i];
-          for (int j=0;j<columns.length;j++) {
-            int column = columns[j];
-            target    = (target    != cellAtt.getForeground(row, column)) ?
-              null : target;
-            reference = (reference != cellAtt.getBackground(row, column)) ?
-              null : reference;
-          }
-        }
-        String title;
-        if (isForeground) {
-          target    = (target   !=null) ? target    : table.getForeground();
-          reference = (reference!=null) ? reference : table.getBackground();
-          title = "Foreground Color";
-        } else {
-          target    = (reference!=null) ? reference : table.getBackground();
-          reference = (target   !=null) ? target    : table.getForeground();
-          title = "Foreground Color";
-        }   
-        
-        Color color = c;
-        if (color != null) {        
-          if (isForeground) {
-            cellAtt.setForeground(color, rows, columns);
-          } else {
-            cellAtt.setBackground(color, rows, columns);
-          }
-          table.clearSelection();
-          table.revalidate();
-          table.repaint();    
-        }
-      }
 }

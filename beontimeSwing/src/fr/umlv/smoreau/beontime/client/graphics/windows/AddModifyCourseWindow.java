@@ -1,6 +1,3 @@
-/*
- * 
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Component;
@@ -12,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,14 +18,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.toedter.calendar.JDateChooser;
 
+import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.Formation;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.element.Material;
+import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -75,7 +79,7 @@ public class AddModifyCourseWindow {
 	private JButton ok;
 	private JButton annuler;
 	
-	
+	private boolean isOk;
 	
 	private JPanel teacherPanel = new JPanel();
 	private JPanel teacherPlusPanel = new JPanel();
@@ -88,26 +92,95 @@ public class AddModifyCourseWindow {
 	private GridBagLayout AMCWLayout = new GridBagLayout();
 	private GridBagConstraints layoutConstraints = new GridBagConstraints();
 	
+	private String[] teachersName;
+	private User[] teachers;
+	private String[] roomsName;
+	private Room[] rooms;
+	private String[] materialsName;
+	private Material[] materials;
+	private String[] groupsName;
+	private Group[] groups;
+	
 	
 	public AddModifyCourseWindow () {
-		
+	    this.isOk = false;
 		AMCWFrame = new JDialog(MainFrame.getInstance().getMainFrame(), TITRE, true);
 		AMCWFrame.getContentPane().setLayout(AMCWLayout);
 		
-		initAddModifyCourseWindow();  
+		try {
+            Collection t = DaoManager.getUserDao().getTeachers();
+            if (t.size() == 0)
+                throw new Exception();
+            teachersName = new String[t.size()+1];
+            teachers = new User[t.size()+1];
+            teachersName[0] = "";
+            int j = 1;
+            for (Iterator i = t.iterator(); i.hasNext(); ++j) {
+                teachers[j] = (User) i.next();
+                teachersName[j] = teachers[j].getName() + " " + teachers[j].getFirstName();
+            }
+        } catch (Exception e) {
+            teachersName = null;
+            teachers = null;
+        }
+        
+        try {
+            Collection r = DaoManager.getElementDao().getRooms();
+            if (r.size() == 0)
+                throw new Exception();
+            roomsName = new String[r.size()+1];
+            rooms = new Room[r.size()+1];
+            roomsName[0] = "";
+            int j = 1;
+            for (Iterator i = r.iterator(); i.hasNext(); ++j) {
+                rooms[j] = (Room) i.next();
+                roomsName[j] = rooms[j].getName();
+            }
+        } catch (Exception e) {
+            roomsName = null;
+            rooms = null;
+        }
+        
+        try {
+            Collection m = DaoManager.getElementDao().getMaterials();
+            if (m.size() == 0)
+                throw new Exception();
+            materialsName = new String[m.size()+1];
+            materials = new Material[m.size()+1];
+            materialsName[0] = "";
+            int j = 1;
+            for (Iterator i = m.iterator(); i.hasNext(); ++j) {
+                materials[j] = (Material) i.next();
+                materialsName[j] = materials[j].getName();
+            }
+        } catch (Exception e) {
+            materialsName = null;
+            materials = null;
+        }
+        
+        Collection g = MainFrame.getInstance().getModel().getTimetable().getGroups();
+        groups = new Group[g.size()];
+        groupsName = new String[g.size()];
+        int j = 0;
+        for (Iterator i = g.iterator(); i.hasNext(); ++j) {
+            groups[j] = (Group) i.next();
+            groupsName[j] = groups[j].getHeading();
+        }
 		
+		initAddModifyCourseWindow();
 	}
 	
 	
 	public Collection getTeachers() {
-		
-		int nbteachers = teacherPanel.getComponentCount();
-		
 		ArrayList list = new ArrayList();
-		Component [] components = teacherPanel.getComponents();
 		
-		for(int i=0; i<nbteachers;i++) {
-			list.add(((JComboBox)components[i]).getSelectedItem().toString());
+		if (teachersName != null) {
+			Component[] components = teacherPanel.getComponents();
+			
+			for(int i = 0; i < components.length; ++i) {
+			    if (components[i] instanceof JComboBox)
+			        list.add(teachers[((JComboBox)components[i]).getSelectedIndex()]);
+			}
 		}
 		
 		return list;
@@ -120,34 +193,32 @@ public class AddModifyCourseWindow {
 	
 	
 	public Collection getPlaceCourse() {
-		
-		int nbteachers = placeCoursePanel.getComponentCount();
-		
 		ArrayList list = new ArrayList();
-		Component [] components = placeCoursePanel.getComponents();
 		
-		for(int i=0; i<nbteachers;i++) {
-			list.add(((JComboBox)components[i]).getSelectedItem().toString());
+		if (roomsName != null) {
+			Component[] components = placeCoursePanel.getComponents();
+			
+			for(int i = 0; i < components.length; ++i)
+			    if (components[i] instanceof JComboBox)
+			        list.add(rooms[((JComboBox)components[i]).getSelectedIndex()]);
 		}
 		
 		return list;
 	}
 	
 	public int getNbWeeksCourse(){
-		
 		return Integer.parseInt(repeatCourseJcb.getSelectedItem().toString());
-		
 	}
 	
 	public Collection getCourseEquipment() {
-		
-		int nbteachers = courseEquipmentPanel.getComponentCount();
-		
 		ArrayList list = new ArrayList();
-		Component [] components = courseEquipmentPanel.getComponents();
 		
-		for(int i=0; i<nbteachers;i++) {
-			list.add(((JComboBox)components[i]).getSelectedItem().toString());
+		if (materialsName != null) {
+			Component[] components = courseEquipmentPanel.getComponents();
+			
+			for (int i = 0; i < components.length; ++i)
+			    if (components[i] instanceof JComboBox)
+			        list.add(materials[((JComboBox)components[i]).getSelectedIndex()]);
 		}
 		
 		return list;
@@ -157,39 +228,32 @@ public class AddModifyCourseWindow {
 		return courseFormationJcb.getSelectedItem().toString();
 	}
 	
-	public String getCourseGroup() {
-		return courseGroupJcb.getSelectedItem().toString();
+	public Group getCourseGroup() {
+		return groups[courseGroupJcb.getSelectedIndex()];
 	}
 	
 	public String getTypeCourse() {
-		
 		if (magistral.isSelected())
-			return "cours magistraux";
+			return TimetableDao.TYPES_COURSES[0];
 		
 		else if(td.isSelected())
-			return "travaux dirigés";
+			return TimetableDao.TYPES_COURSES[1];
 		
-		return "travaux pratiques";
+		return TimetableDao.TYPES_COURSES[2];
 	}
-	
-	
 
 	
 	public void setNbWeeksCourse(int nb){	
 		repeatCourseJcb.addItem(""+nb);
 	}
 	
-	
-	
 	public void setCourseFormation(Formation formation) {
-		
 		AMCWFrame.getContentPane().remove(courseFormationLabel);
 		AMCWFrame.getContentPane().remove(courseFormationJcb);
 		
 		courseFormationLabel = new JLabel("Le cours est attribué à la formation "+formation.getHeading());
 		addComponent(AMCWLayout,layoutConstraints,courseFormationLabel,1,8,6,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		AMCWFrame.getContentPane().add(courseFormationLabel);
-	
 	}
 	
 	public void setCourseGroup(Group group) {
@@ -197,7 +261,6 @@ public class AddModifyCourseWindow {
 	}
 	
 	public void setTypeCourse(String typeCourse) {
-		
 		if (typeCourse.compareTo("cours magistraux") == 0)
 			magistral.setSelected(true);
 		
@@ -207,17 +270,16 @@ public class AddModifyCourseWindow {
 		tp.setSelected(true);
 	}
 	
-	
-	
-	
+
 	private void initAddModifyCourseWindow() {
-		
-		
 		teacherLabel = new JLabel("Le cours sera donné par :");
 		addComponent(AMCWLayout,layoutConstraints,teacherLabel,1,1,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(30,10,15,10));
 		AMCWFrame.getContentPane().add(teacherLabel);
 		
-		teacherCourseJcb = new JComboBox();
+		if (teachersName == null)
+		    teacherCourseJcb = new JComboBox();
+		else
+		    teacherCourseJcb = new JComboBox(teachersName);
 		
 		teacherPanel.setLayout(new BoxLayout(teacherPanel, BoxLayout.Y_AXIS));
 		teacherPanel.add(teacherCourseJcb);
@@ -227,7 +289,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(teacherPanel);
 		
 		teacherPlus = new JButton("+");
-		teacherPlus.addActionListener(new ButtonPlusListener(teacherPlusPanel, teacherPanel, AMCWFrame, new String[] {""}));
+		teacherPlus.addActionListener(new ButtonPlusListener(teacherPlusPanel, teacherPanel, AMCWFrame, teachersName));
 		
 		teacherPlusPanel.setLayout(new BoxLayout(teacherPlusPanel, BoxLayout.Y_AXIS));
 		teacherPlusPanel.add(teacherPlus);
@@ -235,6 +297,12 @@ public class AddModifyCourseWindow {
 		
 		addComponent(AMCWLayout,layoutConstraints,teacherPlusPanel,6,1,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(20,10,15,10));
 		AMCWFrame.getContentPane().add(teacherPlusPanel);
+		
+		if (teachersName == null) {
+		    teacherLabel.setEnabled(false);
+		    teacherCourseJcb.setEnabled(false);
+		    teacherPlus.setEnabled(false);
+		}
 		
 		
 		
@@ -301,7 +369,10 @@ public class AddModifyCourseWindow {
 		addComponent(AMCWLayout,layoutConstraints,placeCourseLabel,1,5,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		AMCWFrame.getContentPane().add(placeCourseLabel);
 		
-		placeCourseJcb = new JComboBox();
+		if (roomsName == null)
+		    placeCourseJcb = new JComboBox();
+		else
+		    placeCourseJcb = new JComboBox(roomsName);
 		
 		placeCoursePanel.setLayout(new BoxLayout(placeCoursePanel, BoxLayout.Y_AXIS));
 		placeCoursePanel.add(placeCourseJcb);
@@ -309,10 +380,8 @@ public class AddModifyCourseWindow {
 		addComponent(AMCWLayout,layoutConstraints,placeCoursePanel,4,5,2,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(placeCoursePanel);
 		
-		
-		
 		placeCoursePlus = new JButton("+");
-		placeCoursePlus.addActionListener(new ButtonPlusListener(placeCoursePlusPanel, placeCoursePanel, AMCWFrame, new String[] {""}));
+		placeCoursePlus.addActionListener(new ButtonPlusListener(placeCoursePlusPanel, placeCoursePanel, AMCWFrame, roomsName));
 		
 		placeCoursePlusPanel.setLayout(new BoxLayout(placeCoursePlusPanel, BoxLayout.Y_AXIS));
 		placeCoursePlusPanel.add(placeCoursePlus);
@@ -320,6 +389,12 @@ public class AddModifyCourseWindow {
 		
 		addComponent(AMCWLayout,layoutConstraints,placeCoursePlusPanel,6,5,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(placeCoursePlusPanel);
+		
+		if (roomsName == null) {
+		    placeCourseLabel.setEnabled(false);
+		    placeCourseJcb.setEnabled(false);
+		    placeCoursePlus.setEnabled(false);
+		}
 		
 		
 		
@@ -338,7 +413,10 @@ public class AddModifyCourseWindow {
 		addComponent(AMCWLayout,layoutConstraints,courseEquipmentLabel,1,7,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		AMCWFrame.getContentPane().add(courseEquipmentLabel);
 		
-		courseEquipmentJcb = new JComboBox();
+		if (materialsName == null)
+		    courseEquipmentJcb = new JComboBox();
+		else
+		    courseEquipmentJcb = new JComboBox(materialsName);
 		
 		courseEquipmentPanel.setLayout(new BoxLayout(courseEquipmentPanel, BoxLayout.Y_AXIS));
 		courseEquipmentPanel.add(courseEquipmentJcb);
@@ -348,7 +426,7 @@ public class AddModifyCourseWindow {
 		AMCWFrame.getContentPane().add(courseEquipmentPanel);
 		
 		courseEquipmentPlus = new JButton("+");
-		courseEquipmentPlus.addActionListener(new ButtonPlusListener(courseEquipmentPlusPanel, courseEquipmentPanel, AMCWFrame, new String[] {""}));
+		courseEquipmentPlus.addActionListener(new ButtonPlusListener(courseEquipmentPlusPanel, courseEquipmentPanel, AMCWFrame, materialsName));
 		
 		courseEquipmentPlusPanel.setLayout(new BoxLayout(courseEquipmentPlusPanel, BoxLayout.Y_AXIS));
 		courseEquipmentPlusPanel.add(courseEquipmentPlus);
@@ -356,6 +434,12 @@ public class AddModifyCourseWindow {
 		
 		addComponent(AMCWLayout,layoutConstraints,courseEquipmentPlusPanel,6,7,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(courseEquipmentPlusPanel);
+		
+		if (materialsName == null) {
+		    courseEquipmentJcb.setEnabled(false);
+		    courseEquipmentLabel.setEnabled(false);
+		    courseEquipmentPlus.setEnabled(false);
+		}
 		
 		
 		
@@ -372,8 +456,7 @@ public class AddModifyCourseWindow {
 		addComponent(AMCWLayout,layoutConstraints,courseGroupLabel,1,9,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
 		AMCWFrame.getContentPane().add(courseGroupLabel);
 		
-		courseGroupJcb = new JComboBox();
-		courseGroupJcb.addItem("Tous");
+		courseGroupJcb = new JComboBox(groupsName);
 		addComponent(AMCWLayout,layoutConstraints,courseGroupJcb,5,9,GridBagConstraints.REMAINDER,1,1.0,0.0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
 		AMCWFrame.getContentPane().add(courseGroupJcb);
 		
@@ -402,6 +485,7 @@ public class AddModifyCourseWindow {
 		
 		
 		ok = new JButton("OK");
+		ok.addActionListener(new ActionOk());
 		addComponent(AMCWLayout,layoutConstraints,ok,5,12,GridBagConstraints.RELATIVE,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMCWFrame.getContentPane().add(ok);
 		
@@ -414,19 +498,15 @@ public class AddModifyCourseWindow {
 		addComponent(AMCWLayout,layoutConstraints,annuler,6,12,GridBagConstraints.REMAINDER,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.NONE,new Insets(20,10,10,10));
 		AMCWFrame.getContentPane().add(annuler);
 	}
-	
-	
-	
+
 	
 	private void initNumberJcb(JComboBox jcb, int start, int end) {
-		
 		for(int i=start;i<=end;i++) {
 			jcb.addItem(""+i);
 		}
 	}
 	
 	private void initMinuteJcb(JComboBox jcb) {
-		
 		String [] tabMin = new String[] {"00","15","30","45"};
 		
 		for (int i=0;i<tabMin.length;i++) {
@@ -434,8 +514,8 @@ public class AddModifyCourseWindow {
 			
 		}
 	}
+
 	private void addComponent(GridBagLayout gbLayout,GridBagConstraints constraints,Component comp,int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty, int anchor, int fill, Insets insets) {
-		
 		constraints. gridx= gridx;
 		constraints. gridy = gridy;
 		constraints. gridwidth= gridwidth;
@@ -447,63 +527,85 @@ public class AddModifyCourseWindow {
 		constraints.insets = insets;
 		
 		gbLayout.setConstraints(comp,constraints);
-		
-	}
-	
-	
-	public static void main(String[] args){
-		
-		MainFrame frame = MainFrame.getInstance();
-		frame.open();
-		
-		AddModifyCourseWindow form = new AddModifyCourseWindow();
-		form.show();
-		
 	}
 
     public void show() {
     	AMCWFrame.pack();
     	AMCWFrame.setResizable(false);
 	    AMCWFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	    AMCWFrame.setLocationRelativeTo(null);
 	    AMCWFrame.setVisible(true);
     }
+
     public void setStartHour(int start){
     	startCourseHourJcb.setSelectedIndex((start/4)+8);
     	startCourseMinuteJcb.setSelectedIndex((start%4));
     }
+
     public void setEndHour(int end){
     	endCourseHourJcb.setSelectedIndex(((end+1)/4)+8);
     	endCourseMinuteJcb.setSelectedIndex(((end+1)%4));
     }
+
     public int getStartHour(){
-    	
-    	int ind_hour=startCourseHourJcb.getSelectedIndex();
-    	int ind_min=startCourseMinuteJcb.getSelectedIndex();
-    	int ret;
-    	if (ind_hour>7){
-    		ret=(ind_hour-8)*4;
-    	}
-    	else{
-    		ret=0;
-    	}
-    	ret=ret+(ind_min);
-    	return ret;
-    	
-    }
-    public int getEndHour(){
-    	int ind_hour=endCourseHourJcb.getSelectedIndex();
-    	int ind_min=endCourseMinuteJcb.getSelectedIndex();
-    	int ret;
-    	if (ind_hour>7){
-    		ret=(ind_hour-8)*4;
-    	}
-    	else{
-    		ret=0;
-    	}
-    	ret=ret+(ind_min)-1;
-    	return ret;
+    	return Integer.parseInt((String) startCourseHourJcb.getSelectedItem());
     }
     
-   
+    public int getStartMinute(){
+    	return Integer.parseInt((String) startCourseMinuteJcb.getSelectedItem());
+    }
 
+    public int getEndHour(){
+        return Integer.parseInt((String) endCourseHourJcb.getSelectedItem());
+    }
+    
+    public int getEndMinute(){
+        return Integer.parseInt((String) endCourseMinuteJcb.getSelectedItem());
+    }
+    
+    public boolean isOk() {
+        return isOk;
+    }
+    
+    private int checking() {
+        /*String name = getName();
+        if (name == null || "".equals(name))
+            return 1;
+        String surname = getSurname();
+        if (surname == null || "".equals(surname))
+            return 2;
+        String email = getCourrielMail();
+        if (email != null && !"".equals(email) && !email.matches(".*@.*\\..*")) {
+            return 3;
+        }*/
+        return 0;
+    }
+
+
+    private class ActionOk implements ActionListener {
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent arg0) {
+            String errorMessage = null;
+            switch (checking()) {
+            case 0:
+                isOk = true;
+                AMCWFrame.dispose();
+                return;
+            case 1:
+                errorMessage = "Le nom est obligatoire";
+                break;
+            case 2:
+                errorMessage = "Le prénom est obligatoire";
+                break;
+            case 3:
+                errorMessage = "L'adresse email est invalide";
+                break;
+            default:
+                errorMessage = "Erreur inconnue";
+            }
+            JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

@@ -207,7 +207,10 @@ public class MainFrame {
 	}
 	
 	public Group getGroupSelected() {
-		//TODO à implémenter
+	    Timetable timetable = model.getTimetable();
+	    if (timetable != null) {
+	        return timetable.getGroup();
+	    }
 		return null;
 	}
 	

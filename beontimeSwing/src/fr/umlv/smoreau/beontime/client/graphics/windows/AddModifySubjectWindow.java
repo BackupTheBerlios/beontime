@@ -190,7 +190,6 @@ public class AddModifySubjectWindow {
             Arrays.sort(teachersName);
             teacherFieldJcb = new JComboBox(teachersName);
         } catch (Exception e) {
-            e.printStackTrace();
             JLabel label = new JLabel("Erreur lors de la récupération des enseignants");
             label.setForeground(Color.RED);
             addComponent(AMFWLayout,layoutConstraints,label,5,2,4,1,1.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(20,10,15,10));
@@ -374,7 +373,7 @@ public class AddModifySubjectWindow {
 	    	    nbGroupsMag = new JComboBox();
 	    	    initNumberJcb(nbGroupsMag, 1, 10);
 	    	    //nbGroupsMag.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-	        	addComponent(layout,layoutConstraints,nbGroupsMag,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
+	        	addComponent(layout,layoutConstraints,nbGroupsMag,9,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsMag);
 	    	    break;
 	        case 2:
@@ -382,7 +381,7 @@ public class AddModifySubjectWindow {
 	            nbGroupsTd = new JComboBox();
 	    	    initNumberJcb(nbGroupsTd, 1, 10);
 	    	    //nbGroupsTd.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-	        	addComponent(layout,layoutConstraints,nbGroupsTd,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
+	        	addComponent(layout,layoutConstraints,nbGroupsTd,9,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsTd);
 	            break;
 	        case 3:
@@ -390,7 +389,7 @@ public class AddModifySubjectWindow {
 	            nbGroupsTp = new JComboBox();
 	    	    initNumberJcb(nbGroupsTp, 1, 10);
 	    	    //nbGroupsTp.addItemListener(new NbHourJcbListener(AMFWFrame, AMFWLayout, layoutConstraints, panel, type));
-	        	addComponent(layout,layoutConstraints,nbGroupsTp,4,2,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
+	        	addComponent(layout,layoutConstraints,nbGroupsTp,9,1,1,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.NONE,new Insets(7,10,7,10));
 	        	panel.add(nbGroupsTp);
 	            break;
     	}
@@ -399,7 +398,7 @@ public class AddModifySubjectWindow {
     	panel.add(typeCourseLabel);
     	
     
-    	addComponent(layout,layoutConstraints,nbGroupsLabel,1,2,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(7,10,7,10));
+    	addComponent(layout,layoutConstraints,nbGroupsLabel,6,1,3,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(7,10,7,10));
     	panel.add(nbGroupsLabel);
     	
     	
