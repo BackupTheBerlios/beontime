@@ -29,7 +29,7 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		this.list = new EventListenerList();
 		this.tree = t;
 		
-		//TO DO pour tester en local
+		// pour tester en local
 	/*	Timetable timetable = new Timetable();
 		Formation formation = new Formation();
 		formation.setHeading("DESS CRI");
@@ -52,7 +52,6 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		timetable.setSubjects(list);
 		
 		model.setTimetable(timetable); */
-		//finTODO
 
 		model.addBoTListener(new EditListener());
 	}
@@ -145,27 +144,6 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		    else
 		    	Formation formation = timetable.getFormation();
 		    	*/
-		/*	formation.setHeading("DESS CRI");
-			formation.setIdFormation(new Long(1));
-			timetable.setFormation(formation);
-			
-			Subject subject = new Subject();
-			subject.setHeading("Matière1");
-			subject.setIdSubject(new Long(1));
-			Subject subject2 = new Subject();
-			subject2.setHeading("Matière2");
-			subject2.setIdSubject(new Long(2));
-			Subject subject3 = new Subject();
-			subject3.setHeading("Matière3");
-			subject3.setIdSubject(new Long(3));
-			ArrayList list = new ArrayList();
-			list.add(subject);
-			list.add(subject2);
-			list.add(subject3);
-			timetable.setSubjects(list);
-			*/
-			
-	//		model.setTimetable(timetable);
 		    
 		  //  tree.fireTreeExpanded(new TreePath(timetable));
 		   // tree.getModel().addTreeModelListener(this);
@@ -175,21 +153,57 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		//    ((DefaultTreeModel) tree.getModel()).reload();
 		//    tree.treeDidChange();
 		    tree.updateUI();
+		    System.out.println("refeshall");
 		}
 		
 		public void addSubject(BoTEvent e) {
 		    Subject subject = e.getSubject();
 		    
 		    //TODO ajouter la matière ++
+		    System.out.println("addSubject");
 		    
-		//    ((DefaultTreeModel) tree.getModel()).nodeStructureChanged(new DefaultMutableTreeNode(tree.getModel().getRoot()));
-		    refreshAll(e);
+		  /*  try {
+		    ((EditAdapter) tree.getModel()).nodesWereInserted(new DefaultMutableTreeNode(subject), new int[]{0});
+		    } catch (Exception ex) {
+		    	System.err.println("pas cool");
+		    	ex.getMessage();
+		    	ex.printStackTrace();
+		    }
+		 */
+	//	   ((EditAdapter) tree.getModel()).reload();
+		/*    ((EditAdapter) tree.getModel()).fireTreeNodesInserted(
+	    			tree.getModel().getRoot(),
+	    			e.getSource(),
+	    			new Object[]{tree.getModel().getRoot(), subject},
+	    			null,
+	    			null);
+*/
+	/*	    TreeModelEvent tme = new TreeModelEvent (e.getSource(), new Object[]{tree.getModel().getRoot(), subject});
+	//	    treeNodesInserted(new TreeModelEvent(null, new Object[]{tree.getModel().getRoot(), subject}));
+		    ((EditAdapter) tree.getModel()).fireTreeNodesInserted(
+		    		EditAdapter.this,
+		    		tme.getPath(),
+		    		tme.getChildIndices(),
+		    		tme.getChildren());
+		*/
+		    Timetable tt = e.getTimetable();
+		    EditAdapter ea = (EditAdapter) tree.getModel();
+		    ea.fireTreeNodesInserted(ea,
+		    		new Object[]{tree.getModel().getRoot(), subject}, 
+		    		new int[]{0, 1, 2}, 
+		    		new Object[]{TimetableDao.TYPES_COURSES[0], TimetableDao.TYPES_COURSES[1], TimetableDao.TYPES_COURSES[2]});
+		    
+		    
+	//	   tree.treeDidChange();
+		//    tree.updateUI();
+		//    refreshAll(e);
 		}
 		
 		public void modifySubject(BoTEvent e) {
 		    Subject subject = e.getSubject();
 		    
 		    //TODO modifier la matière
+		    System.out.println("modSubject");
 		    refreshAll(e);
 		}
 		
@@ -197,6 +211,7 @@ public class EditAdapter /*implements TreeModel*/ extends DefaultTreeModel {
 		    Subject subject = e.getSubject();
 		    
 		    //TODO supprimer la matière
+		    System.out.println("delSubject");
 		    refreshAll(e);
 		}
 	}
