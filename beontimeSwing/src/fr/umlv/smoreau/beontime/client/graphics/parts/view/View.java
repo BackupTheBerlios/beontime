@@ -38,8 +38,15 @@ public class View {
 			j=j+4;
 			header.addGroup(hoursGroup);
 		}
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setRowHeight(77);
+		table.setRowSelectionAllowed(false);
+		table.setCellSelectionEnabled(true);
 		table.setTableHeader(header);
 		jScrollPane=new JScrollPane(table);
+
+		
+		
     }
 	/**
 	 * @return Returns the jPanel.
