@@ -180,7 +180,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
                 // matières de l'enseignant
 	            for (Iterator i = allSubjects.iterator(); i.hasNext(); ) {
 	                Subject subject = (Subject) i.next();
-	                if (subject.getIdTeacher().equals(timetable.getTeacher().getIdUser()))
+	                if (subject.getIdTeacher() != null && subject.getIdTeacher().equals(timetable.getTeacher().getIdUser()))
 	                    timetable.addSubject(subject);
 	            }
 	            
