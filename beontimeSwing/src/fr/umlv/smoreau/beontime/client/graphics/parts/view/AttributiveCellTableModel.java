@@ -129,19 +129,28 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	        cellAtt.setFont(new Font("Arial", Font.CENTER_BASELINE, 9),row,columns);
 	        setValueAt(course,row[0],columns[0]);
 	        cellAtt.combine(row,columns);
-
+	        fireTableCellUpdated(row[0],columns[0]);
 		}
 		
 		public void modifyCourse(BoTEvent e) {
 		    Course course = e.getCourse();
-
-		    //TODO Mohamed: modifier le cours
+		    
 		}
 		
 		public void removeCourse(BoTEvent e) {
 		    Course course = e.getCourse();
-
-		    //TODO Mohamed: supprimer le cours
+		    for(int i=0;i<rowNb;i++){
+		    	for(int j=0;j<colNb;j++){
+		    		Course courseRead=(Course)getValueAt(i,j);
+		    		if (courseRead.equals(course)){
+		    			cellAtt.split(i,j);
+		    	        setValueAt(null,i,j);
+		    	        fireTableCellUpdated(i,j);
+		    			return;
+		    		}
+		    		
+		    	}
+		    }
 		}
 
 		private int getStartColumnHour(int hour,int minute){
