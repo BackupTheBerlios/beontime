@@ -20,13 +20,6 @@
 			type="java.lang.Long"
 		 />
 		<property
-			column="nb_semaine"
-			length="2"
-			name="NbWeeks"
-			not-null="false"
-			type="integer"
-		 />
-		<property
 			column="date_fin"
 			name="EndDate"
 			not-null="false"

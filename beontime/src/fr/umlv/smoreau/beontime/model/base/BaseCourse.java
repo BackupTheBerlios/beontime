@@ -24,7 +24,6 @@ public abstract class BaseCourse  implements Serializable {
 	public static String PROP_ID_COURS = "IdCourse";
 	public static String PROP_ID_FORMATION = "IdFormation";
 	public static String PROP_ID_TYPE_COURS = "IdCourseType";
-	public static String PROP_NB_SEMAINE = "NbWeeks";
 	public static String PROP_DATE_FIN = "EndDate";
 
 
@@ -35,7 +34,6 @@ public abstract class BaseCourse  implements Serializable {
 
 	// fields
 	private java.lang.Long _idFormation;
-	private java.lang.Integer _nbWeeks;
 	private java.util.Calendar _endDate;
 	private java.util.Calendar _beginDate;
 
@@ -113,22 +111,6 @@ public abstract class BaseCourse  implements Serializable {
 	 */
 	public void setIdFormation (java.lang.Long _idFormation) {
 		this._idFormation = _idFormation;
-	}
-
-
-	/**
-	 * Return the value associated with the column: Nb_semaine
-	 */
-	public java.lang.Integer getNbWeeks () {
-		return _nbWeeks;
-	}
-
-	/**
-	 * Set the value related to the column: Nb_semaine
-	 * @param _nbWeeks the Nb_semaine value
-	 */
-	public void setNbWeeks (java.lang.Integer _nbWeeks) {
-		this._nbWeeks = _nbWeeks;
 	}
 
 
