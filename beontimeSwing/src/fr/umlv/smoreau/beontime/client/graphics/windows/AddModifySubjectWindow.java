@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.utils.TextFieldBoT;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -239,7 +238,7 @@ public class AddModifySubjectWindow {
     	
     	
     	
-    	JLabel hourCourseFieldLabel = new JLabel("Nombre d'heures de cours :");
+    	/*JLabel hourCourseFieldLabel = new JLabel("Nombre d'heures de cours :");
     	addComponent(AMFWLayout,layoutConstraints,hourCourseFieldLabel,1,5,4,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(15,10,15,10));
     	AMFWFrame.getContentPane().add(hourCourseFieldLabel);
 
@@ -330,13 +329,13 @@ public class AddModifySubjectWindow {
     		
     	});
     	addComponent(AMFWLayout,layoutConstraints,tpJcb,8,6,1,1,0.0,0.0,GridBagConstraints.WEST,GridBagConstraints.NONE,new Insets(5,10,15,10));
-    	AMFWFrame.getContentPane().add(tpJcb);
+    	AMFWFrame.getContentPane().add(tpJcb);*/
 
     	
-    	createGroupButton = new JButton("Créer");
+    	/*createGroupButton = new JButton("Créer");
     	createGroupButton.setAction(ActionsList.getAction("AddGroup"));
     	addComponent(AMFWLayout,layoutConstraints,createGroupButton,1,10,6,1,0.0,0.0,GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,new Insets(5,10,15,10));
-    	AMFWFrame.getContentPane().add(createGroupButton);
+    	AMFWFrame.getContentPane().add(createGroupButton);*/
 
     	
     	JButton ok = new JButton("OK");
@@ -556,27 +555,36 @@ public class AddModifySubjectWindow {
 	}
     
     public Integer getNbMagHours() {
-        return new Integer((String) magistrauxJcb.getSelectedItem());
+        if (magistrauxJcb != null)
+            return new Integer((String) magistrauxJcb.getSelectedItem());
+        return null;
     }
     
     public void setNbMagHours(Integer value) {
-        magistrauxJcb.setSelectedItem(value.toString());
+        if (magistrauxJcb != null)
+            magistrauxJcb.setSelectedItem(value.toString());
     }
     
     public Integer getNbTdHours() {
-        return new Integer((String) tdJcb.getSelectedItem());
+        if (tdJcb != null)
+            return new Integer((String) tdJcb.getSelectedItem());
+        return null;
     }
     
     public void setNbTdHours(Integer value) {
-        tdJcb.setSelectedItem(value.toString());
+        if (tdJcb != null)
+            tdJcb.setSelectedItem(value.toString());
     }
     
     public Integer getNbTpHours() {
-        return new Integer((String) tpJcb.getSelectedItem());
+        if (tpJcb != null)
+            return new Integer((String) tpJcb.getSelectedItem());
+        return null;
     }
     
     public void setNbTpHours(Integer value) {
-        tpJcb.setSelectedItem(value.toString());
+        if (tpJcb != null)
+            tpJcb.setSelectedItem(value.toString());
     }
     
     public Integer getNbMagGroups() {
