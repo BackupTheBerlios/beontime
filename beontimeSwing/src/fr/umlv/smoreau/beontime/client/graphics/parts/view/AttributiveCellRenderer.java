@@ -94,12 +94,14 @@ public class AttributiveCellRenderer extends JLabel implements TableCellRenderer
                     prtScreen.append(" (TD)");
                 else if (TimetableDao.TYPE_TP.equals(c.getIdCourseType().getNameCourseType()))
                     prtScreen.append(" (TP)");
-                
+
                 for (Iterator i = c.getTeachers().iterator(); i.hasNext(); ) {
                     User user = (User) i.next();
-                    if (teachers.length() > 0)
-                        teachers.append(" - ");
-                    teachers.append(user.getFirstName()).append(" ").append(user.getName());
+                    if (user != null) {
+	                    if (teachers.length() > 0)
+	                        teachers.append(" - ");
+	                    teachers.append(user.getFirstName()).append(" ").append(user.getName());
+                    }
                 }
 
                 for (Iterator i = c.getRooms().iterator(); i.hasNext(); ) {
