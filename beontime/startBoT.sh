@@ -1,1 +1,0 @@
-java -classpath  ./lib/hibernate2.jar:./lib/pg72jdbc2.jar:./lib/dom4j-1.5.2.jar:./lib/commons-logging.jar:./lib/commons-collections-3.1.jar:./lib/db-ojb-1.0.1.jar:./lib/cglib-full-2.0.2.jar:./lib/jta.jar:./classes fr.umlv.smoreau.beontime.Server
