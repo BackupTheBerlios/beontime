@@ -10,9 +10,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import fr.umlv.smoreau.beontime.client.actions.ActionsList;
-import fr.umlv.smoreau.beontime.model.timetable.Course;
-
 public class MultiSpanCellTable extends JTable {
   public MultiSpanCellTable(TableModel model) {
     super(model);

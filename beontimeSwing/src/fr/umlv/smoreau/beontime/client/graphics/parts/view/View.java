@@ -1,7 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 
 import java.awt.Point;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -16,7 +15,6 @@ import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
-import fr.umlv.smoreau.beontime.model.timetable.Subject;
 
 
 /**
