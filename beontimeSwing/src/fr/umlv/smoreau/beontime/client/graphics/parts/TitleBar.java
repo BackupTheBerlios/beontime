@@ -184,7 +184,7 @@ public class TitleBar extends JPanel {
 
 		public void refreshAll(BoTEvent e) {
 		    Timetable timetable = e.getTimetable();
-		    intitleLabel.setText(timetable.getFormation().getHeading());
+		    intitleLabel.setText("Formation : " + timetable.getFormation().getHeading());
 		    if (timetable.getPersonInCharge()==null) {
 		    	responsibleLabel.setEnabled(false);
 		    	intitleLabel.setEnabled(false);
@@ -192,7 +192,7 @@ public class TitleBar extends JPanel {
 		    else {
 		    	responsibleLabel.setEnabled(true);
 		    	intitleLabel.setEnabled(true);
-		    	responsibleLabel.setText(timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
+		    	responsibleLabel.setText("Responsable : " + timetable.getPersonInCharge().getFirstName() + " " + timetable.getPersonInCharge().getName());
 		    }
 		    //TODO : changer la date ?
 		    panel.validate();
