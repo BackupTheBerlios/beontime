@@ -12,7 +12,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,7 +28,10 @@ import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.model.element.Room;
+import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
@@ -75,70 +82,231 @@ public class ExportTimetable extends Action {
 	
 	
 	/**
-     * Write a line into a file
-     * @param line line to write in the file
-     */
-    public static void writeLineFich(File file,String line) {
+	 * Write a line into a file
+	 * @param line line to write in the file
+	 */
+	public static void writeLineFich(File file,String line) {
+		
+		try {
+			FileWriter fichWriter  = new FileWriter(file,true);
+			
+			fichWriter.write(line);
+			fichWriter.close();
+		}
+		catch(IOException ioe) {
+			JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 	
-	try {
-	    FileWriter fichWriter  = new FileWriter(file);
-	    
-	    fichWriter.write(line);
-	    fichWriter.close();
-        }
-        catch(IOException ioe) {
-        	JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-
-    public static String createHeader(Timetable timetable) {
-    
-    	StringBuffer header = new StringBuffer();
-    	if (timetable.getGroup() != null) {
-    	    header.append("GROUPE : ");
-    	    header.append(timetable.getGroup().getHeading());
-    	} else if (timetable.getFormation() != null) {
-    	    header.append("FORMATION : ");
-    	    header.append(timetable.getFormation().getHeading());
-    	    header.append("\r\n");
-    	    header.append("RESPONSABLE : ");
-    	    header.append(timetable.getPersonInCharge().getName());
-    	    header.append(" ");
-    	    header.append(timetable.getPersonInCharge().getFirstName());
-    	} else if (timetable.getTeacher() != null) {
-    	    header.append("ENSEIGNANT : ");
-    	    header.append(timetable.getTeacher().getName());
-    	    header.append(" ");
-    	    header.append(timetable.getTeacher().getFirstName());
-    	} else if (timetable.getRoom() != null) {
-    	    header.append("LOCAL: ");
-    	    header.append(timetable.getRoom().getName());
-    	} else if (timetable.getMaterial() != null) {
-    	    header.append("MATERIEL : ");
-    	    header.append(timetable.getMaterial().getName());
-    	}
-    	header.append("\r\nEMPLOI DU TEMPS DU ");
-	    header.append(MainFrame.getInstance().getBeginPeriod().getTime());
-	    header.append(" AU ");
-	    header.append(MainFrame.getInstance().getEndPeriod().getTime());	
-    
-	    return header.toString();
-    }
+	
+	
+	public static String createHeader(Timetable timetable) {
+		
+		StringBuffer header = new StringBuffer();
+		if (timetable.getGroup() != null) {
+			header.append("GROUPE : ");
+			header.append(timetable.getGroup().getHeading());
+		} else if (timetable.getFormation() != null) {
+			header.append("FORMATION : ");
+			header.append(timetable.getFormation().getHeading());
+			header.append("\r\n");
+			header.append("RESPONSABLE : ");
+			header.append(timetable.getPersonInCharge().getName());
+			header.append(" ");
+			header.append(timetable.getPersonInCharge().getFirstName());
+		} else if (timetable.getTeacher() != null) {
+			header.append("ENSEIGNANT : ");
+			header.append(timetable.getTeacher().getName());
+			header.append(" ");
+			header.append(timetable.getTeacher().getFirstName());
+		} else if (timetable.getRoom() != null) {
+			header.append("LOCAL: ");
+			header.append(timetable.getRoom().getName());
+		} else if (timetable.getMaterial() != null) {
+			header.append("MATERIEL : ");
+			header.append(timetable.getMaterial().getName());
+		}
+		
+		header.append("\r\n\r\n\r\n\r\nEMPLOI DU TEMPS DU ");
+		Calendar beginPeriod = MainFrame.getInstance().getBeginPeriod();
+		
+		header.append(beginPeriod.get(Calendar.DAY_OF_MONTH)+" "+getMonth(beginPeriod)+" "+beginPeriod.get(Calendar.YEAR));
+		//header.append(MainFrame.getInstance().getBeginPeriod().getTime());
+		header.append(" AU ");
+		
+		Calendar endPeriod = MainFrame.getInstance().getEndPeriod();
+		header.append(endPeriod.get(Calendar.DAY_OF_MONTH)+" "+getMonth(endPeriod)+" "+endPeriod.get(Calendar.YEAR));
+		//header.append(MainFrame.getInstance().getEndPeriod().getTime());	
+		header.append("\r\n\r\n\r\n");
+		
+		
+		return header.toString();
+	}
+	
+	public static String getDay(Calendar calendar) {
+	
+		if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
+			return "Lundi";
+		
+		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY)
+			return "Mardi";
+		
+		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY)
+			return "Marcredi";
+		
+		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY)
+			return "Jeudi";
+		
+		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY)
+			return "Vendredi";
+		
+		else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+			return "Samedi";
+		
+		else 
+			return "Dimanche";
+		
+		
+	
+		
+	}
+	
+	public static String getMonth(Calendar calendar) {
+	
+		if (calendar.get(Calendar.MONTH) == Calendar.JANUARY)
+			return "Janvier";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.FEBRUARY)
+			return "Fevrier";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.MARCH)
+			return "Mars";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.APRIL)
+			return "Avril";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.MAY)
+			return "Mai";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.JUNE)
+			return "Juin";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.JULY)
+			return "Juillet";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.AUGUST)
+			return "Aout";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.SEPTEMBER)
+			return "Septembre";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.OCTOBER)
+			return "Octobre";
+		
+		else if (calendar.get(Calendar.MONTH) == Calendar.NOVEMBER)
+			return "Novembre";
+		
+		else
+			return "Decembre";
+		
+		
+		
+	}
+	
+	
+	
+	public static String getHour(Calendar calendar) {
+		
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		
+		if (minute != 0)
+			return hour+"H"+minute;
+		else
+			return hour+"H";
+	}
 	
 	public static void exportTXT(File file) {
-		
-		/*filter.setBeginPeriod(mainFrame.getBeginPeriod());
-		filter.setEndPeriod(mainFrame.getEndPeriod());
-		Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
-		MainFrame.getInstance().getModel().fireShowTimetable(timetable);
-		*/
-		/*Voir dans AttributiveCellTableModel, viewListener*/
 		
 		Timetable timetable = MainFrame.getInstance().getModel().getTimetable();
 		writeLineFich(file,ExportTimetable.createHeader(timetable));
 		
 		
+		
+		
+		Collection courses = timetable.getCourses();
+		
+		
+		
+		Calendar beginPeriod = MainFrame.getInstance().getBeginPeriod();
+		Calendar endPeriod = MainFrame.getInstance().getEndPeriod();	
+		
+		
+		
+		
+		int diffDay = (beginPeriod.get(Calendar.DAY_OF_WEEK)) - (Calendar.MONDAY);
+		for(int i=0; i<diffDay; i++) {
+			beginPeriod.roll(Calendar.DATE, false);
+		}
+		
+		
+		
+		/* write the timetable week by week */
+		while (beginPeriod.compareTo(endPeriod) < 0) {
+			
+			Calendar beginPeriodCopy = Calendar.getInstance();
+			beginPeriodCopy.setTime(beginPeriod.getTime());
+			
+			
+			for(int i=1; i<7; i++) {
+				beginPeriodCopy.roll(Calendar.DATE, true);
+			}
+			
+			writeLineFich(file,"Semaine du "+beginPeriod.get(Calendar.DAY_OF_MONTH)+" "+getMonth(beginPeriod)+" "+beginPeriod.get(Calendar.YEAR)+" au "+beginPeriodCopy.get(Calendar.DAY_OF_MONTH)+" "+getMonth(beginPeriodCopy)+" "+beginPeriodCopy.get(Calendar.YEAR)+" : \r\n\r\n");
+			
+			
+			for(int i=0; i<7; i++) {
+				
+				writeLineFich(file, getDay(beginPeriod).toUpperCase()+" "+beginPeriod.get(Calendar.DAY_OF_MONTH)+" : \r\n");
+				boolean existCourse = false;
+				
+				for (Iterator it = courses.iterator(); it.hasNext(); ) {
+					Course course = (Course) it.next();					
+					
+					
+					if((course.getBeginDate().get(Calendar.DAY_OF_MONTH) == beginPeriod.get(Calendar.DAY_OF_MONTH)) && (course.getBeginDate().get(Calendar.MONTH) == beginPeriod.get(Calendar.MONTH)) && (course.getBeginDate().get(Calendar.YEAR) == beginPeriod.get(Calendar.YEAR))) {
+						writeLineFich(file,course.getSubject().getHeading()+" ("+getHour(course.getBeginDate())+'-'+getHour(course.getEndDate())+")");
+						
+						Set teachers = course.getTeachers();
+						if (!teachers.isEmpty()) {
+							for (Iterator it2 = teachers.iterator(); it2.hasNext(); ) {
+								User user = (User) it2.next();
+								writeLineFich(file," - "+user.getName()+" ");
+							}
+						}
+						
+						
+						Set rooms = course.getRooms();
+						if (!rooms.isEmpty()) {
+							for (Iterator it2 = rooms.iterator(); it2.hasNext(); ) {
+								Room room = (Room) it2.next();
+								writeLineFich(file," - "+room.getName()+" ");
+							}
+						}
+						writeLineFich(file,"\r\n");
+						existCourse = true;
+					}  
+				}
+				
+				if (!existCourse)
+					writeLineFich(file,"Pas de cours\r\n");
+				
+				writeLineFich(file,"\r\n");
+				beginPeriod.roll(Calendar.DATE, true);
+			}
+			
+			
+		}
 		
 		
 	}
@@ -153,13 +321,11 @@ public class ExportTimetable extends Action {
 		BOTFileFilter filterJPEG = new BOTFileFilter(new String[] {"jpeg", "jpg"}, "Images JPEG");
 		BOTFileFilter filterPNG = new BOTFileFilter("png", "Images PNG");
 		BOTFileFilter filterTXT= new BOTFileFilter("txt", "Fichiers TEXT");
-		BOTFileFilter filterXML = new BOTFileFilter("xml", "Fichiers XML");
-		BOTFileFilter filter = new BOTFileFilter(new String[] {"png", "jpeg", "jpg", "txt","xml"}, "Images JPEG & Images PNG, Fichiers TXT & XML ");
+		BOTFileFilter filter = new BOTFileFilter(new String[] {"png", "jpeg", "jpg", "txt"}, "Images JPEG & Images PNG, Fichiers TXT");
 		
 		EEDTFrame.addChoosableFileFilter(filterJPEG);
 		EEDTFrame.addChoosableFileFilter(filterPNG);
 		EEDTFrame.addChoosableFileFilter(filterTXT);
-		EEDTFrame.addChoosableFileFilter(filterXML);
 		EEDTFrame.addChoosableFileFilter(filter);
 		
 		int returnVal = EEDTFrame.showSaveDialog(MainFrame.getInstance().getMainFrame());
@@ -167,10 +333,7 @@ public class ExportTimetable extends Action {
 		
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 			
-			System.out.println("You chose to save this file: " + EEDTFrame.getSelectedFile().getName());
-			
 			FileFilter selectedFilter = EEDTFrame.getFileFilter();
-			System.out.println("Filter choisi : "+selectedFilter.getDescription());
 			
 			
 			String formatName = null;
@@ -179,9 +342,9 @@ public class ExportTimetable extends Action {
 			try {
 				
 				if (selectedFilter.equals(filter)) {
-					if( !(EEDTFrame.getSelectedFile().getName().endsWith(".txt")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".xml")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".png")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpeg")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpg")) ) {
+					if( !(EEDTFrame.getSelectedFile().getName().endsWith(".txt")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".png")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpeg")) && !(EEDTFrame.getSelectedFile().getName().endsWith(".jpg")) ) {
 						
-						Object[] possibleValues = { "png", "jpeg", "jpg", "txt", "xml" };
+						Object[] possibleValues = { "png", "jpeg", "jpg", "txt"};
 						Object selectedValue = JOptionPane.showInputDialog(null,
 								
 								"Veuillez sélectionner un format d'exportation dans la liste suivante", "Format d'exportation",
@@ -218,18 +381,6 @@ public class ExportTimetable extends Action {
 					
 					formatName = "txt";
 					
-					ExportTimetable.exportTXT(file);
-					
-					return;
-				}
-				
-				else if (selectedFilter.equals(filterXML)) {
-					
-					if(!EEDTFrame.getSelectedFile().getName().endsWith(".xml"))
-						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat(".xml"));
-					
-					formatName = "xml";
-					return;
 				}
 				
 				else if(selectedFilter.equals(filterJPEG)) {
@@ -251,15 +402,18 @@ public class ExportTimetable extends Action {
 					
 					if(!EEDTFrame.getSelectedFile().getName().endsWith(".png")) {
 						file = new File(EEDTFrame.getCurrentDirectory(), EEDTFrame.getSelectedFile().getName().concat(".png"));
-						System.out.println("on est entré : "+ file.getName());
 					}
 					formatName = "png";
 				}
 				
 				
-				Image image = ExportTimetable.getImage(MainFrame.getInstance().getView().getJScrollPane());
 				
-				/* Accepted export "gif", "jpg", "bmp", "jpeg" */
+				if (formatName.compareTo("txt") == 0) {
+					ExportTimetable.exportTXT(file);		
+					return;
+				}
+				
+				Image image = ExportTimetable.getImage(MainFrame.getInstance().getView().getJScrollPane());
 				ImageIO.write(ExportTimetable.toBufferedImage(image), formatName, file);
 				
 				
