@@ -32,5 +32,7 @@ public class Disconnect extends Action {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
+        mainFrame.close();
+        (new Connect(mainFrame)).actionPerformed(null);
     }
 }

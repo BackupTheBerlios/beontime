@@ -28,6 +28,7 @@ public class ActionsList {
 	    ACTIONS.put("CloseTimetable", new CloseTimetable(null));
 		ACTIONS.put("PrintTimetable", new PrintTimetable(null));
 		ACTIONS.put("ExportTimetable", new ExportTimetable(null));
+		ACTIONS.put("Disconnect", new Disconnect(null));
 		ACTIONS.put("Quit", new Quit(null));
 		ACTIONS.put("CutCourse", new CutCourse(null));
 		ACTIONS.put("CopyCourse", new CopyCourse(null));

@@ -145,7 +145,7 @@ public class MainFrame {
 		//splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
 		splitPaneHorizontal2.setRightComponent(timetableviewpanel);
 		splitPaneHorizontal2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		splitPaneHorizontal2.setDividerLocation((int)(WIDTH*0.68));
+		//splitPaneHorizontal2.setDividerLocation((int)(WIDTH*0.68));
 		splitPaneHorizontal2.setDividerSize(0);
 		
 		container.add(splitPaneHorizontal2, BorderLayout.NORTH);
@@ -197,11 +197,12 @@ public class MainFrame {
 		mainFrame.setJMenuBar(menuBar);
         buttonBar = new ButtonBar(this);
         splitPaneHorizontal2.setLeftComponent(buttonBar.getToolBar());
+        splitPaneHorizontal2.setDividerLocation((int)(WIDTH*0.68));
 		mainFrame.setVisible(true);
 	}
 	
 	public void close() {
-		System.exit(0);
+		mainFrame.setVisible(false);
 	}
 
 	public Course getCourseSelected() {

@@ -54,6 +54,7 @@ public class MenuBar extends JMenuBar {
 			fichier.add(new JMenuItem(ActionsList.getAction("ExportTimetable")));
 			fichier.addSeparator();
 		}
+		fichier.add(new JMenuItem(ActionsList.getAction("Disconnect")));
 		fichier.add(new JMenuItem(ActionsList.getAction("Quit")));
 
 		JMenu edition = null;
