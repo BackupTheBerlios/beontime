@@ -103,33 +103,39 @@ public class UserDao extends Dao {
 		return getUsers(filter);
 	}
 	
-	public void addUser(Person user) {
+	public boolean addUser(Person user) {
         try {
             TransactionManager.beginTransaction();
             add(user);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'une personne : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void modifyUser(Person user) {
+	public boolean modifyUser(Person user) {
         try {
             TransactionManager.beginTransaction();
             modify(user);
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de l'ajout d'une personne : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 	
-	public void removeUser(Person user) {
+	public boolean removeUser(Person user) {
         try {
             TransactionManager.beginTransaction();
             remove(TABLE, new UserFilter(user));
             TransactionManager.commit();
         } catch (HibernateException e) {
             System.err.println("Erreur lors de la suppression d'une personne : " + e.getMessage());
+            return false;
         }
+        return true;
 	}
 }

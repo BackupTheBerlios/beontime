@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @author BeOnTime
  */
 public class FilterUtils {
-    public static void fillFilterClass(Object in, Object out, Collection methods) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    protected static void fillFilterClass(Object in, Object out, Collection methods) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (in != null && out != null) {
             Class classIn = in.getClass();
             Class classOut = out.getClass();
@@ -24,7 +24,7 @@ public class FilterUtils {
         }
     }
     
-    public static String createHQLQuery(Object object, HashMap corres) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    protected static String createHQLQuery(Object object, HashMap corres) throws IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 	    StringBuffer query = new StringBuffer();
 	    Class clazz = object.getClass();
 	    
