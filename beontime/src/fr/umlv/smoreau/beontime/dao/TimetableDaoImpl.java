@@ -2,7 +2,6 @@ package fr.umlv.smoreau.beontime.dao;
 /* DESS CRI - BeOnTime - timetable project */
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -81,7 +80,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         }
 	}
 	
-	public Collection getCoursesDirected(User user) throws RemoteException, HibernateException {
+	/*public Collection getCoursesDirected(User user) throws RemoteException, HibernateException {
 	    Collection result = new ArrayList();
 
 	    Session session = null;
@@ -97,7 +96,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         }
         
         return result;
-	}
+	}*/
 	
 	public Collection getSubjects(SubjectFilter filter) throws RemoteException, HibernateException {
 	    Session session = null;
@@ -109,7 +108,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         }
 	}
 	
-	public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException {
+	/*public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException {
 	    Session session = null;
         try {
             session = Hibernate.getCurrentSession();
@@ -119,7 +118,7 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
         } finally {
             Hibernate.closeSession();
         }
-	}
+	}*/
 
 	public Timetable getTimetable(TimetableFilter filter) throws RemoteException, HibernateException {
 	    Session session = null;
@@ -154,9 +153,11 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
                 Collection co = get(TABLE_ASSOCIATION, f, Hibernate.getCurrentSession());
                 if (co != null && co.size() > 0) {
 	                TakePartGroupSubjectCourse takePart = (TakePartGroupSubjectCourse) co.toArray()[0];
-	                SubjectFilter s = new SubjectFilter(new Subject(takePart.getIdSubject()));
-	                co = get(TABLE_SUBJECT, s, Hibernate.getCurrentSession());
-	                tmp.setSubject((Subject) co.toArray()[0]);
+	                for (Iterator j = timetable.getSubjects().iterator(); j.hasNext(); ) {
+	                    Subject s = (Subject) j.next();
+	                    if (s.getIdSubject().equals(takePart.getIdSubject()))
+	                        tmp.setSubject(s);
+	                }
                 }
             }
             
@@ -175,6 +176,17 @@ public class TimetableDaoImpl extends Dao implements TimetableDao {
 
 	public Collection getCourses() throws RemoteException, HibernateException {
 		return getCourses(null);
+	}
+	
+	public Course getCourse(Course course, String[] join) throws RemoteException, HibernateException {
+	    try {
+            Session session = Hibernate.getCurrentSession();
+            course = (Course) get(TABLE_COURSE, new CourseFilter(course), session).toArray()[0];
+            join(course, join);
+        } finally {
+            Hibernate.closeSession();
+        }
+        return course;
 	}
 
 	public Collection getSubjects() throws RemoteException, HibernateException {

@@ -12,7 +12,6 @@ import fr.umlv.smoreau.beontime.filter.SubjectFilter;
 import fr.umlv.smoreau.beontime.filter.TimetableFilter;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.timetable.*;
-import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * RMI interface for the TimeTable DAO
@@ -20,18 +19,25 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public interface TimetableDao extends Remote {
     public static final String[] TYPES_COURSES = { "cours magistraux", "travaux dirigés", "travaux pratiques" };
+    
+    public static final String JOIN_GROUPS_SUBJECTS = "GroupsSubjectsTakingPart";
+    public static final String JOIN_TEACHERS_DIRECTING = "TeachersDirecting";
+    public static final String JOIN_MATERIALS = "Materials";
+    public static final String JOIN_ROOMS = "Rooms";
 	
 	public Collection getCourses(CourseFilter filter) throws RemoteException, HibernateException;
 	
-	public Collection getCoursesDirected(User user) throws RemoteException, HibernateException;
+	//public Collection getCoursesDirected(User user) throws RemoteException, HibernateException;
 	
 	public Collection getSubjects(SubjectFilter filter) throws RemoteException, HibernateException;
 	
-	public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException;
+	//public Collection getSubjectsResponsible(User user) throws RemoteException, HibernateException;
 
 	public Timetable getTimetable(TimetableFilter filter) throws RemoteException, HibernateException;
 
 	public Collection getCourses() throws RemoteException, HibernateException;
+	
+	public Course getCourse(Course course, String[] join) throws RemoteException, HibernateException;
 
 	public Collection getSubjects() throws RemoteException, HibernateException;
 	

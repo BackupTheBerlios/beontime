@@ -3,7 +3,6 @@ package fr.umlv.smoreau.beontime.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -14,7 +13,6 @@ import fr.umlv.smoreau.beontime.Hibernate;
 import fr.umlv.smoreau.beontime.TransactionManager;
 import fr.umlv.smoreau.beontime.filter._BelongStudentGroupFilter;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
-import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.association.BelongStudentGroup;
 import fr.umlv.smoreau.beontime.model.user.User;
@@ -54,7 +52,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
         try {
             session = Hibernate.getCurrentSession();
             Collection c = get(TABLE, filter, session);
-            UserDao userDao = UserDaoImpl.getInstance();
+            /*UserDao userDao = UserDaoImpl.getInstance();
             for (Iterator i = c.iterator(); i.hasNext(); ) {
                 Group group = (Group) i.next();
                 Set belongs = group.getStudents();
@@ -66,7 +64,7 @@ public class GroupDaoImpl extends Dao implements GroupDao {
 	                    group.addStudent(tmp.toArray()[0]);
 	                }
                 }
-            }
+            }*/
             return c;
         } finally {
             Hibernate.closeSession();
