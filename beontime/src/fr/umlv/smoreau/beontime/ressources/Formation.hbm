@@ -10,7 +10,7 @@
 			name="IdFormation"
 			type="java.lang.Long"
 		>
-			<generator class="vm" />
+			<generator class="assigned" />
 		</id>
 		<property
 			column="intitule"
