@@ -11,7 +11,10 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttribute;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Chromaticity;
+import javax.print.attribute.standard.MultipleDocumentHandling;
+import javax.print.attribute.standard.NumberUp;
 import javax.print.attribute.standard.OrientationRequested;
+import javax.print.attribute.standard.SheetCollate;
 import javax.swing.JTable;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
@@ -90,9 +93,10 @@ public class PrintTimetable extends Action {
             
             job.setPrintable(printable);
 
-            PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet(new PrintRequestAttribute[] { OrientationRequested.LANDSCAPE, Chromaticity.COLOR});
+            PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet(new PrintRequestAttribute[] { OrientationRequested.LANDSCAPE, Chromaticity.COLOR, MultipleDocumentHandling.SINGLE_DOCUMENT, new NumberUp(1), SheetCollate.COLLATED});
             
             boolean printAccepted = job.printDialog(attr);
+            
 
             if (printAccepted)    
                 job.print(attr);

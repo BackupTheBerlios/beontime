@@ -31,7 +31,6 @@ public class ManageUsersTable extends JTable {
 		
 		panel = new JPanel(new GridLayout(1, 0));
 		
-		
 		table = this;
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		

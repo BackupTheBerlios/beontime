@@ -1,5 +1,6 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.event.EventListenerList;
@@ -16,14 +17,15 @@ import fr.umlv.smoreau.beontime.model.user.User;
  */
 public class ManageUsersAdapter implements TableModel {
 	private final EventListenerList list;
-	private User[] users;
+	private ArrayList users;
 	private final static String[] columnNames = {"Nom","Prénom","Courriel"};
+	
 	
 	
 	public ManageUsersAdapter(BoTModel model, Collection users) {
 		this.list = new EventListenerList();
-		this.users = (User[]) users.toArray(new User[users.size()]);
-
+		users = new ArrayList(users);
+		
 		model.addBoTListener(new ManageUsersListener());
 	}
 	
@@ -31,7 +33,7 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
 	public int getRowCount() {
-		return users.length;
+		return users.size();
 	}
 
 	/* (non-Javadoc)
@@ -66,15 +68,17 @@ public class ManageUsersAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-	    if (rowIndex < users.length) {
-		    switch(columnIndex) {
-		    	case 0: return users[rowIndex].getName();
-		    	case 1: return users[rowIndex].getFirstName();
-		    	case 2: return users[rowIndex].getEMail();
-		    }
-	    }
-	    
-	    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
+	   
+		if (rowIndex < users.size()) {
+	    switch(columnIndex) {
+	    	case 0: return ((User)users.get(rowIndex)).getName();
+	    	case 1: return ((User)users.get(rowIndex)).getFirstName();
+	    	case 2: return ((User)users.get(rowIndex)).getEMail();
+	    	}
+		}
+    
+    throw new IllegalArgumentException("case ("+rowIndex+','+columnIndex+") invalide");
+		
 	}
 	
 
@@ -86,7 +90,7 @@ public class ManageUsersAdapter implements TableModel {
 
 
 	public Object getObjectAt(int rowIndex) {
-		return users[rowIndex];
+		return (User)users.get(rowIndex);
 	}
 	
 	

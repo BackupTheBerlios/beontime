@@ -30,7 +30,6 @@ public class ManageMaterialsTable extends JTable {
 		
 		panel = new JPanel(new GridLayout(1, 0));
 		
-		
 		table = this;
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
