@@ -11,23 +11,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class ShowTimetableHorizontal extends Action{
     private static final String NAME = "Afficher l'emploi du temps horizontalement";
     private static final String ICON = "affiche_horizontal.png";
+    private static final String SMALL_ICON = "affiche_horizontal_small.png";
 
 
     public ShowTimetableHorizontal(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ShowTimetableHorizontal(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ShowTimetableHorizontal(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ShowTimetableHorizontal(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

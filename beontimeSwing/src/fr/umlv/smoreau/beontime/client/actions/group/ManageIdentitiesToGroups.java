@@ -12,23 +12,13 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageGroupsWindow;
 public class ManageIdentitiesToGroups extends Action {
     private static final String NAME = "Gérer les étudiants du groupe";
     private static final String ICON = "groupe.png";
+    private static final String SMALL_ICON = "groupe_small.png";
 
 
     public ManageIdentitiesToGroups(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ManageIdentitiesToGroups(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ManageIdentitiesToGroups(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ManageIdentitiesToGroups(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

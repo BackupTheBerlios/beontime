@@ -1,7 +1,6 @@
 package fr.umlv.smoreau.beontime.client.actions.authentication;
 
 import java.awt.event.ActionEvent;
-import java.rmi.RemoteException;
 
 import javax.swing.JOptionPane;
 
@@ -18,22 +17,12 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class Connect extends Action {
     private static final String NAME = "Se connecter";
     private static final String ICON = "";
+    private static final String SMALL_ICON = "";
     
     public Connect(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public Connect(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public Connect(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public Connect(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
@@ -55,16 +44,10 @@ public class Connect extends Action {
             } else {
                 mainFrame.setUserConnected(user);
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             actionPerformed(null);
-        }/* catch (NullPointerException e) {
-            //TODO supprimer ce catch pour le rendu
-            JOptionPane.showMessageDialog(null, "Serveur non démarré, mais je démarre quand même, rien que pour toi ! ;op", "Attention", JOptionPane.WARNING_MESSAGE);
-            User user = new User();
-            user.setUserType(UserDao.TYPE_SECRETARY);
-            mainFrame.setUser(user);
-        }*/
+        }
 
         mainFrame.open();
     }

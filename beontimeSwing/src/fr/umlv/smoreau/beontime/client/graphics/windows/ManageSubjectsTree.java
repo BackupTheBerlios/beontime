@@ -19,9 +19,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.AddSubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.ModifySubject;
-import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.ColorBoT;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
@@ -161,12 +159,12 @@ public class ManageSubjectsTree extends JTree {
 			super();
 			
 			if (object == null) {
-				JMenuItem menuItem = new JMenuItem(new AddSubject(false, mainFrame));
+				JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddSubject"));
 				add(menuItem);
 			} else if (object instanceof Subject) {
-				JMenuItem menuItem = new JMenuItem(new ModifySubject(false, mainFrame));
+				JMenuItem menuItem = new JMenuItem(ActionsList.getAction("ModifySubject"));
 				add(menuItem);
-				menuItem = new JMenuItem(new RemoveSubject(false, mainFrame));
+				menuItem = new JMenuItem(ActionsList.getAction("RemoveSubject"));
 				add(menuItem);
 			}
 		}

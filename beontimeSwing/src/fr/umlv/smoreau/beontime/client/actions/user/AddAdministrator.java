@@ -9,21 +9,10 @@ import fr.umlv.smoreau.beontime.dao.UserDao;
 public class AddAdministrator extends AddUser {
     private static final String NAME = "Ajouter un administrateur";
     private static final String ICON = "creer_user.png";
+    private static final String SMALL_ICON = "creer_user_small.png";
 
 
     public AddAdministrator(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame, UserDao.TYPE_ADMIN);
-    }
-    
-    public AddAdministrator(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame, UserDao.TYPE_ADMIN);
-    }
-    
-    public AddAdministrator(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame, UserDao.TYPE_ADMIN);
-    }
-    
-    public AddAdministrator(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame, UserDao.TYPE_ADMIN);
+        super(NAME, SMALL_ICON, ICON, mainFrame, UserDao.TYPE_ADMIN);
     }
 }

@@ -22,8 +22,8 @@ import fr.umlv.smoreau.beontime.model.user.User;
  * @author BeOnTime
  */
 public class AddUser extends Action {
-    protected AddUser(String name, String icon, MainFrame mainFrame, String type) {
-        super(name, icon, mainFrame);
+    protected AddUser(String name, String smallIcon, String icon, MainFrame mainFrame, String type) {
+        super(name, smallIcon, icon, mainFrame);
         this.type = type;
     }
 

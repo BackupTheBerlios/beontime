@@ -11,22 +11,11 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class ViewAllFunctionalities extends Action {
     private static final String NAME = "Voir les fonctionnalités de la secrétaire";
     private static final String ICON = "";
+    private static final String SMALL_ICON = "";
 
 
     public ViewAllFunctionalities(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
-    }
-    
-    public ViewAllFunctionalities(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ViewAllFunctionalities(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ViewAllFunctionalities(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
 
 

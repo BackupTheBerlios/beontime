@@ -12,22 +12,12 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.SearchAvailabilityWindow
 public class SearchAvailability extends Action {
     private static final String NAME = "Rechercher une disponibilité";
     private static final String ICON = "rechercher_indisponibilite.png";
+    private static final String SMALL_ICON = "rechercher_indisponibilite_small.png";
     
     public SearchAvailability(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public SearchAvailability(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public SearchAvailability(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public SearchAvailability(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -9,6 +9,7 @@ import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUserWindow;
+import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
@@ -17,22 +18,11 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class ModifyUser extends Action {
     private static final String NAME = "Modifier l'utilisateur";
     private static final String ICON = "modifier_user.png";
+    private static final String SMALL_ICON = "modifier_user_small.png";
 
 
     public ModifyUser(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
-    }
-    
-    public ModifyUser(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ModifyUser(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ModifyUser(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
 
 
@@ -44,34 +34,37 @@ public class ModifyUser extends Action {
         if (user == null)
             return;
 
-        AddModifyUserWindow window = new AddModifyUserWindow(user.getUserType());
-        window.setName(user.getName());
-        window.setSurname(user.getFirstName());
-        window.setCourrielMail(user.getEMail());
-        window.setBuilding(user.getBuildingNameForOffice());
-        window.setLocal(user.getOfficeName());
-        window.setPhone(user.getTelephone());
-        window.setFormations(user.getFormationsInCharge());
-        window.show();
-        
-        if (window.isOk()) {
-            user.setName(window.getName());
-            user.setFirstName(window.getSurname());
-            user.setEMail(window.getCourrielMail());
-            user.setBuildingNameForOffice(window.getBuilding());
-            user.setOfficeName(window.getLocal());
-            user.setTelephone(window.getPhone());
-            user.setFormationsInCharge(window.getFormations());
+        try {
+	        if (UserDao.TYPE_SECRETARY.equals(user.getUserType()))
+	            user = DaoManager.getUserDao().getUser(user, new String[] {UserDao.JOIN_FORMATIONS_IN_CHARGE});
+	
+	        AddModifyUserWindow window = new AddModifyUserWindow(user.getUserType());
+	        window.setName(user.getName());
+	        window.setSurname(user.getFirstName());
+	        window.setCourrielMail(user.getEMail());
+	        window.setBuilding(user.getBuildingNameForOffice());
+	        window.setLocal(user.getOfficeName());
+	        window.setPhone(user.getTelephone());
+	        window.setFormations(user.getFormationsInCharge());
+	        window.show();
+	        
+	        if (window.isOk()) {
+	            user.setName(window.getName());
+	            user.setFirstName(window.getSurname());
+	            user.setEMail(window.getCourrielMail());
+	            user.setBuildingNameForOffice(window.getBuilding());
+	            user.setOfficeName(window.getLocal());
+	            user.setTelephone(window.getPhone());
+	            user.setFormationsInCharge(window.getFormations());
 
-            try {
                 DaoManager.getUserDao().modifyUser(user);
                 
                 mainFrame.getModel().fireRefreshUser(user, BoTModel.TYPE_MODIFY);
                 
                 JOptionPane.showMessageDialog(null, "Modification effectuée avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
+	        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

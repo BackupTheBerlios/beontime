@@ -14,23 +14,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class CloseTimetable extends Action {
     private static final String NAME = "Fermer l'emploi du temps";
     private static final String ICON = "fermer_emploi.png";
+    private static final String SMALL_ICON = "fermer_emploi_small.png";
 
 
     public CloseTimetable(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public CloseTimetable(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public CloseTimetable(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public CloseTimetable(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

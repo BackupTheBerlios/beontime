@@ -12,22 +12,12 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyUnavailabilityW
 public class ModifyUnavailability extends Action {
     private static final String NAME = "Modifier l'indisponibilité";
     private static final String ICON = "modifier_indisponibilite.png";
+    private static final String SMALL_ICON = "modifier_indisponibilite_small.png";
     
     public ModifyUnavailability(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ModifyUnavailability(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ModifyUnavailability(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ModifyUnavailability(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

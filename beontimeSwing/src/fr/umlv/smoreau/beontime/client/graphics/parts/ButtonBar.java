@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
@@ -66,6 +67,7 @@ public class ButtonBar {
 	        defToolBar.add(null);
 	    } else {
 			JButton bouton = toolBar.add(action);
+			bouton.setIcon((Icon) action.getValue(fr.umlv.smoreau.beontime.client.actions.Action.ICON));
 			bouton.setToolTipText((String) action.getValue(AbstractAction.NAME));
 			bouton.setText("");
 			bouton.setBorderPainted(true);

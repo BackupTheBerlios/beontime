@@ -13,23 +13,13 @@ import fr.umlv.smoreau.beontime.dao.UserDao;
 public class ManageUsers extends Action {
     private static final String NAME = "Gérer les utilisateurs";
     private static final String ICON = "gerer_user.png";
+    private static final String SMALL_ICON = "gerer_user_small.png";
 
 
     public ManageUsers(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ManageUsers(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ManageUsers(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ManageUsers(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

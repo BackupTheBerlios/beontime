@@ -11,23 +11,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class PasteCourse extends Action {
     private static final String NAME = "Coller le cours";
     private static final String ICON = "coller.png";
+    private static final String SMALL_ICON = "coller_small.png";
 
 
     public PasteCourse(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public PasteCourse(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public PasteCourse(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public PasteCourse(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -21,23 +21,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class ExportTimetable extends Action {
     private static final String NAME = "Exporter l'emploi du temps";
     private static final String ICON = "exporter.png";
+    private static final String SMALL_ICON = "exporter_small.png";
 
 
     public ExportTimetable(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ExportTimetable(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ExportTimetable(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ExportTimetable(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -16,18 +16,6 @@ public class MoveDownButton extends Action {
     public MoveDownButton(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
-    
-    public MoveDownButton(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public MoveDownButton(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public MoveDownButton(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
 
 
     /* (non-Javadoc)

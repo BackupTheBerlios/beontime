@@ -17,23 +17,13 @@ import fr.umlv.smoreau.beontime.model.element.Material;
 public class RemoveMaterial extends Action {
     private static final String NAME = "Supprimer le matériel";
     private static final String ICON = "supprimer_materiel.png";
+    private static final String SMALL_ICON = "supprimer_materiel_small.png";
 
 
     public RemoveMaterial(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public RemoveMaterial(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public RemoveMaterial(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public RemoveMaterial(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

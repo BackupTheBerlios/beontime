@@ -11,22 +11,12 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class RemoveUnavailability extends Action {
     private static final String NAME = "Supprimer l'indisponibilité";
     private static final String ICON = "supprimer_indisponibilite.png";
+    private static final String SMALL_ICON = "supprimer_indisponibilite_small.png";
     
     public RemoveUnavailability(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public RemoveUnavailability(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public RemoveUnavailability(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public RemoveUnavailability(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

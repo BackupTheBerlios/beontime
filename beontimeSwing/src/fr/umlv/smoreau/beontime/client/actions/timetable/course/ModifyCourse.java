@@ -12,23 +12,13 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 public class ModifyCourse extends Action {
     private static final String NAME = "Modifier le cours";
     private static final String ICON = "modifier_cours.png";
+    private static final String SMALL_ICON = "modifier_cours_small.png";
 
 
     public ModifyCourse(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
-    }
-    
-    public ModifyCourse(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ModifyCourse(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
 
-    public ModifyCourse(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -12,23 +12,13 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
 public class ManageUnavailabilities extends Action {
     private static final String NAME = "Gérer les indisponibilités";
     private static final String ICON = "gerer_indisponibilite.png";
+    private static final String SMALL_ICON = "gerer_indisponibilite_small.png";
 
 
     public ManageUnavailabilities(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ManageUnavailabilities(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ManageUnavailabilities(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ManageUnavailabilities(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

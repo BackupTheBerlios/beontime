@@ -1,9 +1,3 @@
-/*
- * Created on 28 févr. 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
 import java.awt.Color;
@@ -24,19 +18,14 @@ import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
-import fr.umlv.smoreau.beontime.client.actions.group.AddGroup;
-import fr.umlv.smoreau.beontime.client.actions.group.ModifyGroup;
-import fr.umlv.smoreau.beontime.client.actions.group.RemoveGroup;
+import fr.umlv.smoreau.beontime.client.actions.ActionsList;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
 /**
- * @author sandrine
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @author BeOnTime
  */
 public class ManageGroupsTree extends JTree {
 	
@@ -160,12 +149,12 @@ public class ManageGroupsTree extends JTree {
 			super();
 			
 			if (object == null) {
-				JMenuItem menuItem = new JMenuItem(new AddGroup(false, mainFrame));
+				JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddGroup"));
 				add(menuItem);
 			} else if (object instanceof Group) {
-				JMenuItem menuItem = new JMenuItem(new ModifyGroup(false, mainFrame));
+				JMenuItem menuItem = new JMenuItem(ActionsList.getAction("ModifyGroup"));
 				add(menuItem);
-				menuItem = new JMenuItem(new RemoveGroup(false, mainFrame));
+				menuItem = new JMenuItem(ActionsList.getAction("RemoveGroup"));
 				add(menuItem);
 			}
 		}

@@ -16,18 +16,6 @@ public class MoveUpButton extends Action {
     public MoveUpButton(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
-    
-    public MoveUpButton(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public MoveUpButton(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public MoveUpButton(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
 
 
     /* (non-Javadoc)

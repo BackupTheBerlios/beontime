@@ -11,23 +11,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class CutCourse extends Action {
     private static final String NAME = "Couper le cours";
     private static final String ICON = "couper.png";
+    private static final String SMALL_ICON = "couper_small.png";
 
 
     public CutCourse(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public CutCourse(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public CutCourse(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public CutCourse(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -12,22 +12,11 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AboutWindow;
 public class About extends Action {
     private static final String NAME = "A propos de BeOnTime";
     private static final String ICON = "aide.png";
+    private static final String SMALL_ICON = "aide_small.png";
 
 
     public About(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
-    }
-    
-    public About(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public About(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public About(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
 
 

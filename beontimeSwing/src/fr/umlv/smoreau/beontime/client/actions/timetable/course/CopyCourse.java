@@ -11,23 +11,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class CopyCourse extends Action {
     private static final String NAME = "Copier le cours";
     private static final String ICON = "copier.png";
+    private static final String SMALL_ICON = "copier_small.png";
 
 
     public CopyCourse(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public CopyCourse(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public CopyCourse(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public CopyCourse(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

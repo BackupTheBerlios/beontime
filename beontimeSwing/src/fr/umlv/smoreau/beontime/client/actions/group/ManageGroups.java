@@ -12,23 +12,13 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
 public class ManageGroups extends Action {
     private static final String NAME = "Gérer les groupes";
     private static final String ICON = "gerer_groupe.png";
+    private static final String SMALL_ICON = "gerer_groupe_small.png";
 
 
     public ManageGroups(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ManageGroups(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ManageGroups(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ManageGroups(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

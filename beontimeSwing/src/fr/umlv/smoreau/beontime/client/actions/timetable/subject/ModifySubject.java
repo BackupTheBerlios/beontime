@@ -17,23 +17,13 @@ import fr.umlv.smoreau.beontime.model.timetable.Subject;
 public class ModifySubject extends Action {
     private static final String NAME = "Modifier la matière";
     private static final String ICON = "modifier_matiere.png";
+    private static final String SMALL_ICON = "modifier_matiere_small.png";
 
 
     public ModifySubject(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ModifySubject(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ModifySubject(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ModifySubject(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

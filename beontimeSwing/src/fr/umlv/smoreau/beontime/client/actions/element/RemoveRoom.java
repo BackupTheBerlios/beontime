@@ -17,23 +17,13 @@ import fr.umlv.smoreau.beontime.model.element.Room;
 public class RemoveRoom extends Action {
     private static final String NAME = "Supprimer le local";
     private static final String ICON = "supprimer_local.png";
+    private static final String SMALL_ICON = "supprimer_local_small.png";
 
 
     public RemoveRoom(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public RemoveRoom(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public RemoveRoom(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public RemoveRoom(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

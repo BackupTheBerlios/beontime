@@ -10,24 +10,14 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
  */
 public class AddIdentityToGroup extends Action {
     private static final String NAME = "Ajouter des étudiants au groupe";
-    private static final String ICON = "New24.gif";
+    private static final String ICON = "";
+    private static final String SMALL_ICON = "";
 
 
     public AddIdentityToGroup(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public AddIdentityToGroup(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public AddIdentityToGroup(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public AddIdentityToGroup(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

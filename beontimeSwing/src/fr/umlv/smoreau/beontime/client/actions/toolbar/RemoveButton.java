@@ -16,18 +16,6 @@ public class RemoveButton extends Action {
     public RemoveButton(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
-    
-    public RemoveButton(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public RemoveButton(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public RemoveButton(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
 
 
     /* (non-Javadoc)

@@ -17,22 +17,11 @@ import fr.umlv.smoreau.beontime.model.timetable.Subject;
 public class AddSubject extends Action {
     private static final String NAME = "Ajouter une matière";
     private static final String ICON = "ajouter_matiere.png";
+    private static final String SMALL_ICON = "ajouter_matiere_small.png";
 
 
     public AddSubject(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
-    }
-    
-    public AddSubject(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public AddSubject(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public AddSubject(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
 
 

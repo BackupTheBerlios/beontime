@@ -20,23 +20,13 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class GenerateGroups extends Action {
     private static final String NAME = "Générer des groupes automatiquement";
     private static final String ICON = "groupe_auto.png";
+    private static final String SMALL_ICON = "groupe_auto_small.png";
 
 
     public GenerateGroups(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public GenerateGroups(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public GenerateGroups(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public GenerateGroups(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

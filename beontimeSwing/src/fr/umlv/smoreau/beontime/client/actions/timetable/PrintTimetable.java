@@ -15,23 +15,13 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class PrintTimetable extends Action {
     private static final String NAME = "Imprimer l'emploi du temps";
     private static final String ICON = "imprimer.png";
+    private static final String SMALL_ICON = "imprimer_small.png";
 
 
     public PrintTimetable(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public PrintTimetable(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public PrintTimetable(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public PrintTimetable(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

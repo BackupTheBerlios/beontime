@@ -11,7 +11,6 @@ import javax.swing.UIManager;
 import javax.swing.table.TableColumnModel;
 
 import fr.umlv.smoreau.beontime.client.actions.ActionsList;
-import fr.umlv.smoreau.beontime.client.actions.timetable.course.AddCourse;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
@@ -133,7 +132,7 @@ public class View {
 	    
 	    public PopupMenu(Object object) {
 	        super();
-            JMenuItem menuItem = new JMenuItem(new AddCourse(false, mainFrame));
+            JMenuItem menuItem = new JMenuItem(ActionsList.getAction("AddCourse"));
 			add(menuItem);
 	    }
 	}

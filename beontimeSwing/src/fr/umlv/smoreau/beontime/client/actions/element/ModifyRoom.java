@@ -18,23 +18,13 @@ import fr.umlv.smoreau.beontime.model.element.Room;
 public class ModifyRoom extends Action {
     private static final String NAME = "Modifier le local";
     private static final String ICON = "modifier_local.png";
+    private static final String SMALL_ICON = "modifier_local_small.png";
 
 
     public ModifyRoom(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ModifyRoom(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ModifyRoom(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ModifyRoom(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

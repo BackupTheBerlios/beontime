@@ -15,11 +15,20 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public abstract class Action extends AbstractAction {
     private static final String DIR_IMAGES = "images";
     
+    public static final String ICON = "icon";
+    
     protected MainFrame mainFrame;
 
-
+    
     public Action(String name, String icon, MainFrame mainFrame) {
         super(name, getImage(icon));
+        putValue(ICON, getImage(icon));
+        this.mainFrame = mainFrame;
+    }
+
+    public Action(String name, String smallIcon, String icon, MainFrame mainFrame) {
+        super(name, getImage(smallIcon));
+        putValue(ICON, getImage(icon));
         this.mainFrame = mainFrame;
     }
     
@@ -34,5 +43,9 @@ public abstract class Action extends AbstractAction {
 	            return new ImageIcon(url);
 	    }
 		return null;
+	}
+	
+	public void setSmallIcon(boolean small) {
+	    putValue(Action.SMALL_ICON, getImage("ajouter_matiere_small.png"));
 	}
 }

@@ -16,23 +16,13 @@ import fr.umlv.smoreau.beontime.model.Group;
 public class AddGroup extends Action {
     private static final String NAME = "Créer un groupe d'étudiants";
     private static final String ICON = "creer_groupe.png";
+    private static final String SMALL_ICON = "creer_groupee_small.png";
 
 
     public AddGroup(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public AddGroup(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public AddGroup(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public AddGroup(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

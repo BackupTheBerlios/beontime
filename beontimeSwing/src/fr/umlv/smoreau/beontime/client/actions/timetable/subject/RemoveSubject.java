@@ -20,23 +20,13 @@ import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 public class RemoveSubject extends Action {
     private static final String NAME = "Supprimer la matière";
     private static final String ICON = "supprimer_matiere.png";
+    private static final String SMALL_ICON = "supprimer_matiere_small.png";
 
 
     public RemoveSubject(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public RemoveSubject(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public RemoveSubject(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public RemoveSubject(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

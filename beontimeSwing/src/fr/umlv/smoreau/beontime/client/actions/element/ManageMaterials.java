@@ -12,23 +12,13 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.ManageElementsWindow;
 public class ManageMaterials extends Action {
     private static final String NAME = "Gérer les matériels";
     private static final String ICON = "gerer_materiel.png";
+    private static final String SMALL_ICON = "gerer_materiel_small.png";
 
 
     public ManageMaterials(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ManageMaterials(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ManageMaterials(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ManageMaterials(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -12,23 +12,13 @@ import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyGroupWindow;
 public class ModifyGroup extends Action {
     private static final String NAME = "Modifier le groupe";
     private static final String ICON = "modifier_groupe.png";
+    private static final String SMALL_ICON = "modifier_groupe_small.png";
 
 
     public ModifyGroup(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public ModifyGroup(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public ModifyGroup(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public ModifyGroup(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

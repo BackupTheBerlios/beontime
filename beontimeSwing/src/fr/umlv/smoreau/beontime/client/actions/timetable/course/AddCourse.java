@@ -12,8 +12,6 @@ import fr.umlv.smoreau.beontime.client.DaoManager;
 import fr.umlv.smoreau.beontime.client.actions.Action;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.client.graphics.parts.view.AttributiveCellTableModel;
-import fr.umlv.smoreau.beontime.client.graphics.parts.view.DefaultCellAttribute;
 import fr.umlv.smoreau.beontime.client.graphics.windows.AddModifyCourseWindow;
 import fr.umlv.smoreau.beontime.model.association.IsDirectedByCourseTeacher;
 import fr.umlv.smoreau.beontime.model.association.TakePartGroupSubjectCourse;
@@ -29,35 +27,19 @@ import fr.umlv.smoreau.beontime.model.user.User;
 public class AddCourse extends Action {
     private static final String NAME = "Placer un cours";
 	private static final String ICON = "ajouter_cours.png";
-    private static JTable table;
-    private static DefaultCellAttribute cellAtt;
-    private static AttributiveCellTableModel ml;
+	private static final String SMALL_ICON = "ajouter_cours_small.png";
 
-    
 
     public AddCourse(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public AddCourse(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public AddCourse(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public AddCourse(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        ml=mainFrame.getTableModel();
-        cellAtt = (DefaultCellAttribute) ml.getCellAttribute();
-        table = mainFrame.getTable();
+        JTable table = mainFrame.getTable();
         int[] columns = table.getSelectedColumns();
         int[] rows    = table.getSelectedRows();
     	AddModifyCourseWindow window = new AddModifyCourseWindow();
@@ -130,7 +112,6 @@ public class AddCourse extends Action {
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
     	}

@@ -16,18 +16,6 @@ public class AddButton extends Action {
     public AddButton(MainFrame mainFrame) {
         super(NAME, ICON, mainFrame);
     }
-    
-    public AddButton(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public AddButton(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public AddButton(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
 
 
     /* (non-Javadoc)

@@ -11,22 +11,12 @@ import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 public class Disconnect extends Action {
     private static final String NAME = "Se déconnecter";
     private static final String ICON = "decon.png";
+    private static final String SMALL_ICON = "decon_small.png";
     
     public Disconnect(MainFrame mainFrame) {
-        super(NAME, ICON, mainFrame);
+        super(NAME, SMALL_ICON, ICON, mainFrame);
     }
-    
-    public Disconnect(boolean showIcon, MainFrame mainFrame) {
-        super(NAME, showIcon ? ICON : null, mainFrame);
-    }
-    
-    public Disconnect(String name, MainFrame mainFrame) {
-        super(name, ICON, mainFrame);
-    }
-    
-    public Disconnect(String name, boolean showIcon, MainFrame mainFrame) {
-        super(name, showIcon ? ICON : null, mainFrame);
-    }
+
     
     /* (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
