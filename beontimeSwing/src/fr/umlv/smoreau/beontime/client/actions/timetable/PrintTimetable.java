@@ -15,6 +15,7 @@ import javax.print.attribute.standard.MultipleDocumentHandling;
 import javax.print.attribute.standard.NumberUp;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.print.attribute.standard.SheetCollate;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
@@ -79,9 +80,23 @@ public class PrintTimetable extends Action {
     	    header.append(timetable.getPersonInCharge().getName());
     	    header.append(" ");
     	    header.append(timetable.getPersonInCharge().getFirstName());
-    	    header.append("\r\nEmploi du temps ");
-    	    header.append(mainFrame.getTitleBar().getPeriod());
+    	} else if (timetable.getTeacher() != null) {
+    	    header.append("Enseignant: ");
+    	    header.append(timetable.getTeacher().getName());
+    	    header.append(" ");
+    	    header.append(timetable.getTeacher().getFirstName());
+    	} else if (timetable.getRoom() != null) {
+    	    header.append("Local: ");
+    	    header.append(timetable.getRoom().getName());
+    	} else if (timetable.getMaterial() != null) {
+    	    header.append("Matériel: ");
+    	    header.append(timetable.getMaterial().getName());
     	}
+    	header.append("\r\nEmploi du temps du ");
+	    header.append(mainFrame.getBeginPeriod().getTime());
+	    header.append(" au ");
+	    header.append(mainFrame.getEndPeriod().getTime());
+
     	MessageFormat headerFormat = new MessageFormat(header.toString());
 		MessageFormat footerFormat = new MessageFormat(mainFrame.getStateBar().getRemark()+"\r\nPage {0}");
     	
@@ -102,11 +117,7 @@ public class PrintTimetable extends Action {
                 job.print(attr);
             
         } catch (PrinterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de l'impression", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
-        
-        
-        
     }
 }
