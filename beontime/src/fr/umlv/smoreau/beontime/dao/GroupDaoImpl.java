@@ -117,12 +117,14 @@ public class GroupDaoImpl extends Dao implements GroupDao {
             TransactionManager.beginTransaction();
             session = Hibernate.getCurrentSession();
             modify(group, session);
+
+            _BelongStudentGroupFilter filter = new _BelongStudentGroupFilter();
+            filter.setIdGroup(group);
+            remove(TABLE_BELONG, filter, session);
             Collection c = group.getStudents();
             if (c != null) {
-	            for (Iterator i = c.iterator(); i.hasNext(); ) {
-	                BelongStudentGroup belong = new BelongStudentGroup((User) i.next(), group);
-                	addOrModify(belong, session);
-	            }
+	            for (Iterator i = c.iterator(); i.hasNext(); )
+	                add(i.next(), session);
             }
             TransactionManager.commit();
         } catch (HibernateException e) {

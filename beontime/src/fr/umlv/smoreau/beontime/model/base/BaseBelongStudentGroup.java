@@ -93,7 +93,8 @@ public abstract class BaseBelongStudentGroup implements Serializable {
 		else {
 			fr.umlv.smoreau.beontime.model.base.BaseBelongStudentGroup mObj = (fr.umlv.smoreau.beontime.model.base.BaseBelongStudentGroup) obj;
 			if (null == this.getIdGroup() || null == mObj.getIdGroup()) return false;
-			else return (this.getIdGroup().equals(mObj.getIdGroup()));
+			if (null == this.getIdStudent() || null == mObj.getIdStudent()) return false;
+			else return (this.getIdGroup().equals(mObj.getIdGroup()) && this.getIdStudent().equals(mObj.getIdStudent()));
 		}
 	}
 

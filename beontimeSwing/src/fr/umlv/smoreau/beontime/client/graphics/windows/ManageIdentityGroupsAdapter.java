@@ -9,38 +9,43 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
+import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
-import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.dao.DaoManager;
+import fr.umlv.smoreau.beontime.dao.GroupDao;
+import fr.umlv.smoreau.beontime.filter.UserFilter;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.association.BelongStudentGroup;
+import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
  */
 public class ManageIdentityGroupsAdapter implements TableModel {
-
 	private final EventListenerList list;
 	private BoTModel model;
-	private ArrayList groups;
+	private Group group;
 	private ArrayList students;
 	
 	
-	
-	
-	public ManageIdentityGroupsAdapter(BoTModel model, Formation formation, ArrayList groups) {
+	public ManageIdentityGroupsAdapter(BoTModel model) {
 		this.model = model;
 		this.list = new EventListenerList();
-		this.groups = groups;
-	
-		HashSet setStudents = new HashSet();
+		this.group = MainFrame.getInstance().getGroupSelected();
 		
-		for(Iterator it = formation.getGroups().iterator();it.hasNext();) {
-			for(Iterator it2 = ((Group)it.next()).getStudents().iterator();it2.hasNext();) {
-				// TODO Normalement Je pense que c'est le nom de l'étudiant, pour l'instant j'ai mis sont identificateur
-				setStudents.add((Long)it2.next());
-			}	
-		}	
+		try {
+			this.group = DaoManager.getGroupDao().getGroup(this.group, new String[] {GroupDao.JOIN_STUDENTS});
+		} catch (Exception e) {
+			this.group.setStudents(new HashSet());
+		}
 		
-		this.students = new ArrayList(setStudents);
+		try {
+			UserFilter filter = new UserFilter();
+			filter.setIdFormation(group.getIdFormation());
+			this.students = (ArrayList) DaoManager.getUserDao().getStudents(filter);
+		} catch (Exception e) {
+			this.students = new ArrayList();
+		}
 	
 		model.addBoTListener(new ManageIdentityGroupsListener(this));
 	}
@@ -49,7 +54,6 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getRowCount()
 	 */
 	public int getRowCount() {
-		
 		return students.size();
 	}
 	
@@ -57,25 +61,23 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getColumnCount()
 	 */
 	public int getColumnCount() {
-		return groups.size()+1;
+		return 2;
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#getColumnName(int)
 	 */
 	public String getColumnName(int columnIndex) {
-		
 		if (columnIndex == 0)
 			return "";
 		
-		return ((Group)groups.get(columnIndex-1)).getHeading();
+		return group.getHeading();
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#getColumnClass(int)
 	 */
 	public Class getColumnClass(int columnIndex) {
-		// TODO Auto-generated method stub
 		return Object.class;
 	}
 	
@@ -83,7 +85,6 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#isCellEditable(int, int)
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -91,30 +92,24 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		
-		Long ID_student = (Long)students.get(rowIndex);
-		
+		User student = (User) students.get(rowIndex);
+
 		if (columnIndex == 0)
-			return ID_student;
-		
-		
-		for(Iterator it = ((Group)(groups.get(columnIndex-1))).getStudents().iterator();it.hasNext();) {
-			
-			if ( ((Long)it.next()).compareTo(ID_student) == 0)
-				return "oui";
-		}	
-		
-		return "non";
-		
+			return student;
+
+		for (Iterator it = group.getStudents().iterator(); it.hasNext(); ) {
+			BelongStudentGroup belong = (BelongStudentGroup) it.next();
+			if (belong.getIdStudent().equals(student.getIdUser()))
+				return belong;
+		}
+
+		return null;
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	/* (non-Javadoc)
@@ -122,15 +117,21 @@ public class ManageIdentityGroupsAdapter implements TableModel {
 	 */
 	public void addTableModelListener(TableModelListener l) {
 		list.add(TableModelListener.class, l);
-		
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableModel#removeTableModelListener(javax.swing.event.TableModelListener)
 	 */
 	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
 		list.remove(TableModelListener.class, l);
+	}
+	
+	public EventListenerList getEventListenerList() {
+		return list;
+	}
+	
+	public Group getGroup() {
+		return group;
 	}
 	
 	private class  ManageIdentityGroupsListener extends DefaultBoTListener {

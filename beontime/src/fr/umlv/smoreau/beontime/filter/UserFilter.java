@@ -22,6 +22,7 @@ public class UserFilter extends User implements Filter {
         corres.put("BuildingNameForOffice", new FilterObject("nom_batiment_bureau"));
         corres.put("Login", new FilterObject("login"));
         corres.put("Password", new FilterObject("password"));
+        corres.put("IdFormation", null);
     }
 
 

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
+import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.windows.GenerateGroupsWindow;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
@@ -65,7 +66,10 @@ public class GenerateGroups extends Action {
                     }
                     j += nbStudentsByGroup;
                     
-                    DaoManager.getGroupDao().addGroup(group);
+                    group = DaoManager.getGroupDao().addGroup(group);
+                    
+                    mainFrame.getModel().getTimetable().addGroup(group);
+                    mainFrame.getModel().fireRefreshGroup(group, BoTModel.TYPE_ADD);
                 }
                 
                 JOptionPane.showMessageDialog(null, "Ajouts effectués avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);

@@ -32,6 +32,9 @@ public class FilterUtils {
 	    for (Iterator i = corres.keySet().iterator(); i.hasNext();) {
 	        String methodName = (String) i.next();
 	        FilterObject filterObject = (FilterObject) corres.get(methodName);
+	        
+	        if (filterObject == null)
+	        	continue;
 
 	        String[] split = null;
 	        if (methodName.indexOf(".") != -1)
