@@ -1,3 +1,10 @@
+/*
+ * (swing1.1beta3)
+ * 
+ */
+
+
+
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.*;
 
@@ -6,11 +13,20 @@ import java.awt.*;
  * @version 1.0 11/22/98
  */
 
-public class DefaultCellAttribute implements CellAttribute ,CellSpan {
+public class DefaultCellAttribute 
+//    implements CellAttribute ,CellSpan  {
+      implements CellAttribute ,CellSpan ,ColoredCell ,CellFont {
 
+  //
+  // !!!! CAUTION !!!!!
+  // these values must be synchronized to Table data
+  //
   protected int rowSize;
   protected int columnSize;
   protected int[][][] span;                   // CellSpan
+  protected Color[][] foreground;             // ColoredCell
+  protected Color[][] background;             //
+  protected Font[][]  font;                   // CellFont
   
   public DefaultCellAttribute() {
     this(1,1);
@@ -57,11 +73,8 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan {
     if (isOutOfBounds(rows, columns)) return;
     int    rowSpan  = rows.length;
     int columnSpan  = columns.length;
-    System.out.println(rows.length);
-    System.out.println(columns.length);
     int startRow    = rows[0];
     int startColumn = columns[0];
-
     for (int i=0;i<rowSpan;i++) {
       for (int j=0;j<columnSpan;j++) {
 	if ((span[startRow +i][startColumn +j][CellSpan.COLUMN] != 1)
@@ -96,7 +109,57 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan {
   }
 
 
-   //
+  //
+  // ColoredCell
+  //
+  public Color getForeground(int row, int column) {
+    if (isOutOfBounds(row, column)) return null;
+    return foreground[row][column];
+  }
+  public void setForeground(Color color, int row, int column) {
+    if (isOutOfBounds(row, column)) return;
+    foreground[row][column] = color;
+  }
+  public void setForeground(Color color, int[] rows, int[] columns) {
+    if (isOutOfBounds(rows, columns)) return;
+    setValues(foreground, color, rows, columns);
+  }
+  public Color getBackground(int row, int column) {
+    if (isOutOfBounds(row, column)) return null;
+    return background[row][column];
+  }
+  public void setBackground(Color color, int row, int column) {
+  	System.out.println("b");
+    if (isOutOfBounds(row, column)) return;
+    System.out.println("c");
+    background[row][column] = color;
+  }
+  public void setBackground(Color color, int[] rows, int[] columns) {
+    if (isOutOfBounds(rows, columns)) return;
+    setValues(background, color, rows, columns);
+  }
+  //
+
+
+  //
+  // CellFont
+  //
+  public Font getFont(int row, int column) {
+    if (isOutOfBounds(row, column)) return null;
+    return font[row][column];
+  }
+  public void setFont(Font font, int row, int column) {
+    if (isOutOfBounds(row, column)) return;
+    this.font[row][column] = font;
+  }
+  public void setFont(Font font, int[] rows, int[] columns) {
+    if (isOutOfBounds(rows, columns)) return;
+    setValues(this.font, font, rows, columns);
+  }
+  //
+
+
+  //
   // CellAttribute
   //
   public void addColumn() {
@@ -146,6 +209,9 @@ public class DefaultCellAttribute implements CellAttribute ,CellSpan {
     columnSize = size.width;
     rowSize    = size.height;
     span = new int[rowSize][columnSize][2];   // 2: COLUMN,ROW
+    foreground = new Color[rowSize][columnSize];
+    background = new Color[rowSize][columnSize];
+    font = new Font[rowSize][columnSize];
     initValue();
   }
 

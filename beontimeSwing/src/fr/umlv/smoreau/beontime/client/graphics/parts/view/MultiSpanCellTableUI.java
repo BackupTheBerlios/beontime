@@ -1,3 +1,10 @@
+/*
+ * (swing1.1beta3)
+ * 
+ */
+
+
+
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Color;
 import java.awt.Component;

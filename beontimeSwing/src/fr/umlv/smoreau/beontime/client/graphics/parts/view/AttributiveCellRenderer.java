@@ -1,4 +1,9 @@
+/*
+ * (swing1.1beta3)
+ */
 
+
+ 
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.*;
 import javax.swing.*;
@@ -9,8 +14,7 @@ import javax.swing.border.*;
 /**
  * @version 1.0 11/22/98
  */
-public class AttributiveCellRenderer extends JLabel
-    implements TableCellRenderer {
+public class AttributiveCellRenderer extends JLabel implements TableCellRenderer {
   protected static Border noFocusBorder; 
  
   public AttributiveCellRenderer() {
@@ -27,7 +31,26 @@ public class AttributiveCellRenderer extends JLabel
     TableModel model = table.getModel();
     if (model instanceof AttributiveCellTableModel) {
       CellAttribute cellAtt = ((AttributiveCellTableModel)model).getCellAttribute();
+      if (cellAtt instanceof ColoredCell) {
+	foreground = ((ColoredCell)cellAtt).getForeground(row,column);
+	background = ((ColoredCell)cellAtt).getBackground(row,column);
+      }
+      if (cellAtt instanceof CellFont) {
+	font = ((CellFont)cellAtt).getFont(row,column);
+      }
     }
+    if (isSelected) {
+      setForeground((foreground != null) ? foreground
+                          : table.getSelectionForeground());
+      setBackground(table.getSelectionBackground());
+    } else {
+      setForeground((foreground != null) ? foreground 
+			  : table.getForeground());
+      setBackground((background != null) ? background 
+			  : table.getBackground());
+    }
+    setFont((font != null) ? font : table.getFont());
+    
     if (hasFocus) {
       setBorder( UIManager.getBorder("Table.focusCellHighlightBorder") );
       if (table.isCellEditable(row, column)) {
@@ -40,8 +63,7 @@ public class AttributiveCellRenderer extends JLabel
     }
     setValue(value);        
     return this;
-  }
-    
+  }  
   protected void setValue(Object value) {
     setText((value == null) ? "" : value.toString());
   }

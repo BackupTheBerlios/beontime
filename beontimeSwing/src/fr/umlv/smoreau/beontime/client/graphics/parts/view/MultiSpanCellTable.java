@@ -1,5 +1,11 @@
-package fr.umlv.smoreau.beontime.client.graphics.parts.view;
+/*
+ * (swing1.1beta3)
+ * 
+ */
 
+
+
+package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -21,8 +27,10 @@ public class MultiSpanCellTable extends JTable {
   public MultiSpanCellTable(TableModel model) {
     super(model);
     setUI(new MultiSpanCellTableUI());
-    getTableHeader().setReorderingAllowed(false);
+    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+    setRowSelectionAllowed(false);
     setCellSelectionEnabled(true);
+    setRowHeight(77);
     setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
   }
   
@@ -76,11 +84,12 @@ public class MultiSpanCellTable extends JTable {
   
   
   private int[] rowColumnAtPoint(Point point) {
+  	
     int[] retValue = {-1,-1};
     int row = point.y / (rowHeight + rowMargin);
     if ((row <0)||(getRowCount() <= row)) return retValue;
-    int column = getColumnModel().getColumnIndexAtX(point.x);
-
+    int column = getColumnModel().getColumnIndexAtX((int)((95*point.getX())/100));
+    //int column=super.columnAtPoint(point);
     CellSpan cellAtt = (CellSpan)((AttributiveCellTableModel)getModel()).getCellAttribute();
 
     if (cellAtt.isVisible(row,column)) {

@@ -5,7 +5,6 @@
  * Window - Preferences - Java - Code Style - Code Templates
  */
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,6 +21,7 @@ import javax.swing.plaf.basic.BasicTableHeaderUI;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
 
 /**
  * @author Mohamed

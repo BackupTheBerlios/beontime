@@ -1,3 +1,9 @@
+/*
+ * (swing1.1beta3)
+ * 
+ */
+
+
 
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
 import java.awt.Dimension;
@@ -10,22 +16,23 @@ import javax.swing.table.AbstractTableModel;
  */
 
 public class AttributiveCellTableModel extends AbstractTableModel {
-	String[] colName;
-	private fr.umlv.smoreau.beontime.client.graphics.parts.view.DefaultCellAttribute cellAtt;
-	private Object[][] data;
+	int colNb=0;
+	private DefaultCellAttribute cellAtt;
+	private String[][] data;
+	private String[] plage=new String[]{"00","15","30","45"};
 	/**
 	 * 
 	 */
 	public AttributiveCellTableModel(int numRows, int numColumns) {
-		colName = new String[numColumns];
-		data =new Object[numRows][numColumns];
+		colNb = numColumns;
+		data =new String[numRows][numColumns];
 	    cellAtt = new DefaultCellAttribute(numRows,numColumns);
 	}
 	
-	  public AttributiveCellTableModel(Object[][] data, String[] columnNames) {
-	  	colName=columnNames;
+	  public AttributiveCellTableModel(String[][] data, int nbcolumn) {
+	  	colNb=nbcolumn;
 	  	this.data=data;
-	  	cellAtt = new DefaultCellAttribute(data.length,columnNames.length);
+	  	cellAtt = new DefaultCellAttribute(data.length,nbcolumn);
 	  }
 
 	public int getRowCount() {
@@ -33,16 +40,20 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	}
 
 	public int getColumnCount() {
-		return colName.length;
+		return colNb;
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
+		return (String)(data[rowIndex][columnIndex]);
+	}
+	public void setValueAt(Object o,int rowIndex, int columnIndex){
+		data[rowIndex][columnIndex]=(String)o;
 	}
 	
-	public CellAttribute getCellAttribute() {
+	public DefaultCellAttribute getCellAttribute() {
 	    return cellAtt;
 	}
+
 
 	public void setCellAttribute(CellAttribute newCellAtt) {
 	    int numColumns = getColumnCount();
@@ -53,6 +64,13 @@ public class AttributiveCellTableModel extends AbstractTableModel {
 	    }
 	    cellAtt = (DefaultCellAttribute) newCellAtt;
 	    fireTableDataChanged();
+	}
+	public String getColumnName(int columnIndex) {
+
+		System.out.println(columnIndex%4);
+		return plage[columnIndex%4];
+		
+		
 	}
    
 }

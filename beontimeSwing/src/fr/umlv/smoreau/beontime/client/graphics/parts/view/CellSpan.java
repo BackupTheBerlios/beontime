@@ -1,5 +1,12 @@
-
 package fr.umlv.smoreau.beontime.client.graphics.parts.view;
+/*
+ * (swing1.1beta3)
+ * 
+ */
+
+
+
+
 /**
  * @version 1.0 11/22/98
  */
