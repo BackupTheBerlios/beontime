@@ -29,7 +29,6 @@ import fr.umlv.smoreau.beontime.client.actions.timetable.subject.RemoveSubject;
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.ColorBoT;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
-import fr.umlv.smoreau.beontime.client.graphics.parts.edit.EditAdapter;
 import fr.umlv.smoreau.beontime.model.timetable.Subject;
 import fr.umlv.smoreau.beontime.model.timetable.Timetable;
 
@@ -51,7 +50,7 @@ public class ManageSubjectsTree extends JTree {
 	
 	public ManageSubjectsTree(final BoTModel model) {
 		super();
-		super.setModel(new EditAdapter(model, this));
+		super.setModel(new ManageSubjectsAdapter(model, this));
 		ManageSubjectsTree.mainFrame = MainFrame.getInstance();
 		
 		panel = new JPanel(new GridLayout(1, 0));
