@@ -103,7 +103,7 @@ public class TestSql {
 	
 	public static void main(String[] args) {
 		TestSql tSql=new TestSql();
-		Connection connexion=tSql.getConnection("jdbc:postgresql://172.16.0.5:5432/bot","bot","bot");
+		Connection connexion=tSql.getConnection("jdbc:postgresql://saadouni.dyndns.org:5432/bot","bot","bot");
 		String name;
 		System.out.println("\nAjout d'un étudiant :\n-------------------------\n");
 		boolean ret=tSql.addEtudiant(connexion,"Doe","John");
