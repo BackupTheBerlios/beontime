@@ -53,9 +53,9 @@
 			<one-to-many class="fr.umlv.smoreau.beontime.model.association.ParticipeGroupSubjectCourse" />
 		</set>
 		<set
-			cascade="all"
+			cascade="none"
 			name="PersonneSet"
-			table="Est_Dirige_par_Cours_Enseignant"
+			table="est_dirige_par_cours_enseignant"
 		>
 			<key column="ID_cours" />
 			<!--composite-element class="fr.umlv.smoreau.beontime.model.user.Person">

@@ -1,8 +1,6 @@
 package junit;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import fr.umlv.smoreau.beontime.dao.TimetableDao;
 import fr.umlv.smoreau.beontime.model.element.Material;
@@ -25,7 +23,7 @@ public class TimetableDaoTest extends TestCase {
         super(name);
     }
 
-    /*public void testGetCourses() {
+    public void testGetCourses() {
         assertNotNull(timetableDao.getCourses());
     }
     
@@ -35,7 +33,7 @@ public class TimetableDaoTest extends TestCase {
     
     public void testGetSubjects() {
         assertNotNull(timetableDao.getSubjects());
-    }*/
+    }
     
     public void testAddRemoveCourse() {
         // ajout d'un cours simple
@@ -47,35 +45,29 @@ public class TimetableDaoTest extends TestCase {
         assertTrue(timetableDao.addCourse(course));
         
         // modification du cours, ajout d'un local
-        /*Room room = new Room();
+        Room room = new Room();
         room.setDescription("local d'essai ...");
-        Set rooms = new HashSet();
-        rooms.add(room);
-        course.setLocalSet(rooms);
+        course.addToLocalSet(room);
         assertTrue(timetableDao.modifyCourse(course));
         
         // modification du cours, ajout d'un matériel
         Material material = new Material();
         material.setDescription("matériel d'essai ...");
-        Set materials = new HashSet();
-        materials.add(material);
-        course.setMaterielSet(materials);
-        assertTrue(timetableDao.modifyCourse(course));*/
+        course.addToMaterielSet(material);
+        assertTrue(timetableDao.modifyCourse(course));
         
         // modification du cours, ajout d'un enseignant
         Person person = new Person();
-        //person.setIdPersonne(new Long(114));
+        person.setIdPersonne(new Long(10));
         person.setTypePersonne("enseignant");
-        Set persons = new HashSet();
-        persons.add(person);
-        course.setPersonneSet(persons);
+        course.addToPersonneSet(person);
         assertTrue(timetableDao.modifyCourse(course));
         
         // suppression du cours
         assertTrue(timetableDao.removeCourse(course));
     }
     
-    /*public void testAddRemoveSubject() {
+    public void testAddRemoveSubject() {
         Subject subject = new Subject();
         subject.setIdFormation(new Long(2));
         subject.setIdTeacher(new Long(5));
@@ -83,7 +75,7 @@ public class TimetableDaoTest extends TestCase {
         subject.setIntitule("matière de test");
         assertTrue(timetableDao.modifySubject(subject));
         assertTrue(timetableDao.removeSubject(subject));
-    }*/
+    }
 
     
     public static Test suite() {
