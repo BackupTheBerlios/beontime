@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.DefaultBoTListener;
+import fr.umlv.smoreau.beontime.client.graphics.utils.ComboBoxItem;
 import fr.umlv.smoreau.beontime.dao.DaoManager;
 import fr.umlv.smoreau.beontime.dao.UserDao;
 import fr.umlv.smoreau.beontime.filter.GroupFilter;
@@ -126,7 +127,7 @@ public class TimeTableViewPanelBar extends JPanel {
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = formations.iterator(); i.hasNext(); ) {
 							Formation formation = (Formation) i.next();
-							jcbSubjectEDT.addItem(new Item(formation.getHeading(), formation.getIdFormation()));
+							jcbSubjectEDT.addItem(new ComboBoxItem(formation.getHeading(), formation.getIdFormation()));
 						}
 						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_ENSEIGNANT.equals(event.getItem())) {
@@ -134,7 +135,7 @@ public class TimeTableViewPanelBar extends JPanel {
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = teachers.iterator(); i.hasNext(); ) {
 							User teacher = (User) i.next();
-							jcbSubjectEDT.addItem(new Item(teacher.getName()+" "+teacher.getFirstName(), teacher.getIdUser()));
+							jcbSubjectEDT.addItem(new ComboBoxItem(teacher.getName()+" "+teacher.getFirstName(), teacher.getIdUser()));
 						}
 						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_LOCAL.equals(event.getItem())) {
@@ -142,7 +143,7 @@ public class TimeTableViewPanelBar extends JPanel {
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = rooms.iterator(); i.hasNext(); ) {
 							Room room = (Room) i.next();
-							jcbSubjectEDT.addItem(new Item(room.getName(),room.getIdRoom()));
+							jcbSubjectEDT.addItem(new ComboBoxItem(room.getName(),room.getIdRoom()));
 						}
 						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_MATERIEL.equals(event.getItem())) {
@@ -150,7 +151,7 @@ public class TimeTableViewPanelBar extends JPanel {
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = materials.iterator(); i.hasNext(); ) {
 							Material material = (Material) i.next();
-							jcbSubjectEDT.addItem(new Item(material.getName(), material.getIdMaterial()));
+							jcbSubjectEDT.addItem(new ComboBoxItem(material.getName(), material.getIdMaterial()));
 						}
 						jcbSubjectEDT.setEnabled(true);
 					} else if (TYPE_GROUPE.equals(event.getItem())) {
@@ -158,7 +159,7 @@ public class TimeTableViewPanelBar extends JPanel {
 						jcbSubjectEDT.addItem(TYPE_VIDE);
 						for (Iterator i = formations.iterator(); i.hasNext(); ) {
 							Formation formation = (Formation) i.next();
-							jcbSubjectEDT.addItem(new Item(formation.getHeading(), formation.getIdFormation()));
+							jcbSubjectEDT.addItem(new ComboBoxItem(formation.getHeading(), formation.getIdFormation()));
 						}
 						jcbSubjectEDT.setEnabled(true);
 					}
@@ -181,7 +182,7 @@ public class TimeTableViewPanelBar extends JPanel {
 				    }
 					if (!TYPE_VIDE.equals(event.getItem())) {
 					    boolean show = false;
-					    Long id = ((Item)event.getItem()).getId();
+					    Long id = ((ComboBoxItem)event.getItem()).getId();
 					    TimetableFilter filter = new TimetableFilter();
 
 					    if (TYPE_FORMATION.equals(jcbTypeEDT.getSelectedItem())) {
@@ -204,7 +205,7 @@ public class TimeTableViewPanelBar extends JPanel {
 							jcbGroupEDT.addItem("");
 							for (Iterator i = groups.iterator(); i.hasNext(); ) {
 							    Group group = (Group) i.next();
-							    jcbGroupEDT.addItem(new Item(group.getHeading(), group.getIdGroup()));
+							    jcbGroupEDT.addItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
 							}
 							jcbGroupEDT.setEnabled(true);
 					    }
@@ -232,10 +233,10 @@ public class TimeTableViewPanelBar extends JPanel {
 					    mainFrame.getModel().fireCloseTimetable(false);
 				    }
 					if (!TYPE_VIDE.equals(event.getItem())) {
-					    Long id = ((Item)event.getItem()).getId();
+					    Long id = ((ComboBoxItem)event.getItem()).getId();
 					    TimetableFilter filter = new TimetableFilter();
 					    filter.setGroup(new Group(id));
-					    filter.setFormation(new Formation(((Item)jcbSubjectEDT.getSelectedItem()).getId()));
+					    filter.setFormation(new Formation(((ComboBoxItem)jcbSubjectEDT.getSelectedItem()).getId()));
 					    filter.setBeginPeriod(mainFrame.getBeginPeriod());
 						filter.setEndPeriod(mainFrame.getEndPeriod());
 						Timetable timetable = DaoManager.getTimetableDao().getTimetable(filter);
@@ -248,39 +249,12 @@ public class TimeTableViewPanelBar extends JPanel {
 		}
 	}
 	
-	private class Item {
-		private String text;
-		private Long id;
-		
-		public Item(String text, Long id) {
-			this.text = text;
-			this.id = id;
-		}
-		
-		public Long getId() {
-			return id;
-		}
-		
-		public String toString() {
-			return text;
-		}
-		
-		public boolean equals(Object obj) {
-		    if (obj == null || !(obj instanceof Item))
-		        return false;
-
-		    Item item = (Item) obj;
-
-		    return id.equals(item.id);
-		}
-	}
-	
 	private class TimeTableViewListener extends DefaultBoTListener {
 	    public void addGroup(BoTEvent e) throws InterruptedException {
 	        if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
                 Group group = e.getGroup();
-                jcbGroupEDT.addItem(new Item(group.getHeading(), group.getIdGroup()));
+                jcbGroupEDT.addItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
                 jcbGroupEDT.revalidate();
             }
         }
@@ -288,7 +262,7 @@ public class TimeTableViewPanelBar extends JPanel {
         public void addMaterial(BoTEvent e) throws InterruptedException {
             if (TYPE_MATERIEL.equals(jcbTypeEDT.getSelectedItem())) {
                 Material material = e.getMaterial();
-                jcbSubjectEDT.addItem(new Item(material.getName(), material.getIdMaterial()));
+                jcbSubjectEDT.addItem(new ComboBoxItem(material.getName(), material.getIdMaterial()));
                 jcbSubjectEDT.revalidate();
             }
         }
@@ -296,7 +270,7 @@ public class TimeTableViewPanelBar extends JPanel {
         public void addRoom(BoTEvent e) throws InterruptedException {
             if (TYPE_LOCAL.equals(jcbTypeEDT.getSelectedItem())) {
                 Room room = e.getRoom();
-                jcbSubjectEDT.addItem(new Item(room.getName(), room.getIdRoom()));
+                jcbSubjectEDT.addItem(new ComboBoxItem(room.getName(), room.getIdRoom()));
                 jcbSubjectEDT.revalidate();
             }
         }
@@ -305,7 +279,7 @@ public class TimeTableViewPanelBar extends JPanel {
             if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
                 User user = e.getUser();
                 if (UserDao.TYPE_TEACHER.equals(user.getUserType())) {
-	                jcbSubjectEDT.addItem(new Item(user.getName()+" "+user.getFirstName(), user.getIdUser()));
+	                jcbSubjectEDT.addItem(new ComboBoxItem(user.getName()+" "+user.getFirstName(), user.getIdUser()));
 	                jcbSubjectEDT.revalidate();
                 }
             }
@@ -315,8 +289,8 @@ public class TimeTableViewPanelBar extends JPanel {
             if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
                 Group group = e.getGroup();
-                Item itemSelected = (Item) jcbGroupEDT.getSelectedItem();
-                Item item = new Item(group.getHeading(), group.getIdGroup());
+                ComboBoxItem itemSelected = (ComboBoxItem) jcbGroupEDT.getSelectedItem();
+                ComboBoxItem item = new ComboBoxItem(group.getHeading(), group.getIdGroup());
                 jcbGroupEDT.removeItem(item);
                 jcbGroupEDT.addItem(item);
                 if (itemSelected.equals(item))
@@ -329,7 +303,7 @@ public class TimeTableViewPanelBar extends JPanel {
             if (TYPE_GROUPE.equals(jcbTypeEDT.getSelectedItem()) &&
 	                !TYPE_VIDE.equals(jcbSubjectEDT.getSelectedItem())) {
                 Group group = e.getGroup();
-                jcbGroupEDT.removeItem(new Item(group.getHeading(), group.getIdGroup()));
+                jcbGroupEDT.removeItem(new ComboBoxItem(group.getHeading(), group.getIdGroup()));
                 jcbGroupEDT.revalidate();
             }
         }
@@ -337,7 +311,7 @@ public class TimeTableViewPanelBar extends JPanel {
         public void removeMaterial(BoTEvent e) throws InterruptedException {
             if (TYPE_MATERIEL.equals(jcbTypeEDT.getSelectedItem())) {
                 Material material = e.getMaterial();
-                jcbSubjectEDT.removeItem(new Item(material.getName(), material.getIdMaterial()));
+                jcbSubjectEDT.removeItem(new ComboBoxItem(material.getName(), material.getIdMaterial()));
                 jcbSubjectEDT.revalidate();
             }
         }
@@ -345,7 +319,7 @@ public class TimeTableViewPanelBar extends JPanel {
         public void removeRoom(BoTEvent e) throws InterruptedException {
             if (TYPE_LOCAL.equals(jcbTypeEDT.getSelectedItem())) {
                 Room room = e.getRoom();
-                jcbSubjectEDT.removeItem(new Item(room.getName(), room.getIdRoom()));
+                jcbSubjectEDT.removeItem(new ComboBoxItem(room.getName(), room.getIdRoom()));
                 jcbSubjectEDT.revalidate();
             }
         }
@@ -354,7 +328,7 @@ public class TimeTableViewPanelBar extends JPanel {
             if (TYPE_ENSEIGNANT.equals(jcbTypeEDT.getSelectedItem())) {
                 User user = e.getUser();
                 if (UserDao.TYPE_TEACHER.equals(user.getUserType())) {
-	                jcbSubjectEDT.removeItem(new Item(user.getName()+" "+user.getFirstName(), user.getIdUser()));
+	                jcbSubjectEDT.removeItem(new ComboBoxItem(user.getName()+" "+user.getFirstName(), user.getIdUser()));
 	                jcbSubjectEDT.revalidate();
                 }
             }

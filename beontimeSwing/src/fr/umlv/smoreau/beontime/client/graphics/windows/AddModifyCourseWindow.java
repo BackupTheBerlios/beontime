@@ -803,7 +803,7 @@ public class AddModifyCourseWindow {
             Calendar endCourse = getEndDate();
             UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
             UnavailabilityFilter filter = new UnavailabilityFilter();
-            Calendar beginPeriod = Calendar.getInstance();
+            /*Calendar beginPeriod = Calendar.getInstance();
             beginPeriod.setTime(getDateCourse());
             beginPeriod.set(Calendar.HOUR_OF_DAY, 0);
             beginPeriod.set(Calendar.MINUTE, 0);
@@ -814,15 +814,15 @@ public class AddModifyCourseWindow {
             endPeriod.set(Calendar.HOUR_OF_DAY, 23);
             endPeriod.set(Calendar.MINUTE, 59);
             endPeriod.set(Calendar.SECOND, 59);
-            endPeriod.set(Calendar.MILLISECOND, 0);
+            endPeriod.set(Calendar.MILLISECOND, 0);*/
 
             for (int k = 0; k < getNbWeeksCourse(); ++k) {
-                beginPeriod.set(Calendar.DAY_OF_YEAR, beginPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
-                endPeriod.set(Calendar.DAY_OF_YEAR, endPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
+                //beginPeriod.set(Calendar.DAY_OF_YEAR, beginPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
+                //endPeriod.set(Calendar.DAY_OF_YEAR, endPeriod.get(Calendar.DAY_OF_YEAR) + 7*k);
                 beginCourse.set(Calendar.DAY_OF_YEAR, beginCourse.get(Calendar.DAY_OF_YEAR) + 7*k);
                 endCourse.set(Calendar.DAY_OF_YEAR, endCourse.get(Calendar.DAY_OF_YEAR) + 7*k);
-                filter.setBeginPeriod(beginPeriod);
-                filter.setEndPeriod(endPeriod);
+                //filter.setBeginPeriod(beginPeriod);
+                //filter.setEndPeriod(endPeriod);
 	            Collection unavailabilities = new ArrayList();
 	
 	            // vérification que le groupe est libre

@@ -63,4 +63,13 @@ public class DefaultBoTListener implements BoTListener {
 
 	public void removeGroup(BoTEvent e) throws InterruptedException {
     }
+
+    public void addUnavailability(BoTEvent e) throws InterruptedException {
+    }
+
+    public void modifyUnavailability(BoTEvent e) throws InterruptedException {       
+    }
+
+    public void removeUnavailability(BoTEvent e) throws InterruptedException {
+    }
 }

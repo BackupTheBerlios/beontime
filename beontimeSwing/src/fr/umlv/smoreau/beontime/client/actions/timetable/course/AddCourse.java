@@ -107,13 +107,10 @@ public class AddCourse extends Action {
                     UnavailabilityDao unavailabilityDao = DaoManager.getAvailabilityDao();
 
                     Unavailability unavailability = new Unavailability();
-                    unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_COURSE));
-                    unavailability.setIdUnavailabilitySubject(course.getIdCourse());
                     unavailability.setBeginDate(course.getBeginDate());
                     unavailability.setEndDate(course.getEndDate());
                     unavailability.setIdCourse(course.getIdCourse());
                     unavailability.setDescription(UnavailabilityDao.AUTO_DESCRIPTION);
-                    unavailabilityDao.addUnavailability(unavailability);
 
                     for (Iterator j = course.getGroupsSubjectsTakingPart().iterator(); j.hasNext(); ) {
                         TakePartGroupSubjectCourse tmp = (TakePartGroupSubjectCourse) j.next();
@@ -156,7 +153,6 @@ public class AddCourse extends Action {
                 
                 JOptionPane.showMessageDialog(null, "Ajout effectué avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Une erreur interne est survenue", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
     	}

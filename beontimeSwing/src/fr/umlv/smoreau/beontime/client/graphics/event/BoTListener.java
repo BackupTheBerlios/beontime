@@ -45,4 +45,10 @@ public interface BoTListener extends EventListener {
 	public void modifyGroup(BoTEvent e) throws InterruptedException;
 
 	public void removeGroup(BoTEvent e) throws InterruptedException;
+	
+	public void addUnavailability(BoTEvent e) throws InterruptedException;
+
+	public void modifyUnavailability(BoTEvent e) throws InterruptedException;
+
+	public void removeUnavailability(BoTEvent e) throws InterruptedException;
 }

@@ -1,42 +1,44 @@
 package fr.umlv.smoreau.beontime.client.graphics.windows;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 
 import fr.umlv.smoreau.beontime.client.graphics.BoTModel;
 import fr.umlv.smoreau.beontime.client.graphics.MainFrame;
+import fr.umlv.smoreau.beontime.model.Formation;
+import fr.umlv.smoreau.beontime.model.Group;
 import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
-import fr.umlv.smoreau.beontime.model.timetable.Course;
 import fr.umlv.smoreau.beontime.model.user.User;
 
 /**
  * @author BeOnTime
  */
 public class ManageUnavailabilitiesTree extends JTree {
-	
+    private SimpleDateFormat FORMAT_DATE  = new SimpleDateFormat("dd/MM/yyyy à HH:mm");
+
 	private final JTree tree;
 	private Unavailability unavailabilitySelected;
 	
 	private JPanel panel;
 	private static MainFrame mainFrame;
-	
-	
-	
+
+
 	public ManageUnavailabilitiesTree(final BoTModel model) {
 		super();
 		super.setModel(new ManageUnavailabilitiesAdapter(model, this));
@@ -50,41 +52,15 @@ public class ManageUnavailabilitiesTree extends JTree {
 		
 		tree = this;
 		
-		// Popup Menus
-		//final PopupMenu popupSubject = new PopupMenu(new Unavailability());
-		//final PopupMenu popupNothing = new PopupMenu(null);
-		
-		super.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
-				
-				/*modifyButton.setEnabled(true);
-				removeButton.setEnabled(true);
-				searchUnavailabilitiesButton.setVisible(true);*/
-				
-				// Popup Menus
-				if (e.getButton() == MouseEvent.BUTTON3) {
-					int row = tree.getRowForLocation(e.getX(), e.getY());
-					tree.setSelectionRow(row);
-					unavailabilitySelected = null;
-					if (row != -1) {
-						Object object = tree.getPathForRow(row).getLastPathComponent();
-						/*if (object instanceof Unavailability) {
-							popupSubject.show(e.getComponent(), e.getX(), e.getY());
-							unavailabilitySelected = (Unavailability) object;
-						} */
-					} else {
-						//popupNothing.show(e.getComponent(), e.getX(), e.getY());
-					}
-				}
-			}
-			public void mousePressed(MouseEvent e) {
-			}
-			public void mouseReleased(MouseEvent e) {
-			}
-			public void mouseEntered(MouseEvent e) {
-			}
-			public void mouseExited(MouseEvent e) {
-			}
+		super.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                TreePath treePath = e.getPath();
+                Object selected = treePath.getLastPathComponent();
+                if (selected instanceof Unavailability)
+                    mainFrame.setUnavailabilitySelected((Unavailability) selected);
+                else
+                    mainFrame.setUnavailabilitySelected(null);
+            }
 		});
 		
 		JScrollPane scrollPane = new JScrollPane(this);
@@ -136,44 +112,26 @@ public class ManageUnavailabilitiesTree extends JTree {
 				font = new Font("Arial", Font.PLAIN, 14);
 				Room room = (Room) value;
 				setText(room.getName());
-			} else if (value instanceof Course) {
+			} else if (value instanceof Formation) {
 				font = new Font("Arial", Font.PLAIN, 14);
-				Course course = (Course) value;
-				setText(course.getIdCourseType().getNameCourseType()+" du "+course.getBeginDate()+" au "+course.getEndDate());
+				Formation formation = (Formation) value;
+				setText(formation.getHeading());
+			} else if (value instanceof Group) {
+				font = new Font("Arial", Font.PLAIN, 14);
+				Group group = (Group) value;
+				setText(group.getHeading());
 			} else if (value instanceof Unavailability) {
 				font = new Font("Arial", Font.PLAIN, 14);
 				Unavailability u = (Unavailability) value;
-				setText(u.getDescription()+" du "+u.getBeginDate()+" au "+u.getEndDate());
+				setText(u.getDescription()+" du "+FORMAT_DATE.format(u.getBeginDate().getTime())+" au "+FORMAT_DATE.format(u.getEndDate().getTime()));
 			}
-			
-			
-			
+
 			setFont(font);
 			setToolTipText(tooltip);
-			setBackgroundSelectionColor(Color.WHITE);
 			
 			setIcon(null);
 			
 			return this;
 		}
 	}
-	
-/*	private static class PopupMenu extends JPopupMenu {
-		private Object selected;
-		
-		public PopupMenu(Object object) {
-			super();
-			
-			if (object == null) {
-				JMenuItem menuItem = new JMenuItem(new AddSubject(false, mainFrame));
-				add(menuItem);
-			} else if (object instanceof Subject) {
-				JMenuItem menuItem = new JMenuItem(new ModifySubject(false, mainFrame));
-				add(menuItem);
-				menuItem = new JMenuItem(new RemoveSubject(false, mainFrame));
-				add(menuItem);
-			}
-		}
-	}
-*/
 }

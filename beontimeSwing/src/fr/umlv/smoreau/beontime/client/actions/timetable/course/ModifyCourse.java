@@ -118,13 +118,10 @@ public class ModifyCourse extends Action {
                 unavailabilityDao.removeUnavailability(filter);
 
                 Unavailability unavailability = new Unavailability();
-                unavailability.setIdUnavailabilityType(unavailabilityDao.getTypeUnavailability(UnavailabilityDao.TYPE_COURSE));
-                unavailability.setIdUnavailabilitySubject(course.getIdCourse());
                 unavailability.setBeginDate(course.getBeginDate());
                 unavailability.setEndDate(course.getEndDate());
                 unavailability.setIdCourse(course.getIdCourse());
                 unavailability.setDescription(UnavailabilityDao.AUTO_DESCRIPTION);
-                unavailabilityDao.addUnavailability(unavailability);
 
                 for (Iterator j = course.getGroupsSubjectsTakingPart().iterator(); j.hasNext(); ) {
                     TakePartGroupSubjectCourse tmp = (TakePartGroupSubjectCourse) j.next();

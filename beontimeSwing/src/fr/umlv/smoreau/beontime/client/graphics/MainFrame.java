@@ -55,6 +55,7 @@ public class MainFrame {
 	private Material materialSelected;
 	private Group groupSelected;
 	private Course courseSelected;
+	private Unavailability unavailabilitySelected;
 
 	private MenuBar menuBar;
 	private ButtonBar buttonBar;
@@ -224,8 +225,14 @@ public class MainFrame {
 	}
 	
 	public Unavailability getUnavailabilitySelected() {
-		//TODO à implémenter
-		return null;
+		return unavailabilitySelected;
+	}
+	
+	public void setUnavailabilitySelected(Unavailability unavailability) {
+		ActionsList.getAction("ModifyUnavailability").setEnabled(unavailability != null);
+		ActionsList.getAction("RemoveUnavailability").setEnabled(unavailability != null);
+
+	    this.unavailabilitySelected = unavailability;
 	}
 	
 	public Group getGroupSelected() {

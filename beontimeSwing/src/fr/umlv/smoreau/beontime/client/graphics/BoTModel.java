@@ -5,6 +5,7 @@ import javax.swing.event.EventListenerList;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTEvent;
 import fr.umlv.smoreau.beontime.client.graphics.event.BoTListener;
 import fr.umlv.smoreau.beontime.model.Group;
+import fr.umlv.smoreau.beontime.model.Unavailability;
 import fr.umlv.smoreau.beontime.model.element.Material;
 import fr.umlv.smoreau.beontime.model.element.Room;
 import fr.umlv.smoreau.beontime.model.timetable.Course;
@@ -185,6 +186,24 @@ public class BoTModel {
 				    ((BoTListener) listeners[i + 1]).modifyGroup(event);
 				else if (type == TYPE_REMOVE)
 				    ((BoTListener) listeners[i + 1]).removeGroup(event);
+			}
+		}
+	}
+	
+	public void fireRefreshUnavailability(Unavailability unavailability, int type) throws InterruptedException {
+	    BoTEvent event = null;
+
+		Object[] listeners = list.getListenerList();
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == BoTListener.class) {
+				if (event == null)
+					event = new BoTEvent(this, unavailability);
+				if (type == TYPE_ADD)
+				    ((BoTListener) listeners[i + 1]).addUnavailability(event);
+				else if (type == TYPE_MODIFY)
+				    ((BoTListener) listeners[i + 1]).modifyUnavailability(event);
+				else if (type == TYPE_REMOVE)
+				    ((BoTListener) listeners[i + 1]).removeUnavailability(event);
 			}
 		}
 	}
