@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.umlv.smoreau.beontime.client.actions.Action;
-import fr.umlv.smoreau.beontime.client.graphics.windows.ViewTimetableWindow;
 
 /**
  * @author Mohamed

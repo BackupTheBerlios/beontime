@@ -5,28 +5,24 @@ package fr.umlv.smoreau.beontime.client.graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.FlowLayout;
 import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 import fr.umlv.smoreau.beontime.client.graphics.parts.ButtonBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.MenuBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.StateBar;
+import fr.umlv.smoreau.beontime.client.graphics.parts.TimeTableViewPanelBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.TitleBar;
 import fr.umlv.smoreau.beontime.client.graphics.parts.edit.Edit;
 import fr.umlv.smoreau.beontime.client.graphics.parts.view.View;
@@ -56,7 +52,9 @@ public class MainFrame {
 	private final static int X_POSITION = 0;
 	private final static int Y_POSITION = 0;
 	private final static int WIDTH = 800;
-	private final static int HEIGHT = 600;	
+	private final static int HEIGHT = 600;
+
+	private TimeTableViewPanelBar timetableviewpanel;	
 	
     /** Creates a new instance of FenetreConjugaison */
     public MainFrame() {
@@ -76,9 +74,10 @@ public class MainFrame {
     public void initMainFrame() {
 
         menuBar = new MenuBar();
-        buttonBar = new ButtonBar();
+        buttonBar = new ButtonBar(this);
         titleBar = new TitleBar();
         stateBar = new StateBar();
+        timetableviewpanel=new TimeTableViewPanelBar();
         Edit edit=new Edit();
         View view=new View();
         
@@ -108,7 +107,12 @@ public class MainFrame {
         splitPaneVertical2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
 		container.setLayout(new BorderLayout()); 
-		container.add(buttonBar, BorderLayout.NORTH);
+		//container.add(buttonBar.getToolBar(), BorderLayout.NORTH);
+		JPanel buttonBarPanel=new JPanel();
+		buttonBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT,5,5));
+		buttonBarPanel.add(buttonBar.getToolBar());
+		buttonBarPanel.add(timetableviewpanel);
+		container.add(buttonBarPanel, BorderLayout.NORTH);
 		container.add(splitPaneVertical2); 
 
 		mainFrame.setJMenuBar(menuBar);
@@ -203,5 +207,14 @@ public class MainFrame {
 
 	public JFrame getMainFrame() {
 		return mainFrame;
+	}
+
+
+	/**
+	 * 
+	 */
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 }
